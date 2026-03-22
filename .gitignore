@@ -45,3 +45,7 @@ pipeline/output/
 # Large data files
 pipiads_data/*.json
 scout/output/*.json
+
+# VPS automation
+credentials/
+logs/
