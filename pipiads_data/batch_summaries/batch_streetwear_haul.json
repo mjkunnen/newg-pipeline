@@ -1,0 +1,18 @@
+{
+  "keyword": "streetwear haul",
+  "tier": "T2",
+  "mode": "niche",
+  "pages_visited": 1,
+  "cards_scanned": 12,
+  "cards_captured": 3,
+  "pre_filtered_out": 9,
+  "winners": 0,
+  "possible_winners": 2,
+  "mid": 1,
+  "junk_rate": 0.75,
+  "early_terminated": false,
+  "recommend": "reduce",
+  "reason": "high junk (75%)",
+  "gate_passed": true,
+  "outcome_label": "MODERATE_SIGNAL"
+}

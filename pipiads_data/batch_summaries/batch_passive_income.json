@@ -1,0 +1,18 @@
+{
+  "keyword": "passive income",
+  "tier": "T2",
+  "mode": "niche",
+  "pages_visited": 4,
+  "cards_scanned": 76,
+  "cards_captured": 2,
+  "pre_filtered_out": 74,
+  "winners": 0,
+  "possible_winners": 1,
+  "mid": 1,
+  "junk_rate": 0.97,
+  "early_terminated": false,
+  "recommend": "abandon",
+  "reason": "97% junk, 0 winners",
+  "gate_passed": true,
+  "outcome_label": "JUNK_DOMINATED"
+}

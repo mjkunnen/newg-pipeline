@@ -1,0 +1,18 @@
+{
+  "keyword": "mens streetwear",
+  "tier": "T1",
+  "mode": "broad",
+  "pages_visited": 1,
+  "cards_scanned": 13,
+  "cards_captured": 3,
+  "pre_filtered_out": 10,
+  "winners": 3,
+  "possible_winners": 0,
+  "mid": 0,
+  "junk_rate": 0.77,
+  "early_terminated": false,
+  "recommend": "expand",
+  "reason": "3W/0PW, 77% junk",
+  "gate_passed": true,
+  "outcome_label": "HIGH_SIGNAL"
+}

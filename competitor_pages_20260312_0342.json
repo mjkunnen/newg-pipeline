@@ -1,0 +1,71 @@
+[
+  {
+    "username": "god._.hand",
+    "url": "https://www.tiktok.com/@god._.hand",
+    "followers": 114100,
+    "following": 2,
+    "likes": 6600000,
+    "bio": "instagram : kz._.03",
+    "bio_link": "",
+    "avg_views": 142861,
+    "max_views": 2300000,
+    "slideshow_posts": 36,
+    "video_posts": 0,
+    "total_checked": 36,
+    "slideshow_ratio": 1.0,
+    "format": "slideshow-only",
+    "detection_method": "api_intercept",
+    "scraped_at": "2026-03-12T03:53:28.448242",
+    "fit_score": 6,
+    "score_notes": [
+      "VIRAL 1.3x views/flw",
+      "95%+ slideshows"
+    ]
+  },
+  {
+    "username": "stoic.wealth",
+    "url": "https://www.tiktok.com/@stoic.wealth",
+    "followers": 11000,
+    "following": 0,
+    "likes": 150100,
+    "bio": "♟️ Estilo | Grooming | Mentalidad Guía práctica para tu mejor versión. 👇 Las herramientas que uso 👇",
+    "bio_link": "",
+    "avg_views": 17893,
+    "max_views": 102600,
+    "slideshow_posts": 35,
+    "video_posts": 0,
+    "total_checked": 35,
+    "slideshow_ratio": 1.0,
+    "format": "slideshow-only",
+    "detection_method": "api_intercept",
+    "scraped_at": "2026-03-12T04:04:52.121549",
+    "fit_score": 6,
+    "score_notes": [
+      "VIRAL 1.6x views/flw",
+      "95%+ slideshows"
+    ]
+  },
+  {
+    "username": "lifeofstreetwear",
+    "url": "https://www.tiktok.com/@lifeofstreetwear",
+    "followers": 53100,
+    "following": 246,
+    "likes": 4300000,
+    "bio": "Streetwear | Fashion Brand ↓ Shop the drop",
+    "bio_link": "",
+    "avg_views": 2539,
+    "max_views": 35900,
+    "slideshow_posts": 35,
+    "video_posts": 0,
+    "total_checked": 35,
+    "slideshow_ratio": 1.0,
+    "format": "slideshow-only",
+    "detection_method": "api_intercept",
+    "scraped_at": "2026-03-12T04:06:16.125560",
+    "fit_score": 3,
+    "score_notes": [
+      "95%+ slideshows",
+      "Bio: 'streetwear'"
+    ]
+  }
+]

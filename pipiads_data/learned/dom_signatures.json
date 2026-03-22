@@ -1,0 +1,814 @@
+{
+  "version": "4.1",
+  "created_at": "20260314_1009",
+  "result_card_roots": [
+    {
+      "container_class": "lists-wrap wt-block-grid wt-list-unstyled wt-block-grid-xs-1 wt-block-grid-sm-1 wt-block-grid-md-2 wt-block-grid-lg-3 wt",
+      "child_class": "item-wrap wt-block-grid__item",
+      "child_tag": "LI",
+      "repeated_count": 20,
+      "selector_strategies": [
+        {
+          "selector": ".item-wrap",
+          "stability": "medium",
+          "type": "class"
+        },
+        {
+          "selector": ".wt-block-grid__item",
+          "stability": "medium",
+          "type": "class"
+        },
+        {
+          "selector": ".lists-wrap > li",
+          "stability": "medium",
+          "type": "container_child"
+        },
+        {
+          "selector": ".wt-block-grid > li",
+          "stability": "medium",
+          "type": "container_child"
+        }
+      ],
+      "inner_fields_sample": {
+        "selector": ".item-wrap",
+        "idx": 0,
+        "tag": "LI",
+        "class": "item-wrap wt-block-grid__item",
+        "rect": {
+          "x": 218.5,
+          "y": 705.296875,
+          "width": 367,
+          "height": 559,
+          "top": 705.296875,
+          "right": 585.5,
+          "bottom": 1264.296875,
+          "left": 218.5
+        },
+        "images": [
+          {
+            "src": "https://cdn-video.pipiads.com/cover_8a903d4abb1f1dd36444.jpg?x-oss-process=image/resize,l_694,m_lfit",
+            "alt": "",
+            "class": "el-image__inner"
+          },
+          {
+            "src": "https://cdn-video.pipiads.com/cover_8a903d4abb1f1dd36444.jpg?x-oss-process=image/resize,l_694,m_lfit",
+            "alt": "",
+            "class": "el-image__inner"
+          }
+        ],
+        "links": [
+          {
+            "href": "https://www.pipiads.com/advertiser-analysis/64d833a3a1b89264668c6a29/",
+            "text": "",
+            "class": "link-item title a-link"
+          },
+          {
+            "href": "https://www.pipiads.com/advertiser-analysis/64d833a3a1b89264668c6a29/",
+            "text": "fateclo",
+            "class": "link-item title a-link"
+          },
+          {
+            "href": "https://www.pipiads.com/ad-search/8a903d4abb1f1dd36444/",
+            "text": "",
+            "class": "el-tooltip btn-detail"
+          }
+        ],
+        "buttons": [
+          {
+            "text": "",
+            "class": "el-button el-tooltip el-button--default btn-border"
+          }
+        ],
+        "texts": [
+          {
+            "text": "00:11",
+            "tag": "DIV",
+            "class": "time"
+          },
+          {
+            "text": "1.0x",
+            "tag": "DIV",
+            "class": "btn-speed btn-item"
+          },
+          {
+            "text": "Aug 12 2023-Aug 15 2023",
+            "tag": "SPAN",
+            "class": ""
+          },
+          {
+            "text": "11K",
+            "tag": "P",
+            "class": "value"
+          },
+          {
+            "text": "Impression",
+            "tag": "P",
+            "class": "caption"
+          },
+          {
+            "text": "3",
+            "tag": "P",
+            "class": "value"
+          },
+          {
+            "text": "Days",
+            "tag": "P",
+            "class": "caption"
+          },
+          {
+            "text": "16",
+            "tag": "P",
+            "class": "value"
+          },
+          {
+            "text": "Like",
+            "tag": "P",
+            "class": "caption"
+          },
+          {
+            "text": "Jetzt kaufen",
+            "tag": "DIV",
+            "class": "shop-now"
+          },
+          {
+            "text": "fateclo",
+            "tag": "A",
+            "class": "link-item title a-link"
+          },
+          {
+            "text": "(1)",
+            "tag": "SPAN",
+            "class": "absCount"
+          }
+        ],
+        "videos": [],
+        "data_attrs": [
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "item-inner is-tk"
+          },
+          {
+            "name": "data-v-3c282112",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "item-inner is-tk"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "cover-container"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "cover-containter"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "cover showPlayIcon"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "item-bg"
+          },
+          {
+            "name": "data-v-4c838f62",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "el-image"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "el-image"
+          },
+          {
+            "name": "data-v-4c838f62",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "el-image el-image-center"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "el-image el-image-center"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "time"
+          },
+          {
+            "name": "data-v-09274dac",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "controls-container video-control"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "controls-container video-control"
+          },
+          {
+            "name": "data-v-09274dac",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "volume-control"
+          },
+          {
+            "name": "data-v-09274dac",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "btn-volume btn-item"
+          },
+          {
+            "name": "data-v-09274dac",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "speed-control"
+          },
+          {
+            "name": "data-v-09274dac",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "btn-speed btn-item"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "video-play-icon"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "bottom-wrap"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "other-info flex flex-wrap"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "flex ellipsis-one-line align-center time-line-wrap"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "el-tooltip create-time btn item"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "SPAN",
+            "on_class": ""
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "ad-type-box"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "data-count"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "item"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "P",
+            "on_class": "value"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "P",
+            "on_class": "caption"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "item"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "P",
+            "on_class": "value"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "P",
+            "on_class": "caption"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "item"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "P",
+            "on_class": "value"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "P",
+            "on_class": "caption"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "button-text-copy bottom-border-b"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "left"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "H5",
+            "on_class": "title"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "SPAN",
+            "on_class": "el-tooltip item"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "shop-now"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "pro-info"
+          },
+          {
+            "name": "data-v-13f6104a",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "ad-display-container"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "ad-display-container"
+          },
+          {
+            "name": "data-v-13f6104a",
+            "value": "",
+            "on_tag": "A",
+            "on_class": "link-item title a-link"
+          },
+          {
+            "name": "data-v-4c838f62",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "el-image pro-logo flex-shrink-0"
+          },
+          {
+            "name": "data-v-13f6104a",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "el-image pro-logo flex-shrink-0"
+          },
+          {
+            "name": "data-v-13f6104a",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "app-info-content right flex-1"
+          },
+          {
+            "name": "data-v-13f6104a",
+            "value": "",
+            "on_tag": "P",
+            "on_class": "app-name nickname"
+          },
+          {
+            "name": "data-v-13f6104a",
+            "value": "",
+            "on_tag": "A",
+            "on_class": "link-item title a-link"
+          },
+          {
+            "name": "data-v-13f6104a",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "region-box"
+          },
+          {
+            "name": "data-v-13f6104a",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "el-image el-tooltip _decor flex-shrink-0 btn item"
+          },
+          {
+            "name": "data-v-13f6104a",
+            "value": "",
+            "on_tag": "SPAN",
+            "on_class": "absCount"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "btn-wraps flex flex-shrink-0"
+          },
+          {
+            "name": "data-v-122ea36c",
+            "value": "",
+            "on_tag": "A",
+            "on_class": "el-tooltip btn-detail"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "A",
+            "on_class": "el-tooltip btn-detail"
+          },
+          {
+            "name": "data-v-632960cc",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "btn-collect simple-btn-collect"
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "btn-collect simple-btn-collect"
+          },
+          {
+            "name": "data-v-632960cc",
+            "value": "",
+            "on_tag": "BUTTON",
+            "on_class": "el-button el-tooltip el-button--default btn-border"
+          },
+          {
+            "name": "data-v-e79965e4",
+            "value": "",
+            "on_tag": "SPAN",
+            "on_class": ""
+          },
+          {
+            "name": "data-v-490f6745",
+            "value": "",
+            "on_tag": "SPAN",
+            "on_class": ""
+          },
+          {
+            "name": "data-v-e79965e4",
+            "value": "",
+            "on_tag": "DIV",
+            "on_class": "btn-more el-popover__reference"
+          }
+        ]
+      },
+      "structure_consistency": "high",
+      "cards_inspected_count": 3
+    }
+  ],
+  "detail_modal_roots": [
+    {
+      "class": "v-modal",
+      "id": "",
+      "selector_strategies": [
+        {
+          "selector": "button.v-modal",
+          "stability": "medium",
+          "type": "class"
+        }
+      ],
+      "close_buttons": []
+    },
+    {
+      "class": "v-modal",
+      "id": "",
+      "selector_strategies": [
+        {
+          "selector": "button.v-modal",
+          "stability": "medium",
+          "type": "class"
+        }
+      ],
+      "close_buttons": []
+    }
+  ],
+  "pagination_candidates": [],
+  "filter_candidates": [
+    {
+      "selector": "[class*=\"filter\"]",
+      "tag": "DIV",
+      "class": "btn-add-search had-image-button had-filter-or-and",
+      "text": "",
+      "rect": {
+        "x": 1397,
+        "y": 155,
+        "w": 31,
+        "h": 18
+      }
+    },
+    {
+      "selector": "[class*=\"filter\"]",
+      "tag": "DIV",
+      "class": "filter-wrap filter-action",
+      "text": "All  TikTok  Facebook  All DropshippingTikTok Shop AdE-commerceTikTok Spark AdsGamesAppAIShort DramaCategory: Suggestions  Shopify  Woocommerce  Shopl",
+      "rect": {
+        "x": 228,
+        "y": 185,
+        "w": 1450,
+        "h": 299
+      }
+    },
+    {
+      "selector": "[class*=\"filter\"]",
+      "tag": "DIV",
+      "class": "filter-item filter-ad-types no-limit-height",
+      "text": "All  TikTok  Facebook",
+      "rect": {
+        "x": 228,
+        "y": 209,
+        "w": 1450,
+        "h": 36
+      }
+    },
+    {
+      "selector": "[class*=\"filter\"]",
+      "tag": "DIV",
+      "class": "filter-item filter-data-types no-limit-height",
+      "text": "All DropshippingTikTok Shop AdE-commerceTikTok Spark AdsGamesAppAIShort Drama",
+      "rect": {
+        "x": 228,
+        "y": 259,
+        "w": 1450,
+        "h": 36
+      }
+    },
+    {
+      "selector": "[class*=\"filter\"]",
+      "tag": "DIV",
+      "class": "filter-item filter-time-types no-limit-height",
+      "text": "All  Yesterday  Last 7 days  Last 30 days  Last 6 months  Last Years",
+      "rect": {
+        "x": 311,
+        "y": 353,
+        "w": 775,
+        "h": 32
+      }
+    },
+    {
+      "selector": "[class*=\"filter\"]",
+      "tag": "BUTTON",
+      "class": "el-button btn-filter-winner el-button--default",
+      "text": "Winning Products",
+      "rect": {
+        "x": 409,
+        "y": 499,
+        "w": 161,
+        "h": 32
+      }
+    },
+    {
+      "selector": "[class*=\"filter\"]",
+      "tag": "DIV",
+      "class": "select-history-filter isEn",
+      "text": "Exclude Viewed ads",
+      "rect": {
+        "x": 956,
+        "y": 505,
+        "w": 162,
+        "h": 21
+      }
+    },
+    {
+      "selector": "[class*=\"filter\"]",
+      "tag": "BUTTON",
+      "class": "el-button filter-excluded el-button--default el-button--small el-popover__reference",
+      "text": "Add Exclusions",
+      "rect": {
+        "x": 1129,
+        "y": 499,
+        "w": 124,
+        "h": 32
+      }
+    },
+    {
+      "selector": "[class*=\"sort\"]",
+      "tag": "DIV",
+      "class": "data-view-sort",
+      "text": "Sort by: Last seen  Sort by: Default  Sort by: Last seen  Sort by: Creation Date  Sort by: First seen  Sort by: Impression  Sort by: Ad Spend  Sort by",
+      "rect": {
+        "x": 228,
+        "y": 484,
+        "w": 1450,
+        "h": 47
+      }
+    },
+    {
+      "selector": "[class*=\"sort\"]",
+      "tag": "SPAN",
+      "class": "common-select select-type el-select-sort",
+      "text": "Sort by: Last seen  Sort by: Default  Sort by: Last seen  Sort by: Creation Date  Sort by: First seen  Sort by: Impression  Sort by: Ad Spend  Sort by",
+      "rect": {
+        "x": 228,
+        "y": 499,
+        "w": 172,
+        "h": 32
+      }
+    },
+    {
+      "selector": "[class*=\"dropdown\"]",
+      "tag": "DIV",
+      "class": "pp-dropdown has-border",
+      "text": "Ad Search  Ad Search Adspy Ad Library Advertiser Ad Tracker Influencers Find Similar by Image",
+      "rect": {
+        "x": 324,
+        "y": 0,
+        "w": 135,
+        "h": 60
+      }
+    },
+    {
+      "selector": "[class*=\"dropdown\"]",
+      "tag": "A",
+      "class": "menu-item dropdown-toggle nav-link text-nowrap a-link 333 router-link-exact-active  has-border router-link-active router",
+      "text": "Ad Search",
+      "rect": {
+        "x": 324,
+        "y": 12,
+        "w": 135,
+        "h": 36
+      }
+    },
+    {
+      "selector": "[class*=\"dropdown\"]",
+      "tag": "DIV",
+      "class": "pp-dropdown has-border has-right-line",
+      "text": "AI Tools  AI Tools AI Home Video Transcript Generator Image Translation Image Text Removal Video Text Translator Video Speech Translator Video Text Re",
+      "rect": {
+        "x": 467,
+        "y": 0,
+        "w": 135,
+        "h": 60
+      }
+    },
+    {
+      "selector": "[class*=\"dropdown\"]",
+      "tag": "A",
+      "class": "menu-item dropdown-toggle nav-link text-nowrap a-link 333 has-border",
+      "text": "AI Tools",
+      "rect": {
+        "x": 467,
+        "y": 12,
+        "w": 117,
+        "h": 36
+      }
+    },
+    {
+      "selector": "[class*=\"dropdown\"]",
+      "tag": "DIV",
+      "class": "pp-dropdown user-box",
+      "text": "m  m  mjkmediallc@gmail.com  mjkmediallc@gmail.com  2.0  Basic  Mar 15 2026  Monthly Credits Left: 0/0  Extra Credits Left: 0  1 data cost 1 credit, 1",
+      "rect": {
+        "x": 1845,
+        "y": 0,
+        "w": 34,
+        "h": 60
+      }
+    },
+    {
+      "selector": "[class*=\"dropdown\"]",
+      "tag": "DIV",
+      "class": "dropdown-toggle btn-user",
+      "text": "m",
+      "rect": {
+        "x": 1845,
+        "y": 0,
+        "w": 34,
+        "h": 60
+      }
+    }
+  ],
+  "close_button_candidates": [],
+  "search_input_candidates": [
+    {
+      "placeholder": "Search by any ad keyword, landing page keyword, or type a URL",
+      "name": "",
+      "id": "inputKeyword",
+      "class": "el-input__inner",
+      "selector_strategies": [
+        {
+          "selector": "input[placeholder*=\"Search by any ad keyword, land\"]",
+          "stability": "high",
+          "type": "placeholder"
+        },
+        {
+          "selector": "#inputKeyword",
+          "stability": "high",
+          "type": "id"
+        },
+        {
+          "selector": "input.el-input__inner",
+          "stability": "low",
+          "type": "class"
+        }
+      ]
+    },
+    {
+      "placeholder": "Search content",
+      "name": "",
+      "id": "",
+      "class": "el-input__inner",
+      "selector_strategies": [
+        {
+          "selector": "input[placeholder*=\"Search content\"]",
+          "stability": "high",
+          "type": "placeholder"
+        },
+        {
+          "selector": "input.el-input__inner",
+          "stability": "low",
+          "type": "class"
+        }
+      ]
+    },
+    {
+      "placeholder": "Search content",
+      "name": "",
+      "id": "",
+      "class": "el-input__inner",
+      "selector_strategies": [
+        {
+          "selector": "input[placeholder*=\"Search content\"]",
+          "stability": "high",
+          "type": "placeholder"
+        },
+        {
+          "selector": "input.el-input__inner",
+          "stability": "low",
+          "type": "class"
+        }
+      ]
+    },
+    {
+      "placeholder": "Search content",
+      "name": "",
+      "id": "",
+      "class": "el-input__inner",
+      "selector_strategies": [
+        {
+          "selector": "input[placeholder*=\"Search content\"]",
+          "stability": "high",
+          "type": "placeholder"
+        },
+        {
+          "selector": "input.el-input__inner",
+          "stability": "low",
+          "type": "class"
+        }
+      ]
+    }
+  ],
+  "search_button_candidates": []
+}

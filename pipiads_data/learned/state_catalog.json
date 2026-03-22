@@ -1,0 +1,104 @@
+{
+  "states": {
+    "SEARCH_PAGE": {
+      "name": "SEARCH_PAGE",
+      "url_clues": [
+        "ad-search",
+        "search"
+      ],
+      "identifying_signals": {
+        "search_input_visible": true,
+        "headings": [
+          "Format",
+          "Video Duration(Second)",
+          "Size",
+          "Quality",
+          "Resolution"
+        ],
+        "modals_open": 0
+      },
+      "allowed_actions": [
+        "submit_search",
+        "apply_filter"
+      ],
+      "expected_transitions": {
+        "submit_search": [
+          "LOADING",
+          "RESULTS_PAGE",
+          "EMPTY_RESULTS"
+        ]
+      },
+      "confidence": "high"
+    },
+    "RESULTS_PAGE": {
+      "name": "RESULTS_PAGE",
+      "url_clues": [
+        "ad-search",
+        "search"
+      ],
+      "identifying_signals": {
+        "card_roots_present": true,
+        "card_count": 20,
+        "primary_card_selector": ".item-wrap",
+        "pagination_visible": false
+      },
+      "verification_method": "verify_results_page() — multi-signal",
+      "disambiguation_from_SEARCH_PAGE": "card_roots_present AND repeated >= 3 AND 4+ signals pass",
+      "allowed_actions": [
+        "open_result",
+        "paginate",
+        "submit_search",
+        "api_fetch"
+      ],
+      "expected_transitions": {
+        "open_result": [
+          "DETAIL_MODAL_ONLY"
+        ],
+        "paginate": [
+          "LOADING",
+          "RESULTS_PAGE"
+        ],
+        "submit_search": [
+          "LOADING",
+          "RESULTS_PAGE",
+          "EMPTY_RESULTS"
+        ]
+      },
+      "confidence": "high"
+    },
+    "DETAIL_MODAL": {
+      "name": "DETAIL_MODAL",
+      "detail_type": "modal",
+      "identifying_signals": {
+        "modal_open": true,
+        "url_changed": false
+      },
+      "close_recipes": [
+        {
+          "method": {
+            "selector": "Escape",
+            "stability": "high",
+            "type": "keyboard"
+          },
+          "success_count": 2,
+          "fail_count": 0,
+          "confidence": 1.0,
+          "last_verified_at": "2026-03-14T10:10:03.771413",
+          "notes": "closed modal via keyboard"
+        }
+      ],
+      "allowed_actions": [
+        "extract_detail",
+        "close_detail"
+      ],
+      "expected_transitions": {
+        "close_detail": [
+          "RESULTS_PAGE"
+        ]
+      },
+      "confidence": "medium"
+    }
+  },
+  "version": "4.1",
+  "created_at": "20260314_1009"
+}

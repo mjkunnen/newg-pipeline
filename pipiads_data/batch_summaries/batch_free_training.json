@@ -1,0 +1,18 @@
+{
+  "keyword": "free training",
+  "tier": "T3",
+  "mode": "broad",
+  "pages_visited": 4,
+  "cards_scanned": 26,
+  "cards_captured": 4,
+  "pre_filtered_out": 22,
+  "winners": 0,
+  "possible_winners": 2,
+  "mid": 2,
+  "junk_rate": 0.85,
+  "early_terminated": false,
+  "recommend": "abandon",
+  "reason": "85% junk, 0 winners",
+  "gate_passed": true,
+  "outcome_label": "JUNK_DOMINATED"
+}

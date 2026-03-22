@@ -1,0 +1,151 @@
+{
+  "brand": "NEWGARMENTS",
+  "currency": "EUR",
+  "shipping": "Free worldwide",
+  "restock_policy": "No restocks. When sold out, moves to archive.",
+  "collections": {
+    "691713999225": {
+      "name": "Main Collection",
+      "products": [
+        {
+          "id": "checkered-zipper-gray",
+          "name": "Checkered Inside Out Zipper - Gray",
+          "category": "tops",
+          "subcategory": "hoodies",
+          "shopify_id": 15271111295353,
+          "colorways": [
+            {"name": "Gray", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/4_ccc56236-97bc-457b-bfd8-d8e354edc3cb.png?v=1766218170",
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/3_8e0f973a-2856-4b36-afeb-9cd79ed8c95e.webp?v=1771230227"
+          ]
+        },
+        {
+          "id": "checkered-zipper-black",
+          "name": "Checkered Inside Out Zipper - Black",
+          "category": "tops",
+          "subcategory": "hoodies",
+          "shopify_id": 15271113195897,
+          "colorways": [
+            {"name": "Black", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/6_19932bda-c124-420e-9b59-6419d31dcbc3.png?v=1771230227",
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/5_40d42790-b416-411e-83d3-d8022c29a378.png?v=1765301429"
+          ]
+        },
+        {
+          "id": "checkered-zipper-red",
+          "name": "Checkered Inside Out Zipper - Red",
+          "category": "tops",
+          "subcategory": "hoodies",
+          "shopify_id": 15271113720185,
+          "colorways": [
+            {"name": "Red", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/3_538de051-5bc7-45b9-8bf3-185392b8d99c.png?v=1771230227"
+          ]
+        },
+        {
+          "id": "zip-hoodie-y2k-dark-green",
+          "name": "Zip Hoodie Y2K - Dark Green",
+          "category": "tops",
+          "subcategory": "hoodies",
+          "shopify_id": 15271207600505,
+          "colorways": [
+            {"name": "Dark Green", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/10_99446fbd-db7b-4093-8981-b3360f12641e.png?v=1765308631",
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/9_36290722-5acb-4006-91d5-7fe7d57de6d3.png?v=1765308631"
+          ]
+        },
+        {
+          "id": "zip-hoodie-y2k-black",
+          "name": "Zip Hoodie Y2K - Black",
+          "category": "tops",
+          "subcategory": "hoodies",
+          "shopify_id": 15271207764345,
+          "colorways": [
+            {"name": "Black", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/9_36290722-5acb-4006-91d5-7fe7d57de6d3.png?v=1765308631",
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/10_99446fbd-db7b-4093-8981-b3360f12641e.png?v=1765308631"
+          ]
+        },
+        {
+          "id": "zip-hoodie-y2k-pink",
+          "name": "Zip Hoodie Y2K - Pink",
+          "category": "tops",
+          "subcategory": "hoodies",
+          "shopify_id": 15271207829881,
+          "colorways": [
+            {"name": "Pink", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/13_ef5d7cd1-a2e4-46f7-af14-6303035cc042.png?v=1765308631"
+          ]
+        },
+        {
+          "id": "embroidered-striped-jeans",
+          "name": "Embroidered Striped Baggy Jeans - Black/White",
+          "category": "bottoms",
+          "subcategory": "jeans",
+          "shopify_id": 15283678609785,
+          "colorways": [
+            {"name": "Black/White", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/7_b624fd29-7a4b-4f12-877f-d85ed21952c3.png?v=1765388598",
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/36.png?v=1766502604"
+          ]
+        },
+        {
+          "id": "graphic-lining-jeans",
+          "name": "'Graphic Lining' Baggy Jeans",
+          "category": "bottoms",
+          "subcategory": "jeans",
+          "shopify_id": 15271196787065,
+          "colorways": [
+            {"name": "Default", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/Untitleddesign_98_6efaadd8-c42c-42a4-9182-4735de182451.png?v=1768054930",
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/25_022b30c8-0753-40cc-887c-9f60ad6385f6.png?v=1768054930"
+          ]
+        },
+        {
+          "id": "fur-graphic-sneakers",
+          "name": "Fur Graphic Sneakers",
+          "category": "footwear",
+          "subcategory": "sneakers",
+          "shopify_id": 15357371285881,
+          "colorways": [
+            {"name": "Default", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/sneaker-fourrure-7147771.webp?v=1771060651",
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/sneaker-fourrure-4197251.webp?v=1771060651"
+          ]
+        },
+        {
+          "id": "ocean-stars-sneaker",
+          "name": "Ocean Stars Sneaker",
+          "category": "footwear",
+          "subcategory": "sneakers",
+          "shopify_id": 15278373929337,
+          "colorways": [
+            {"name": "Default", "status": "active"}
+          ],
+          "reference_images": [
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/3_ef25b74a-2f1f-4c14-b8ee-dfa89eed2ef4.jpg?v=1763046283",
+            "https://cdn.shopify.com/s/files/1/0948/8973/8617/files/MG_PRODUCT_LISTING_PHOTOS_52.png?v=1766049921"
+          ]
+        }
+      ]
+    }
+  }
+}

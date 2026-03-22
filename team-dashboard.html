@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWGARMENTS — Team Content Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--bg:#0a0a0a;--s1:#131313;--s2:#1a1a1a;--s3:#222;--bd:#222;--bd2:#2a2a2a;--t:#f0f0f0;--t2:#aaa;--t3:#666;--green:#4ade80;--gbg:rgba(74,222,128,.1);--blue:#818cf8;--bbg:rgba(129,140,248,.1);--orange:#fb923c;--obg:rgba(251,146,60,.1);--pink:#f472b6;--pbg:rgba(244,114,182,.1);--cyan:#22d3ee;--cbg:rgba(34,211,238,.1);--purple:#a78bfa;--purbg:rgba(167,139,250,.1);--yellow:#fbbf24}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);min-height:100vh}
+
+  /* ── ROLE SELECT ── */
+  .role-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px}
+  .role-logo{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:48px;color:var(--t3)}
+  .role-title{font-size:32px;font-weight:800;margin-bottom:8px}
+  .role-sub{font-size:14px;color:var(--t3);margin-bottom:48px}
+  .role-cards{display:flex;gap:20px}
+  .role-card{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:40px 48px;cursor:pointer;transition:all .25s;text-align:center;width:280px}
+  .role-card:hover{background:var(--s2);border-color:#333;transform:translateY(-3px)}
+  .role-card-icon{font-size:48px;margin-bottom:16px}
+  .role-card h2{font-size:20px;font-weight:800;margin-bottom:4px}
+  .role-card .role-name{font-size:14px;color:var(--t2);margin-bottom:16px}
+  .role-card p{font-size:12px;color:var(--t3);line-height:1.6}
+  .role-card-count{margin-top:16px;font-size:11px;font-weight:700;color:var(--green);background:var(--gbg);padding:4px 14px;border-radius:100px;display:inline-block}
+
+  /* ── TOPBAR ── */
+  .topbar{position:fixed;top:0;left:0;right:0;height:56px;background:var(--bg);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:100}
+  .topbar-left{display:flex;align-items:center;gap:12px}
+  .topbar-logo{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+  .topbar-logo span{color:var(--t3);font-weight:400}
+  .topbar-user{font-size:12px;color:var(--t2);background:var(--s1);border:1px solid var(--bd);padding:4px 12px;border-radius:6px}
+  .topbar-progress{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--t3)}
+  .pbar{width:120px;height:3px;background:var(--bd);border-radius:2px;overflow:hidden}
+  .pfill{height:100%;background:var(--green);border-radius:2px;transition:width .4s}
+  .topbar-nav button{padding:6px 16px;border-radius:6px;border:1px solid var(--bd);background:var(--s1);color:var(--t2);font-size:12px;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;transition:all .2s;margin-left:8px}
+  .topbar-nav button:hover{background:var(--s2);color:var(--t)}
+
+  /* ── MAIN ── */
+  .main{margin-top:56px;display:none}
+  .main.active{display:block}
+
+  /* ── OVERVIEW ── */
+  .overview{max-width:800px;margin:0 auto;padding:48px 28px 80px}
+  .overview-header{text-align:center;margin-bottom:48px}
+  .overview-header h1{font-size:26px;font-weight:800;margin-bottom:10px}
+  .overview-header p{font-size:14px;color:var(--t2);line-height:1.7;max-width:560px;margin:0 auto}
+
+  /* ── IDEA CARD ── */
+  .idea-card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:22px 24px;margin-bottom:10px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:18px}
+  .idea-card:hover{background:var(--s2);border-color:#333;transform:translateY(-1px)}
+  .idea-num{font-size:28px;font-weight:800;color:var(--bd2);min-width:44px;text-align:center}
+  .idea-info{flex:1}
+  .idea-info h3{font-size:15px;font-weight:700;margin-bottom:3px}
+  .idea-info>p{font-size:12px;color:var(--t3);line-height:1.5}
+  .idea-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .pill{font-size:10px;font-weight:600;padding:3px 10px;border-radius:100px;background:var(--s2);color:var(--t3);text-transform:uppercase;letter-spacing:.4px}
+  .pill-done{color:var(--green);background:var(--gbg)}
+  .idea-arrow{color:var(--t3);font-size:18px}
+
+  /* ── DETAIL ── */
+  .detail{display:none;max-width:760px;margin:0 auto;padding:40px 28px 100px}
+  .detail.active{display:block}
+  .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--t3);background:none;border:none;font-family:'Inter',sans-serif;cursor:pointer;margin-bottom:24px;padding:6px 0}
+  .back-btn:hover{color:var(--t)}
+  .d-badge{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+  .d-title{font-size:26px;font-weight:800;line-height:1.3;margin-bottom:18px}
+  .goal-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .gt{font-size:11px;font-weight:600;padding:5px 14px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px}
+  .gt-conversion{color:var(--green);background:var(--gbg)}.gt-awareness{color:var(--blue);background:var(--bbg)}.gt-trust{color:var(--orange);background:var(--obg)}.gt-fomo{color:var(--pink);background:var(--pbg)}.gt-engagement{color:var(--cyan);background:var(--cbg)}.gt-brand{color:var(--purple);background:var(--purbg)}
+  .info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+  .ib{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px}
+  .ib-l{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-bottom:5px}
+  .ib-v{font-size:15px;font-weight:700}
+  .hook-box{background:var(--s1);border:1px solid var(--bd);border-left:4px solid var(--green);border-radius:10px;padding:22px 26px;margin-bottom:28px}
+  .hook-box-l{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+  .hook-box-t{font-size:19px;font-weight:700;line-height:1.4}
+  .hook-box-n{font-size:12px;color:var(--t3);margin-top:10px;line-height:1.6}
+  .sec{margin-bottom:28px}
+  .sec-t{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--t2);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bd)}
+  .sec-text{font-size:14px;color:var(--t2);line-height:1.8}
+  .sec-text strong{color:var(--t)}
+  .text-preview{background:#000;border:1px solid var(--bd);border-radius:10px;padding:22px 26px;text-align:center;margin:14px 0}
+  .text-preview p{font-size:17px;font-weight:700;line-height:1.5}
+  .text-preview small{font-size:11px;color:var(--t3);display:block;margin-top:8px}
+
+  /* Step cards */
+  .step-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;margin-bottom:10px;overflow:hidden}
+  .step-hdr{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;transition:background .2s}
+  .step-hdr:hover{background:var(--s2)}
+  .step-n{width:30px;height:30px;border-radius:8px;background:var(--s2);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--t2);flex-shrink:0}
+  .step-sum{flex:1}
+  .step-sum h4{font-size:13px;font-weight:600;margin-bottom:1px}
+  .step-sum p{font-size:11px;color:var(--t3)}
+  .step-dur{font-size:11px;color:var(--t3);white-space:nowrap}
+  .step-tog{color:var(--t3);font-size:14px;transition:transform .2s}
+  .step-body{display:none;padding:0 20px 18px 64px;border-top:1px solid var(--bd)}
+  .step-body.open{display:block;padding-top:16px}
+  .sdr{margin-bottom:12px}
+  .sdr-l{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-bottom:3px}
+  .sdr-v{font-size:13px;color:var(--t2);line-height:1.7}
+  .tip{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:8px;padding:12px 16px;margin-top:10px}
+  .tip-l{font-size:10px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+  .tip-t{font-size:12px;color:var(--t2);line-height:1.6}
+
+  .proof-card{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:14px 18px;margin-bottom:8px}
+  .proof-b{font-size:13px;font-weight:700;margin-bottom:3px}
+  .proof-d{font-size:12px;color:var(--t3);line-height:1.6}
+
+  .eq-list{list-style:none;padding:0}
+  .eq-list li{font-size:13px;color:var(--t2);padding:7px 0;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;gap:10px}
+  .eq-list li:last-child{border-bottom:none}
+  .eq-i{color:var(--green);flex-shrink:0}
+
+  /* Start button */
+  .start-sec{text-align:center;margin:36px 0}
+  .start-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 44px;border-radius:12px;border:none;background:var(--green);color:#000;font-size:14px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+  .start-btn:hover{background:#6ee7a0;transform:translateY(-1px)}
+  .start-sub{font-size:12px;color:var(--t3);margin-top:10px}
+
+  /* Shoot mode */
+  .shoot{display:none;max-width:700px;margin:0 auto;padding:40px 28px 100px}
+  .shoot.active{display:block}
+  .shoot-ind{text-align:center;margin-bottom:10px;font-size:12px;color:var(--t3);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+  .shoot-title{text-align:center;font-size:22px;font-weight:800;margin-bottom:28px}
+  .shoot-dots{display:flex;gap:6px;justify-content:center;margin-bottom:28px}
+  .sdot{width:8px;height:8px;border-radius:50%;background:var(--bd);transition:all .3s}
+  .sdot.active{background:var(--green)}.sdot.done{background:var(--t3)}
+  .s-box{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:28px;margin-bottom:14px}
+  .s-box h3{font-size:13px;font-weight:700;margin-bottom:10px}
+  .s-box p{font-size:14px;color:var(--t2);line-height:1.8}
+  .shoot-nav{display:flex;justify-content:space-between;margin-top:28px;gap:12px}
+  .sn-btn{padding:12px 28px;border-radius:10px;border:1px solid var(--bd);background:var(--s1);color:var(--t2);font-size:13px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:all .2s}
+  .sn-btn:hover{background:var(--s2);color:var(--t)}
+  .sn-btn:disabled{opacity:.3;cursor:default}
+  .sn-btn.pri{background:var(--green);color:#000;border:none}
+  .sn-btn.pri:hover{background:#6ee7a0}
+  .mark-btn{background:none;border:1px solid var(--bd);color:var(--t3);padding:8px 20px;border-radius:8px;font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;transition:all .2s}
+  .mark-btn:hover{border-color:var(--t3);color:var(--t2)}
+
+  .role-cards{flex-wrap:wrap;justify-content:center}
+  @media(max-width:900px){.info-grid{grid-template-columns:repeat(2,1fr)}.role-cards{flex-direction:column}.role-card{width:100%}}
+</style>
+</head>
+<body>
+
+<!-- ROLE SELECT -->
+<div class="role-screen" id="role-screen">
+  <div class="role-logo">NEWGARMENTS</div>
+  <div class="role-title">Content Dashboard</div>
+  <div class="role-sub">Select your role to see your tasks</div>
+  <div class="role-cards">
+    <div class="role-card" onclick="selectRole('faolo')">
+      <div class="role-card-icon">🎬</div>
+      <h2>Faolo</h2>
+      <div class="role-name">Videographer</div>
+      <p>Shoot raw footage and create complete videos. Full step-by-step briefs with camera angles, lighting, and edit instructions.</p>
+      <div class="role-card-count" id="faolo-count"></div>
+    </div>
+    <div class="role-card" onclick="selectRole('jerson')">
+      <div class="role-card-icon">✂️</div>
+      <h2>Jerson</h2>
+      <div class="role-name">Editor</div>
+      <p>Take raw footage and create extra content. Repurpose clips, add trending edits, and maximize every piece of footage.</p>
+      <div class="role-card-count" id="jerson-count"></div>
+    </div>
+    <div class="role-card" onclick="selectRole('max')">
+      <div class="role-card-icon">📸</div>
+      <h2>Max</h2>
+      <div class="role-name">Slideshow Strategist</div>
+      <p>TikTok slideshow concepts based on your data, competitor analysis, and Creative Center research. Slide-by-slide briefs with exact image specs.</p>
+      <div class="role-card-count" id="max-count"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar" id="topbar" style="display:none">
+  <div class="topbar-left">
+    <div class="topbar-logo">NEWGARMENTS <span id="topbar-role"></span></div>
+    <div class="topbar-user" id="topbar-user"></div>
+  </div>
+  <div class="topbar-progress">
+    <span id="prog-text">0 done</span>
+    <div class="pbar"><div class="pfill" id="pfill"></div></div>
+  </div>
+  <div class="topbar-nav">
+    <button onclick="showOverview()">My Tasks</button>
+    <button onclick="switchRole()">Switch Role</button>
+  </div>
+</div>
+
+<div class="main" id="main">
+  <div class="overview" id="overview"></div>
+  <div class="detail" id="detail"></div>
+  <div class="shoot" id="shoot"></div>
+</div>
+
+<script>
+// ─── DATA ────────────────────────────────────
+const FAOLO_IDEAS = [
+  {
+    id:"f1",title:"The Scale Test",potential:95,difficulty:1,tags:["conversion","trust"],platforms:["TikTok","Reels"],duration:"10-15 sec",
+    hook:"Your hoodie weighs this much... ours weighs this much.",
+    hookNote:"Text on screen as you drop each hoodie. No voiceover needed — the numbers speak. The hook IS the weight difference.",
+    textOverlay:"Stop paying premium for paper-thin hoodies.",cta:"Link in bio. No restock.",
+    why:"Undeniable visual proof. The scale can't lie. Directly addresses the #1 pain point: paying premium for thin garbage. When they see 340g vs 880g, the decision makes itself. Cole Buxton proved this gets 100K-500K+ views consistently.",
+    psychology:"73% of Gen Z research brands before buying because they've been burned. The scale gives proof in 10 seconds. It also makes them question every hoodie they own.",
+    proof:[{brand:"Cole Buxton",detail:"Pioneered fabric weight content. GSM comparison videos hit 100K-500K+ views. Turned 'GSM' into a mainstream streetwear term."},{brand:"Fashion creators",detail:"'Weigh my hoodie' format gets 200K-1M views regularly. One Zara vs premium comparison got 2.3M views."}],
+    equipment:["Kitchen/postal scale","1x NEWGARMENTS hoodie","1x thin cheap hoodie (Zara/H&M)","Phone","Clean surface"],
+    steps:[
+      {title:"Set up the scale",action:"Place scale on clean flat surface. Zero it. Plain background — white, wood, or dark.",camera:"Phone overhead pointing straight down. Prop on books or tripod. Scale numbers must be readable.",angle:"Top-down / bird's eye. Tight frame — just scale and hands.",lighting:"Natural sidelight from window. No shadows on display.",duration:"Setup only.",tip:"Turn off scale between takes so it re-zeros. Clean fingerprints off surface."},
+      {title:"Drop the cheap hoodie",action:"Pick up thin hoodie from off-screen. Drop onto scale from ~15cm. Hold on the number for 2 seconds. Hand exits frame.",camera:"Keep rolling overhead. Hand enters from side, drops, exits.",angle:"Same top-down.",lighting:"Same.",duration:"3-4 sec in final edit.",tip:"Let it land flat and limp. The low number is the point."},
+      {title:"Clear and re-zero",action:"Remove cheap hoodie. Wait for zero. This gets cut in edit.",camera:"Can stop recording or cut later.",angle:"Same.",lighting:"Same.",duration:"Not in final.",tip:"Wait for '0.0' to fully settle."},
+      {title:"Drop the NEWGARMENTS hoodie",action:"Drop NEWGARMENTS hoodie from same height. It should THUD. Hold shot on number for 3 full seconds.",camera:"Same overhead. Number must be sharp and readable.",angle:"Same top-down framing.",lighting:"Same.",duration:"4-5 sec. THE MONEY SHOT.",tip:"AUDIO ON. The thud vs soft flop is part of what sells it."},
+      {title:"Optional: wear shot",action:"Quick cut to someone wearing the hoodie. Walking away or confident standing.",camera:"Switch to handheld/tripod at eye level. Portrait 9:16.",angle:"Slightly below eye level — makes person look confident.",lighting:"Natural/golden hour.",duration:"2-3 sec.",tip:"Optional but recommended. Turns a scale video into an aspirational video with proof."},
+      {title:"Edit & post",action:"Cut: cheap drop (3s) → NEWGARMENTS drop (4s) → wear shot (2s). Add text overlay. NO MUSIC — natural sound only.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 10-15 sec.",tip:"Pin comment with product link. Caption: 'Link in bio. No restock.'"}
+    ]
+  },
+  {
+    id:"f2",title:"The Drop Test",potential:88,difficulty:1,tags:["awareness","trust"],platforms:["TikTok","Reels"],duration:"8-12 sec",
+    hook:"180 GSM vs 460 GSM. You can hear the difference.",
+    hookNote:"Silent video. No voiceover. The SOUND of fabric falling is the hook. Thin floats, heavyweight thuds.",
+    textOverlay:"180 GSM vs 460 GSM. You can hear the difference.",cta:"Pin comment with link.",
+    why:"Pure visual contrast. Thin fabric floats like tissue, heavyweight thuds. The sound stops the scroll. People send this to group chats.",
+    psychology:"Only 26% of Gen Z trust brands. But they trust their eyes and ears. Physics can't be faked.",
+    proof:[{brand:"Fabric comparison TikToks",detail:"Simple A/B tests consistently outperform polished product videos."},{brand:"@wisdm",detail:"Built entire audience on 'is this worth it?' tests like this."}],
+    equipment:["1x NEWGARMENTS hoodie","1x thin cheap hoodie","Phone on tripod","Quiet room"],
+    steps:[
+      {title:"Set up",action:"Stand in front of clean background. Camera at waist height, filming in portrait 9:16. Frame: chest to floor.",camera:"Tripod, ~1.5m away, side angle.",angle:"Side angle showing full drop distance.",lighting:"Natural window light.",duration:"Setup.",tip:"Quiet room — audio matters. No music, no talking."},
+      {title:"Drop cheap hoodie",action:"Hold at shoulder height. Let go. It floats down slowly. Hold shot 1 sec after landing.",camera:"Keep rolling.",angle:"Same side.",lighting:"Same.",duration:"3-4 sec.",tip:"Bunch it loosely before dropping for more float effect."},
+      {title:"Drop NEWGARMENTS hoodie",action:"Hold at same height. Drop. Falls FAST, lands with thud. Barely opens up because of weight.",camera:"Same.",angle:"Same.",lighting:"Same.",duration:"3-4 sec.",tip:"Try hard floor instead of carpet for better thud sound."},
+      {title:"Optional: slow motion",action:"Repeat both drops in slo-mo. Makes difference even more dramatic.",camera:"Switch to slo-mo mode.",angle:"Same.",lighting:"Slo-mo needs more light.",duration:"5-6 sec.",tip:"Show real speed first, then slo-mo replay of NEWGARMENTS drop."},
+      {title:"Edit & post",action:"Cut: cheap drop → NEWGARMENTS drop → optional slo-mo. Add text. NO MUSIC. Total: 8-12 sec.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 8-12 sec.",tip:"Caption: '460 GSM. That's it. That's the caption.'"}
+    ]
+  },
+  {
+    id:"f3",title:"Packing ASMR",potential:92,difficulty:1,tags:["trust","brand"],platforms:["TikTok","Reels","Stories"],duration:"30-45 sec",
+    hook:"Every order. Hand packed. Personal note.",
+    hookNote:"No voiceover. No music. PURE ASMR — fabric folding, paper crinkling, pen writing, package sealing. The sounds ARE the content.",
+    textOverlay:"Every order packed by hand with a personal note.",cta:"Pin comment with link.",
+    why:"Packing ASMR goes viral for small brands — 500K to 2M+ views is normal. The handwritten note is the moment people share. Personal touch creates genuine emotional connection.",
+    psychology:"Shows a real person behind the brand. If someone hand-packs and writes a note, the product must be good. Humanizes the brand like nothing else can.",
+    proof:[{brand:"Broken Planet",detail:"Packing content regularly hits 500K+ views."},{brand:"Small brand TikTok",detail:"Packing videos are the #1 recommended format for new brands."},{brand:"Scuffers",detail:"Uses packing content weekly for their 'FF FAM' community."}],
+    equipment:["NEWGARMENTS product","Branded packaging/box","Tissue paper","Thank-you card + nice pen","Stickers/tape","Phone overhead mount","Clean surface"],
+    steps:[
+      {title:"Set up overhead",action:"Phone directly above clean surface pointing down. Frame: workspace, hands, materials laid nearby.",camera:"Overhead / bird's eye. Tripod or books.",angle:"Straight down. Tight frame, no clutter.",lighting:"Bright natural window light. Even, no shadows.",duration:"Setup.",tip:"CRITICAL: Film in SILENT room. No TV, music, people. The sounds of fabric and paper ARE the content."},
+      {title:"Fold the hoodie",action:"Hoodie flat on surface. Fold sleeves in, fold in half, fold again. SLOWLY and deliberately.",camera:"Rolling overhead.",angle:"Top-down.",lighting:"Same.",duration:"8-10 sec.",tip:"Fold SLOWLY. The satisfaction is in the deliberate care. Heavyweight fabric sounds different when folded."},
+      {title:"Wrap in tissue",action:"Tissue paper on surface. Place folded hoodie on top. Wrap neatly. Crinkling sound is ASMR gold.",camera:"Still overhead.",angle:"Top-down.",lighting:"Same.",duration:"8-10 sec.",tip:"Use nice tissue paper. Every fold matters."},
+      {title:"Write the note",action:"Pull card into frame. Write thank-you message slowly. Camera captures pen on paper.",camera:"Overhead, maybe zoom slightly.",angle:"Top-down, tighter on note.",lighting:"Same.",duration:"8-10 sec.",tip:"THIS IS THE VIRAL MOMENT. Pen on paper + personal note = what people share. Use a nice pen. Practice if handwriting is rough."},
+      {title:"Pack everything",action:"Open box. Place tissue-wrapped hoodie inside. Tuck note on top. Add extras (stickers).",camera:"Still overhead.",angle:"Top-down.",lighting:"Same.",duration:"6-8 sec.",tip:"Make it look full and premium."},
+      {title:"Seal it",action:"Close box. Apply branded tape/sticker centered. Place on stack of other orders.",camera:"Overhead for seal. Side angle for stack.",angle:"Top-down then side.",lighting:"Same.",duration:"5-6 sec.",tip:"Stack of orders = subtle demand flex."},
+      {title:"Edit & post",action:"Cut all steps in order. Slow pacing. NO MUSIC, NO VOICEOVER. Pure ASMR. Add text at end. Total: 30-45 sec.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 30-45 sec.",tip:"Boost ASMR sounds slightly in edit if needed. Pin comment with link."}
+    ]
+  },
+  {
+    id:"f4",title:"NPC Fit vs Main Character Fit",potential:90,difficulty:2,tags:["awareness","engagement"],platforms:["TikTok"],duration:"12-18 sec",
+    hook:"NPC fit vs. Main character fit",
+    hookNote:"Text on screen. The video is a visual transformation — before (generic) to after (NEWGARMENTS). Use trending transition sound.",
+    textOverlay:"NPC fit → Main character fit",cta:"Link in bio.",
+    why:"'NPC' is Gen Z's worst fashion insult. This weaponizes their deepest fear (being basic) and positions NEWGARMENTS as the cure.",
+    psychology:"Triggers 'NPC anxiety' — fear of blending in. The before/after makes the purchase feel like a transformation.",
+    proof:[{brand:"TikTok trend",detail:"NPC vs Main Character has billions of views. Proven engagement bait."},{brand:"Streetwear creators",detail:"Fit transformations regularly get 500K-2M views."}],
+    equipment:["1x generic basic outfit","1x full NEWGARMENTS fit","Phone on tripod","Model"],
+    steps:[
+      {title:"Film NPC outfit",action:"Model wears basic thin hoodie, plain joggers, common sneakers. Slouched, low energy, bored. This should look FORGETTABLE.",camera:"Tripod, portrait 9:16. Full body.",angle:"Eye level, straight on.",lighting:"Flat, boring room light on purpose.",duration:"5-6 sec.",tip:"Model should LOOK like an NPC. No expression, no energy."},
+      {title:"Transition",action:"Model walks toward camera or raises hand to lens (creates wipe). Cut point when hand covers frame.",camera:"Same setup.",angle:"Same.",lighting:"Changes next shot.",duration:"1-2 sec.",tip:"Cleanest: hand reaches toward lens, cut when covered, hand pulls away in next shot."},
+      {title:"Film Main Character outfit",action:"Model in full NEWGARMENTS fit. Hand pulls back from lens revealing outfit. Confident posture, shoulders back, slight attitude.",camera:"Same tripod.",angle:"Slightly LOWER than eye level — makes them look powerful.",lighting:"BETTER lighting. Warm lamp, closer to window. The upgrade should be visible.",duration:"6-8 sec.",tip:"Heavyweight fabric should be VISIBLE in how it sits. Energy shift matters as much as outfit."},
+      {title:"Edit & post",action:"Cut: NPC (4s) → transition (0.5s) → Main Character (5s). Add text labels. Use trending sound with beat drop timed to transition. Total: 12-18 sec.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 12-18 sec.",tip:"Search TikTok for trending transition sounds. Time outfit change to the beat drop."}
+    ]
+  },
+  {
+    id:"f5",title:'"Is NEWGARMENTS a Scam?"',potential:93,difficulty:2,tags:["trust","conversion"],platforms:["TikTok"],duration:"45-90 sec",
+    hook:"Everyone asks if we're a scam. Fair. Let me show you everything.",
+    hookNote:"Someone talks directly to camera. Raw, unscripted. This should feel like a friend showing you something, not a brand selling.",
+    textOverlay:"No AliExpress. No Gildan blanks. No BS.",cta:"Judge for yourself. Link in bio.",
+    why:"Naming the objection stops every skeptic. Then overwhelm with proof. Builds more trust in 60 seconds than months of polished content. No scam brand would make this.",
+    psychology:"65% have been burned by IG/TikTok brands. Addressing it first flips the dynamic — you look transparent, competitors look like they're hiding.",
+    proof:[{brand:"Small brand strategy",detail:"Directly addressing 'is this a scam?' drives significantly higher conversion."},{brand:"Broken Planet",detail:"'Why we charge what we charge' went viral for addressing skepticism head-on."}],
+    equipment:["Phone (handheld or tripod)","All NEWGARMENTS products on a table","Branded packaging + notes","Shipping labels/orders if available"],
+    steps:[
+      {title:"Opening — talk to camera",action:"Look into lens: 'Everyone asks if we're a scam. Fair. I get it — every TikTok brand looks sketchy. So let me show you everything.' Say it naturally, don't memorize.",camera:"Selfie-style or tripod at eye level. Portrait 9:16. Head+shoulders.",angle:"Eye level, straight on, into the lens.",lighting:"Natural window light. Face clearly visible.",duration:"8-10 sec.",tip:"Don't script it. Stumbling is BETTER than polished. First take is usually best."},
+      {title:"Show the products",action:"Cut to table with all products. Pick up each piece. Show weight, flip to show inside, point out stitching. 'This is 460 GSM — feel this weight.'",camera:"Show products. Handheld or tripod at table.",angle:"Slightly overhead or eye-level with table.",lighting:"Same natural.",duration:"15-20 sec.",tip:"Don't rush. Pick up each piece like it matters. Let fabric drape to show weight."},
+      {title:"Show inside construction",action:"Flip hoodie inside out. Show stitching, seams, fleece. 'Double stitched. No Gildan blanks. No cheap shortcuts.'",camera:"Close-up on hands and product.",angle:"Tight — fill frame with inside-out fabric.",lighting:"Bright enough to see stitching.",duration:"8-10 sec.",tip:"Point at specific details. Finger pointing makes them impossible to miss."},
+      {title:"Show packaging",action:"Show branded box, tissue paper, handwritten note. 'Every order packed by hand with a note we actually write ourselves.'",camera:"Show materials and finished package.",angle:"Overhead or side.",lighting:"Same.",duration:"8-10 sec.",tip:"Close-up on the note. This separates you from faceless brands."},
+      {title:"Show orders/shipping",action:"Show shipping labels printing or stack of packages. 'Real orders going out today.' Skip if you don't have orders.",camera:"Quick shot of operations.",angle:"Any angle showing real work.",lighting:"Same.",duration:"5-6 sec.",tip:"Even 2-3 packages stacked looks like real demand. Don't fake it."},
+      {title:"Closing",action:"Back to camera. 'We're not hiding anything. This is what we do. Judge for yourself.' Look into lens. Hold a beat. End.",camera:"Same as opening.",angle:"Eye level.",lighting:"Same.",duration:"5-6 sec.",tip:"End with confidence, not desperation. 'Judge for yourself' not 'please buy.'"},
+      {title:"Edit & post",action:"Cut all steps in order. Fast-ish pace but each shot breathes. Text: 'No AliExpress. No Gildan blanks. No BS.' Natural audio, no music. Total: 45-90 sec.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 45-90 sec.",tip:"This is your most important trust video. Film and post FIRST."}
+    ]
+  },
+  {
+    id:"f6",title:"Fabric Pinch Close-Up",potential:82,difficulty:1,tags:["awareness","trust"],platforms:["TikTok","Reels"],duration:"8-12 sec",
+    hook:"Can your hoodie do this?",hookNote:"Macro close-up. No voiceover needed. Just the visual of thick vs thin fabric between fingers.",
+    textOverlay:"Can your hoodie do this?",cta:"Pin comment with link.",
+    why:"Macro fabric shots are mesmerizing. The thickness between two fingers is an instant quality indicator anyone understands. Quick, punchy, easy to film.",
+    psychology:"Visual proof without words. Thick dense fabric vs thin collapsing fabric — the argument is made silently. Targets quality-conscious pride.",
+    proof:[{brand:"Cole Buxton",detail:"Fabric close-ups are core to their strategy."},{brand:"Streetwear TikTok",detail:"Fabric texture content has become its own subgenre."}],
+    equipment:["NEWGARMENTS hoodie","Thin cheap hoodie","Phone (use zoom or clip-on macro lens)"],
+    steps:[
+      {title:"Film NEWGARMENTS pinch",action:"Zoom phone camera in on the fabric. Pinch between two fingers and pull gently. Show the THICKNESS and density. Hold for 3 seconds.",camera:"Extreme close-up. Use phone zoom or macro lens.",angle:"Straight on to the fabric between fingers.",lighting:"Bright natural light so texture is visible.",duration:"4-5 sec.",tip:"Slow, deliberate pinch. Let viewers see the density."},
+      {title:"Film cheap hoodie pinch",action:"Same shot with the thin hoodie. It should collapse between fingers — barely any substance.",camera:"Same framing.",angle:"Same.",lighting:"Same.",duration:"3-4 sec.",tip:"The contrast sells itself."},
+      {title:"Edit & post",action:"Cut: NEWGARMENTS pinch → cheap pinch (or vice versa). Add text 'Can your hoodie do this?' NO MUSIC. Total: 8-12 sec.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 8-12 sec.",tip:"Simple and effective. Film 3 takes and pick the best."}
+    ]
+  },
+  {
+    id:"f7",title:"The Inside-Out Flip",potential:85,difficulty:1,tags:["trust","awareness"],platforms:["TikTok","Reels"],duration:"10-15 sec",
+    hook:"If a brand won't show you the inside, there's a reason.",hookNote:"Text on screen. One smooth motion flipping the hoodie inside out. Let the construction speak.",
+    textOverlay:"If a brand won't show you the inside, there's a reason.",cta:"We show everything. Link in bio.",
+    why:"Flipping inside out is the universal quality check. Doing it confidently shows you have nothing to hide. The hook implies competitors ARE hiding something.",
+    psychology:"Positions you as transparent when others aren't. Gen Z's default is distrust — show what most brands avoid showing.",
+    proof:[{brand:"r/streetwear",detail:"'Flip it inside out' is standard quality advice."},{brand:"Cole Buxton",detail:"Regularly features inside-out shots as trust signals."}],
+    equipment:["NEWGARMENTS hoodie","Phone","Clean surface"],
+    steps:[
+      {title:"Lay hoodie flat",action:"Place hoodie neatly on clean surface.",camera:"Overhead or eye-level.",angle:"Top-down or 45 degrees.",lighting:"Natural light.",duration:"Setup.",tip:"Smooth out wrinkles first."},
+      {title:"The flip",action:"Grab bottom hem. Flip ENTIRE thing inside out toward camera in ONE smooth motion. Practice this 2-3 times.",camera:"Rolling. Keep it one continuous shot.",angle:"Same.",lighting:"Same.",duration:"3-4 sec.",tip:"The smoother the flip, the more satisfying. One take, one motion."},
+      {title:"Show the inside",action:"Camera lingers on the inside: fleece quality, seam finishing, stitching. Run fingers along the seams.",camera:"Move closer for detail.",angle:"Tighter frame on construction details.",lighting:"Bright enough to see stitching.",duration:"5-6 sec.",tip:"Point at specific details — reinforced seams, double stitching."},
+      {title:"Edit & post",action:"Keep as one continuous clip if possible. Add text overlay. Total: 10-15 sec.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 10-15 sec.",tip:"One smooth video > choppy edits for this format."}
+    ]
+  },
+  {
+    id:"f8",title:"50 Pieces. Then It's Archive.",potential:87,difficulty:1,tags:["fomo","conversion"],platforms:["TikTok","Reels","Stories"],duration:"15-25 sec",
+    hook:"We made 50 of these. When they're gone, they're archive. No restock.",hookNote:"Calm voiceover or text only. No hype language. Just a factual statement of real scarcity.",
+    textOverlay:"50 pieces. Then it's gone forever.",cta:"Dropping [date]. Set your alarm.",
+    why:"Real scarcity stated factually. No fake countdowns. Just: this is how many we made, and they're never coming back. Tangible because you can see and count the pile.",
+    psychology:"FOMO is the #1 emotional driver but fake scarcity destroys trust. Real scarcity stated calmly is 10x more powerful.",
+    proof:[{brand:"Corteiz",detail:"Items sell out in hours. 'Sold Out' badges stay visible. Built one of Europe's most desired brands."},{brand:"Trapstar",detail:"'Archive Drop' shows past sold-out items. Creates intense FOMO for current drops."}],
+    equipment:["All pieces from the drop laid out","Clean surface/table","Phone"],
+    steps:[
+      {title:"Lay out all pieces",action:"Arrange all pieces neatly on a large surface. The quantity should be visible — you can COUNT them.",camera:"Overhead or wide angle showing everything.",angle:"Bird's eye or slightly elevated.",lighting:"Natural, even.",duration:"5-6 sec.",tip:"Neatly arranged pieces look premium. Messy pile looks like clearance."},
+      {title:"Pick up one piece",action:"Hands reach in, pick up one piece, hold to camera. Show a detail — the fabric, the label.",camera:"Transition from overhead to closer shot.",angle:"Tighter on the single piece.",lighting:"Same.",duration:"4-5 sec.",tip:"Handle it with care — like it's valuable. Because it is."},
+      {title:"Show pile shrinking",action:"Remove a few pieces (simulating orders). Show the pile getting smaller. The visual of decreasing stock triggers FOMO.",camera:"Back to overhead.",angle:"Same as step 1.",lighting:"Same.",duration:"4-5 sec.",tip:"Don't remove them all — end with 'some left' to drive action."},
+      {title:"Edit & post",action:"Cut: full pile → single piece detail → shrinking pile. Text: '50 pieces. Then it's gone forever.' Calm, factual. Total: 15-25 sec.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 15-25 sec.",tip:"Post 3-5 days before the drop. Not too early (they forget), not too late (no buildup)."}
+    ]
+  },
+  {
+    id:"f9",title:"Mirror Fit Check",potential:79,difficulty:1,tags:["awareness","engagement"],platforms:["TikTok","Reels"],duration:"10-15 sec",
+    hook:"New piece. 460 GSM. Boxy fit. Thoughts?",hookNote:"The most native streetwear format. You wearing it, phone in hand. Specs as text. Asking 'thoughts?' invites engagement.",
+    textOverlay:"[Piece name] / 460 GSM / Boxy fit / €[price]",cta:"Link in bio.",
+    why:"Fit checks are the backbone of streetwear TikTok. If the founder wears the brand, it's instant credibility.",
+    psychology:"Fit checks are how Gen Z validates. Posting yours shows confidence in your product and gives real-body reference.",
+    proof:[{brand:"TikTok #fitcheck",detail:"Billions of views. The format never feels like marketing."}],
+    equipment:["NEWGARMENTS outfit","Mirror","Phone"],
+    steps:[
+      {title:"Get dressed & position",action:"Wear the full fit. Stand in front of a clean mirror. Phone in one hand.",camera:"Selfie via mirror. Portrait 9:16.",angle:"Eye level in mirror.",lighting:"Good natural light. Avoid flash.",duration:"Setup.",tip:"Clean the mirror. Background should be tidy."},
+      {title:"Show the fit",action:"Show front. Turn to side. Turn to show back. Natural movements, not stiff.",camera:"Keep recording, one continuous take.",angle:"Mirror selfie angle.",lighting:"Same.",duration:"8-10 sec.",tip:"Be confident. The energy sells as much as the fabric."},
+      {title:"Edit & post",action:"Trim to best 10-15 sec. Add specs as text overlay. Post with 'Thoughts?' to invite comments.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 10-15 sec.",tip:"This takes 2 minutes total. Post these regularly — they're free engagement."}
+    ]
+  },
+  {
+    id:"f10",title:"What €45 Gets You (Us vs Them)",potential:91,difficulty:2,tags:["conversion","trust"],platforms:["TikTok","Reels"],duration:"20-30 sec",
+    hook:"What €45 gets you from a TikTok brand vs from us.",hookNote:"Side by side comparison. Show the sad reality of a cheap brand package, then the NEWGARMENTS experience. The contrast does the selling.",
+    textOverlay:"Same price. Not the same hoodie.",cta:"Link in bio.",
+    why:"Price comparison is the most engaging TikTok format. Reframes 'is this expensive?' to 'this is a steal.' Visual contrast between plastic mailer and branded packaging is undeniable.",
+    psychology:"Gen Z has limited budgets. Showing what their money actually buys vs the alternative makes both the rational and emotional case.",
+    proof:[{brand:"TikTok comparison format",detail:"'What $X gets you' consistently ranks among the highest-performing formats across all niches."},{brand:"Small DTC brands",detail:"Brands showing quality vs competitors at same price see 2-3x higher click-through."}],
+    equipment:["NEWGARMENTS hoodie in full packaging","Thin cheap hoodie in plastic mailer","Kitchen scale (optional)","Phone"],
+    steps:[
+      {title:"Show the cheap experience",action:"Pull a thin hoodie from a cheap plastic mailer bag. Show how light it is. Feel the fabric — thin. Check stitching — basic, single stitch.",camera:"Overhead or eye-level tabletop shot.",angle:"Top-down or 45 degrees.",lighting:"Natural light.",duration:"8-10 sec.",tip:"Make it look as unimpressive as it really is. The plastic bag, the thin fabric — don't try to make it look worse than it is. Reality is enough."},
+      {title:"Show the NEWGARMENTS experience",action:"Pull NEWGARMENTS hoodie from branded packaging. Tissue paper, handwritten note visible. Show the weight, the thickness, the double stitching.",camera:"Same framing for direct comparison.",angle:"Same.",lighting:"Same.",duration:"10-12 sec.",tip:"The contrast should be night and day. Same price point, completely different experience."},
+      {title:"Optional: scale comparison",action:"Both hoodies on the scale back to back for the final proof.",camera:"Overhead on scale.",angle:"Top-down.",lighting:"Same.",duration:"6-8 sec.",tip:"This is the knockout punch after the visual comparison."},
+      {title:"Edit & post",action:"Cut: cheap experience → NEWGARMENTS experience → optional scale. Text: 'Same price. Not the same hoodie.' Total: 20-30 sec.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Final: 20-30 sec.",tip:"This video pre-handles the price objection. Post before drops."}
+    ]
+  }
+];
+
+const JERSON_IDEAS = [
+  {
+    id:"j1",title:"Beat-Sync Product Reveal",potential:90,difficulty:2,tags:["awareness","engagement"],platforms:["TikTok","Reels"],duration:"12-18 sec",
+    hook:"[Trending sound with beat drop] + product reveal timed to the beat",hookNote:"No voiceover. Find a trending sound with a clear beat drop. Every cut and reveal hits ON the beat. The rhythm makes it addictive to watch.",
+    textOverlay:"Dropping [date]. No restock.",cta:"Link in bio.",
+    why:"Beat-synced content is one of the highest-performing formats on TikTok. The rhythm keeps people watching and the timing of reveals creates dopamine hits. When product shots hit exactly on the beat, it feels premium and satisfying.",
+    psychology:"Music-synced content triggers the brain's pattern recognition. When visual cuts align with audio beats, it feels 'right' and people watch to the end. TikTok's algorithm rewards watch-through rate — and beat-sync keeps people hooked.",
+    proof:[{brand:"Fashion TikTok",detail:"Beat-synced product reveals consistently outperform static content by 3-5x in engagement."},{brand:"Streetwear creators",detail:"Flat lay outfit builds synced to beats get 100K-500K views regularly."}],
+    equipment:["Raw footage from Faolo: flat lays, detail shots, product close-ups","CapCut or Premiere Pro","Trending TikTok sound"],
+    steps:[
+      {title:"Select the sound",action:"Go to TikTok → search trending sounds in streetwear/fashion content. Pick one with a CLEAR beat drop or rhythmic pattern. Save it. The sound choice is 50% of why this works.",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"5 min to find sound.",tip:"Look at sounds used by Corteiz, Cole Buxton, or Represent fan accounts. Use sounds with 10K-500K videos — popular enough to ride the wave but not oversaturated."},
+      {title:"Map the beats",action:"Import sound into CapCut/Premiere. Listen and mark every major beat or hit. These are your CUT POINTS. Every visual change should land exactly on a beat.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"In CapCut, use the 'Auto beat sync' feature as a starting point, then adjust manually."},
+      {title:"Select and order footage",action:"From Faolo's raw footage, pull: 1) Full product flat lay (wide), 2) Fabric close-up, 3) Stitching detail, 4) Label shot, 5) Fit/lifestyle shot. Order from wide → tight → detail → lifestyle.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"Each clip should be 1-3 seconds max. Short cuts = energy. Long holds = boring. Match energy to the sound."},
+      {title:"Cut to the beat",action:"Place each clip so the CUT happens exactly on the beat. Every transition = on a beat. The first beat = first image. Beat drop = best/hero shot.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"15 min.",tip:"The FIRST frame matters most. Start with the most visually striking shot — close-up texture, color pop, or the hoodie dropping heavy."},
+      {title:"Add text and export",action:"Add minimal text: product name, '460 GSM', price, and 'No restock.' White clean font. Export in 9:16 at highest quality.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Less text = better for beat-sync videos. Let the visuals and rhythm do the work. Text should be small and clean — not competing with the imagery."}
+    ]
+  },
+  {
+    id:"j2",title:"Quick Cuts Montage (B-Roll Edit)",potential:88,difficulty:1,tags:["awareness","brand"],platforms:["TikTok","Reels"],duration:"8-15 sec",
+    hook:"No hook text needed — the rapid visual energy IS the hook. First frame must be visually striking.",
+    hookNote:"Pure visual montage. No talking, no text (except maybe brand name at end). Fast cuts of the best B-roll clips. Every cut is under 1 second. The speed and quality of footage stops the scroll.",
+    textOverlay:"NEWGARMENTS",cta:"Link in bio.",
+    why:"Short, fast-cut montages are the most shareable brand content on TikTok. They feel like a movie trailer for your brand. Takes 15 minutes to edit from existing footage and can generate massive reach.",
+    psychology:"Rapid cuts create a sense of energy and premium quality. The brain tries to process each image, which forces attention. If every frame looks good, the overall impression is 'this brand is fire.'",
+    proof:[{brand:"Aimé Leon Dore",detail:"Editorial montages are their signature format. Minimal text, pure visual storytelling."},{brand:"Corteiz",detail:"Quick-cut event footage creates hype without explaining anything."}],
+    equipment:["All raw B-roll from Faolo's shoots","CapCut or Premiere Pro","A trending or lo-fi instrumental"],
+    steps:[
+      {title:"Pull the best frames",action:"Go through ALL of Faolo's raw footage. Screenshot or mark every visually strong moment: fabric close-ups, hoodie being tossed, fabric draping, hands touching fabric, packing shots, lifestyle moments. You need 8-15 of these.",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"15 min.",tip:"Look for variety: mix wide shots, close-ups, textures, movement, and human moments. No two consecutive clips should be the same type."},
+      {title:"Select a sound",action:"Pick a trending lo-fi beat, drill instrumental, or atmospheric track. The vibe should match NEWGARMENTS: premium, confident, not hype-y.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Avoid overused mainstream songs. Underground or lo-fi instrumentals feel more 'streetwear.'"},
+      {title:"Rapid cut edit",action:"Cut every clip to 0.5-1 second. Place them in order: start strong, build energy, peak in the middle, end on the hero shot (best product image or lifestyle shot). Every cut should be ON or near a beat.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"15 min.",tip:"The first 0.5 seconds must be your most visually striking clip. If someone doesn't stop scrolling in the first frame, nothing else matters."},
+      {title:"Color and export",action:"Apply a consistent color grade across all clips so they feel cohesive. Slightly desaturated with lifted blacks = premium streetwear look. Add 'NEWGARMENTS' text at the very end. Export 9:16.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"Don't over-grade. Subtle consistency > dramatic filters. The footage should look real but polished."}
+    ]
+  },
+  {
+    id:"j3",title:"Side-by-Side Split Screen",potential:87,difficulty:1,tags:["conversion","trust"],platforms:["TikTok","Reels"],duration:"10-15 sec",
+    hook:"Left: what €45 gets you elsewhere. Right: what €45 gets you from us.",
+    hookNote:"Split screen with two clips playing simultaneously. Left = cheap/disappointing. Right = NEWGARMENTS premium. The comparison is instant and undeniable.",
+    textOverlay:"Same price. Different world.",cta:"Link in bio.",
+    why:"Split-screen comparisons are one of TikTok's highest-engagement formats because they let viewers judge for themselves. No brand needs to SAY they're better — the side-by-side shows it.",
+    psychology:"The brain automatically compares when presented with two options side by side. It's impossible NOT to judge. And when one side is clearly superior, the decision feels obvious — not sold.",
+    proof:[{brand:"Quality comparison TikToks",detail:"Split-screen quality tests regularly go viral because they remove all doubt."},{brand:"'Cheap vs Expensive' format",detail:"One of the most replayed content categories on TikTok."}],
+    equipment:["Faolo's footage of NEWGARMENTS product","Footage or clips of cheap/generic product (film with phone if needed)","CapCut or Premiere Pro"],
+    steps:[
+      {title:"Prepare two sets of clips",action:"LEFT side (cheap): pulling thin hoodie from plastic bag, holding it up (looks light/limp), inside-out showing basic stitching, on body looking shapeless. RIGHT side (NEWGARMENTS): pulling from branded packaging, holding up (looks heavy/structured), inside-out showing double stitching, on body looking premium.",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"10 min to select clips.",tip:"Film the 'cheap' side yourself if Faolo didn't — literally just hold up an H&M hoodie with your phone. Doesn't need to be polished."},
+      {title:"Create split screen",action:"In CapCut: use split screen template or manually position two clips side by side. Both should play simultaneously. LEFT and RIGHT labels at top.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"Keep both sides doing the SAME action at the SAME time. Unboxing at same moment. Hold-up at same moment. Inside-out at same moment. Synchronized comparison is key."},
+      {title:"Sync the actions",action:"Trim and align so both sides show the same step at the same time: unbox together, hold up together, flip inside out together. The synchronization is what makes it satisfying.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"If timing is slightly off, it looks amateur. Spend the time to sync it perfectly."},
+      {title:"Add text and export",action:"Add labels: 'Other brands €45' on left, 'NEWGARMENTS €45' on right. Final text: 'Same price. Different world.' Clean font, 9:16 export.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Don't name specific competitor brands — just 'other brands' or 'fast fashion.' You don't want drama, you want contrast."}
+    ]
+  },
+  {
+    id:"j4",title:"Text-Heavy Educational Edit",potential:86,difficulty:2,tags:["trust","awareness","engagement"],platforms:["TikTok","Reels"],duration:"20-35 sec",
+    hook:"Stop buying streetwear until you watch this.",
+    hookNote:"Bold text appearing on screen while B-roll plays underneath. Each line of text = a new fact or quality check. The text carries the message while Faolo's footage provides the proof.",
+    textOverlay:"Multiple text screens (see steps for exact text)",cta:"Save this. Link in bio.",
+    why:"Educational content gets the highest SAVE rate on TikTok and Instagram. Saves = algorithmic boost = more reach. When you teach someone how to spot quality, they save it for future reference AND they associate your brand with expertise.",
+    psychology:"Gen Z values brands that educate, not just sell. Teaching quality checks positions NEWGARMENTS as the authority. Once they learn these checks, every other hoodie fails — which drives them back to you.",
+    proof:[{brand:"Cole Buxton",detail:"Education-first content turned them from unknown to one of the most discussed premium streetwear brands."},{brand:"'Red flags' format",detail:"Educational red flag content gets highest save rates across TikTok fashion."}],
+    equipment:["Faolo's B-roll: fabric close-ups, stitching, scale test, inside-out, wear shots","CapCut or Premiere Pro"],
+    steps:[
+      {title:"Write the text sequence",action:"Plan 5-7 text screens that tell a story. Example sequence:\n1. 'Stop buying streetwear until you watch this'\n2. 'Check 1: Flip it inside out' [show B-roll of inside]\n3. 'If the stitching is single thread, it's cheap' [show bad stitching]\n4. 'Check 2: Feel the weight' [show scale test]\n5. 'Under 300 GSM = fast fashion fabric' [show number]\n6. 'Check 3: Squeeze and release' [show crumple test]\n7. 'Now you know. NEWGARMENTS passes every test.'",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"10 min to plan.",tip:"Each text screen should be readable in 2-3 seconds. Test by reading it aloud — if you can't read it in 3 seconds, it's too long."},
+      {title:"Match B-roll to each text",action:"For each text screen, place the matching footage underneath. 'Flip it inside out' → show Faolo's inside-out flip footage. 'Feel the weight' → show scale test footage. The B-roll PROVES what the text claims.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"15 min.",tip:"The text-to-visual match must be EXACT. Don't show random B-roll — show the proof that matches the claim."},
+      {title:"Style the text",action:"Use bold, clean sans-serif font. White text with slight shadow or dark background bar for readability. Each new text should animate in (fade, slide, or pop). Consistent style throughout.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"CapCut has great text animation presets. Use 'slide up' or 'fade in' — nothing too flashy."},
+      {title:"Add sound and export",action:"Use a subtle, atmospheric sound or low beat. NOT a loud trending sound — the text needs to be the focus. Export 9:16.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Caption: 'Save this before you buy anything.' The 'save this' CTA directly asks for the action that boosts algorithm reach."}
+    ]
+  },
+  {
+    id:"j5",title:"Slow-Mo Detail Reel",potential:81,difficulty:1,tags:["brand","awareness"],platforms:["TikTok","Reels"],duration:"10-15 sec",
+    hook:"No text hook — pure cinematic slow motion of fabric, stitching, and drape. A moody atmospheric sound plays.",
+    hookNote:"This is aspirational brand content. No selling, no specs, no CTA in the video itself. Just beautiful slow-motion footage that makes people FEEL something about the brand. Pin the link in comments.",
+    textOverlay:"NEWGARMENTS (small, at the end)",cta:"Pin comment with link.",
+    why:"Slow-mo detail reels create premium brand perception. They make a hoodie feel like a luxury item. This is the content that makes someone follow your page — it's not converting today, it's building desire for later.",
+    psychology:"Slow motion signals importance and quality. When you slow something down, the brain treats it as worth paying attention to. Fabric texture in slow-mo looks and feels expensive.",
+    proof:[{brand:"Aimé Leon Dore",detail:"Their editorial content barely shows product — sells a world/aesthetic. People follow for the feeling."},{brand:"Luxury brand social",detail:"Slow-mo detail shots are a staple of premium brand social content because they communicate quality without words."}],
+    equipment:["Faolo's slow-motion footage or any raw footage (you'll add slow-mo in edit)","CapCut or Premiere Pro","Atmospheric/ambient sound"],
+    steps:[
+      {title:"Select best detail footage",action:"Pull 4-6 clips from Faolo's footage that show: fabric texture, hand running across fabric, hoodie being tossed (catching the drape), stitching close-up, someone putting it on, walk-away lifestyle shot.",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"Choose clips with natural MOVEMENT — fabric moving, hands touching, body turning. Slow-mo only works with motion."},
+      {title:"Apply slow motion",action:"Slow each clip to 40-60% speed in CapCut/Premiere. If Faolo filmed in 60fps or 120fps, you can slow down further without losing quality. If filmed in 30fps, don't go below 50% or it'll look choppy.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"CapCut's 'Smooth slow motion' feature uses AI to interpolate frames — use it for clips that weren't shot in high FPS."},
+      {title:"Color grade",action:"Apply a consistent grade: slightly warm, lifted shadows, subtle grain. Think: cinematic streetwear lookbook. All clips should look like they belong together.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"Don't go too dark or too saturated. The fabric texture needs to be visible. Subtle warmth looks premium."},
+      {title:"Add sound and export",action:"Use an ambient, atmospheric sound — piano, lo-fi ambient, or cinematic pad. Keep it quiet and moody. Add small 'NEWGARMENTS' text at the very end. Export 9:16.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"This video won't get the most likes — but it'll get follows. It's brand-building content that makes your page look premium."}
+    ]
+  },
+  {
+    id:"j6",title:"Carousel Spec Slides (from stills)",potential:84,difficulty:1,tags:["conversion","trust"],platforms:["IG Carousel"],duration:"6-8 slides",
+    hook:"Everything you need to know in 6 slides.",hookNote:"Take the best still frames from Faolo's footage and create an Instagram carousel. Each slide = one detail + one spec. Carousels get 2-3x more saves than single posts.",
+    textOverlay:"One spec per slide (see steps)",cta:"Link in bio. Limited pieces.",
+    why:"Carousels get the highest save rate on Instagram. Each save tells the algorithm to push it further. This format turns Faolo's footage into the best possible Instagram product post.",
+    psychology:"Information in digestible pieces feels premium. By the last slide (price), they've already been sold through 5 slides of quality proof.",
+    proof:[{brand:"Instagram algorithm",detail:"Carousels outperform single images in saves and shares. Swipe increases dwell time."},{brand:"DTC brands",detail:"Product carousel breakdowns are the highest-converting organic format on Instagram."}],
+    equipment:["Screenshots/stills from Faolo's footage","Canva, Figma, or Photoshop","NEWGARMENTS brand fonts/colors"],
+    steps:[
+      {title:"Extract the best frames",action:"From Faolo's video footage, screenshot or export 6-8 of the best frames: full product shot, fabric close-up, stitching detail, cuff/ribbing, label, lifestyle/on-body shot.",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"Export frames at highest resolution. Blurry carousel slides look amateur."},
+      {title:"Design slide 1 — hero",action:"Full product image. Clean, centered. Product name in bold. This slide needs to make people SWIPE — it's your thumbnail.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Keep design minimal. White or dark background, product centered, name in a clean font."},
+      {title:"Design slides 2-5 — specs",action:"Each slide = one close-up image + one spec:\nSlide 2: Fabric → '460 GSM French Terry'\nSlide 3: Stitching → 'Double Stitched Seams'\nSlide 4: Cuff → 'Reinforced Ribbing'\nSlide 5: Label → 'Designed in the Netherlands'",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"15 min.",tip:"Consistent design across all slides. Same font, same text placement, same style. This is what makes it look professional."},
+      {title:"Design final slide — CTA",action:"Lifestyle/styled shot. Price prominently displayed. 'No restock.' and 'Link in bio.'",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"The final slide is where the conversion happens. Price + scarcity + CTA."},
+      {title:"Export and post",action:"Export all slides as high-res images (1080x1350px — Instagram's optimal carousel size). Post as carousel with a simple caption including key specs.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Caption: '460 GSM. Double stitched. Boxy fit. Designed in NL. Link in bio. No restock.' — Short, spec-driven, done."}
+    ]
+  },
+  {
+    id:"j7",title:"3-Second Hook Variations",potential:89,difficulty:2,tags:["conversion","awareness"],platforms:["TikTok","Reels"],duration:"10-15 sec each",
+    hook:"Multiple hooks — create 5 different versions of the same video with different first 3 seconds.",
+    hookNote:"Take ONE strong piece of footage from Faolo and create 5 DIFFERENT videos by changing only the hook (first 3 seconds). Same body, same product, different entry point. This is how you find what works without filming more.",
+    textOverlay:"Different per version (see steps)",cta:"Link in bio.",
+    why:"The hook determines 90% of a video's performance. By testing 5 different hooks on the same footage, you find what actually resonates — without filming anything new. This is the highest-ROI editing task you can do.",
+    psychology:"Different hooks activate different emotional triggers. One person stops for curiosity ('What is this?'), another for fear ('You're wasting money'), another for identity ('This isn't for everyone'). Testing hooks = reaching different segments.",
+    proof:[{brand:"Every viral brand",detail:"Successful TikTok brands test multiple hooks per video. The same footage can get 5K views with one hook and 500K with another."},{brand:"DTC marketing",detail:"Hook testing is the #1 optimization lever for TikTok content. Brands that test hooks see 3-10x performance improvement."}],
+    equipment:["Faolo's best footage for one product","CapCut or Premiere Pro","5 different text hooks"],
+    steps:[
+      {title:"Choose the core footage",action:"Pick Faolo's strongest footage for one product — the best shots, details, lifestyle. This will be the BODY of all 5 videos (stays the same).",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Choose footage that's versatile — works whether the hook is about quality, scarcity, price, or identity."},
+      {title:"Write 5 different hooks",action:"Create 5 different opening text/visuals, each targeting a different trigger:\n\n1. CURIOSITY: 'This hoodie weighs almost a kilo'\n2. PAIN: 'Tired of hoodies that feel like tissue paper?'\n3. FOMO: '50 made. 0 restocks.'\n4. IDENTITY: 'This isn't for everyone. That's the point.'\n5. VALUE: 'What €45 actually gets you'",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"Each hook targets a DIFFERENT emotion. That's the point — you're testing which emotion your audience responds to most."},
+      {title:"Create 5 versions",action:"For each video: different first 3 seconds (different text, maybe different opening clip), then the SAME body footage. Each version should feel complete on its own.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"20 min.",tip:"The first FRAME matters. For the curiosity hook, start with a close-up. For FOMO, start with text on black. For value, start with a split-screen."},
+      {title:"Post and track",action:"Post all 5 over 5 days (one per day). Track which hook gets the most views, watch time, and engagement. The winner = your audience's strongest emotional trigger. Use that trigger for future content.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"Ongoing.",tip:"Don't post all 5 on the same day — the algorithm might suppress them. Space them out. The data from this test is worth more than any single video."}
+    ]
+  },
+  {
+    id:"j8",title:"Story Series Cut (from long video)",potential:82,difficulty:1,tags:["awareness","engagement"],platforms:["IG Stories"],duration:"4-6 stories (5-8 sec each)",
+    hook:"'Part 1 of 4' — story series creates urgency to keep tapping through.",
+    hookNote:"Take one of Faolo's longer videos (like the 'Is This a Scam?' or packing video) and cut it into 4-6 Instagram Story segments. Each story ends on a mini-cliffhanger that makes them tap to the next one.",
+    textOverlay:"Part 1/4, 2/4, etc.",cta:"Swipe up / Link in last story.",
+    why:"Story series get higher completion rates than single long stories. The 'part X of Y' format creates a commitment — once they start, they want to finish. It also multiplies your content: one video becomes 4-6 stories.",
+    psychology:"The Zeigarnik effect: people remember incomplete tasks more than complete ones. Ending each story segment mid-action creates an urge to see the next part. This is why Netflix cliffhangers work.",
+    proof:[{brand:"Brand storytelling",detail:"Multi-part stories get 20-40% higher completion rates than single stories."},{brand:"Content repurposing",detail:"Cutting one video into story segments is the #1 way to maximize content output with zero new filming."}],
+    equipment:["Faolo's longer videos (30+ seconds)","CapCut or Stories editor"],
+    steps:[
+      {title:"Select a source video",action:"Choose one of Faolo's longer videos: the packing ASMR, the scam address video, or the comparison video. Anything 30+ seconds.",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"2 min.",tip:"The 'Is This a Scam?' video works perfectly for this — natural story arc with reveals."},
+      {title:"Plan the cut points",action:"Map where the natural 'cliffhanger' moments are. For a packing video: Story 1 = folding (ends before wrapping), Story 2 = wrapping (ends before note), Story 3 = writing note (ends before packing), Story 4 = final package + text. Each segment = 5-8 seconds.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Each story should end at a moment of anticipation — right BEFORE the satisfying reveal."},
+      {title:"Cut and label",action:"Cut the video into segments. Add 'Part 1/4' etc. as text. Add a 'Tap to see →' at the end of each story (except the last).",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"Last story should have the CTA: link sticker, 'Link in bio', or 'DM for link.'"},
+      {title:"Post as story sequence",action:"Upload all stories at once so they play in order. Add poll sticker on one ('Would you cop?'), add question sticker on another ('What do you want to see next?'). Interactive stickers boost story reach.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Post stories during peak hours — 12pm, 6pm, or 9pm in your audience's timezone."}
+    ]
+  },
+  {
+    id:"j9",title:"Before/After Transition Edit",potential:85,difficulty:2,tags:["conversion","awareness"],platforms:["TikTok"],duration:"10-15 sec",
+    hook:"Before NEWGARMENTS → After NEWGARMENTS",
+    hookNote:"A slick transition edit showing the upgrade from generic to premium. The edit quality IS the content — smooth transitions, matching movement, and satisfying timing.",
+    textOverlay:"Before → After",cta:"Link in bio.",
+    why:"Before/after transitions are one of TikTok's signature formats. When done well, they get shared and stitched. The edit skill itself becomes impressive content.",
+    psychology:"Before/after taps into the transformation narrative. People love seeing upgrades. The implicit message: 'you could be the after.' It's aspirational without saying a word.",
+    proof:[{brand:"TikTok transitions",detail:"Before/after content has its own massive subculture. Well-executed transitions get millions of views."},{brand:"Fashion makeover content",detail:"Outfit transformation is consistently one of the highest-performing fashion formats."}],
+    equipment:["Faolo's footage: generic outfit shots AND NEWGARMENTS outfit shots","CapCut (best for transitions)","Trending transition sound"],
+    steps:[
+      {title:"Find matching movements",action:"Look through Faolo's footage for moments where the model does similar movements in both the generic and NEWGARMENTS outfit. Example: walking toward camera in both, or a spin in both. The transition works best when the movement MATCHES across the cut.",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"If movements don't match perfectly, use a hand-to-lens wipe as the transition point."},
+      {title:"Choose a transition style",action:"Options:\n• Match cut (same movement, outfit changes mid-motion)\n• Hand wipe (hand covers lens, reveals new outfit)\n• Spin transition (model spins, cuts mid-spin to new outfit)\n• Flash/light transition (flash of white between cuts)",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"5 min.",tip:"Match cuts are the most impressive but hardest. Hand wipes are easiest and still look great."},
+      {title:"Execute the edit",action:"Cut: 'Before' footage (generic outfit, 4-5 sec) → transition effect → 'After' footage (NEWGARMENTS, 5-6 sec). The transition should happen on the beat drop of your chosen sound.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"15 min.",tip:"Spend time getting the transition FRAME-PERFECT. One frame off and it looks amateur. Frame-by-frame adjustment is worth it."},
+      {title:"Polish and export",action:"Add subtle text: 'Before' and 'After'. Maybe add a slight zoom or speed ramp on the reveal. Color: make the 'Before' slightly flat/grey and the 'After' warm and vibrant. Export 9:16.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"The color shift between before and after makes the transformation feel even bigger. Subtle desaturation on 'before', warmth on 'after'."}
+    ]
+  },
+  {
+    id:"j10",title:"Repurpose: 1 Shoot → 5 Videos",potential:93,difficulty:2,tags:["conversion","awareness","trust"],platforms:["TikTok","Reels","Stories","IG Carousel"],duration:"Various",
+    hook:"N/A — this is a repurposing workflow, not a single video.",
+    hookNote:"This task is about taking ALL footage from ONE Faolo shoot and creating 5 completely different pieces of content. Maximum output from minimum footage. This is why you're here, Jerson — squeeze every drop of value from the raw material.",
+    textOverlay:"Varies per video",cta:"Varies per video",
+    why:"Most brands post one video per shoot and waste 80% of the footage. Creating 5 different pieces from one shoot means 5x the content output, 5x the chances of going viral, and 5x the touchpoints with potential customers — with ZERO additional filming.",
+    psychology:"Different content formats reach different audience segments. Someone who skips a comparison video might stop for a montage. Someone who ignores Reels might save a carousel. Multi-format distribution catches everyone.",
+    proof:[{brand:"Every successful brand",detail:"Top-performing streetwear brands repurpose every shoot into 5-10+ pieces. One Corteiz event becomes dozens of content pieces across platforms."},{brand:"Content strategy 101",detail:"The 1-to-many content model is the standard for efficient social media growth."}],
+    equipment:["All raw footage from one Faolo shoot","CapCut or Premiere Pro","Canva for carousel"],
+    steps:[
+      {title:"Video 1: The hero TikTok",action:"This is the 'main' video Faolo designed. Edit it as intended with its original hook, shots, and text. This is the primary piece.",camera:"N/A — editing task.",angle:"N/A",lighting:"N/A",duration:"20 min.",tip:"Edit this first and best. It's the hero content."},
+      {title:"Video 2: The quick-cut montage",action:"Take the best 8-12 B-roll clips (1 sec each) and cut them to a trending beat. No text, no hook — pure visual energy. Brand name at end.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"15 min.",tip:"This takes the least effort and often performs surprisingly well. Pure vibes."},
+      {title:"Video 3: Detail close-up with specs",action:"Pull ONLY the close-up footage: fabric, stitching, label, cuff. Edit as a slow, detailed product showcase with spec text on each shot.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"15 min.",tip:"Different audience than the montage. This targets the quality-conscious buyer who wants facts."},
+      {title:"Video 4: IG carousel from stills",action:"Screenshot 6-8 best frames. Design into a carousel with specs on each slide. This lives on Instagram forever (not temporary like Reels).",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"20 min.",tip:"Carousels have the longest shelf life. They keep getting saves weeks after posting."},
+      {title:"Video 5: Story series",action:"Cut the longest footage into 4-6 story segments with 'Part X/Y' labels. Add poll and question stickers for engagement.",camera:"N/A",angle:"N/A",lighting:"N/A",duration:"10 min.",tip:"Stories reach your existing followers. The other formats reach new people. Both matter."}
+    ]
+  }
+];
+
+const SLIDESHOW_IDEAS = [
+  {
+    id:"s1",title:"\"I Fw This\" Outfit Collage → Broke → Offer",potential:98,difficulty:1,tags:["conversion","PAS","own-proven"],platforms:["TikTok Spark Ad"],duration:"4 slides",
+    hook:"Outfit collage + 'I fw this heavy 🔥'",
+    hookNote:"BASED ON: Your own viral post (@newgarmentsclo/photo/7590800763165723937). Proven on YOUR account. Outfit collage → empty wallet → product offer → CTA. Complete PAS funnel in 4 slides.",
+    textOverlay:"Slide 1: 'I fw this heavy 🔥' — Slide 2: 'but my bank account:' — Slide 3: 'Heavyweight Zipped Hoodie — 7 colors — €46.95' — Slide 4: 'Shop Now — upgrade your style without overpaying'",
+    cta:"Shop Now via Spark Ad",
+    why:"This is YOUR proven format that already works on your account. PAS (Problem-Agitate-Solve) is the #1 direct response framework. The broke slide is universally relatable, the offer solves it.",
+    psychology:"'I fw this' = social validation. Empty wallet = shared pain. €46.95 after 'broke' context = feels like a solution. 4 slides = high completion rate.",
+    proof:[{brand:"NEWGARMENTS own post",detail:"Proven format on @newgarmentsclo — outfit collage + PAS flow."},{brand:"PAS framework",detail:"#1 conversion framework in direct response advertising."}],
+    equipment:["4 outfit photos wearing Heavyweight Zipped Hoodie (different colorways)","Empty wallet or €0 bank app screenshot","Product collage of all 7 colorways with prices","NEWGARMENTS logo on dark background"],
+    caption:"the one 🤞",
+    audio:"Trending lo-fi or soft beat",
+    firstSlide:"2x2 collage: 4 outfits with Heavyweight Zipped Hoodie in Black, Navy, Purple, Red",
+    backedBy:"Own proven post on @newgarmentsclo",
+    sourceLinks:[{label:"YOUR OWN POST (this format)",url:"https://www.tiktok.com/@newgarmentsclo/photo/7590800763165723937"}],
+    goal:"CONVERSION. Direct to shop. Proven on your account.",
+    imageRules:"Slide 1 = 2x2 outfit collage (4 colorways). Slide 2 = empty wallet photo. Slide 3 = product grid with all colorways + prices. Slide 4 = logo + CTA on dark bg.",
+    products:["Heavyweight Zipped Hoodie — Black (€46.95)","Heavyweight Zipped Hoodie — Navy Blue","Heavyweight Zipped Hoodie — Purple","Heavyweight Zipped Hoodie — Red"],
+    steps:[
+      {title:"Slide 1: Outfit Collage — 4 Colorways",action:"2x2 grid collage. Each photo = you wearing the Heavyweight Zipped Hoodie in a different color (Black, Navy, Purple, Red). Each styled differently. Text: 'I fw this heavy 🔥'",camera:"Phone — 4 separate outfit shots, combine in Canva",angle:"Mix: mirror selfie, friend-shot, candid, walking",lighting:"Natural, consistent",duration:"15 min",tip:"Use your 4 strongest colorways. Each outfit must look completely different."},
+      {title:"Slide 2: The Problem — Broke",action:"Photo of empty wallet OR screenshot of bank app at €0.00. Text: 'but my bank account:'. Universal relatable moment.",camera:"Phone — close-up",angle:"Close-up of empty wallet",lighting:"Doesn't matter",duration:"2 min",tip:"The worse the 'broke' slide looks, the stronger the contrast with slide 3."},
+      {title:"Slide 3: The Solution — Product Grid",action:"All 7 Heavyweight Zipped Hoodie colorways in a clean grid. Text: 'Heavyweight Zipped Hoodie — 7 colors — €46.95'. Price MUST be visible. Show: Black, Navy Blue, Purple, Red, Moss Green, Light-Gray, Pink.",camera:"Product photos arranged in Canva",angle:"Clean product grid",lighting:"Well-lit product shots",duration:"10 min",tip:"Price (€46.95) is the key. After the 'broke' slide, €46.95 feels affordable."},
+      {title:"Slide 4: CTA — Shop Now",action:"NEWGARMENTS logo centered. Text: 'Shop Now — upgrade your style without overpaying'. Dark background, clean.",camera:"Canva design",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"Clear, direct CTA. No ambiguity."}
+    ]
+  },
+  {
+    id:"s2",title:"\"Not Made For Everyone\" Exclusivity Drop",potential:97,difficulty:1,tags:["conversion","exclusivity","own-proven"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Dark moody hero shot + 'Not made for everyone'",
+    hookNote:"BASED ON: Your own #1 post — 1.6M views, 10.1K likes, 2,725 saves. Caption: 'Not made for everyone... Free worldwide shipping'. Combined with Broken Planet's drop carousel format (@brokenplanet/photo/7544037377103219990). Exclusivity + scarcity = proven conversion driver.",
+    textOverlay:"Slide 1: 'Not made for everyone.' — Slide 2: 'Heavyweight. Premium. Built to last.' — Slide 3: 'Distorted Knit — €41.95' — Slide 4: 'Once stock is gone, it's gone.' — Slide 5: 'Shop Now ⬇️ Free worldwide shipping'",
+    cta:"Shop Now via Spark Ad",
+    why:"Your #1 post ever (1.6M views) used this exact caption. Broken Planet uses the same scarcity model (limited drops, 1.3M views in 24 hours). Exclusivity + scarcity = the combination that moves streetwear.",
+    psychology:"'Not made for everyone' = exclusivity (only for people with taste). Scarcity ('once it's gone') = FOMO. Free shipping removes the last objection. This is the Broken Planet / Corteiz playbook adapted for your brand.",
+    proof:[{brand:"NEWGARMENTS #1 post",detail:"1.6M views, 10.1K likes, 2,725 saves — your best performing post EVER."},{brand:"Broken Planet",detail:"784K followers, 1.3M views in 24 hours on drop carousels. Photo carousel format confirmed."},{brand:"Corteiz",detail:"#1 streetwear brand 2025 (Complex). Same scarcity/exclusivity model."}],
+    equipment:["'Distorted' Knit — moody dark photos","Detail/texture close-ups","On-body lifestyle shot","Logo + scarcity text + CTA"],
+    caption:"not made for everyone.",
+    audio:"Dark atmospheric beat",
+    firstSlide:"Dark, moody hero shot of 'Distorted' Knit on person. Text: 'Not made for everyone.'",
+    backedBy:"Your own #1 post (1.6M views), Broken Planet drop carousel format, Corteiz scarcity model",
+    sourceLinks:[{label:"YOUR #1 POST (1.6M views)",url:"https://www.tiktok.com/@newgarmentsclo"},{label:"Broken Planet Drop Carousel",url:"https://www.tiktok.com/@brokenplanet/photo/7544037377103219990"}],
+    goal:"CONVERSION via exclusivity + scarcity. 'Not for everyone' + 'once it's gone' = buy now.",
+    imageRules:"Dark, moody aesthetic throughout. This is streetwear, not H&M. Low light, shadows, atmospheric. Product = the centerpiece. Scarcity text creates urgency.",
+    products:["'Distorted' Knit (€41.95) — #1 Bestseller"],
+    steps:[
+      {title:"Slide 1: The Hook — 'Not Made For Everyone'",action:"Dark, moody shot of someone wearing the 'Distorted' Knit. Atmospheric lighting — shadows, low key. Text: 'Not made for everyone.' Bold, centered. This is your proven 1.6M view hook.",camera:"Phone — moody setting (dark room, backlit, street at night)",angle:"Full body or 3/4, showing the knit's texture",lighting:"Low key — backlighting or single lamp",duration:"",tip:"This exact caption got you 1.6M views. The dark mood + exclusivity text = proven scroll-stopper."},
+      {title:"Slide 2: Product Details — Quality Flex",action:"Close-up of the 'Distorted' Knit texture, stitching, unique pattern. Text: 'Heavyweight. Premium. Built to last.' Let the quality speak without specs.",camera:"Phone — macro close-up",angle:"Fabric texture, pattern detail, label",lighting:"Good light on texture",duration:"",tip:"Show the unique distorted knit pattern up close. The texture IS the product."},
+      {title:"Slide 3: Product + Price",action:"Full product shot — flat lay or on-body, clean. Text: 'Distorted Knit — €41.95'. Price visible, product name clear. This is the purchase slide.",camera:"Phone — clean product shot",angle:"Flat lay or styled on-body",lighting:"Clean, well-lit",duration:"",tip:"€41.95 is your #1 bestseller for a reason. The price point is right."},
+      {title:"Slide 4: Scarcity — FOMO",action:"Dark background with bold text: 'Once stock is gone, it's gone.' or 'When stock runs out, our website closes.' This is the urgency trigger. Broken Planet does this every drop.",camera:"Canva — text on dark bg",angle:"N/A",lighting:"N/A",duration:"3 min",tip:"This mirrors your own bio ('WEBSITE WILL BE CLOSED ONCE SOLD OUT'). Use it."},
+      {title:"Slide 5: CTA — Shop Now",action:"Logo + 'Shop Now ⬇️ Free worldwide shipping'. Free shipping removes the last objection after the scarcity trigger.",camera:"Canva design",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"'Free worldwide shipping' was part of your 1.6M view caption. Keep it."}
+    ]
+  },
+  {
+    id:"s3",title:"Gymshark Reveal Carousel — \"Where Is This Going?\"",potential:95,difficulty:2,tags:["conversion","reveal","gymshark-format"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Mystery product shot — partial/hidden — 'You asked for heavyweight...'",
+    hookNote:"BASED ON: Gymshark's reveal carousel format — 5.6M views on a single post. Their last 50 TikTok posts were ALL carousels. Format: slide 1 = mystery/tease, slides 2-4 = build anticipation, slide 5 = full reveal. Adapted for Heavyweight Zipped Hoodie.",
+    textOverlay:"Slide 1: 'You asked for heavyweight...' — Slide 2: 'We delivered.' — Slide 3: '460 GSM. Double stitched. 7 colorways.' — Slide 4: (no text — let product speak) — Slide 5: 'Heavyweight Zipped Hoodie — €46.95 — Shop Now'",
+    cta:"Shop Now via Spark Ad",
+    why:"Gymshark posted 50+ consecutive carousels and one hit 5.6M views. Their 'Where Is This Going?' reveal format creates anticipation through swiping. The mystery hook forces swipes, and each swipe = algorithm signal.",
+    psychology:"Curiosity gap: 'You asked for heavyweight...' → viewer MUST swipe to see what it is. Each reveal builds desire. By slide 5 they've invested 5 swipes = high purchase intent. Gymshark proved this at 5M+ follower scale.",
+    proof:[{brand:"Gymshark",detail:"5.6M views on single carousel. Last 50 posts = ALL carousels. 6.5M followers, 133.3M total likes."},{brand:"Carousel reveal format",detail:"Reveal/surprise format creates anticipation through swiping. 20-30% higher CTR."}],
+    equipment:["Heavyweight Zipped Hoodie — partial/hidden shots for tease","Detail close-ups for build-up","Full reveal hero shot","All 7 colorways for final spread"],
+    caption:"you asked. we delivered.",
+    audio:"Build-up/reveal trending sound",
+    firstSlide:"Hoodie partially visible — fabric texture close-up or silhouette. Text: 'You asked for heavyweight...'",
+    backedBy:"Gymshark (5.6M views per carousel, 50+ consecutive carousels, 6.5M followers)",
+    sourceLinks:[{label:"Gymshark Carousel Strategy",url:"https://www.tiktok.com/@gymshark"},{label:"Gymshark Case Study",url:"https://www.milkkarten.net/p/tiktok-photo-mode-brands"}],
+    goal:"CONVERSION via reveal curiosity. Each swipe builds desire → final slide = purchase.",
+    imageRules:"Slide 1 = tease (partial, hidden, silhouette). Slides 2-3 = progressively reveal more. Slide 4 = full reveal. Slide 5 = purchase CTA. Build anticipation through the sequence.",
+    products:["Heavyweight Zipped Hoodie — all 7 colorways (€46.95)"],
+    steps:[
+      {title:"Slide 1: The Tease — Partial Reveal",action:"Close-up of the fabric texture or zipper detail ONLY. Or silhouette of the hoodie. Don't show the full product yet. Text: 'You asked for heavyweight...' This creates the curiosity gap.",camera:"Phone — extreme close-up",angle:"Fabric texture only, or silhouette backlit",lighting:"Moody, atmospheric",duration:"",tip:"Gymshark's 5.6M view post used this exact reveal structure. The tease forces the swipe."},
+      {title:"Slide 2: The Build — More Detail",action:"Show slightly more: the zipper, the hood shape, the drop shoulder. Still not the full product. Text: 'We delivered.' Building anticipation.",camera:"Phone — partial product",angle:"Detail shots — zipper, hood, shoulder",lighting:"Good detail lighting",duration:"",tip:"Each slide reveals a bit more. Like unwrapping a gift one layer at a time."},
+      {title:"Slide 3: The Specs — Quality Proof",action:"Close-up collage: thick fabric cross-section, double stitching, premium label. Text: '460 GSM. Double stitched. 7 colorways.' Now they know WHAT it is but haven't seen the full thing yet.",camera:"Phone — macro details",angle:"Detail collage",lighting:"Well-lit",duration:"",tip:"The specs build the value BEFORE the full reveal. By the time they see it, they already want it."},
+      {title:"Slide 4: The Full Reveal — Hero Shot",action:"FULL product reveal: person wearing the Heavyweight Zipped Hoodie, best possible shot. No text — let the product speak. This is the payoff for 3 slides of anticipation.",camera:"Phone — best possible shot",angle:"Full outfit, styled, fire",lighting:"Natural, warm, perfect",duration:"",tip:"This slide must be your absolute BEST photo. 3 slides of build-up lead to this moment."},
+      {title:"Slide 5: CTA — All Colors + Purchase",action:"All 7 colorways laid out or in grid. Text: 'Heavyweight Zipped Hoodie — €46.95 — Shop Now ⬇️'. After the reveal, the viewer is ready to buy.",camera:"Product grid or flat lay of all colors",angle:"All 7 colorways visible",lighting:"Clean, even",duration:"",tip:"Showing all 7 colors = 'there's one for you'. Price after the reveal = no-brainer."}
+    ]
+  },
+  {
+    id:"s4",title:"White Fox \"Spotted\" Social Proof Format",potential:94,difficulty:2,tags:["conversion","social-proof","spotted"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Candid street photo + 'Spotted wearing NEWGARMENTS'",
+    hookNote:"BASED ON: White Fox Boutique's 'Spotted in LA' format — $2.9M EMV from hoodie campaign alone. 1.5M followers. Format: show real people spotted wearing the product in the wild = massive social proof. Adapted for your Checkered Inside Out Zipper.",
+    textOverlay:"Slide 1: 'Spotted 📸' — Slide 2: 'The Checkered Inside Out Zipper' — Slide 3: 'The hoodie everyone keeps asking about' — Slide 4: '€43.95 — 3 colors available' — Slide 5: 'Shop Now ⬇️'",
+    cta:"Shop Now via Spark Ad",
+    why:"White Fox's 'Spotted in LA' hoodie post drove $2.9M in earned media. The 'spotted' format = street-level social proof. It implies people are wearing your product IRL = others must want it too. Strongest social proof format on TikTok.",
+    psychology:"'Spotted' implies organic popularity (people are wearing it without being asked). Street photography feel = authentic, not staged. Other people's validation > brand's own claims. The viewer thinks: 'if they're wearing it, I should too.'",
+    proof:[{brand:"White Fox Boutique",detail:"'Spotted in LA' hoodie campaign = $2.9M EMV. 305 posts. 1.5M followers."},{brand:"White Fox viral hoodie",detail:"Hoodie campaign URL: tiktok.com/@whitefox/video/7415546991595359496 — 'Shop the viral hoodie'"}],
+    equipment:["Candid-style street photos of people wearing Checkered Inside Out Zipper","Detail close-ups of the checkered pattern","All 3 colorways (Gray, Black, Red)","Logo + CTA"],
+    caption:"spotted 📸",
+    audio:"Cool street/lifestyle trending sound",
+    firstSlide:"Candid street-style photo of someone wearing Checkered Inside Out Zipper. Text: 'Spotted 📸'",
+    backedBy:"White Fox 'Spotted in LA' format ($2.9M EMV), street photography social proof",
+    sourceLinks:[{label:"White Fox 'Spotted' Viral Hoodie",url:"https://www.tiktok.com/@whitefox/video/7415546991595359496"},{label:"White Fox Lounge Hoodie",url:"https://www.tiktok.com/@whitefox/video/7490926433175391493"},{label:"White Fox Case Study",url:"https://www.creatoriq.com/blog/white-fox-boutique-top-apparel-brand-influencer-marketing"}],
+    goal:"CONVERSION via 'spotted' social proof. If others are wearing it → I need it.",
+    imageRules:"Street photography style — candid, not posed. Multiple people wearing the product in different settings. Must feel like REAL sightings, not a photoshoot. Raw, authentic, real.",
+    products:["Checkered Inside Out Zipper — Gray (€43.95)","Checkered Inside Out Zipper — Black","Checkered Inside Out Zipper — Red"],
+    steps:[
+      {title:"Slide 1: Spotted — Street Candid",action:"Candid-style street photo of someone wearing the Checkered Inside Out Zipper. Text: 'Spotted 📸'. Must look like you saw someone wearing it and snapped a photo. White Fox style.",camera:"Phone — candid/street photography style",angle:"Slightly distance, street setting, natural",lighting:"Natural daylight, outdoor",duration:"",tip:"This must feel REAL, like a street photographer caught someone wearing it. Not a posed brand photo."},
+      {title:"Slide 2: Product Reveal",action:"Clean shot of the Checkered Inside Out Zipper — showing the unique checkered pattern and inside-out design. Text: 'The Checkered Inside Out Zipper'. Product name reveal.",camera:"Phone — product detail",angle:"Show the checkered pattern clearly",lighting:"Good, detailed",duration:"",tip:"The unique checkered pattern is the differentiator. Make it the star."},
+      {title:"Slide 3: Social Proof Text",action:"Another 'spotted' photo or on-body shot. Text: 'The hoodie everyone keeps asking about'. This reinforces that it's POPULAR — people are talking about it.",camera:"Phone — another street/lifestyle shot",angle:"Different person or different setting",lighting:"Natural",duration:"",tip:"Multiple sightings = more social proof. White Fox showed multiple people in LA wearing the hoodie."},
+      {title:"Slide 4: All Colors + Price",action:"All 3 colorways (Gray, Black, Red) side by side. Text: '€43.95 — 3 colors available'. Price + options = purchase consideration.",camera:"Flat lay or product grid",angle:"All 3 colors visible",lighting:"Clean, even",duration:"",tip:"3 colors = choice. Price after social proof = easy decision."},
+      {title:"Slide 5: CTA",action:"Logo + 'Shop Now ⬇️'. Clean, direct.",camera:"Canva design",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"After 'spotted' social proof + all colors + price, the CTA closes the deal."}
+    ]
+  },
+  {
+    id:"s5",title:"COMFRT UGC Review — \"TikTok Made Me Buy This\"",potential:93,difficulty:1,tags:["conversion","UGC","review"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Unboxing NEWGARMENTS package + 'The hoodie TikTok made me buy'",
+    hookNote:"BASED ON: COMFRT's UGC model — $23.31M in TikTok Shop sales, 520K+ units sold. 99.27% of sales from influencer/UGC content. Format: real person reviewing product, authentic feel. UGC = +55% ROI. Adapted for Heavyweight Zipped Hoodie.",
+    textOverlay:"Slide 1: 'The hoodie TikTok made me buy' — Slide 2: 'This thickness is insane 😳' — Slide 3: 'The fit tho' — Slide 4: 'Double stitched. Built different.' — Slide 5: '€46.95 — worth every cent — Shop Now'",
+    cta:"Shop Now via Spark Ad",
+    why:"COMFRT made $23.31M selling hoodies through UGC reviews on TikTok. 99.27% came from creators, not brand content. The 'TikTok made me buy it' frame (72.5B views on the hashtag) is the most powerful commerce format. Your hoodie is perfect for this.",
+    psychology:"Third-party validation > brand claims. 'TikTok made me buy it' implies thousands already bought it. Unboxing creates anticipation. Each slide = another proof point. By slide 5, the viewer is convinced.",
+    proof:[{brand:"COMFRT",detail:"$23.31M TikTok Shop sales. 520K units. 99.27% from UGC/influencer content. Hoodie brand."},{brand:"#tiktokmademebuyit",detail:"72.5 BILLION views. Most powerful commerce hashtag."}],
+    equipment:["NEWGARMENTS package (branded box/bag)","Heavyweight Zipped Hoodie for unboxing","On-body photos","Detail close-ups of fabric, stitching"],
+    caption:"no cap this is insane",
+    audio:"Trending reaction/review sound",
+    firstSlide:"Hands opening NEWGARMENTS package. Text: 'The hoodie TikTok made me buy'",
+    backedBy:"COMFRT ($23.31M from hoodie UGC), #tiktokmademebuyit (72.5B views)",
+    sourceLinks:[{label:"COMFRT TikTok ($23.31M sales)",url:"https://www.tiktok.com/@comfrt"},{label:"COMFRT Case Study",url:"https://www.kalodata.com/blog/how-comfrt-brand-achieved-23-31m-in-tiktok-shop-sales"}],
+    goal:"CONVERSION via UGC review. Feels like a real person recommending, not an ad.",
+    imageRules:"ALL photos must look customer-made, not brand-made. Phone camera, casual setting, imperfect lighting. The imperfection IS the authenticity. No studio, no professional editing.",
+    products:["Heavyweight Zipped Hoodie — Black (€46.95)"],
+    steps:[
+      {title:"Slide 1: Unboxing",action:"Hands opening the NEWGARMENTS package. Show branded packaging. Text: 'The hoodie TikTok made me buy'. Must look like a real customer, not a brand shoot.",camera:"Phone — POV/top-down",angle:"Hands + package",lighting:"Room light — casual",duration:"",tip:"COMFRT's entire $23.31M came from content like this. Authentic > polished."},
+      {title:"Slide 2: First Impression — Thickness",action:"Holding the hoodie, squeezing the fabric to show thickness. Text: 'This thickness is insane 😳'. The 460 GSM weight is VISIBLE when you hold it.",camera:"Phone",angle:"Holding hoodie, showing weight/thickness",lighting:"Casual",duration:"",tip:"Squeeze the fabric. Let it spring back. 460 GSM is visually thick. This sells itself."},
+      {title:"Slide 3: On-Body — The Fit",action:"Mirror selfie or friend-shot wearing the Heavyweight Zipped Hoodie. Full outfit. Text: 'The fit tho'. Show the boxy, oversized fit.",camera:"Phone — mirror selfie",angle:"Full body",lighting:"Natural",duration:"",tip:"The fit is the 2nd selling point after thickness. Boxy oversized = what they want."},
+      {title:"Slide 4: Quality Details",action:"Close-up of double stitching, premium zipper, label. Text: 'Double stitched. Built different.' Quality proof.",camera:"Phone — close-up",angle:"Macro details — stitching, zipper, label",lighting:"Good light",duration:"",tip:"Details that a brand wouldn't normally show = this feels like an honest review."},
+      {title:"Slide 5: Verdict + CTA",action:"Another shot wearing it + text: '€46.95 — worth every cent — Shop Now ⬇️'. Positive verdict with price and CTA.",camera:"Phone",angle:"Lifestyle",lighting:"Good",duration:"",tip:"'Worth every cent' is a verdict, not a sales pitch. After 4 proof slides, it's credible."}
+    ]
+  },
+  {
+    id:"s6",title:"PacSun Micro-Creator Simple Try-On",potential:92,difficulty:1,tags:["conversion","try-on","micro-creator"],platforms:["TikTok Spark Ad"],duration:"4 slides",
+    hook:"Just received package + pulling product out",
+    hookNote:"BASED ON: PacSun's viral moment — 11,000 jeans sold in 48 hours from a 5K-follower creator. Simple try-on format. No fancy editing. The raw simplicity IS the selling point. Adapted for Denim Striped Barrel Jeans (your #3 bestseller).",
+    textOverlay:"Slide 1: 'Just got these in 📦' — Slide 2: 'Denim Striped Barrel Jeans' — Slide 3: 'The fit is actually insane' — Slide 4: '€34.95 — need these — Shop Now ⬇️'",
+    cta:"Shop Now via Spark Ad",
+    why:"PacSun sold 11,000 pairs in 48 hours from ONE simple try-on post by a creator with only 5,000 followers. No fancy editing, no special effects. Just: here are the jeans, here's how they fit, link to buy. Your Barrel Jeans at €34.95 are in the impulse purchase sweet spot.",
+    psychology:"Simplicity = authenticity. A raw try-on from a small creator feels more trustworthy than a brand campaign. €34.95 = impulse purchase range ($20-30 USD). Low price + authentic review = minimal purchase resistance.",
+    proof:[{brand:"PacSun",detail:"11,000 jeans sold in 48 hours. Creator had only 5,000 followers. Simple try-on format."},{brand:"PacSun annual",detail:"$20M+ TikTok revenue. TikTok = 10% of e-commerce. 100K+ total pairs sold."}],
+    equipment:["NEWGARMENTS package with Denim Striped Barrel Jeans inside","Try-on photos (before/after putting them on)","Full outfit shot","Close-up of striped denim detail"],
+    caption:"these go crazy 🔥",
+    audio:"Casual trending sound",
+    firstSlide:"Hands pulling Denim Striped Barrel Jeans out of package. Text: 'Just got these in 📦'",
+    backedBy:"PacSun (11K jeans sold in 48h from 5K-follower creator), impulse purchase price point",
+    sourceLinks:[{label:"PacSun Viral Jeans Post",url:"https://www.tiktok.com/@pacsun/video/7443911815593069866"},{label:"PacSun Case Study (Digiday)",url:"https://digiday.com/marketing/how-fashion-retailer-pacsuns-viral-jeans-moment-on-tiktok-is-part-of-its-bigger-bet-on-creators/"}],
+    goal:"CONVERSION via simple try-on. Raw authenticity + impulse price point = instant buy.",
+    imageRules:"Maximum simplicity. Phone camera, bedroom/bathroom mirror, no editing. The rawness IS the credibility. If it looks too polished, it looks like an ad.",
+    products:["Denim Striped Barrel Jeans — Blue (€34.95)","Denim Striped Barrel Jeans — Black (€34.95)"],
+    steps:[
+      {title:"Slide 1: Unboxing — Just Arrived",action:"Pulling Denim Striped Barrel Jeans out of the NEWGARMENTS package. Text: 'Just got these in 📦'. Raw, excited, authentic.",camera:"Phone — POV",angle:"Hands pulling product from package",lighting:"Room light",duration:"",tip:"PacSun's 11K pair viral moment came from content THIS simple. Don't overthink it."},
+      {title:"Slide 2: The Product — Close-Up",action:"Holding the jeans up, showing the striped denim detail. Text: 'Denim Striped Barrel Jeans'. The unique stripe pattern is the hook.",camera:"Phone",angle:"Holding up, showing pattern",lighting:"Natural",duration:"",tip:"The striped barrel shape is unique. Show what makes them different from regular jeans."},
+      {title:"Slide 3: Try-On — The Fit",action:"Full outfit with the jeans on. Mirror selfie or friend-shot. Text: 'The fit is actually insane'. Show the barrel/wide leg shape.",camera:"Phone — mirror",angle:"Full body, showing the full silhouette",lighting:"Natural",duration:"",tip:"The barrel fit is the selling point. Make sure the shape is clearly visible."},
+      {title:"Slide 4: CTA — Price + Buy",action:"Another angle or both colorways (Blue + Black). Text: '€34.95 — need these — Shop Now ⬇️'. Impulse price + CTA.",camera:"Phone or Canva",angle:"Both colors if possible",lighting:"Good",duration:"",tip:"€34.95 is impulse range. After seeing the fit, price seals the deal."}
+    ]
+  },
+  {
+    id:"s7",title:"Odd Muse Founder Value Comparison",potential:91,difficulty:1,tags:["conversion","founder","comparison"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Side-by-side: competitor vs yours + 'Let me show you what €42 gets you'",
+    hookNote:"BASED ON: Odd Muse founder Aimee Smale's comparison posts — scaled to £5M/year revenue. She compares her blazer's value vs competitors directly on camera. Founder-led content = highest trust. Adapted for 'Distorted' Knit vs competitor knits.",
+    textOverlay:"Slide 1: 'Let me show you what €41.95 gets you' — Slide 2: 'Other brands: thin, basic knit — €60+' — Slide 3: 'NEWGARMENTS: Distorted Knit — €41.95' — Slide 4: 'Heavyweight. Unique pattern. Premium quality.' — Slide 5: 'Shop Now ⬇️'",
+    cta:"Shop Now via Spark Ad",
+    why:"Odd Muse went from zero to £5M/year using founder-led comparison content. When the FOUNDER shows you why their product is better value, it's more credible than any ad. Your 'Distorted' Knit at €41.95 vs competitor knits at €60+ = clear value win.",
+    psychology:"Founder authority: when the person behind the brand makes the comparison, it carries weight. Price anchoring: show €60+ first, then €41.95. Side-by-side evidence = objective, not opinion.",
+    proof:[{brand:"Odd Muse",detail:"£5M/year revenue from founder-led TikTok content. Blazer comparison posts went viral."},{brand:"Odd Muse founder",detail:"tiktok.com/@aimeesmalex/video/7424078027874700577 — founder comparing blazer value directly."}],
+    equipment:["Competitor knit (or generic thin knit for comparison)","'Distorted' Knit","Side-by-side comparison photos","Price comparison graphic"],
+    caption:"know your worth",
+    audio:"Confident/flex trending sound",
+    firstSlide:"Side-by-side: thin competitor knit (€60+) vs 'Distorted' Knit. Text: 'Let me show you what €41.95 gets you'",
+    backedBy:"Odd Muse (£5M/year from founder comparison content), price anchoring psychology",
+    sourceLinks:[{label:"Odd Muse Founder Comparison",url:"https://www.tiktok.com/@aimeesmalex/video/7424078027874700577"},{label:"Odd Muse Case Study",url:"https://www.tacticone.co/blog/odd-muse-founder-led-product-first-strategy"}],
+    goal:"CONVERSION via founder-led value comparison. Show don't tell.",
+    imageRules:"Side-by-side comparison must be OBVIOUS. Competitor = thin, basic, overpriced. Yours = premium, unique, better price. The visual difference must slap.",
+    products:["'Distorted' Knit (€41.95) — #1 Bestseller"],
+    steps:[
+      {title:"Slide 1: The Comparison Setup",action:"Side-by-side: hold a thin/basic competitor knit next to your 'Distorted' Knit. Text: 'Let me show you what €41.95 gets you'. The difference in thickness/quality should be VISIBLE.",camera:"Phone — holding both products",angle:"Side-by-side, both clearly visible",lighting:"Good, even",duration:"",tip:"Odd Muse built £5M/year doing exactly this. The founder showing the comparison = maximum credibility."},
+      {title:"Slide 2: The Competitor — Overpriced",action:"Close-up of the competitor/basic knit. Thin, basic, nothing special. Text: 'Other brands: thin, basic knit — €60+'. Show how underwhelming it is.",camera:"Phone — close-up",angle:"Detail showing thinness/basicness",lighting:"Normal",duration:"",tip:"Make the competitor look as basic as possible. The contrast with slide 3 does the selling."},
+      {title:"Slide 3: Your Product — Better Value",action:"Close-up of 'Distorted' Knit. Thick, unique pattern, premium feel. Text: 'NEWGARMENTS: Distorted Knit — €41.95'. The upgrade is visual.",camera:"Phone — close-up",angle:"Detail showing unique pattern and thickness",lighting:"Good, warm",duration:"",tip:"The distorted knit pattern is unique. No competitor has this. That's your advantage."},
+      {title:"Slide 4: On-Body — The Proof",action:"Person wearing the 'Distorted' Knit, looking fire. Text: 'Heavyweight. Unique pattern. Premium quality.' Let them see how it looks IRL.",camera:"Phone — friend-shot or mirror",angle:"Full outfit",lighting:"Natural, good",duration:"",tip:"After the comparison, seeing it on a real person seals the deal."},
+      {title:"Slide 5: CTA",action:"Logo + 'Shop Now ⬇️' + €41.95. After the comparison, this is a no-brainer.",camera:"Canva design",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"The math does itself: better product, lower price. CTA = easy decision."}
+    ]
+  },
+  {
+    id:"s8",title:"Full Outfit Combo — Hoodie + Jeans Styled",potential:96,difficulty:1,tags:["conversion","outfit","combo-deal"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Complete outfit flat lay + 'Full fit under €85'",
+    hookNote:"BASED ON: Ralph Lauren's flat-lay showcase (@rachellliang — 20.9K likes) + Gymshark's outfit carousel format. Flat lay of COMPLETE outfit drives higher purchase consideration than single product. Combo deal = higher AOV. Uses your top 2 products together.",
+    textOverlay:"Slide 1: 'Full fit under €85' — Slide 2: 'Heavyweight Zipped Hoodie — €46.95' — Slide 3: 'Denim Striped Barrel Jeans — €34.95' — Slide 4: 'Total: €81.90 + BUY 2 GET 30% OFF' — Slide 5: 'Shop Now ⬇️'",
+    cta:"Shop Now via Spark Ad",
+    why:"Flat-lay outfit combos are the most-saved carousel format. By showing hoodie + jeans together, you increase average order value. Your BUY 2 GET 30% OFF deal makes this even stronger — €81.90 becomes ~€57. Full outfit for under €60 = killer value proposition.",
+    psychology:"Complete outfit = viewer can imagine wearing the full look (not just one piece). Budget framing ('under €85') removes price objection. Discount stacking ('BUY 2 GET 30% OFF') creates urgency and perceived value. Saves = algorithm boost.",
+    proof:[{brand:"Ralph Lauren flat-lay",detail:"@rachellliang carousel — 20.9K likes, 71 comments. Flat-lay showcase = high engagement."},{brand:"Outfit combos",detail:"Complete outfit posts = most-saved carousel format on TikTok. Higher AOV than single product."}],
+    equipment:["Heavyweight Zipped Hoodie — laid out","Denim Striped Barrel Jeans — laid out","Sneakers/accessories for complete look","On-body photo of full outfit"],
+    caption:"the combo 🤝",
+    audio:"Clean trending sound",
+    firstSlide:"Bird's eye flat lay: Heavyweight Zipped Hoodie + Denim Striped Barrel Jeans + sneakers. Text: 'Full fit under €85'",
+    backedBy:"Ralph Lauren flat-lay format (20.9K likes), outfit combo = highest save rate, BUY 2 GET 30% OFF",
+    sourceLinks:[{label:"Ralph Lauren Flat-Lay Carousel",url:"https://www.tiktok.com/@rachellliang"},{label:"Gymshark Outfit Carousels",url:"https://www.tiktok.com/@gymshark"}],
+    goal:"CONVERSION + higher AOV. Full outfit combo + discount = multiple items per order.",
+    imageRules:"Slide 1 = bird's eye flat lay of complete outfit. Slides 2-3 = individual products with prices. Slide 4 = total + discount. Slide 5 = CTA. Clean, Pinterest-style aesthetic throughout.",
+    products:["Heavyweight Zipped Hoodie — Black (€46.95)","Denim Striped Barrel Jeans — Blue (€34.95)"],
+    steps:[
+      {title:"Slide 1: Full Outfit Flat Lay",action:"Bird's eye view: Heavyweight Zipped Hoodie + Denim Striped Barrel Jeans + sneakers + accessories, all laid out clean. Text: 'Full fit under €85'. The complete look in one shot.",camera:"Phone — directly from above",angle:"Bird's eye / flat lay",lighting:"Clean, even, bright",duration:"10 min",tip:"Style it like a magazine spread. Each piece placed intentionally. Add sneakers + accessories for completeness."},
+      {title:"Slide 2: Product 1 — Hoodie",action:"Heavyweight Zipped Hoodie solo or on-body. Text: 'Heavyweight Zipped Hoodie — €46.95'. Individual product + price.",camera:"Phone — product or on-body",angle:"Clean product shot",lighting:"Good",duration:"",tip:"Show it individually so the viewer registers each product and its price."},
+      {title:"Slide 3: Product 2 — Jeans",action:"Denim Striped Barrel Jeans solo or on-body. Text: 'Denim Striped Barrel Jeans — €34.95'. The second product + price.",camera:"Phone — product or on-body",angle:"Show the striped detail + barrel shape",lighting:"Good",duration:"",tip:"Your #3 bestseller at €34.95. The unique stripe pattern is the differentiator."},
+      {title:"Slide 4: Combo Deal — Discount Stack",action:"Both products together + text: 'Total: €81.90 + BUY 2 GET 30% OFF = ~€57'. The discount makes it irresistible. Full premium outfit for under €60.",camera:"Canva graphic or both products together",angle:"Both visible",lighting:"Clean",duration:"5 min",tip:"€57 for a full outfit = the headline. BUY 2 GET 30% OFF is your existing deal — use it."},
+      {title:"Slide 5: CTA — Shop the Look",action:"Logo + 'Shop the full fit ⬇️'. Direct, specific CTA.",camera:"Canva design",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"'Shop the full fit' = specific CTA that drives multi-product orders = higher AOV."}
+    ]
+  },
+  {
+    id:"s9",title:"Youthforia Story Arc — Brand Journey Carousel",potential:88,difficulty:2,tags:["conversion","story","founder"],platforms:["TikTok Spark Ad"],duration:"6 slides",
+    hook:"Early days photo + 'From bedroom brand to...'",
+    hookNote:"BASED ON: Youthforia's Shark Tank carousel — 6.6M views. Story arc format with founder narrative. 11% higher reach than their video posts. People connect with brand stories. Your journey from startup to 77K followers = compelling story.",
+    textOverlay:"Slide 1: 'Started in a bedroom' — Slide 2: 'First order: 1 hoodie' — Slide 3: '77,600 followers later...' — Slide 4: 'Now: premium streetwear, worldwide shipping' — Slide 5: 'The hoodie that started it all — €46.95' — Slide 6: 'Shop Now ⬇️'",
+    cta:"Shop Now via Spark Ad",
+    why:"Youthforia's story arc carousel hit 6.6M views — 11% more reach than their videos. Brand journey content creates emotional connection. Your story from bedroom to 77K followers IS the content. People buy from brands they feel connected to.",
+    psychology:"Narrative arc = emotional investment. The viewer roots for you. By the time they see the product, they WANT you to succeed = they want to buy. Founder story = highest trust format after UGC reviews.",
+    proof:[{brand:"Youthforia",detail:"Story arc carousel = 6.6M views. 11% higher reach than video. Shark Tank narrative format."},{brand:"Founder-led content",detail:"Odd Muse: £5M/year from founder content. PacSun: authentic stories drive purchases."}],
+    equipment:["Early brand photos (first product, first order, early days)","Current brand photos (products, warehouse, team)","Growth milestone screenshots","Product hero shot"],
+    caption:"from day 1",
+    audio:"Inspiring/emotional trending sound",
+    firstSlide:"Early days photo — bedroom setup, first product prototype. Text: 'Started in a bedroom'",
+    backedBy:"Youthforia (6.6M views story carousel), founder-led content psychology",
+    sourceLinks:[{label:"Youthforia Carousel Case Study",url:"https://www.modernretail.co/technology/tiktok-is-pushing-brands-to-post-photos-instead-of-videos/"}],
+    goal:"CONVERSION via emotional brand connection. Story → trust → purchase.",
+    imageRules:"Chronological visual journey. Slide 1 = raw, humble beginning. Each slide shows growth. Final slides = where you are now (premium). The contrast between start and now = the story.",
+    products:["Heavyweight Zipped Hoodie (€46.95) — 'the one that started it all'"],
+    steps:[
+      {title:"Slide 1: The Beginning",action:"Earliest brand photo. First product, bedroom workspace, humble start. Text: 'Started in a bedroom'. Raw, unperfect.",camera:"Archive photo",angle:"Whatever you have from early days",lighting:"Doesn't matter — early days should look rough",duration:"",tip:"The more humble the beginning looks, the more impressive the journey. Don't fake it."},
+      {title:"Slide 2: First Milestone",action:"First order, first customer, first package shipped. Text: 'First order: 1 hoodie'. The humble start.",camera:"Archive photo",angle:"First product shipped",lighting:"Whatever was available",duration:"",tip:"Real photos from your actual journey. Authenticity is everything here."},
+      {title:"Slide 3: Growth",action:"Screenshot of follower growth, or collage of growth moments. Text: '77,600 followers later...' The numbers tell the story.",camera:"Screenshot or collage",angle:"N/A",lighting:"N/A",duration:"",tip:"77,600 followers from a bedroom = impressive. Let the numbers speak."},
+      {title:"Slide 4: Now",action:"Current brand: products, warehouse, premium packaging. Text: 'Now: premium streetwear, worldwide shipping'. Show how far you've come.",camera:"Current brand photos",angle:"Professional, premium feel",lighting:"Good, modern",duration:"",tip:"The contrast between slide 1 and slide 4 IS the story. Bedroom → brand."},
+      {title:"Slide 5: The Product — Full Circle",action:"Hero shot of Heavyweight Zipped Hoodie. Text: 'The hoodie that started it all — €46.95'. Connect the story back to the product.",camera:"Best product photo",angle:"Hero shot, premium",lighting:"Best possible",duration:"",tip:"The product is the hero of the story. Everything led to this."},
+      {title:"Slide 6: CTA",action:"Logo + 'Shop Now ⬇️ — Be part of the story'. Invites the viewer to join.",camera:"Canva design",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"'Be part of the story' = they're not just buying a hoodie, they're supporting a brand journey."}
+    ]
+  },
+  {
+    id:"s10",title:"Hidden Discount on Final Slide — Swipe Bait",potential:90,difficulty:1,tags:["conversion","FOMO","discount"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Product showcase + 'Swipe to the end for something special'",
+    hookNote:"BASED ON: Shopify's documented carousel tactic — hidden discount code on final slide, limited to first 15 users. Forces complete swipe-through (= algorithm boost) + creates urgency (limited codes). Each swipe = engagement signal for Spark Ad performance.",
+    textOverlay:"Slide 1: 'Our bestsellers 🔥 (swipe to the end)' — Slide 2: 'Distorted Knit — €41.95' — Slide 3: 'Heavyweight Zipped Hoodie — €46.95' — Slide 4: 'Denim Striped Barrel Jeans — €34.95' — Slide 5: '🎁 Use code TIKTOK15 for 15% off — first 50 only'",
+    cta:"Shop Now + discount code via Spark Ad",
+    why:"Shopify documented this as a high-conversion carousel tactic. The hidden discount forces 100% swipe-through (every slide viewed = algorithm boost). Limited quantity ('first 50 only') creates urgency. Your top 3 bestsellers as the content = product showcase + conversion.",
+    psychology:"Curiosity ('swipe to the end') forces engagement. Sunk cost: after swiping through 4 slides, not buying feels like wasting the effort. Exclusive discount = reward for engagement. Limited quantity = buy NOW.",
+    proof:[{brand:"Shopify carousel tactic",detail:"12-slide carousel with hidden discount on final slide. Documented conversion tactic."},{brand:"FOMO + exclusive discount",detail:"Limited codes create urgency. Exclusivity = higher conversion than open discounts."}],
+    equipment:["Product photos of top 3 bestsellers","Detail shots","Discount code graphic for final slide"],
+    caption:"swipe to the end 👀",
+    audio:"Build-up trending sound",
+    firstSlide:"Grid of 3 bestselling products. Text: 'Our bestsellers 🔥 (swipe to the end)'",
+    backedBy:"Shopify hidden discount tactic, FOMO psychology, swipe-through = algorithm boost",
+    sourceLinks:[{label:"Shopify Carousel Tactic",url:"https://www.shopify.com/blog/how-to-make-a-slideshow-on-tiktok"},{label:"Carousel Conversion Guide",url:"https://getkoro.app/blog/tiktok-slideshow"}],
+    goal:"CONVERSION via hidden discount + forced swipe-through. Algorithm boost + urgency = sales.",
+    imageRules:"Each slide = 1 bestselling product with price. Final slide = exclusive discount code + limited quantity urgency. Clean, consistent product photography throughout.",
+    products:["'Distorted' Knit (€41.95) — #1 Bestseller","Heavyweight Zipped Hoodie (€46.95) — #2 Bestseller","Denim Striped Barrel Jeans (€34.95) — #3 Bestseller"],
+    steps:[
+      {title:"Slide 1: Hook — Bestsellers + Swipe Bait",action:"Grid of your top 3 products. Text: 'Our bestsellers 🔥 (swipe to the end)'. The 'swipe to the end' creates curiosity — what's at the end?",camera:"Product grid or collage",angle:"All 3 products visible",lighting:"Clean, even",duration:"5 min",tip:"The 'swipe to the end' hook forces complete engagement. Every swipe = algorithm fuel."},
+      {title:"Slide 2: Bestseller #1 — Distorted Knit",action:"'Distorted' Knit — clean product shot or on-body. Text: '#1 Bestseller — Distorted Knit — €41.95'. Your top seller gets the spotlight.",camera:"Phone — product or on-body",angle:"Show unique pattern",lighting:"Good",duration:"",tip:"Your #1 bestseller for a reason. Let it shine."},
+      {title:"Slide 3: Bestseller #2 — Heavyweight Hoodie",action:"Heavyweight Zipped Hoodie. Text: '#2 — Heavyweight Zipped Hoodie — €46.95 — 7 colors'. Second product + price.",camera:"Phone",angle:"Product or on-body",lighting:"Good",duration:"",tip:"7 colorways = mention it. Choice = higher purchase consideration."},
+      {title:"Slide 4: Bestseller #3 — Barrel Jeans",action:"Denim Striped Barrel Jeans. Text: '#3 — Denim Striped Barrel Jeans — €34.95'. Third product at impulse price.",camera:"Phone",angle:"Show the striped barrel shape",lighting:"Good",duration:"",tip:"€34.95 = lowest price of the three. Good anchor for the discount on next slide."},
+      {title:"Slide 5: THE REWARD — Discount Code",action:"Bold graphic: '🎁 Use code TIKTOK15 for 15% off — first 50 only'. This is the payoff for swiping all the way. Limited = urgency.",camera:"Canva design — bold, eye-catching",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"'First 50 only' creates real urgency. Track the code to measure conversion directly."}
+    ]
+  },
+  {
+    id:"s11",title:"\"Fashion Killa\" Outfit Reveal Trend",potential:89,difficulty:1,tags:["conversion","trend","outfit-reveal"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Selfie/pose + 'Don't make me mad or I'll throw a fit'",
+    hookNote:"BASED ON: 'Fashion Killa' TikTok carousel trend — hundreds of millions of views. Format: slide 1 = caption setup ('throw a fit'), remaining slides = outfit reveals. Pun on 'fit' (outfit) = humor + product showcase. Trending audio = algorithm boost.",
+    textOverlay:"Slide 1: 'Don't make me mad or I'll throw a fit 😤' — Slide 2: (outfit 1 — no text) — Slide 3: (outfit 2 — no text) — Slide 4: (outfit 3 — no text) — Slide 5: 'All pieces: NEWGARMENTS — Shop Now ⬇️'",
+    cta:"Shop Now via Spark Ad",
+    why:"The 'Fashion Killa' carousel trend has hundreds of millions of views. The pun ('throw a fit' = have a tantrum / show an outfit) is instantly engaging. Trending format = algorithm boost. Product showcase disguised as a meme = zero ad resistance.",
+    psychology:"Humor = ad resistance down. The pun is universally understood on FashionTok. Each outfit reveal = product showcase without feeling like a showcase. Multiple outfits = versatility proof. Trending format = discoverability.",
+    proof:[{brand:"Fashion Killa trend",detail:"Hundreds of millions of views across TikTok. #1 fashion carousel trend."},{brand:"Meme format",detail:"Humor-based carousels = highest share rate. Shared for the joke, sells through the fit."}],
+    equipment:["3 complete outfits using NEWGARMENTS products","Confident selfie/pose for slide 1","Full outfit photos for reveals"],
+    caption:"try me 😤",
+    audio:"'Fashion Killa' trending audio",
+    firstSlide:"Confident selfie/pose. Text: 'Don't make me mad or I'll throw a fit 😤'",
+    backedBy:"Fashion Killa carousel trend (hundreds of millions of views), trending audio algorithm boost",
+    sourceLinks:[{label:"Fashion Killa Trend Examples",url:"https://www.tiktok.com/discover/fashion-killa-throw-a-fit"},{label:"Fashion Killa Carousel Format",url:"https://www.tiktok.com/discover/dont-make-me-mad-or-ill-throw-a-fit"}],
+    goal:"CONVERSION via trending meme format. Product showcase disguised as humor.",
+    imageRules:"Slide 1 = attitude/confident selfie (no product focus). Slides 2-4 = full outfit reveals wearing NEWGARMENTS. Slide 5 = product list + CTA. Each outfit must be fire.",
+    products:["Zip Hoodie Y2K — Dark Green (€42.95)","Retro Patchwork Barrel Jeans — Blue (€37.95)","Heavyweight Zipped Hoodie — Black (€46.95)","Checkered Inside Out Zipper — Gray (€43.95)"],
+    steps:[
+      {title:"Slide 1: The Setup — 'Throw a Fit'",action:"Confident selfie or attitude pose. No NEWGARMENTS product visible yet. Text: 'Don't make me mad or I'll throw a fit 😤'. The pun IS the hook.",camera:"Phone — selfie",angle:"Face/upper body, confident expression",lighting:"Good",duration:"",tip:"The attitude is key. Look like you're about to do something. The 'fit' reveal is the payoff."},
+      {title:"Slide 2: Fit #1 — Y2K Vibe",action:"Full outfit: Zip Hoodie Y2K (Dark Green) + Retro Patchwork Barrel Jeans (Blue). No text. Let the fit speak.",camera:"Phone — full body",angle:"Full outfit visible",lighting:"Natural",duration:"",tip:"This is the first 'fit' — it needs to slap. Y2K + patchwork = trendy combo."},
+      {title:"Slide 3: Fit #2 — Classic Streetwear",action:"Full outfit: Heavyweight Zipped Hoodie (Black) + Denim Striped Barrel Jeans (Blue). No text. Different vibe than fit 1.",camera:"Phone — full body",angle:"Full outfit, different pose",lighting:"Natural",duration:"",tip:"Completely different vibe than slide 2. Versatility across fits = more products showcased."},
+      {title:"Slide 4: Fit #3 — Statement Piece",action:"Full outfit: Checkered Inside Out Zipper (Gray) + Oversized Washed Blue Jeans. No text. The boldest fit.",camera:"Phone — full body",angle:"Full outfit, confident pose",lighting:"Natural",duration:"",tip:"End on the boldest, most eye-catching outfit. This is the 'save' slide."},
+      {title:"Slide 5: Product List + CTA",action:"List all products with prices. Text: 'All pieces: NEWGARMENTS — Shop Now ⬇️'. Price each item. Total the outfit.",camera:"Canva graphic",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"Listing each product + price = shopping list. Viewers screenshot this slide."}
+    ]
+  },
+  {
+    id:"s12",title:"Y2K Stars Knit — \"The Knit That Broke TikTok\"",potential:87,difficulty:1,tags:["conversion","hype","single-product"],platforms:["TikTok Spark Ad"],duration:"4 slides",
+    hook:"Close-up of Y2K Stars pattern + 'The knit that keeps selling out'",
+    hookNote:"BASED ON: SKIMS single-product viral strategy — 100M+ views, 250K units sold, 46K waitlist on ONE product. Focus ALL attention on ONE standout product with a unique visual hook. Your Y2K Stars Knitted Sweater has a visually striking star pattern = perfect for this.",
+    textOverlay:"Slide 1: 'The knit everyone's been asking about' — Slide 2: (on-body shot — no text) — Slide 3: 'Y2K Stars Knitted Sweater — €45.95' — Slide 4: 'Limited stock — Shop Now ⬇️'",
+    cta:"Shop Now via Spark Ad",
+    why:"SKIMS proved that focusing ALL marketing energy on ONE standout product = maximum virality. Their slip dress hit 100M+ views and sold 250K units. Your Y2K Stars Knit has the visual distinctiveness to be YOUR 'one product' viral moment.",
+    psychology:"Single product focus = no choice paralysis. The unique star pattern = visually memorable. 'Everyone's been asking' = social proof. Limited stock = scarcity/FOMO. SKIMS created a 46K waitlist with this exact approach.",
+    proof:[{brand:"SKIMS",detail:"100M+ views on ONE product. 250K units sold. 46K waitlist. Single-product focus strategy."},{brand:"Viral product strategy",detail:"One hero product becomes brand identity. All attention on one item = maximum conversion."}],
+    equipment:["Y2K Stars Knitted Sweater — close-up of star pattern","On-body lifestyle shots","Product flat lay","Logo + scarcity CTA"],
+    caption:"that one 🌟",
+    audio:"Hype trending sound",
+    firstSlide:"Macro close-up of the Y2K stars pattern. Text: 'The knit everyone's been asking about'",
+    backedBy:"SKIMS single-product viral strategy (100M+ views, 250K units, 46K waitlist)",
+    sourceLinks:[{label:"SKIMS Viral Product Strategy",url:"https://www.newdaystudio.co/blog/tiktok-brands-that-went-viral"}],
+    goal:"CONVERSION via single-product viral focus. All attention on ONE standout item.",
+    imageRules:"Every slide = the Y2K Stars Knitted Sweater from a different angle/context. The star pattern must be clearly visible in every shot. No other products — ONLY this one.",
+    products:["Y2K Stars Knitted Sweater — White (€45.95)"],
+    steps:[
+      {title:"Slide 1: Pattern Close-Up — The Visual Hook",action:"Macro close-up of the Y2K star pattern on the sweater. The pattern is visually unique and eye-catching. Text: 'The knit everyone's been asking about'. The pattern stops the scroll.",camera:"Phone — macro",angle:"Close-up of star pattern detail",lighting:"Good light to show pattern clearly",duration:"",tip:"The star pattern IS the hook. Make it big, clear, detailed. SKIMS used the product's unique look as the entire marketing strategy."},
+      {title:"Slide 2: On-Body — The Look",action:"Person wearing the Y2K Stars Knitted Sweater, styled. Full outfit. No text — let the look speak. The sweater is the star.",camera:"Phone — friend-shot or mirror",angle:"Full outfit, sweater clearly visible",lighting:"Natural, good",duration:"",tip:"Style it well. The on-body shot is where the viewer imagines wearing it."},
+      {title:"Slide 3: Product + Price",action:"Clean product shot. Text: 'Y2K Stars Knitted Sweater — €45.95'. Name + price, clear and direct.",camera:"Phone — flat lay or hanger",angle:"Full product visible",lighting:"Clean",duration:"",tip:"After the visual hook + on-body, the price is the only thing standing between desire and purchase."},
+      {title:"Slide 4: Scarcity + CTA",action:"Text: 'Limited stock — Shop Now ⬇️'. Scarcity trigger + direct CTA. SKIMS created a 46K waitlist with this approach.",camera:"Canva design",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"'Limited stock' = real urgency. If you can track actual stock levels, mention the number."}
+    ]
+  },
+  {
+    id:"s13",title:"BUY 2 GET 30% OFF — Bundle Deal Showcase",potential:94,difficulty:1,tags:["conversion","bundle","discount"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Stack of products + 'The deal nobody's talking about'",
+    hookNote:"BASED ON: Your existing BUY 2 GET 30% OFF / BUY 3 GET 40% OFF promotion. COMFRT's live-shopping format uses limited-time discounts as the primary conversion driver. Combine your existing deal with visual product stacking for maximum AOV.",
+    textOverlay:"Slide 1: 'The deal nobody's talking about 👀' — Slide 2: 'BUY 2 → 30% OFF' — Slide 3: 'BUY 3 → 40% OFF' — Slide 4: 'BUY 4 → 40% OFF + FREE GIFT 🎁' — Slide 5: 'Shop Now — deals end when stock runs out'",
+    cta:"Shop Now via Spark Ad",
+    why:"Your existing tiered discount (30%/40%/40%+gift) is a strong conversion driver but needs visual presentation. COMFRT drives millions through limited-time discounts during live streams. A carousel showcasing the escalating deal creates urgency at each tier.",
+    psychology:"Escalating discounts: each tier is MORE generous = the viewer wants the BEST deal. 'BUY 4 + FREE GIFT' feels like the ultimate win. Loss aversion: not getting the better discount = leaving money on table. Higher AOV = more revenue per customer.",
+    proof:[{brand:"COMFRT",detail:"$23.31M using limited-time discounts as primary conversion driver."},{brand:"Tiered discounts",detail:"Escalating discount tiers increase AOV by 35-50% vs single discount."}],
+    equipment:["Photos of 2, 3, 4 products stacked/grouped","Price calculation graphics for each tier","Product photos of bestsellers","Logo + urgency CTA"],
+    caption:"you're welcome 🤝",
+    audio:"Upbeat trending sound",
+    firstSlide:"Stack of NEWGARMENTS products (hoodie, knit, jeans). Text: 'The deal nobody's talking about 👀'",
+    backedBy:"COMFRT discount model ($23.31M), tiered discount psychology (35-50% AOV increase)",
+    sourceLinks:[{label:"COMFRT Sales Model",url:"https://www.tiktok.com/@comfrt"},{label:"Tiered Discount Strategy",url:"https://newgarments.store/nl/collections/warehouse-sale"}],
+    goal:"CONVERSION + maximum AOV. Escalating discounts drive multi-item orders.",
+    imageRules:"Each slide = more products stacked. Visual escalation from 2 → 3 → 4 items. Price calculations visible. The FREE GIFT on tier 4 = the cherry on top.",
+    products:["'Distorted' Knit (€41.95)","Heavyweight Zipped Hoodie (€46.95)","Denim Striped Barrel Jeans (€34.95)","Retro Patchwork Barrel Jeans (€37.95)"],
+    steps:[
+      {title:"Slide 1: Hook — The Deal",action:"Stack/pile of NEWGARMENTS products. Text: 'The deal nobody's talking about 👀'. Create curiosity about what the deal is.",camera:"Phone — pile of products",angle:"Above or 3/4 showing multiple items",lighting:"Clean",duration:"",tip:"The hook implies an INSIDER deal. Curiosity + deal = irresistible swipe."},
+      {title:"Slide 2: Tier 1 — BUY 2 GET 30% OFF",action:"2 products together (e.g., Distorted Knit + Heavyweight Hoodie). Text: 'BUY 2 → 30% OFF' + original price → discounted price. Math visible.",camera:"Phone — 2 products",angle:"Both products visible",lighting:"Clean",duration:"",tip:"Show the actual math: €41.95 + €46.95 = €88.90 → 30% OFF = €62.23. The saving is real."},
+      {title:"Slide 3: Tier 2 — BUY 3 GET 40% OFF",action:"3 products together. Text: 'BUY 3 → 40% OFF'. Even bigger discount = even more value.",camera:"Phone — 3 products",angle:"All 3 visible",lighting:"Clean",duration:"",tip:"The escalation from 30% to 40% makes the viewer think: 'if I'm buying 2, I might as well get 3.'"},
+      {title:"Slide 4: Tier 3 — THE ULTIMATE DEAL",action:"4 products + FREE GIFT visual. Text: 'BUY 4 → 40% OFF + FREE GIFT 🎁'. The best deal of all. This is the 'I need this' slide.",camera:"Phone or Canva — 4 products + gift icon",angle:"All products + gift visual",lighting:"Clean, celebratory",duration:"",tip:"The FREE GIFT is the cherry on top. After seeing 30% → 40% → 40%+gift, tier 3 is the obvious choice."},
+      {title:"Slide 5: CTA — Urgency Close",action:"Logo + 'Shop Now — deals end when stock runs out ⬇️'. The urgency is real: your site says 'WEBSITE WILL BE CLOSED ONCE SOLD OUT'.",camera:"Canva design",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"The urgency ties to your actual business model (limited stock). It's real, not manufactured."}
+    ]
+  },
+  {
+    id:"s14",title:"\"Structure\" Knit Texture Showcase — ASMR Style",potential:85,difficulty:1,tags:["conversion","texture","aesthetic"],platforms:["TikTok Spark Ad"],duration:"4 slides",
+    hook:"Extreme close-up of knit texture + 'Feel this through your screen'",
+    hookNote:"BASED ON: Product texture/ASMR carousel trend on FashionTok. Close-up fabric shots with 'satisfying' texture = high save rate + purchase curiosity. Your 'Structure' Graphic Knitted Sweater has a tactile, 3D texture that photographs incredibly well.",
+    textOverlay:"Slide 1: 'Feel this through your screen' — Slide 2: 'Structure Graphic Knitted Sweater' — Slide 3: 'Heavyweight knit — €46.95' — Slide 4: '2 colors available — Shop Now ⬇️'",
+    cta:"Shop Now via Spark Ad",
+    why:"Texture/ASMR content is huge on TikTok. Close-up fabric shots trigger a 'I need to feel this' response. Your 'Structure' knit has a 3D graphic pattern that is uniquely photogenic. This format turns fabric texture into desire.",
+    psychology:"Tactile curiosity: when people SEE interesting texture, they WANT to feel it. The only way to feel it = buy it. Close-up macro photography makes the texture feel 3D. Saves = 'I want to come back to this' = algorithm boost.",
+    proof:[{brand:"Texture/ASMR TikTok",detail:"Fabric texture close-ups = high save rate. 'I need to feel this' response."},{brand:"Product photography",detail:"TikTok data: showing product in use = +175% conversion. Close-ups of construction = trust."}],
+    equipment:["'Structure' Graphic Knitted Sweater — macro close-ups","On-body styled shots","Both colorways (Black + Moss Green)","Logo + CTA"],
+    caption:"trust the texture",
+    audio:"Soft/satisfying ASMR trending sound",
+    firstSlide:"Extreme macro close-up of the 3D graphic knit pattern. Text: 'Feel this through your screen'",
+    backedBy:"Texture/ASMR content trend, tactile curiosity psychology, product close-up = +175% conversion",
+    sourceLinks:[{label:"Texture Showcase Fashion TikTok",url:"https://www.tiktok.com/discover/satisfying-fabric-texture"},{label:"Product Photography Impact",url:"https://nightjar.so/blog/product-photography-for-tiktok-shop-what-sells-vs-what-scrolls"}],
+    goal:"CONVERSION via tactile curiosity. 'I need to FEEL this' → buy.",
+    imageRules:"Slide 1 = EXTREME close-up (macro). Show every fiber, every knit pattern detail. Must look 3D and tactile. Slides 2-3 = progressively zoom out to show full product. Slide 4 = CTA.",
+    products:["'Structure' Graphic Knitted Sweater — Black (€46.95)","'Structure' Graphic Knitted Sweater — Moss Green (€46.95)"],
+    steps:[
+      {title:"Slide 1: Macro Texture — The Hook",action:"EXTREME close-up of the 'Structure' knit pattern. Fill the entire frame with texture. Text: 'Feel this through your screen'. The texture is the hook.",camera:"Phone — macro mode, as close as possible",angle:"Directly on fabric surface",lighting:"Angled light to show 3D texture and shadows",duration:"",tip:"Use angled lighting to create shadows in the knit pattern. This makes the texture look 3D and touchable."},
+      {title:"Slide 2: Product Reveal",action:"Zoom out to show the full sweater. Text: 'Structure Graphic Knitted Sweater'. Now the viewer sees the complete product.",camera:"Phone — product shot",angle:"Full product visible",lighting:"Good",duration:"",tip:"The transition from macro to full product = satisfying reveal."},
+      {title:"Slide 3: On-Body + Price",action:"Person wearing it, styled. Text: 'Heavyweight knit — €46.95'. Show how it looks IRL.",camera:"Phone — friend-shot",angle:"Full outfit",lighting:"Natural",duration:"",tip:"After the texture hook, seeing it on a real person completes the picture."},
+      {title:"Slide 4: Both Colors + CTA",action:"Both colorways (Black + Moss Green) side by side. Text: '2 colors available — Shop Now ⬇️'.",camera:"Product photo or flat lay",angle:"Both colors visible",lighting:"Clean",duration:"",tip:"2 colors = choice without overwhelm. CTA after texture + on-body = ready to buy."}
+    ]
+  },
+  {
+    id:"s15",title:"\"10 Comments Get a Surprise\" Engagement Bait + Showcase",potential:93,difficulty:1,tags:["conversion","engagement","own-proven"],platforms:["TikTok Spark Ad"],duration:"5 slides",
+    hook:"Product collage + 'The first 10 comments get a surprise :)'",
+    hookNote:"BASED ON: Your own #3 post — 668,600 views, 1,486 likes. Caption: 'The first 10 comments will get a surprise :)'. This drove 11 comments (high for your account) and massive views. The engagement bait + product showcase = Spark Ad algorithm fuel. Every comment = more reach.",
+    textOverlay:"Slide 1: 'New drops just landed 🔥' — Slide 2: 'Heavyweight Zipped Hoodie — 7 colors — €46.95' — Slide 3: 'Distorted Knit — €41.95' — Slide 4: 'Denim Striped Barrel Jeans — €34.95' — Slide 5: 'BUY 2 GET 30% OFF — Shop Now ⬇️'",
+    cta:"Shop Now via Spark Ad",
+    why:"Your 'first 10 comments' caption got 668K views on its FIRST use. Comments = direct algorithm fuel for Spark Ads. More comments = more reach = more conversions. Combined with product showcase of your top 3 bestsellers + your existing discount deal.",
+    psychology:"Engagement bait: 'surprise' creates curiosity + motivation to comment. Every comment = Spark Ad algorithm signal. The product showcase ensures the engagement is paired with purchase opportunity. Comments from viewers attract more viewers (social proof).",
+    proof:[{brand:"NEWGARMENTS own post #3",detail:"668,600 views with 'first 10 comments get a surprise' caption. Your 3rd best post."},{brand:"Comment algorithm",detail:"Every comment = engagement signal. For Spark Ads, comments directly improve ad performance and reach."}],
+    equipment:["Product photos of top 3 bestsellers","On-body shots","Discount deal graphic","Logo + CTA"],
+    caption:"the first 10 comments get a surprise :)",
+    audio:"Upbeat trending sound",
+    firstSlide:"Product collage of top 3 bestsellers. Text: 'New drops just landed 🔥'",
+    backedBy:"Your own #3 post (668K views), comment algorithm = Spark Ad fuel",
+    sourceLinks:[{label:"YOUR #3 POST (668K views)",url:"https://www.tiktok.com/@newgarmentsclo"}],
+    goal:"ENGAGEMENT + CONVERSION. Comments fuel Spark Ad reach, product showcase drives purchases.",
+    imageRules:"Clean product showcase format. Each bestseller gets its own slide with price. Final slide = discount deal + CTA. Professional-looking but not overly polished.",
+    products:["Heavyweight Zipped Hoodie (€46.95)","'Distorted' Knit (€41.95)","Denim Striped Barrel Jeans (€34.95)"],
+    steps:[
+      {title:"Slide 1: Hook — New Drops",action:"Collage or grid of your top 3 products. Text: 'New drops just landed 🔥'. Visual impact of multiple products.",camera:"Product photos in grid",angle:"Clean product shots",lighting:"Good, consistent",duration:"5 min",tip:"The caption 'first 10 comments get a surprise' drove 668K views for you. Use it again."},
+      {title:"Slide 2: Bestseller #1 — Hoodie",action:"Heavyweight Zipped Hoodie — show all 7 colorways or best color on-body. Text: 'Heavyweight Zipped Hoodie — 7 colors — €46.95'.",camera:"Phone",angle:"On-body or flat lay",lighting:"Good",duration:"",tip:"Your #2 bestseller with 7 color options = high chance someone finds their color."},
+      {title:"Slide 3: Bestseller #2 — Knit",action:"'Distorted' Knit on-body or product shot. Text: 'Distorted Knit — €41.95'. Your #1 bestseller.",camera:"Phone",angle:"Showing unique distorted pattern",lighting:"Good",duration:"",tip:"#1 bestseller. The unique pattern is the visual hook."},
+      {title:"Slide 4: Bestseller #3 — Jeans",action:"Denim Striped Barrel Jeans. Text: 'Denim Striped Barrel Jeans — €34.95'. Impulse price point.",camera:"Phone",angle:"Show barrel shape + stripes",lighting:"Good",duration:"",tip:"€34.95 = impulse buy territory. Lowest price of the three = easy first purchase."},
+      {title:"Slide 5: Deal + CTA",action:"Text: 'BUY 2 GET 30% OFF — Shop Now ⬇️'. The discount after seeing 3 products = 'which 2 should I get?'.",camera:"Canva design",angle:"N/A",lighting:"N/A",duration:"5 min",tip:"After 3 products, the viewer is thinking 'which one?'. The BUY 2 discount answers: 'get two.'"}
+    ]
+  }
+];
+const TIKTOK_ANALYSIS = {
+  account:{handle:"@newgarmentsclo",followers:"77,600",hearts:"1,600,000",posts:"1,091"},
+  slideVsVideo:[
+    {metric:"Avg Views",slideshow:"326,117",video:"73,718",advantage:"4.4x more views"},
+    {metric:"Avg Likes",slideshow:"1,674",video:"122",advantage:"13.7x more likes"},
+    {metric:"Avg Comments",slideshow:"22.3",video:"1.3",advantage:"17x more comments"},
+    {metric:"Avg Shares",slideshow:"58.7",video:"8.7",advantage:"6.7x more shares"},
+    {metric:"Avg Saves",slideshow:"427",video:"41.4",advantage:"10.3x more saves"},
+    {metric:"Avg Engagement Rate",slideshow:"0.98%",video:"0.51%",advantage:"1.9x higher ER"}
+  ],
+  firstSlideRanking:[
+    {type:"Person in outfit, real setting",performance:"Highest purchase intent (+72%)",why:"Looks like a friend's post on the FYP. Combines +72% purchase intent (person) with product visibility. Phone-shot, not studio."},
+    {type:"Bold text + moody photo",performance:"Highest recall (+48%)",why:"Text overlay = +48% brand recall, +11% purchase intent. 'What do you want for your birthday?' stops the scroll through curiosity."},
+    {type:"B&W silhouette / dark aesthetic",performance:"Most scroll-stopping",why:"Stands out in colorful FYP feed. Streetwear visual language. Contrast with all the videos around it = pattern interruption."},
+    {type:"Candid/walking shot",performance:"Most native feel",why:"Movement in a photo = unexpected on FYP. Feels like a real moment. Not like an ad. No ad blindness trigger."},
+    {type:"Product-only flat lay",performance:"Lowest engagement",why:"+138% ad recall BUT triggers ad blindness on FYP. Looks like catalog/Amazon. Only for established brands."}
+  ],
+  captionResearch:[
+    {category:"Identity — Fits the FYP (Highest virality)",examples:"'School fit', 'Winter fit', 'Fit check', 'The uniform'",why:"On the FYP people scroll through content about WHO they are. Identity captions fit right in. Caption locked in Spark Ads = must sound native."},
+    {category:"Vibe — Sounds like a friend (Most shares)",examples:"'nothing..', 'iykyk', 'lately', 'the vision'",why:"66% of consumers prefer friend/creator posts. On the FYP your caption must sound like a person, not a brand. Triggers sharing."},
+    {category:"Save/Utility — Bookmark reflex (Most saves)",examples:"'Let me save your fashion style', '1 hoodie. 7 days.', 'Save for later'",why:"Saves = #1 TikTok algorithm signal. >3% save rate = strong, >5% = exceptional. People save slideshows as reference content."},
+    {category:"Question — Lowest friction (Most comments)",examples:"'Which one? 1, 2, 3?', 'Rate this fit 1-10', 'Would you wear this?'",why:"Typing a number = lowest friction comment. Every comment = engagement signal the algorithm rewards. Carousels already get 2.9x more comments."}
+  ],
+  brandCaseStudies:[
+    {brand:"Vitamasques",result:"2x CTR, CPA only 30% of video, 3x CVR",format:"Carousel ads vs video ads"},
+    {brand:"Matalan (clothing)",result:"ROAS £15+, CVR peaked at 28.52%",format:"Carousel ads for full-funnel"},
+    {brand:"Soli",result:"-38% CPI, +178% CTR, +1055% conversions",format:"Carousel image ads"},
+    {brand:"Fashion Nova",result:"-40% CPA",format:"Organic → Spark Ads pipeline"},
+    {brand:"SKIMS",result:"250K+ units sold, 46K waitlist",format:"Weekly micro-drops + UGC"}
+  ],
+  problems:[
+    {title:"First slide: Person in outfit stops the FYP scroll",detail:"Showing a person = +72% purchase intent (TikTok Lumen Study). Showing product = +138% ad recall. BEST: person WITH product. Your slideshow competes with organic content on the FYP — must look like a friend's post."},
+    {title:"Phone-shot ALWAYS wins on the FYP",detail:"63% chance of beating studio for purchases (TikTok official). UGC = +55% ROI vs non-UGC. Unbranded UGC = another +19% better. On the FYP = native feel is everything."},
+    {title:"Caption is LOCKED in Spark Ads — keep it simple",detail:"Caption is EXACTLY copied from organic post. CANNOT be edited. Native captions: -37% CPA, +69% CVR. 'School fit' works both organic and paid. '460 GSM hoodie' works nowhere."},
+    {title:"Saves = #1 signal on the FYP",detail:"Slideshows = 'reference content' people save. Save rate >3% = strong, >5% = exceptional. Your account: 427 avg saves per slideshow vs 41 for video (10.3x more). Saves trigger broader reach."},
+    {title:"10+ creatives = 3x more purchase intent",detail:"Campaigns with 10+ unique creatives → 3.0x purchase intent vs <5 creatives (TikTok data). 5+ variations = 2.3x better ROAS. Creative fatigue after 3-5 days. Volume > perfection."},
+    {title:"Slideshows stop the scroll through pattern interruption",detail:"FYP = full of videos. A slideshow (still image) AUTOMATICALLY stands out through contrast. Every swipe = active engagement signal. 2.5x higher interaction than auto-play. Your data: 4.4x more views than video."}
+  ],
+  rules:[
+    "FIRST SLIDE: Person in outfit, real setting, phone-shot. You compete with organic content on the FYP — must look like a friend's post.",
+    "CAPTION: 2-5 words, native tone. LOCKED in Spark Ads. Must work as organic AND as paid ad on someone's FYP.",
+    "PHOTOS: Phone-shot only (63% beats studio). Film grain, warm tones. Test: 'could a creator have posted this?'",
+    "AUDIO: Trending sound ALWAYS. Beat-sync transitions. Sound = discovery on FYP.",
+    "SLIDES: 3-7 optimal. Every swipe = engagement signal for algorithm. Target 20%+ swipe-through rate.",
+    "VOLUME: 10-15 variations per week. 10+ unique creatives = 3x more purchase intent. Creative fatigue after 3-5 days.",
+    "PIPELINE: Post organic → monitor saves + comments (24-48h) → boost top 2-3 as Spark Ads → pause after 3-5 days.",
+    "NEVER: Specs in caption. Marketing words. Studio shots. Logo-first slides. White background product photos."
+  ],
+  calendar:[
+    {week:"First Slide Types (What to Shoot)",days:[
+      {day:"Fit Check",concept:"Mirror selfie showing full outfit. Zero text. Outfit IS the hook.",strategy:"Most native format. Highest CTR."},
+      {day:"Bold Text",concept:"Relatable question or statement on moody background photo.",strategy:"Highest comment rate. Dialogue trigger."},
+      {day:"B&W / Silhouette",concept:"Dark aesthetic silhouette or high-contrast B&W shot.",strategy:"Stands out in colorful feed. Streetwear visual language."},
+      {day:"Candid / Walking",concept:"Person walking in outfit. Movement creates energy.",strategy:"Feels like real life, not photoshoot."},
+      {day:"Aesthetic Lifestyle",concept:"Curated mood photo. Warm tones. Aspirational.",strategy:"Highest save rate. Pinterest energy."}
+    ]},
+    {week:"Caption Rotation (Avoid Fatigue)",days:[
+      {day:"Identity",concept:"'School fit', 'Winter fit', 'Fit check', 'The uniform'",strategy:"Virality — WHO you are, not WHAT the product is"},
+      {day:"Save/Utility",concept:"'Let me save your style', 'Save for later', '1 hoodie. 7 days.'",strategy:"Highest saves — bookmark reflex"},
+      {day:"Question",concept:"'Which one? 1, 2, 3?', 'Rate this fit 1-10', 'Would you wear this?'",strategy:"Most comments — low friction engagement"},
+      {day:"Vibe",concept:"'nothing..', 'iykyk', 'the vision', 'lately'",strategy:"Most shares — sounds like a friend not a brand"},
+      {day:"Permission",concept:"'Your sign to cop this', 'POV: you actually have style'",strategy:"Conversion push — permission to purchase"}
+    ]},
+    {week:"Spark Ads Pipeline (Weekly)",days:[
+      {day:"Mon-Wed",concept:"Post 5-8 organic slideshows across different formats + captions",strategy:"Volume testing phase"},
+      {day:"Thu",concept:"Check: which got most saves + comments? Which first slide worked?",strategy:"Data review — saves > views"},
+      {day:"Fri",concept:"Boost top 2-3 as Spark Ads with conversion objective",strategy:"Scale winners only"},
+      {day:"Weekend",concept:"Shoot new content. Try 1-2 new first slide types + trending sounds",strategy:"Production + trend scouting"},
+      {day:"Next Mon",concept:"Pause underperformers (3-5 day fatigue). Fresh creative round.",strategy:"Iterate and refresh"}
+    ]},
+    {week:"Currently Trending Sounds (March 2026)",days:[
+      {day:"Primadonna Girl",concept:"Marina — 2-slide glow-up format",strategy:"Brand evolution / before-after"},
+      {day:"Boom Clap",concept:"Charli XCX — text reveal on every beat drop",strategy:"Text sync storytelling"},
+      {day:"ANTI track",concept:"Rihanna — 'Sets with me' product flex",strategy:"Product showcase carousel"},
+      {day:"Hard Times",concept:"Paramore — relatable problems carousel",strategy:"Humor + community building"},
+      {day:"Kiss It Better",concept:"Rihanna — seasonal contrast / lifestyle",strategy:"Aesthetic mood carousel"}
+    ]},
+    {week:"Brand Case Studies (Proof It Works)",days:[
+      {day:"Vitamasques",concept:"Carousel: 2x CTR, CPA only 30% of video, 3x CVR",strategy:"Carousel ads outperform video dramatically"},
+      {day:"Matalan",concept:"Clothing brand: ROAS £15+, CVR 28.52%",strategy:"Carousels for full-funnel conversion"},
+      {day:"Soli",concept:"-38% CPI, +178% CTR, +1055% conversions",strategy:"Image carousel ads at scale"},
+      {day:"Fashion Nova",concept:"-40% CPA with organic → Spark Ads pipeline",strategy:"Post organic, boost winners"},
+      {day:"SKIMS",concept:"250K+ units sold, 46K waitlist from weekly drops",strategy:"Volume + UGC + micro-drops"}
+    ]}
+  ]
+};
+
+const FIRST_SLIDE_STRATEGIES = [
+  {name:"Moody B&W Silhouette + Dialogue Text",rank:1,metric:"Highest Aesthetic Impact",example:"Dark silhouette photo with 'What do you want for your birthday?' text. Moody, cinematic, mysterious.",why:"B&W silhouette trend is CURRENTLY trending. Dialogue text creates curiosity. The combination = peak streetwear aesthetic on TikTok right now.",usedBy:"Streetwear creators, dark aesthetic accounts, CapCut 'Black edit' (39K+ uses)"},
+  {name:"Bold Text on Product Photo (Beat-Synced)",rank:2,metric:"Highest Replay Rate",example:"Product photo with short bold text ('You asked for heavyweight') timed to land on the first beat of the song.",why:"Beat-synced text is satisfying. First beat = first text = instant engagement. Viewers replay to catch all the text = more views per person.",usedBy:"Boom Clap trend (March 2026), fashion product carousels"},
+  {name:"Relatable Setup (Meme/Text First)",rank:3,metric:"Highest Swipe-Through",example:"Bold text on simple background: 'me saying I don't need any more hoodies' — sets up the punchline carousel.",why:"Relatable text hooks the viewer into the story. They MUST swipe to see the punchline. Swipe-through rate = algorithm signal.",usedBy:"Twist-ending carousels, meme-format slideshows"},
+  {name:"Curated Aesthetic Image (Mood Board)",rank:4,metric:"Highest Save Rate",example:"Warm, aspirational lifestyle photo with 'More of this in 2026' text. Pinterest-board energy.",why:"Mood board slides get saved as inspo. Save = #1 algorithm signal. Aspirational imagery creates desire without selling.",usedBy:"'More of this in 2026' trend, quiet flex accounts, lifestyle carousels"},
+  {name:"Full Outfit on Person (Fit Check)",rank:5,metric:"Most Native Format",example:"Mirror selfie or friend photo showing full outfit. Zero text. The outfit IS the hook.",why:"The most TikTok-native fashion format. Bypasses ad detection entirely. Person in outfit = instant identification.",usedBy:"#fitcheck (billions of views), streetwear community, creator content"}
+];
+// ── State ──
+let role = null;
+let completedIds = JSON.parse(localStorage.getItem('ng_done') || '[]');
+let currentIdea = null;
+let shootStep = 0;
+
+function saveState() { localStorage.setItem('ng_done', JSON.stringify(completedIds)); }
+
+function getIdeas() { return role === 'faolo' ? FAOLO_IDEAS : role === 'jerson' ? JERSON_IDEAS : SLIDESHOW_IDEAS; }
+
+function updateProgress() {
+  const ideas = getIdeas();
+  const done = ideas.filter(i => completedIds.includes(i.id)).length;
+  const pct = Math.round((done / ideas.length) * 100);
+  document.getElementById('pfill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = `${done} of ${ideas.length} done`;
+}
+
+// ── Role Select ──
+function initRoleCounts() {
+  const fd = FAOLO_IDEAS.filter(i => completedIds.includes(i.id)).length;
+  const jd = JERSON_IDEAS.filter(i => completedIds.includes(i.id)).length;
+  const md = SLIDESHOW_IDEAS.filter(i => completedIds.includes(i.id)).length;
+  document.getElementById('faolo-count').textContent = `${FAOLO_IDEAS.length} tasks · ${fd} done`;
+  document.getElementById('jerson-count').textContent = `${JERSON_IDEAS.length} tasks · ${jd} done`;
+  document.getElementById('max-count').textContent = `${SLIDESHOW_IDEAS.length} concepts · ${md} done`;
+}
+
+function selectRole(r) {
+  role = r;
+  document.getElementById('role-screen').style.display = 'none';
+  document.getElementById('topbar').style.display = 'flex';
+  document.getElementById('main').classList.add('active');
+  const roleLabels = {faolo:'Videographer',jerson:'Editor',max:'Slideshow Strategist'};
+  const roleIcons = {faolo:'🎬 Faolo',jerson:'✂️ Jerson',max:'📸 Max'};
+  document.getElementById('topbar-role').textContent = '/ ' + roleLabels[r];
+  document.getElementById('topbar-user').textContent = roleIcons[r];
+  showOverview();
+}
+
+function switchRole() {
+  role = null;
+  document.getElementById('role-screen').style.display = 'flex';
+  document.getElementById('topbar').style.display = 'none';
+  document.getElementById('main').classList.remove('active');
+  initRoleCounts();
+}
+
+// ── Overview ──
+function showOverview() {
+  const ov = document.getElementById('overview');
+  document.getElementById('detail').className = 'detail';
+  document.getElementById('shoot').className = 'shoot';
+  ov.style.display = 'block';
+  updateProgress();
+  window.scrollTo(0, 0);
+
+  const ideas = getIdeas().sort((a, b) => b.potential - a.potential);
+  const names = {faolo:'Faolo',jerson:'Jerson',max:'Max'};
+  const name = names[role];
+  const roleDescs = {
+    faolo:"These are your shoot briefs. Each one has everything you need: camera angles, lighting, step-by-step instructions, and edit notes. Click any idea to see the full brief, then hit 'Start Shooting' for guided mode.",
+    jerson:"These are your edit tasks. You'll take Faolo's raw footage and create extra content from it — different formats, different hooks, different platforms. Click any task for the full brief with step-by-step instructions.",
+    max:"15 conversion-optimized slideshow concepts for Spark Ads on the FYP. Every concept = complete funnel: Hook → Problem → Solution → Price → CTA. Based on proven frameworks (PAS, AIDA, price anchoring). Data: Vitamasques 3x CVR, Matalan 28% CVR, Soli +1055% conversions. Pipeline: post organic → monitor saves → boost winners as Spark Ads."
+  };
+  const roleDesc = roleDescs[role];
+
+  let analysisHTML = '';
+  if (role === 'max') {
+    const a = TIKTOK_ANALYSIS;
+    analysisHTML = `
+    <div style="margin-bottom:32px">
+      <!-- Account Stats -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px">
+        <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px;text-align:center">
+          <div style="font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Followers</div>
+          <div style="font-size:24px;font-weight:800;color:var(--green)">${a.account.followers}</div>
+        </div>
+        <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px;text-align:center">
+          <div style="font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Total Hearts</div>
+          <div style="font-size:24px;font-weight:800;color:var(--pink)">${a.account.hearts}</div>
+        </div>
+        <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px;text-align:center">
+          <div style="font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Total Posts</div>
+          <div style="font-size:24px;font-weight:800;color:var(--blue)">${a.account.posts}</div>
+        </div>
+        <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px;text-align:center">
+          <div style="font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Handle</div>
+          <div style="font-size:16px;font-weight:700;color:var(--cyan)">${a.account.handle}</div>
+        </div>
+      </div>
+
+      <!-- Slideshow vs Video Toggle -->
+      <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;margin-bottom:16px">
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:16px;color:var(--green)">SLIDESHOW vs VIDEO Performance (Last 31 Posts — Spark Ads)</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <tr style="border-bottom:1px solid var(--bd)">
+            <th style="text-align:left;padding:8px;color:var(--t3)">Metric</th>
+            <th style="text-align:center;padding:8px;color:var(--green)">Slideshows</th>
+            <th style="text-align:center;padding:8px;color:var(--t3)">Videos</th>
+            <th style="text-align:right;padding:8px;color:var(--yellow)">Advantage</th>
+          </tr>
+          ${a.slideVsVideo.map(r=>`<tr style="border-bottom:1px solid var(--bd)">
+            <td style="padding:8px;font-weight:600">${r.metric}</td>
+            <td style="text-align:center;padding:8px;color:var(--green);font-weight:700">${r.slideshow}</td>
+            <td style="text-align:center;padding:8px;color:var(--t3)">${r.video}</td>
+            <td style="text-align:right;padding:8px;color:var(--yellow);font-weight:700">${r.advantage}</td>
+          </tr>`).join('')}
+        </table>
+      </div>
+
+      <!-- First Slide Ranking -->
+      <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;margin-bottom:16px">
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:16px;color:var(--purple)">FIRST SLIDE — What Stops the Scroll on the FYP (Ranked)</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <tr style="border-bottom:1px solid var(--bd)">
+            <th style="text-align:left;padding:8px;color:var(--t3)">#</th>
+            <th style="text-align:left;padding:8px;color:var(--purple)">First Slide Type</th>
+            <th style="text-align:center;padding:8px;color:var(--green)">Performance</th>
+            <th style="text-align:left;padding:8px;color:var(--t3)">Why</th>
+          </tr>
+          ${a.firstSlideRanking.map((r,i)=>`<tr style="border-bottom:1px solid var(--bd)">
+            <td style="padding:8px;font-weight:700;color:${i===0?'var(--green)':i===a.firstSlideRanking.length-1?'var(--orange)':'var(--t2)'}">${i+1}</td>
+            <td style="padding:8px;font-weight:600">${r.type}</td>
+            <td style="text-align:center;padding:8px;color:var(--green);font-weight:600;font-size:11px">${r.performance}</td>
+            <td style="padding:8px;font-size:11px;color:var(--t2)">${r.why}</td>
+          </tr>`).join('')}
+        </table>
+      </div>
+
+      <!-- Caption Research -->
+      <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;margin-bottom:16px">
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:16px;color:var(--cyan)">CAPTIONS — What Works on the FYP as Spark Ad</h3>
+        ${a.captionResearch.map(c=>`<div style="margin-bottom:12px;padding:12px;background:var(--s2);border-radius:8px">
+          <div style="font-weight:700;margin-bottom:4px;color:var(--cyan)">${c.category}</div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:4px">${c.examples}</div>
+          <div style="font-size:11px;color:var(--t2)">${c.why}</div>
+        </div>`).join('')}
+      </div>
+
+      <!-- Brand Case Studies -->
+      <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;margin-bottom:16px">
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:16px;color:var(--yellow)">BRAND CASE STUDIES — Carousel Spark Ads Results</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <tr style="border-bottom:1px solid var(--bd)">
+            <th style="text-align:left;padding:8px;color:var(--t3)">Brand</th>
+            <th style="text-align:left;padding:8px;color:var(--yellow)">Result</th>
+            <th style="text-align:right;padding:8px;color:var(--t3)">Format</th>
+          </tr>
+          ${a.brandCaseStudies.map(b=>`<tr style="border-bottom:1px solid var(--bd)">
+            <td style="padding:8px;font-weight:700">${b.brand}</td>
+            <td style="padding:8px;color:var(--green);font-weight:600">${b.result}</td>
+            <td style="padding:8px;text-align:right;color:var(--t3);font-size:11px">${b.format}</td>
+          </tr>`).join('')}
+        </table>
+      </div>
+
+      <!-- Problems / Key Insights -->
+      <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;margin-bottom:16px">
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:16px;color:var(--orange)">KEY FINDINGS — Spark Ads on the FYP</h3>
+        ${a.problems.map(p=>`<div style="margin-bottom:12px;padding:12px;background:var(--obg);border-radius:8px">
+          <div style="font-weight:700;margin-bottom:4px">${p.title}</div>
+          <div style="font-size:12px;color:var(--t2)">${p.detail}</div>
+        </div>`).join('')}
+      </div>
+
+      <!-- Rules & Strategies toggles -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;cursor:pointer" onclick="document.getElementById('rules-panel').style.display=document.getElementById('rules-panel').style.display==='none'?'block':'none'">
+          <h3 style="font-size:14px;font-weight:800;color:var(--cyan);margin-bottom:4px">8 Rules — Spark Ads on FYP</h3>
+          <div style="font-size:12px;color:var(--t3)">Click to expand</div>
+          <div id="rules-panel" style="display:none;margin-top:12px">
+            ${a.rules.map((r,i)=>`<div style="margin-bottom:8px;font-size:12px;color:var(--t2)"><span style="color:var(--cyan);font-weight:700">${i+1}.</span> ${r}</div>`).join('')}
+          </div>
+        </div>
+        <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;cursor:pointer" onclick="document.getElementById('strats-panel').style.display=document.getElementById('strats-panel').style.display==='none'?'block':'none'">
+          <h3 style="font-size:14px;font-weight:800;color:var(--purple);margin-bottom:4px">5 First Slide Formats</h3>
+          <div style="font-size:12px;color:var(--t3)">Click to expand</div>
+          <div id="strats-panel" style="display:none;margin-top:12px">
+            ${FIRST_SLIDE_STRATEGIES.map(s=>`<div style="margin-bottom:10px;padding:10px;background:var(--purbg);border-radius:8px">
+              <div style="font-weight:700;font-size:12px;margin-bottom:2px">#${s.rank} ${s.name} <span style="color:var(--yellow);font-size:11px">(${s.metric})</span></div>
+              <div style="font-size:11px;color:var(--t2);margin-bottom:2px">${s.why}</div>
+              <div style="font-size:11px;color:var(--t3)">Used by: ${s.usedBy}</div>
+            </div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-Week Calendar -->
+      <div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;cursor:pointer" onclick="document.getElementById('cal-panel').style.display=document.getElementById('cal-panel').style.display==='none'?'block':'none'">
+        <h3 style="font-size:14px;font-weight:800;color:var(--blue);margin-bottom:4px">FYP Strategy — First Slides, Captions, Pipeline, Sounds</h3>
+        <div style="font-size:12px;color:var(--t3);margin-bottom:0">Click to expand</div>
+        <div id="cal-panel" style="display:none;margin-top:16px">
+          ${a.calendar.map(w=>`<div style="margin-bottom:16px">
+            <div style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--blue)">${w.week}</div>
+            <table style="width:100%;border-collapse:collapse;font-size:12px">
+              ${w.days.map(d=>`<tr style="border-bottom:1px solid var(--bd)">
+                <td style="padding:6px;font-weight:600;width:50px">${d.day}</td>
+                <td style="padding:6px">${d.concept}</td>
+                <td style="padding:6px;color:var(--t3);text-align:right">${d.strategy}</td>
+              </tr>`).join('')}
+            </table>
+          </div>`).join('')}
+          <div style="font-size:11px;color:var(--t3);margin-top:8px">Volume is king. 10-15 variations per week. Creative fatigue after 3-5 days. Refresh constantly. Test organically → boost winners as Spark Ads.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding:12px;background:var(--gbg);border-radius:8px;font-size:12px;color:var(--green);text-align:center;font-weight:600">
+        15 conversion-optimized slideshow concepts below. Every ad = complete funnel: Hook → Problem → Solution → Price → CTA. Shoot variations, test organically, boost winners as Spark Ads.
+      </div>
+    </div>`;
+  }
+
+  ov.innerHTML = `
+    <div class="overview-header">
+      <h1>Hey ${name}!</h1>
+      <p>${roleDesc}</p>
+    </div>
+    ${analysisHTML}
+    <div id="idea-list">${ideas.map(idea => {
+      const done = completedIds.includes(idea.id);
+      return `<div class="idea-card" onclick="openIdea('${idea.id}')">
+        <div class="idea-num">${idea.id.replace(/[a-z]/g,'')}</div>
+        <div class="idea-info">
+          <h3>${idea.title}</h3>
+          <p>"${idea.hook.substring(0,80)}${idea.hook.length > 80 ? '...' : ''}"</p>
+          <div class="idea-meta">
+            ${idea.tags.map(t => `<span class="pill">${t}</span>`).join('')}
+            <span class="pill">${idea.platforms.join(' / ')}</span>
+            <span class="pill">${idea.duration}</span>
+            ${done ? '<span class="pill pill-done">✓ Done</span>' : ''}
+          </div>
+        </div>
+        <div class="idea-arrow">→</div>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+// ── Detail ──
+function openIdea(id) {
+  currentIdea = getIdeas().find(i => i.id === id);
+  if (!currentIdea) return;
+  document.getElementById('overview').style.display = 'none';
+  document.getElementById('shoot').className = 'shoot';
+  const el = document.getElementById('detail');
+  el.className = 'detail active';
+  window.scrollTo(0, 0);
+
+  const done = completedIds.includes(currentIdea.id);
+
+  el.innerHTML = `
+    <button class="back-btn" onclick="showOverview()">← Back to my tasks</button>
+    <div class="d-badge">${role === 'faolo' ? 'SHOOT BRIEF' : role === 'jerson' ? 'EDIT TASK' : 'SLIDESHOW CONCEPT'} #${currentIdea.id.replace(/[a-z]/g,'')}</div>
+    <div class="d-title">${currentIdea.title}</div>
+    <div class="goal-tags">${currentIdea.tags.map(t => `<span class="gt gt-${t}">${t}</span>`).join('')}</div>
+    <div class="info-grid">
+      <div class="ib"><div class="ib-l">Potential</div><div class="ib-v" style="color:var(--green)">${currentIdea.potential}/100</div></div>
+      <div class="ib"><div class="ib-l">Difficulty</div><div class="ib-v">${'●'.repeat(currentIdea.difficulty)}${'○'.repeat(3-currentIdea.difficulty)}</div></div>
+      <div class="ib"><div class="ib-l">Duration</div><div class="ib-v" style="font-size:13px">${currentIdea.duration}</div></div>
+      <div class="ib"><div class="ib-l">Platforms</div><div class="ib-v" style="font-size:12px">${currentIdea.platforms.join(', ')}</div></div>
+    </div>
+    <div class="hook-box">
+      <div class="hook-box-l">⚡ THE HOOK</div>
+      <div class="hook-box-t">"${currentIdea.hook}"</div>
+      <div class="hook-box-n">${currentIdea.hookNote}</div>
+    </div>
+    ${role==='max'&&currentIdea.firstSlide?`
+    <div class="sec"><div class="sec-t">First-Slide Strategy</div><div class="sec-text" style="color:var(--purple);font-weight:600">${currentIdea.firstSlide}</div></div>
+    <div class="sec"><div class="sec-t">Backed By Data</div><div class="sec-text" style="color:var(--cyan)">${currentIdea.backedBy}</div></div>
+    ${currentIdea.sourceLinks?`<div class="sec"><div class="sec-t">Source Links — Reference Posts</div><div style="display:flex;flex-wrap:wrap;gap:8px">${currentIdea.sourceLinks.map(l=>`<a href="${l.url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--purbg);border:1px solid var(--purple);border-radius:8px;color:var(--purple);text-decoration:none;font-size:12px;font-weight:600;transition:all .2s" onmouseover="this.style.background='var(--purple)';this.style.color='#fff'" onmouseout="this.style.background='var(--purbg)';this.style.color='var(--purple)'"><span style="font-size:14px">🔗</span>${l.label}</a>`).join('')}</div></div>`:''}
+    <div class="sec"><div class="sec-t">Goal</div><div class="sec-text" style="color:var(--green);font-weight:700">${currentIdea.goal}</div></div>
+    ${currentIdea.products?`<div class="sec"><div class="sec-t">Products Used</div><div style="display:flex;flex-wrap:wrap;gap:6px">${currentIdea.products.map(p=>`<span style="padding:6px 12px;background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.3);border-radius:6px;color:var(--green);font-size:12px;font-weight:600">${p}</span>`).join('')}</div></div>`:''}
+    `:''}
+    <div class="sec"><div class="sec-t">Text Overlay</div><div class="text-preview"><p>${currentIdea.textOverlay}</p><small>Clean white font. Centered.</small></div></div>
+    <div class="sec"><div class="sec-t">Call to Action</div><div class="sec-text"><strong>${currentIdea.cta}</strong></div></div>
+    ${role==='max'&&currentIdea.caption?`
+    <div class="sec"><div class="sec-t">Full Caption</div><div class="sec-text" style="font-size:12px;line-height:1.7;color:var(--t2);white-space:pre-wrap">${currentIdea.caption}</div></div>
+    <div class="sec"><div class="sec-t">Audio</div><div class="sec-text">${currentIdea.audio}</div></div>
+    <div class="sec"><div class="sec-t">Image Rules</div><div class="sec-text" style="color:var(--orange)">${currentIdea.imageRules}</div></div>
+    `:''}
+    <div class="sec"><div class="sec-t">Why This Works</div><div class="sec-text">${currentIdea.why}</div></div>
+    <div class="sec"><div class="sec-t">Psychology</div><div class="sec-text">${currentIdea.psychology}</div></div>
+    <div class="sec"><div class="sec-t">Proof — Where This Worked Before</div>${currentIdea.proof.map(p => `<div class="proof-card"><div class="proof-b">${p.brand}</div><div class="proof-d">${p.detail}</div></div>`).join('')}</div>
+    <div class="sec"><div class="sec-t">Equipment / What You Need</div><ul class="eq-list">${currentIdea.equipment.map(e => `<li><span class="eq-i">✓</span>${e}</li>`).join('')}</ul></div>
+    <div class="sec"><div class="sec-t">${role==='max'?'Slide-by-Slide':'Step-by-Step'} (${currentIdea.steps.length} ${role==='max'?'slides':'steps'})</div>${currentIdea.steps.map((s,i) => `
+      <div class="step-card"><div class="step-hdr" onclick="togStep(this)"><div class="step-n">${i+1}</div><div class="step-sum"><h4>${s.title}</h4><p>${s.duration}</p></div><div class="step-dur">${s.duration}</div><div class="step-tog">▸</div></div>
+      <div class="step-body"><div class="sdr"><div class="sdr-l">What to do</div><div class="sdr-v">${s.action.replace(/\n/g,'<br>')}</div></div>
+      <div class="sdr"><div class="sdr-l">${role==='faolo'?'Camera':role==='jerson'?'Tool':'Image Source'}</div><div class="sdr-v">${s.camera}</div></div>
+      <div class="sdr"><div class="sdr-l">${role==='max'?'Text Overlay':'Angle'}</div><div class="sdr-v">${s.angle}</div></div>
+      <div class="sdr"><div class="sdr-l">Lighting</div><div class="sdr-v">${s.lighting}</div></div>
+      ${s.tip?`<div class="tip"><div class="tip-l">💡 Pro Tip</div><div class="tip-t">${s.tip}</div></div>`:''}</div></div>
+    `).join('')}</div>
+    <div class="start-sec">
+      <button class="start-btn" onclick="startShoot('${currentIdea.id}')">▶ ${role==='faolo'?'Start Shooting':role==='jerson'?'Start Editing':'Start Creating'}</button>
+      <div class="start-sub">${role==='max'?'Slide-by-slide guided mode — one slide at a time':'Step-by-step guided mode — one instruction at a time'}</div>
+    </div>
+    <div style="text-align:center;margin-top:12px">
+      ${done ? '<span class="pill pill-done" style="font-size:12px;padding:6px 16px">✓ Marked as Done</span>' : `<button class="mark-btn" onclick="markDone('${currentIdea.id}')">Mark as done</button>`}
+    </div>`;
+}
+
+function togStep(h){const b=h.nextElementSibling,t=h.querySelector('.step-tog');if(b.classList.contains('open')){b.classList.remove('open');t.textContent='▸'}else{b.classList.add('open');t.textContent='▾'}}
+
+// ── Shoot/Edit Mode ──
+function startShoot(id) {
+  currentIdea = getIdeas().find(i => i.id === id);
+  if (!currentIdea) return;
+  shootStep = 0;
+  document.getElementById('overview').style.display = 'none';
+  document.getElementById('detail').className = 'detail';
+  document.getElementById('shoot').className = 'shoot active';
+  window.scrollTo(0, 0);
+  renderStep();
+}
+
+function renderStep() {
+  const el = document.getElementById('shoot');
+  const s = currentIdea.steps[shootStep];
+  const total = currentIdea.steps.length;
+  const last = shootStep === total - 1;
+  const first = shootStep === 0;
+
+  el.innerHTML = `
+    <button class="back-btn" onclick="openIdea('${currentIdea.id}')">← Back to brief</button>
+    <div class="shoot-ind">Step ${shootStep+1} of ${total} — ${currentIdea.title}</div>
+    <div class="shoot-title">${s.title}</div>
+    <div class="shoot-dots">${currentIdea.steps.map((_,i)=>`<div class="sdot ${i<shootStep?'done':''} ${i===shootStep?'active':''}"></div>`).join('')}</div>
+    <div class="s-box"><h3>📋 What to do</h3><p>${s.action.replace(/\n/g,'<br>')}</p></div>
+    <div class="s-box"><h3>${role==='faolo'?'📷 Camera':role==='jerson'?'🖥️ Tool':'🖼️ Image Source'}</h3><p>${s.camera}</p></div>
+    <div class="s-box"><h3>${role==='max'?'✏️ Text Overlay':'📐 Angle'}</h3><p>${s.angle}</p></div>
+    <div class="s-box"><h3>💡 Lighting</h3><p>${s.lighting}</p></div>
+    <div class="s-box"><h3>⏱ Duration</h3><p>${s.duration}</p></div>
+    ${s.tip?`<div class="tip" style="margin-top:16px"><div class="tip-l">💡 Pro Tip</div><div class="tip-t">${s.tip}</div></div>`:''}
+    <div class="shoot-nav">
+      <button class="sn-btn" onclick="prevStep()" ${first?'disabled':''}>← Previous</button>
+      ${last?`<button class="sn-btn pri" onclick="finishTask()">✓ Done</button>`:`<button class="sn-btn pri" onclick="nextStep()">Next Step →</button>`}
+    </div>`;
+}
+
+function nextStep(){if(shootStep<currentIdea.steps.length-1){shootStep++;window.scrollTo(0,0);renderStep()}}
+function prevStep(){if(shootStep>0){shootStep--;window.scrollTo(0,0);renderStep()}}
+function finishTask(){markDone(currentIdea.id);showOverview()}
+function markDone(id){if(!completedIds.includes(id)){completedIds.push(id);saveState()}updateProgress();openIdea(id)}
+
+// Init
+initRoleCounts();
+</script>
+</body>
+</html>

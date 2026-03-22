@@ -1,0 +1,895 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e1441]:
+    - heading "We value your privacy" [level=1] [ref=e1442]
+    - generic [ref=e1443]:
+      - paragraph [ref=e1445]: We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+      - generic [ref=e1446]:
+        - button "Customize" [ref=e1447] [cursor=pointer]
+        - button "Reject All" [ref=e1448] [cursor=pointer]
+        - button "Accept All" [ref=e1449] [cursor=pointer]
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - generic [ref=e7] [cursor=pointer]: 
+      - link [ref=e9] [cursor=pointer]:
+        - /url: /home
+        - img [ref=e10]
+      - generic [ref=e11]:
+        - generic [ref=e14] [cursor=pointer]:
+          - generic [ref=e15]: 
+          - generic [ref=e16]: Rumah
+        - generic [ref=e17] [cursor=pointer]:
+          - generic [ref=e18]:
+            - generic [ref=e19]:
+              - generic [ref=e20]: 
+              - generic [ref=e21]: Sumber
+            - generic [ref=e23]: 
+          - generic:
+            - link "Produk" [ref=e27]:
+              - /url: /home.html
+            - link "Pabrik" [ref=e31]:
+              - /url: /factories
+            - link "Merek" [ref=e35]:
+              - /url: https://selected.cjdropshipping.com/
+            - generic [ref=e37]:
+              - generic [ref=e39]: Sumber
+              - generic [ref=e41]: 
+        - generic [ref=e42] [cursor=pointer]:
+          - generic [ref=e43]:
+            - generic [ref=e44]:
+              - generic [ref=e45]: 
+              - generic [ref=e46]: Komunitas
+            - generic [ref=e48]: 
+          - generic:
+            - link "Agen" [ref=e52]:
+              - /url: /agents
+            - link "Academy" [ref=e56]:
+              - /url: /mentors
+            - link "Elites" [ref=e60]:
+              - /url: https://elites.cjdropshipping.com/
+        - generic [ref=e61] [cursor=pointer]:
+          - generic [ref=e62]:
+            - generic [ref=e63]:
+              - generic [ref=e64]: 
+              - generic [ref=e65]: Produk saya
+            - generic [ref=e67]: 
+          - generic:
+            - link "Produk tambahan" [ref=e71]:
+              - /url: /login.html?target=L21pbmUvcHJvZHVjdHMvbXlwcm9kdWN0cw==
+            - link "Simpan Produk" [ref=e75]:
+              - /url: /login.html?target=L21pbmUvcHJvZHVjdHMvY29ubmVjdGlvbg==
+            - link "Inventaris saya" [ref=e79]:
+              - /url: /login.html?target=L21pbmUvbXlJbnZlbnRvcnlOZXcvcHJvZHVjdEludmVudG9yeQ==
+            - link "Daftar Keinginan" [ref=e83]:
+              - /url: /login.html?target=L215Lmh0bWwjL3JlZ3VsYXItcGFja2FnaW5n
+            - link "Kustomisasi" [ref=e87]:
+              - /url: /login.html?target=L21pbmUvY3VzdG9taXphdGlvbg==
+        - generic [ref=e90] [cursor=pointer]:
+          - generic [ref=e91]: 
+          - generic [ref=e92]: Keranjang
+        - generic [ref=e93] [cursor=pointer]:
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - generic [ref=e96]: 
+              - generic [ref=e97]: Pesanan
+            - generic [ref=e99]: 
+          - generic:
+            - link "Perintah Simpan" [ref=e103]:
+              - /url: /login.html?target=L21pbmUvZHJvcHNoaXBwaW5nL29yZGVyTGlzdD9vcmRlclR5cGU9MyZjaGlsZFR5cGU9MQ==
+            - link "Perintah Sampel" [ref=e107]:
+              - /url: /login.html?target=L21pbmUvcHVyY2hhc2UvcHVyY2hhc2VMaXN0P29yZGVyVHlwZT0x
+            - link "Perintah Wholesale" [ref=e111]:
+              - /url: /login.html?target=L21pbmUvcHVyY2hhc2UvcHVyY2hhc2VMaXN0P29yZGVyVHlwZT0z
+            - link "Perintah Inventar" [ref=e115]:
+              - /url: /login.html?target=L21pbmUvcHVyY2hhc2UvcHVyY2hhc2VMaXN0P29yZGVyVHlwZT0y
+            - generic [ref=e118]:
+              - generic [ref=e120]: Pemenuhan pesanan
+              - generic [ref=e122]: 
+            - link "Pesanan yang Tidak Terkirim" [ref=e126]:
+              - /url: /login.html?target=L21pbmUvdW5kZWxpdmVyZWRPcmRlcg==
+            - link "Perselisihan" [ref=e130]:
+              - /url: /login.html?target=L21pbmUvZGlzcHV0ZS9saXN0
+        - generic [ref=e131] [cursor=pointer]:
+          - generic [ref=e132]:
+            - generic [ref=e133]:
+              - generic [ref=e134]: 
+              - generic [ref=e135]: Layanan
+            - generic [ref=e137]: 
+          - generic:
+            - generic [ref=e139]:
+              - text: Berlangganan layanan
+              - generic [ref=e141]: 
+            - generic [ref=e143]:
+              - generic [ref=e145]: 3PL Fulfillment
+              - generic [ref=e147]: 
+            - generic [ref=e149]:
+              - generic [ref=e151]: Cetak Sesuai Permintaan
+              - generic [ref=e153]: 
+            - link "Layanan Fotografi" [ref=e157]:
+              - /url: /login.html?target=L21pbmUvdmlld1BvcnQvbGlzdA==
+            - link "Beli/jual toko Anda" [ref=e161]:
+              - /url: https://blog.cjdropshipping.com/detail/Sell-Your-Shopify-Store-for-Cash-Today-
+            - link "Agen pembayaran" [ref=e165]:
+              - /url: /payment-agency
+            - link "Layanan kredit" [ref=e169]:
+              - /url: /loancredit
+            - link "Layanan pengiriman lebih cepat" [ref=e173]:
+              - /url: /logistics
+        - generic [ref=e174] [cursor=pointer]:
+          - generic [ref=e175]:
+            - generic [ref=e176]:
+              - generic [ref=e177]: 
+              - generic [ref=e178]: Aplikasi
+            - generic [ref=e180]: 
+          - generic:
+            - generic [ref=e182]:
+              - text: Install App
+              - generic [ref=e184]: 
+            - link "Shopify" [ref=e188]:
+              - /url: /login.html?target=L215Lmh0bWwjL2F1dGhvcml6ZS9TaG9waWZ5
+              - generic [ref=e189]: Shopify
+        - generic [ref=e190] [cursor=pointer]:
+          - generic [ref=e191]:
+            - generic [ref=e192]:
+              - generic [ref=e193]: 
+              - generic [ref=e194]: MyCJ
+            - generic [ref=e196]: 
+          - generic:
+            - link "Dasbor" [ref=e200]:
+              - /url: /login.html?target=L215Lmh0bWwjL2Rhc2hib2FyZA==
+            - link "Pengaturan" [ref=e204]:
+              - /url: /login.html?target=L215Lmh0bWwjL3Byb2ZpbGUvaW5mbw==
+            - link "Dompet" [ref=e208]:
+              - /url: /login.html?target=L21pbmUvd2FsbGV0
+            - link "Tiket" [ref=e212]:
+              - /url: /login.html?target=L21pbmUvdGlja2V0
+            - link "CJ Perdana" [ref=e216]:
+              - /url: /prime
+            - link "Pengiriman Perhitungan" [ref=e220]:
+              - /url: /calculation.html
+            - generic [ref=e222]:
+              - generic [ref=e224]: Aktivitas terbaru
+              - generic [ref=e226]: 
+            - link "Pemasok disimpan" [ref=e230]:
+              - /url: /savedFactories
+            - link "Daftar ekspor" [ref=e234]:
+              - /url: /login.html?target=L21pbmUvZXhwb3J0TGlzdA==
+      - generic [ref=e236] [cursor=pointer]:
+        - generic [ref=e237]:
+          - img [ref=e238]
+          - generic [ref=e1450]: Agen Kontak
+        - img [ref=e244]
+    - generic [ref=e245]:
+      - generic [ref=e249]:
+        - generic [ref=e250]:
+          - generic [ref=e251]:
+            - generic [ref=e253] [cursor=pointer]:
+              - generic [ref=e254]: 
+              - generic [ref=e255]:
+                - generic [ref=e256]: Global
+                - generic [ref=e257]: Products
+            - generic [ref=e259] [cursor=pointer]:
+              - generic [ref=e260]: 
+              - generic [ref=e263]: 
+          - generic [ref=e264]:
+            - textbox "Cari Produk Unggulan berdasarkan Kata Kunci, SKU, atau Link URL 1688 / Taobao / Aliexpress" [ref=e265]: oversized cargo pants men
+            - generic [ref=e268]: 
+          - generic [ref=e269]:
+            - generic [ref=e271] [cursor=pointer]: In this page
+            - generic [ref=e273] [cursor=pointer]: On CJ
+        - generic [ref=e274]:
+          - generic [ref=e276] [cursor=pointer]: 
+          - generic [ref=e279] [cursor=pointer]:
+            - generic [ref=e281]: 
+            - generic [ref=e282]: Indonesia-
+            - generic [ref=e283]: USD
+          - generic [ref=e284]:
+            - link "Terdaftar" [ref=e286] [cursor=pointer]:
+              - /url: "#"
+            - link "Masuk" [ref=e288] [cursor=pointer]:
+              - /url: "#"
+      - generic: 
+      - generic [ref=e289]:
+        - generic [ref=e290]:
+          - generic [ref=e291]:
+            - generic [ref=e293]:
+              - generic [ref=e294]:
+                - generic [ref=e295]: 
+                - text: Search results for "oversized cargo pants men"
+              - generic [ref=e296]:
+                - text: Didn't find what you want? Contact us or post a sourcing request
+                - generic [ref=e299]: 
+            - generic [ref=e300]:
+              - generic [ref=e302]:
+                - generic [ref=e303]: "Ship From:"
+                - generic [ref=e304]:
+                  - generic [ref=e305]:
+                    - link "All " [ref=e307] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=&shipTo=&defaultArea=undefined
+                      - generic [ref=e308]:
+                        - text: All
+                        - generic [ref=e310]: 
+                    - link "United States United States" [ref=e311] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=US&shipTo=US&defaultArea=2
+                      - generic [ref=e312]:
+                        - img "United States" [ref=e313]
+                        - text: United States
+                    - link "China China" [ref=e314] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=CN&shipTo=US&defaultArea=1
+                      - generic [ref=e315]:
+                        - img "China" [ref=e316]
+                        - text: China
+                    - link "United Kingdom United Kingdom" [ref=e317] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=GB&shipTo=GB&defaultArea=17
+                      - generic [ref=e318]:
+                        - img "United Kingdom" [ref=e319]
+                        - text: United Kingdom
+                    - link "Germany Germany" [ref=e320] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=DE&shipTo=DE&defaultArea=4
+                      - generic [ref=e321]:
+                        - img "Germany" [ref=e322]
+                        - text: Germany
+                    - link "Brazil Brazil" [ref=e323] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=BR&shipTo=BR&defaultArea=40
+                      - generic [ref=e324]:
+                        - img "Brazil" [ref=e325]
+                        - text: Brazil
+                    - link "Canada Canada" [ref=e326] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=CA&shipTo=CA&defaultArea=11
+                      - generic [ref=e327]:
+                        - img "Canada" [ref=e328]
+                        - text: Canada
+                    - link "France France" [ref=e329] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=FR&shipTo=FR&defaultArea=19
+                      - generic [ref=e330]:
+                        - img "France" [ref=e331]
+                        - text: France
+                    - link "Australia Australia" [ref=e332] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=AU&shipTo=AU&defaultArea=9
+                      - generic [ref=e333]:
+                        - img "Australia" [ref=e334]
+                        - text: Australia
+                    - link "United Arab Emirates United Arab Emirates" [ref=e335] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=AE&shipTo=AE&defaultArea=30
+                      - generic [ref=e336]:
+                        - img "United Arab Emirates" [ref=e337]
+                        - text: United Arab Emirates
+                    - link "Spain Spain" [ref=e338] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=ES&shipTo=ES&defaultArea=31
+                      - generic [ref=e339]:
+                        - img "Spain" [ref=e340]
+                        - text: Spain
+                    - link "Japan Japan" [ref=e341] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&from=JP&shipTo=JP&defaultArea=10
+                      - generic [ref=e342]:
+                        - img "Japan" [ref=e343]
+                        - text: Japan
+                  - generic [ref=e344] [cursor=pointer]:
+                    - generic [ref=e345]: More
+                    - generic [ref=e346]: 
+              - generic [ref=e348]:
+                - generic [ref=e349]: "Category:"
+                - generic [ref=e352]:
+                  - link "All" [ref=e356] [cursor=pointer]:
+                    - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=
+                  - generic [ref=e357]:
+                    - link "Women's Clothing " [ref=e360] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=2FE8A083-5E7B-4179-896D-561EA116F730
+                      - text: Women's Clothing
+                      - generic [ref=e361]: 
+                    - text:       
+                  - generic [ref=e362]:
+                    - link "Pet Supplies " [ref=e365] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=2409110611570657700
+                      - text: Pet Supplies
+                      - generic [ref=e366]: 
+                    - text:           
+                  - generic [ref=e367]:
+                    - link "Home, Garden & Furniture " [ref=e370] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=52FC6CA5-669B-4D0B-B1AC-415675931399
+                      - text: Home, Garden & Furniture
+                      - generic [ref=e371]: 
+                    - text:       
+                  - generic [ref=e372]:
+                    - link "Health, Beauty & Hair " [ref=e375] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=2C7D4A0B-1AB2-41EC-8F9E-13DC31B1C902
+                      - text: Health, Beauty & Hair
+                      - generic [ref=e376]: 
+                    - text:          
+                  - generic [ref=e377]:
+                    - link "Jewelry & Watches " [ref=e380] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=2837816E-2FEA-4455-845C-6F40C6D70D1E
+                      - text: Jewelry & Watches
+                      - generic [ref=e381]: 
+                    - text:      
+                  - generic [ref=e382]:
+                    - link "Men's Clothing " [ref=e385] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=B8302697-CF47-4211-9BD0-DFE8995AEB30
+                      - text: Men's Clothing
+                      - generic [ref=e386]: 
+                    - text:       
+                  - generic [ref=e387]:
+                    - link "Bags & Shoes " [ref=e390] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=2415A90C-5D7B-4CC7-BA8C-C0949F9FF5D8
+                      - text: Bags & Shoes
+                      - generic [ref=e391]: 
+                    - text:     
+                  - generic [ref=e392]:
+                    - link "Toys, Kids & Babies " [ref=e395] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=A50A92FA-BCB3-4716-9BD9-BEC629BEE735
+                      - text: Toys, Kids & Babies
+                      - generic [ref=e396]: 
+                    - text:       
+                  - generic [ref=e397]:
+                    - link "Sports & Outdoors " [ref=e400] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=4B397425-26C1-4D0E-B6D2-96B0B03689DB
+                      - text: Sports & Outdoors
+                      - generic [ref=e401]: 
+                    - text:       
+                  - generic [ref=e402]:
+                    - link "Consumer Electronics " [ref=e405] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=D9E66BF8-4E81-4CAB-A425-AEDEC5FBFBF2
+                      - text: Consumer Electronics
+                      - generic [ref=e406]: 
+                    - text:       
+                  - generic [ref=e407]:
+                    - link "Home Improvement " [ref=e410] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=6A5D2EB4-13BD-462E-A627-78CFED11B2A2
+                      - text: Home Improvement
+                      - generic [ref=e411]: 
+                    - text:      
+                  - generic [ref=e412]:
+                    - link "Automobiles & Motorcycles " [ref=e415] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=A2F799BE-FB59-428E-A953-296AA2673FCF
+                      - text: Automobiles & Motorcycles
+                      - generic [ref=e416]: 
+                    - text:       
+                  - generic [ref=e417]:
+                    - link "Phones & Accessories " [ref=e420] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=E9FDC79A-8365-4CA6-AC23-64D971F08B8B
+                      - text: Phones & Accessories
+                      - generic [ref=e421]: 
+                    - text:     
+                  - generic [ref=e422]:
+                    - link "Computer & Office " [ref=e425] [cursor=pointer]:
+                      - /url: /search/oversized+cargo+pants+men.html?pageNum=1&id=1126E280-CB7D-418A-90AB-7118E2D97CCC
+                      - text: Computer & Office
+                      - generic [ref=e426]: 
+                    - text:       
+              - generic [ref=e428]:
+                - generic [ref=e429]: "Other:"
+                - generic [ref=e431]:
+                  - generic [ref=e433] [cursor=pointer]:
+                    - generic [ref=e434]: POD Products (All)
+                    - generic [ref=e435]: 
+                  - generic [ref=e437] [cursor=pointer]:
+                    - generic [ref=e438]: Inventory Types (All)
+                    - generic [ref=e439]: 
+                  - generic [ref=e441] [cursor=pointer]:
+                    - generic [ref=e442]: Product with Videos (All)
+                    - generic [ref=e443]: 
+                  - generic [ref=e445] [cursor=pointer]:
+                    - generic [ref=e446]: Free Shipping (All)
+                    - generic [ref=e447]: 
+                  - generic [ref=e449] [cursor=pointer]:
+                    - generic [ref=e450]: Self-pickUp (All)
+                    - generic [ref=e451]: 
+                  - generic [ref=e453] [cursor=pointer]:
+                    - generic [ref=e454]: Certificates (All)
+                    - generic [ref=e455]: 
+                  - generic [ref=e456]:
+                    - generic [ref=e457]: "Inventory:"
+                    - generic [ref=e458]:
+                      - textbox "Min" [ref=e459]
+                      - text: "-"
+                      - textbox "Max" [ref=e460]
+                    - generic [ref=e461] [cursor=pointer]: Confirm
+                  - generic [ref=e462]:
+                    - generic [ref=e463]: "Price:"
+                    - generic [ref=e464]:
+                      - textbox "Min" [ref=e465]
+                      - text: "-"
+                      - textbox "Max" [ref=e466]
+                    - generic [ref=e467] [cursor=pointer]: Confirm
+            - generic [ref=e468]:
+              - generic [ref=e469]: "Sort by:"
+              - generic [ref=e470]:
+                - link "Best Match" [ref=e472] [cursor=pointer]:
+                  - /url: /search/oversized+cargo+pants+men.html?pageNum=1&feildType=0&isAsc=0
+                - link "Inventory  " [ref=e474] [cursor=pointer]:
+                  - /url: /search/oversized+cargo+pants+men.html?pageNum=1&feildType=4&isAsc=0
+                  - text: Inventory
+                  - generic [ref=e475]:
+                    - generic [ref=e476]: 
+                    - generic [ref=e477]: 
+                - link "Lists " [ref=e479] [cursor=pointer]:
+                  - /url: /search/oversized+cargo+pants+men.html?pageNum=1&feildType=1&isAsc=0
+                  - text: Lists
+                  - generic [ref=e481]: 
+                - link "Price  " [ref=e483] [cursor=pointer]:
+                  - /url: /search/oversized+cargo+pants+men.html?pageNum=1&feildType=2&isAsc=1
+                  - text: Price
+                  - generic [ref=e484]:
+                    - generic [ref=e485]: 
+                    - generic [ref=e486]: 
+                - link "Newest" [ref=e488] [cursor=pointer]:
+                  - /url: /search/oversized+cargo+pants+men.html?pageNum=1&feildType=3&isAsc=0
+                - text: 
+              - generic [ref=e489]:
+                - generic [ref=e490] [cursor=pointer]:
+                  - generic [ref=e491]: 
+                  - generic [ref=e492]: Grid
+                - generic [ref=e493] [cursor=pointer]:
+                  - generic [ref=e494]: 
+                  - generic [ref=e495]: List
+            - text:                                                                                                                           
+            - generic [ref=e500]:
+              - 'link "Daftar  Tambah ke Produk-Ku  Oversized Cargo Pants Casual Loose Men Daftar: 73 $6.63  QTY " [ref=e503] [cursor=pointer]':
+                - /url: /product/oversized-cargo-pants-casual-loose-men-p-2502270726041616200.html
+                - generic [ref=e505]:
+                  - img [ref=e506]
+                  - generic [ref=e508]:
+                    - generic: Daftar
+                    - generic [ref=e509]: 
+                  - generic [ref=e511]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e512]: 
+                - generic [ref=e513]:
+                  - generic [ref=e514]: Oversized Cargo Pants Casual Loose Men
+                  - generic [ref=e516]: "Daftar: 73"
+                  - generic [ref=e517]:
+                    - generic [ref=e519]: $6.63
+                    - generic [ref=e520]:
+                      - generic [ref=e523]: 
+                      - generic [ref=e525]:
+                        - generic [ref=e526]: QTY
+                        - generic [ref=e527]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Multi-pocket Tether Solid Color Loose Cargo Pants Men Daftar: 36 $6.47  QTY " [ref=e530] [cursor=pointer]':
+                - /url: /product/multi-pocket-tether-solid-color-loose-cargo-pants-men-p-2503010316261614000.html
+                - generic [ref=e532]:
+                  - img [ref=e533]
+                  - generic [ref=e535]:
+                    - generic: Daftar
+                    - generic [ref=e536]: 
+                  - generic [ref=e538]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e539]: 
+                - generic [ref=e540]:
+                  - generic [ref=e541]: Multi-pocket Tether Solid Color Loose Cargo Pants Men
+                  - generic [ref=e543]: "Daftar: 36"
+                  - generic [ref=e544]:
+                    - generic [ref=e546]: $6.47
+                    - generic [ref=e547]:
+                      - generic [ref=e550]: 
+                      - generic [ref=e552]:
+                        - generic [ref=e553]: QTY
+                        - generic [ref=e554]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Plus Size Loose Cargo Pants Daftar: 89 $6.14-6.47  QTY " [ref=e557] [cursor=pointer]':
+                - /url: /product/plus-size-loose-cargo-pants-p-2408050905501602900.html
+                - generic [ref=e559]:
+                  - img [ref=e560]
+                  - generic [ref=e562]:
+                    - generic: Daftar
+                    - generic [ref=e563]: 
+                  - generic [ref=e565]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e566]: 
+                - generic [ref=e567]:
+                  - generic [ref=e568]: Plus Size Loose Cargo Pants
+                  - generic [ref=e570]: "Daftar: 89"
+                  - generic [ref=e571]:
+                    - generic [ref=e573]: $6.14-6.47
+                    - generic [ref=e574]:
+                      - generic [ref=e577]: 
+                      - generic [ref=e579]:
+                        - generic [ref=e580]: QTY
+                        - generic [ref=e581]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Men''s Loose Multi-pocket Cargo Pants Daftar: 79 $8.62-9.78  QTY " [ref=e584] [cursor=pointer]':
+                - /url: /product/mens-loose-multi-pocket-cargo-pants-p-2507200257271605700.html
+                - generic [ref=e586]:
+                  - img [ref=e587]
+                  - generic [ref=e589]:
+                    - generic: Daftar
+                    - generic [ref=e590]: 
+                  - generic [ref=e592]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e593]: 
+                - generic [ref=e594]:
+                  - generic [ref=e595]: Men's Loose Multi-pocket Cargo Pants
+                  - generic [ref=e597]: "Daftar: 79"
+                  - generic [ref=e598]:
+                    - generic [ref=e600]: $8.62-9.78
+                    - generic [ref=e601]:
+                      - generic [ref=e604]: 
+                      - generic [ref=e606]:
+                        - generic [ref=e607]: QTY
+                        - generic [ref=e608]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Korean Loose Cotton Sports Cargo Pants Daftar: 261 $9.83  QTY " [ref=e611] [cursor=pointer]':
+                - /url: /product/korean-loose-cotton-sports-cargo-pants-p-1371401982333554688.html
+                - generic [ref=e613]:
+                  - img [ref=e614]
+                  - generic [ref=e616]:
+                    - generic: Daftar
+                    - generic [ref=e617]: 
+                  - generic [ref=e619]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e620]: 
+                - generic [ref=e621]:
+                  - generic [ref=e622]: Korean Loose Cotton Sports Cargo Pants
+                  - generic [ref=e624]: "Daftar: 261"
+                  - generic [ref=e625]:
+                    - generic [ref=e627]: $9.83
+                    - generic [ref=e628]:
+                      - generic [ref=e631]: 
+                      - generic [ref=e633]:
+                        - generic [ref=e634]: QTY
+                        - generic [ref=e635]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Large Loose Pockets Drawstring Boys Straight Cargo Pants Daftar: 233 $3.34  QTY " [ref=e638] [cursor=pointer]':
+                - /url: /product/large-loose-pockets-drawstring-boys-straight-cargo-pants-p-2506190147331613600.html
+                - generic [ref=e640]:
+                  - img [ref=e641]
+                  - generic [ref=e643]:
+                    - generic: Daftar
+                    - generic [ref=e644]: 
+                  - generic [ref=e646]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e647]: 
+                - generic [ref=e648]:
+                  - generic [ref=e649]: Large Loose Pockets Drawstring Boys Straight Cargo Pants
+                  - generic [ref=e651]: "Daftar: 233"
+                  - generic [ref=e652]:
+                    - generic [ref=e654]: $3.34
+                    - generic [ref=e655]:
+                      - generic [ref=e658]: 
+                      - generic [ref=e660]:
+                        - generic [ref=e661]: QTY
+                        - generic [ref=e662]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Men''s Casual Multi-pocket Loose Straight Cargo Pants Daftar: 870 $5.03-5.44  QTY " [ref=e665] [cursor=pointer]':
+                - /url: /product/mens-casual-multi-pocket-loose-straight-cargo-pants-p-1610542114364993536.html
+                - generic [ref=e667]:
+                  - img [ref=e668]
+                  - generic [ref=e670]:
+                    - generic: Daftar
+                    - generic [ref=e671]: 
+                  - generic [ref=e673]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e674]: 
+                - generic [ref=e675]:
+                  - generic [ref=e676]: Men's Casual Multi-pocket Loose Straight Cargo Pants
+                  - generic [ref=e678]: "Daftar: 870"
+                  - generic [ref=e679]:
+                    - generic [ref=e681]: $5.03-5.44
+                    - generic [ref=e682]:
+                      - generic [ref=e685]: 
+                      - generic [ref=e687]:
+                        - generic [ref=e688]: QTY
+                        - generic [ref=e689]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Couple American Retro High Street Fashionable Pleated Straight Cargo Pants Daftar: 136 $7.96  QTY " [ref=e692] [cursor=pointer]':
+                - /url: /product/couple-american-retro-high-street-fashionable-pleated-straight-cargo-pants-p-2508240218131608800.html
+                - generic [ref=e694]:
+                  - img [ref=e695]
+                  - generic [ref=e697]:
+                    - generic: Daftar
+                    - generic [ref=e698]: 
+                  - generic [ref=e700]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e701]: 
+                - generic [ref=e702]:
+                  - generic [ref=e703]: Couple American Retro High Street Fashionable Pleated Straight Cargo Pants
+                  - generic [ref=e705]: "Daftar: 136"
+                  - generic [ref=e706]:
+                    - generic [ref=e708]: $7.96
+                    - generic [ref=e709]:
+                      - generic [ref=e712]: 
+                      - generic [ref=e714]:
+                        - generic [ref=e715]: QTY
+                        - generic [ref=e716]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Retro High Street Camouflage Men Casual Working Pants Daftar: 106 $7.63  QTY " [ref=e719] [cursor=pointer]':
+                - /url: /product/retro-high-street-camouflage-men-casual-working-pants-p-2502220135331619900.html
+                - generic [ref=e721]:
+                  - img [ref=e722]
+                  - generic [ref=e724]:
+                    - generic: Daftar
+                    - generic [ref=e725]: 
+                  - generic [ref=e727]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e728]: 
+                - generic [ref=e729]:
+                  - generic [ref=e730]: Retro High Street Camouflage Men Casual Working Pants
+                  - generic [ref=e732]: "Daftar: 106"
+                  - generic [ref=e733]:
+                    - generic [ref=e735]: $7.63
+                    - generic [ref=e736]:
+                      - generic [ref=e739]: 
+                      - generic [ref=e741]:
+                        - generic [ref=e742]: QTY
+                        - generic [ref=e743]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Tethered Elastic Waist Casual Cargo Trousers Daftar: 87 $14.63  QTY " [ref=e746] [cursor=pointer]':
+                - /url: /product/tethered-elastic-waist-casual-cargo-trousers-p-1384351184982249472.html
+                - generic [ref=e748]:
+                  - img [ref=e749]
+                  - generic [ref=e751]:
+                    - generic: Daftar
+                    - generic [ref=e752]: 
+                  - generic [ref=e754]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e755]: 
+                - generic [ref=e756]:
+                  - generic [ref=e757]: Tethered Elastic Waist Casual Cargo Trousers
+                  - generic [ref=e759]: "Daftar: 87"
+                  - generic [ref=e760]:
+                    - generic [ref=e762]: $14.63
+                    - generic [ref=e763]:
+                      - generic [ref=e766]: 
+                      - generic [ref=e768]:
+                        - generic [ref=e769]: QTY
+                        - generic [ref=e770]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Multi-pocket Loose Straight Cargo Trousers Daftar: 174 $5.64  QTY " [ref=e773] [cursor=pointer]':
+                - /url: /product/multi-pocket-loose-straight-cargo-trousers-p-2406130628011622100.html
+                - generic [ref=e775]:
+                  - img [ref=e776]
+                  - generic [ref=e778]:
+                    - generic: Daftar
+                    - generic [ref=e779]: 
+                  - generic [ref=e781]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e782]: 
+                - generic [ref=e783]:
+                  - generic [ref=e784]: Multi-pocket Loose Straight Cargo Trousers
+                  - generic [ref=e786]: "Daftar: 174"
+                  - generic [ref=e787]:
+                    - generic [ref=e789]: $5.64
+                    - generic [ref=e790]:
+                      - generic [ref=e793]: 
+                      - generic [ref=e795]:
+                        - generic [ref=e796]: QTY
+                        - generic [ref=e797]: 
+              - 'link "Daftar  Tambah ke Produk-Ku  Cropped pants Hong Kong style loose straight-leg overalls men Daftar: 37 $4.31  QTY " [ref=e800] [cursor=pointer]':
+                - /url: /product/cropped-pants-hong-kong-style-loose-straight-leg-overalls-men-p-1427838937522638848.html
+                - generic [ref=e802]:
+                  - img [ref=e803]
+                  - generic [ref=e805]:
+                    - generic: Daftar
+                    - generic [ref=e806]: 
+                  - generic [ref=e808]:
+                    - generic: Tambah ke Produk-Ku
+                    - generic [ref=e809]: 
+                - generic [ref=e810]:
+                  - generic [ref=e811]: Cropped pants Hong Kong style loose straight-leg overalls men
+                  - generic [ref=e813]: "Daftar: 37"
+                  - generic [ref=e814]:
+                    - generic [ref=e816]: $4.31
+                    - generic [ref=e817]:
+                      - generic [ref=e820]: 
+                      - generic [ref=e822]:
+                        - generic [ref=e823]: QTY
+                        - generic [ref=e824]: 
+              - img [ref=e828]
+              - img [ref=e838]
+              - img [ref=e848]
+              - img [ref=e858]
+              - img [ref=e868]
+              - img [ref=e878]
+              - img [ref=e888]
+              - img [ref=e898]
+              - img [ref=e908]
+              - img [ref=e918]
+              - img [ref=e928]
+              - img [ref=e938]
+              - img [ref=e948]
+              - img [ref=e958]
+              - img [ref=e968]
+              - img [ref=e978]
+              - img [ref=e988]
+              - img [ref=e998]
+              - img [ref=e1008]
+              - img [ref=e1018]
+              - img [ref=e1028]
+              - img [ref=e1038]
+              - img [ref=e1048]
+              - img [ref=e1058]
+              - img [ref=e1068]
+              - img [ref=e1078]
+              - img [ref=e1088]
+              - img [ref=e1098]
+              - img [ref=e1108]
+              - img [ref=e1118]
+              - img [ref=e1128]
+              - img [ref=e1138]
+              - img [ref=e1148]
+              - img [ref=e1158]
+              - img [ref=e1168]
+              - img [ref=e1178]
+              - img [ref=e1188]
+              - img [ref=e1198]
+              - img [ref=e1208]
+              - img [ref=e1218]
+              - img [ref=e1228]
+              - img [ref=e1238]
+              - img [ref=e1248]
+              - img [ref=e1258]
+              - img [ref=e1268]
+              - img [ref=e1278]
+              - img [ref=e1288]
+              - img [ref=e1298]
+          - generic [ref=e1305]:
+            - generic [ref=e1306]: 3201 Rekam
+            - generic [ref=e1307]:
+              - link "<<" [ref=e1308] [cursor=pointer]:
+                - /url: javascript:void(0)
+              - link "<" [ref=e1309] [cursor=pointer]:
+                - /url: javascript:void(0)
+              - link "1" [ref=e1310] [cursor=pointer]:
+                - /url: javascript:void(0)
+              - link "2" [ref=e1311] [cursor=pointer]:
+                - /url: /search/oversized+cargo+pants+men.html?pageNum=2
+              - link "3" [ref=e1312] [cursor=pointer]:
+                - /url: /search/oversized+cargo+pants+men.html?pageNum=3
+              - link "4" [ref=e1313] [cursor=pointer]:
+                - /url: /search/oversized+cargo+pants+men.html?pageNum=4
+              - link "5" [ref=e1314] [cursor=pointer]:
+                - /url: /search/oversized+cargo+pants+men.html?pageNum=5
+              - link ">" [ref=e1315] [cursor=pointer]:
+                - /url: /search/oversized+cargo+pants+men.html?pageNum=2
+              - link ">>" [ref=e1316] [cursor=pointer]:
+                - /url: /search/oversized+cargo+pants+men.html?pageNum=54
+            - generic [ref=e1317]:
+              - text: "Menunjukkan:"
+              - textbox [ref=e1318]: "1"
+              - text: Dari 54
+              - button "Silakan" [ref=e1319] [cursor=pointer]
+          - generic [ref=e1321]:
+            - paragraph [ref=e1322]: Can't find the Product you want? Tell us what you need.
+            - generic [ref=e1323]:
+              - textbox "Please enter a specific product name" [ref=e1324]
+              - generic [ref=e1325] [cursor=pointer]:
+                - generic [ref=e1326]: 
+                - text: Request for Sourcing
+        - text: 
+        - generic: 
+      - generic [ref=e1328]:
+        - generic [ref=e1331]:
+          - generic [ref=e1332]:
+            - heading "CJdropshipping" [level=3] [ref=e1333]: CJdropshipping 
+            - link "Penawaran kami" [ref=e1334] [cursor=pointer]:
+              - /url: /ouroffers
+            - link "Gambaran umum" [ref=e1335] [cursor=pointer]:
+              - /url: /overview
+            - link "Tentang Kami" [ref=e1336] [cursor=pointer]:
+              - /url: /aboutus
+            - link "Hubungi kami" [ref=e1337] [cursor=pointer]:
+              - /url: /contactus
+            - link "Perjanjian pengguna" [ref=e1338] [cursor=pointer]:
+              - /url: /user-agreement
+            - link "Pengembalian uang, kirim ulang, dan pengembalian" [ref=e1339] [cursor=pointer]:
+              - /url: /dispute-policy.html
+            - link "Laporan Integritas" [ref=e1340] [cursor=pointer]:
+              - /url: /report-platform
+            - link "Kebijakan Privasi" [ref=e1341] [cursor=pointer]:
+              - /url: /privacyPolicy
+            - link "Kebijakan kue" [ref=e1342] [cursor=pointer]:
+              - /url: /cookiePolicy
+            - link "Metode pembayaran" [ref=e1343] [cursor=pointer]:
+              - /url: /article-details/112
+            - link "Perjanjian otorisasi toko" [ref=e1344] [cursor=pointer]:
+              - /url: /storeAuthorizationAgreement
+          - generic [ref=e1345]:
+            - generic [ref=e1346]:
+              - generic [ref=e1347]:
+                - heading "Pemenuhan" [level=3] [ref=e1348]: Pemenuhan 
+                - link "Pelacakan pesanan" [ref=e1349] [cursor=pointer]:
+                  - /url: https://cjpacket.com/
+                - link "Biaya pengiriman dan waktu pengiriman" [ref=e1350] [cursor=pointer]:
+                  - /url: /calculation.html
+                - link "3PL Fulfillment" [ref=e1351] [cursor=pointer]:
+                  - /url: https://cjdropshipping.com/fulfillmentservice
+                - link "Biaya pemenuhan" [ref=e1352] [cursor=pointer]:
+                  - /url: /service-fee
+                - link "Pemeriksaan kualitas" [ref=e1353] [cursor=pointer]:
+                  - /url: /article-details/1408356901300867072
+                - link "Kemasan kustom" [ref=e1354] [cursor=pointer]:
+                  - /url: /customPackaging
+              - generic [ref=e1355]:
+                - heading "Sumber Daya" [level=3] [ref=e1356]: Sumber Daya 
+                - link "Laporan produk" [ref=e1357] [cursor=pointer]:
+                  - /url: /top-selling
+                - link "Akademi CJ" [ref=e1358] [cursor=pointer]:
+                  - /url: https://academy.cjdropshipping.com/
+                - link "Blog" [ref=e1359] [cursor=pointer]:
+                  - /url: /blogs
+                - link "API" [ref=e1360] [cursor=pointer]:
+                  - /url: https://developers.cjdropshipping.cn/en/api/introduction.html
+            - generic [ref=e1361]:
+              - generic [ref=e1362]:
+                - heading "Program" [level=3] [ref=e1363]: Program 
+                - link "Layanan kredit" [ref=e1364] [cursor=pointer]:
+                  - /url: /loancredit
+                - link "Terafiliasi" [ref=e1365] [cursor=pointer]:
+                  - /url: https://affiliate.cjdropshipping.com/
+                - link "CJ Prime" [ref=e1366] [cursor=pointer]:
+                  - /url: /prime
+                - link "Solusi Pembayaran" [ref=e1367] [cursor=pointer]:
+                  - /url: /payment-agency
+                - link "Fotografi produk" [ref=e1368] [cursor=pointer]:
+                  - /url: /medium-production-services
+              - generic [ref=e1369]:
+                - heading "Dukungan" [level=3] [ref=e1370]: Dukungan 
+                - link "Laporan produk yang tidak tepat" [ref=e1371] [cursor=pointer]:
+                  - /url: /my.html#/improperProductsReport
+                - link "Pendukung 24/7" [ref=e1372] [cursor=pointer]:
+                  - /url: https://chat.cjdropshipping.com
+                - link "Pusat Bantuan" [ref=e1373] [cursor=pointer]:
+                  - /url: /help-center
+                - link "Tiket" [ref=e1374] [cursor=pointer]:
+                  - /url: /mine/ticket
+                - link "Elites" [ref=e1375] [cursor=pointer]:
+                  - /url: https://elites.cjdropshipping.com
+            - generic [ref=e1377]:
+              - heading "Sumber" [level=3] [ref=e1378]: Sumber 
+              - link "Permintaan pembelian produk" [ref=e1379] [cursor=pointer]:
+                - /url: /sourcing
+              - link "Cetak sesuai permintaan" [ref=e1380] [cursor=pointer]:
+                - /url: /printonDemand/home
+              - link "ODM" [ref=e1381] [cursor=pointer]:
+                - /url: /odm
+              - link "Gudang di Seluruh Dunia" [ref=e1382] [cursor=pointer]:
+                - /url: /global-warehouses
+              - link "Ekstensi Google Chrome" [ref=e1383] [cursor=pointer]:
+                - /url: https://chrome.google.com/webstore/detail/cjdropshipping/mbndljkgaoailfnpeodnlejigmkdpokb
+              - link "Pembelian grosir" [ref=e1384] [cursor=pointer]:
+                - /url: /bulkPurchase
+              - link "Pemasok CJ" [ref=e1385] [cursor=pointer]:
+                - /url: https://suppliers.cjdropshipping.cn/
+          - generic [ref=e1386]:
+            - generic [ref=e1387] [cursor=pointer]: Berlangganan hot product terbaru kami
+            - generic [ref=e1388]: Pindai kode QR untuk mengunduh versi seluler CJdropshipping
+            - link [ref=e1389] [cursor=pointer]:
+              - /url: /cj_apk
+            - generic [ref=e1390]:
+              - paragraph [ref=e1391]: Media sosial
+              - generic [ref=e1392]:
+                - link "" [ref=e1393] [cursor=pointer]:
+                  - /url: https://wa.me/8618067627100
+                  - generic [ref=e1394]: 
+                - link "" [ref=e1395] [cursor=pointer]:
+                  - /url: https://www.facebook.com/cjdropshipping
+                  - generic [ref=e1396]: 
+                - link "" [ref=e1397] [cursor=pointer]:
+                  - /url: https://twitter.com/cjdropshipping
+                  - generic [ref=e1398]: 
+                - link "" [ref=e1399] [cursor=pointer]:
+                  - /url: https://www.youtube.com/channel/UC2Ac78gdQmqd_QgN978nOTw
+                  - generic [ref=e1400]: 
+                - link "" [ref=e1401] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/in/andy-chou-58979591/
+                  - generic [ref=e1402]: 
+                - link "" [ref=e1403] [cursor=pointer]:
+                  - /url: https://www.pinterest.com/cjdropship
+                  - generic [ref=e1404]: 
+                - link "" [ref=e1405] [cursor=pointer]:
+                  - /url: https://www.instagram.com/cjdropshippingofficial/
+                  - generic [ref=e1406]: 
+            - paragraph [ref=e1408]: Metode pembayaran
+        - generic [ref=e1409]:
+          - text: ©2026CJdropshipping.com Semua Hak Dilindungi|
+          - link "浙ICP备2020040134号-1" [ref=e1410] [cursor=pointer]:
+            - /url: https://beian.miit.gov.cn/
+  - generic [ref=e1415]:
+    - generic [ref=e1416]: Berlangganan hot product terbaru kami
+    - generic [ref=e1417]:
+      - generic [ref=e1418]:
+        - generic [ref=e1419]: "*Nama Anda"
+        - textbox "Masukan Nama Anda" [ref=e1420]
+      - generic [ref=e1421]:
+        - generic [ref=e1422]: WhatsApp
+        - generic [ref=e1423] [cursor=pointer]:
+          - img [ref=e1425]
+          - text: Terhubung dengan CJ WhatsApp
+      - generic [ref=e1427]:
+        - generic [ref=e1428]: WeChat
+        - generic [ref=e1429] [cursor=pointer]:
+          - img [ref=e1431]
+          - text: Terhubung dengan WeChat
+      - generic [ref=e1433]:
+        - generic [ref=e1434]: "*Email Anda"
+        - textbox "Mohon isi dengan alamat email yang benar" [ref=e1435]
+    - generic [ref=e1437] [cursor=pointer]: Berlangganan

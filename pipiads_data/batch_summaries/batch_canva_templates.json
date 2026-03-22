@@ -1,0 +1,18 @@
+{
+  "keyword": "canva templates",
+  "tier": "T2",
+  "mode": "niche",
+  "pages_visited": 4,
+  "cards_scanned": 15,
+  "cards_captured": 4,
+  "pre_filtered_out": 11,
+  "winners": 0,
+  "possible_winners": 0,
+  "mid": 4,
+  "junk_rate": 0.73,
+  "early_terminated": false,
+  "recommend": "reduce",
+  "reason": "high junk (73%)",
+  "gate_passed": true,
+  "outcome_label": "SATURATED"
+}

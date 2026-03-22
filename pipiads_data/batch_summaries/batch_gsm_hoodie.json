@@ -1,0 +1,18 @@
+{
+  "keyword": "gsm hoodie",
+  "tier": "T2",
+  "mode": "niche",
+  "pages_visited": 1,
+  "cards_scanned": 16,
+  "cards_captured": 3,
+  "pre_filtered_out": 13,
+  "winners": 0,
+  "possible_winners": 1,
+  "mid": 2,
+  "junk_rate": 0.81,
+  "early_terminated": false,
+  "recommend": "abandon",
+  "reason": "81% junk, 0 winners",
+  "gate_passed": true,
+  "outcome_label": "JUNK_DOMINATED"
+}

@@ -1,0 +1,44 @@
+{
+  "continuation_methods": [
+    {
+      "type": "infinite_scroll_append",
+      "scroll_target": "window",
+      "selector": "window",
+      "batch_size_expected": 8,
+      "confidence": 0.95,
+      "success_count": 1,
+      "fail_count": 0,
+      "settle_wait_seconds": 4,
+      "verification": "dom_card_count increases by ~batch_size after scroll-to-bottom",
+      "stop_conditions": [
+        "no DOM growth after 2 consecutive bottom passes",
+        "no new identities after 2 consecutive bottom passes",
+        "per-keyword batch cap reached"
+      ],
+      "notes": "scroll triggers DOM append with ~8 new cards per batch. Network requests coincide with batch loads. Max observed delta: 52."
+    }
+  ],
+  "recommended_method": "infinite_scroll_append",
+  "fallback_methods": [
+    {
+      "type": "window_scroll",
+      "tested": true,
+      "result": "not_tested"
+    },
+    {
+      "type": "internal_scroll",
+      "tested": false,
+      "result": "not_tested"
+    },
+    {
+      "type": "pagination_click",
+      "tested": false,
+      "result": "not_tested"
+    },
+    {
+      "type": "load_more_click",
+      "tested": false,
+      "result": "not_tested"
+    }
+  ]
+}

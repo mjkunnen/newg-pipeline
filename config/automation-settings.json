@@ -1,0 +1,49 @@
+{
+  "posting_schedule": {
+    "tiktok": {
+      "posts_per_day": 2,
+      "spacing_hours": 4,
+      "content_mix": {
+        "slideshows": 0.7,
+        "videos": 0.3
+      },
+      "weekly_rotation": {
+        "monday": "trust_slideshow",
+        "tuesday": "desire_slideshow",
+        "wednesday": "video_bts",
+        "thursday": "identity_slideshow",
+        "friday": "scarcity_slideshow",
+        "saturday": "interactive_slideshow",
+        "sunday": "lifestyle_photodump"
+      }
+    }
+  },
+  "spark_ads": {
+    "review_day": "thursday",
+    "boost_criteria": {
+      "min_saves": 50,
+      "min_comments": 10,
+      "min_views": 10000
+    },
+    "budget_per_boost_eur": 20,
+    "objective": "lead_generation",
+    "target_markets": ["NL", "BE", "DE", "UK", "US"]
+  },
+  "content_generation": {
+    "batch_size": 10,
+    "review_before_post": true,
+    "auto_caption": true,
+    "auto_hashtags": true,
+    "a_b_test_captions": true
+  },
+  "notion": {
+    "content_calendar_db_id": "VULL_IN",
+    "ad_performance_db_id": "VULL_IN",
+    "competitor_tracking_db_id": "VULL_IN"
+  },
+  "alerts": {
+    "viral_threshold_views": 100000,
+    "low_performance_threshold_views": 1000,
+    "notify_on_viral": true
+  }
+}

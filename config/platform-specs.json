@@ -1,0 +1,82 @@
+{
+  "tiktok": {
+    "carousel": {
+      "dimensions": "1080x1920",
+      "aspect_ratio": "9:16",
+      "max_slides": 35,
+      "optimal_slides": "4-8",
+      "image_format": ["PNG", "JPG"],
+      "max_file_size_per_image_kb": 100,
+      "duration_per_slide_sec": "2-4",
+      "total_duration_sec": "15-30"
+    },
+    "video": {
+      "dimensions": "1080x1920",
+      "aspect_ratio": "9:16",
+      "max_duration_sec": 600,
+      "optimal_duration_sec": "15-60",
+      "format": ["MP4", "MOV"],
+      "max_file_size_mb": 287
+    },
+    "caption": {
+      "max_chars": 2200,
+      "optimal_chars": "200+",
+      "hashtag_strategy": "3-5 relevant hashtags",
+      "note": "Longer captions (200+ chars) get 3x more views"
+    },
+    "posting": {
+      "optimal_frequency": "1-2 per day",
+      "min_spacing_hours": 4,
+      "best_days": ["Tuesday", "Thursday", "Friday"],
+      "note": "Never post 5+ in one day - algorithmic penalty"
+    },
+    "spark_ads": {
+      "engagement_rate_vs_infeed": "+142%",
+      "completion_rate_vs_infeed": "+30%",
+      "conversion_rate_vs_infeed": "+69%",
+      "cpa_vs_infeed": "-37%"
+    },
+    "carousel_vs_video": {
+      "comments": "2.9x more",
+      "likes": "1.9x more",
+      "shares": "2.6x more",
+      "engagements": "81% more",
+      "reach": "3% higher"
+    }
+  },
+  "instagram": {
+    "carousel": {
+      "dimensions_square": "1080x1080",
+      "dimensions_portrait": "1080x1350",
+      "aspect_ratios": ["1:1", "4:5"],
+      "max_slides": 10,
+      "optimal_slides": "5-7",
+      "image_format": ["PNG", "JPG"]
+    },
+    "reels": {
+      "dimensions": "1080x1920",
+      "aspect_ratio": "9:16",
+      "max_duration_sec": 90,
+      "optimal_duration_sec": "15-30"
+    },
+    "story": {
+      "dimensions": "1080x1920",
+      "aspect_ratio": "9:16",
+      "duration_sec": 15
+    }
+  },
+  "pinterest": {
+    "standard_pin": {
+      "dimensions": "1000x1500",
+      "aspect_ratio": "2:3",
+      "image_format": ["PNG", "JPG"],
+      "max_file_size_mb": 32
+    },
+    "idea_pin": {
+      "dimensions": "1080x1920",
+      "aspect_ratio": "9:16",
+      "max_slides": 20,
+      "video_duration_sec": "3-60"
+    }
+  }
+}

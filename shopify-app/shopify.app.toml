@@ -1,0 +1,19 @@
+name = "claudereal"
+client_id = "04e5c3005fb72b8e8c8c2b643e8f4439"
+application_url = "http://localhost:9999"
+embedded = false
+
+[access_scopes]
+scopes = "read_products,write_products,read_orders,write_orders,read_inventory,write_inventory,read_themes,write_themes,read_content,write_content,read_files,write_files,read_customers,write_customers,read_fulfillments,write_fulfillments,read_locations,read_discounts,write_discounts"
+
+[access.admin]
+direct_api_mode = "offline"
+
+[auth]
+redirect_urls = ["http://localhost:9999/callback"]
+
+[webhooks]
+api_version = "2024-10"
+
+[build]
+dev_store_url = "2fgppd-7k.myshopify.com"

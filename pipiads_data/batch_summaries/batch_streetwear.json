@@ -1,0 +1,18 @@
+{
+  "keyword": "streetwear",
+  "tier": "T1",
+  "mode": "broad",
+  "pages_visited": 4,
+  "cards_scanned": 32,
+  "cards_captured": 4,
+  "pre_filtered_out": 28,
+  "winners": 1,
+  "possible_winners": 3,
+  "mid": 0,
+  "junk_rate": 0.88,
+  "early_terminated": false,
+  "recommend": "reduce",
+  "reason": "high junk (88%)",
+  "gate_passed": true,
+  "outcome_label": "HIGH_SIGNAL"
+}

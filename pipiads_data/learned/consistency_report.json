@@ -1,0 +1,8 @@
+{
+  "card_structure_consistency": "high",
+  "detail_open_consistency": "modal_only",
+  "close_recipe_confidence": "medium",
+  "mixed_behavior_notes": [],
+  "cards_inspected": 3,
+  "opens_tested": 2
+}

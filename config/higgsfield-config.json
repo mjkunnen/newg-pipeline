@@ -1,0 +1,44 @@
+{
+  "_note": "Higgsfield AI video generation settings",
+  "api_key_location": ".env (HIGGSFIELD_API_KEY)",
+  "defaults": {
+    "resolution": "1080x1920",
+    "aspect_ratio": "9:16",
+    "duration_sec": 5,
+    "fps": 30,
+    "style": "realistic"
+  },
+  "model_settings": {
+    "reference_image_min_resolution": "1024x1024",
+    "reference_image_format": ["PNG", "JPG"],
+    "lighting": "natural, warm tones",
+    "background": "urban/street setting preferred"
+  },
+  "generation_presets": {
+    "product_showcase": {
+      "description": "360-degree product rotation or model wearing item",
+      "duration_sec": 5,
+      "camera_movement": "slow orbit"
+    },
+    "lifestyle_scene": {
+      "description": "Model walking in urban setting wearing product",
+      "duration_sec": 8,
+      "camera_movement": "tracking shot"
+    },
+    "detail_zoom": {
+      "description": "Close-up zoom on fabric texture and stitching",
+      "duration_sec": 3,
+      "camera_movement": "slow zoom in"
+    },
+    "before_after": {
+      "description": "Transition from generic hoodie to NEWGARMENTS piece",
+      "duration_sec": 5,
+      "camera_movement": "static with transition"
+    }
+  },
+  "batch_rules": {
+    "max_concurrent_generations": 3,
+    "preview_before_full_render": true,
+    "save_to": "ad-generation/visuals/generated/"
+  }
+}

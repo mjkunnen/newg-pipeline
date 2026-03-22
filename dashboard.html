@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWGARMENTS — TikTok Slideshow Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface-hover: #1a1a1a;
+    --border: #222222;
+    --border-accent: #333333;
+    --text: #e8e8e8;
+    --text-muted: #777777;
+    --text-dim: #555555;
+    --accent: #c8ff00;
+    --accent-dim: #6b8700;
+    --red: #ff3b3b;
+    --pink: #d4a0b0;
+    --green: #4a7c59;
+    --blue: #5b8fb9;
+    --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--grain);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .header-brand span { color: var(--accent); }
+
+  .header-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .header-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  .hero {
+    padding: 80px 40px 60px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: 'PLAYBOOK';
+    position: absolute;
+    right: -20px;
+    top: -30px;
+    font-family: 'Space Mono', monospace;
+    font-size: 200px;
+    font-weight: 700;
+    color: rgba(200,255,0,0.03);
+    letter-spacing: -5px;
+    pointer-events: none;
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 64px;
+    line-height: 1.05;
+    font-weight: 400;
+    max-width: 800px;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .hero h1 em { color: var(--accent); font-style: italic; }
+
+  .hero-sub {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.7;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+    opacity: 0;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    animation: fadeUp 0.6s ease 0.2s forwards;
+    opacity: 0;
+  }
+
+  .hero-stat { border-left: 1px solid var(--border-accent); padding-left: 16px; }
+  .hero-stat-value { font-family: 'Space Mono', monospace; font-size: 28px; color: var(--accent); }
+  .hero-stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; }
+
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 40px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 55px;
+    z-index: 99;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(20px);
+  }
+
+  .nav-tab {
+    padding: 16px 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+    user-select: none;
+  }
+
+  .nav-tab:hover { color: var(--text-muted); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-header { padding: 40px 40px 20px; }
+  .section-header h2 { font-family: 'Instrument Serif', serif; font-size: 36px; font-weight: 400; }
+  .section-header p { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
+
+  .originals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    margin: 0 40px 40px;
+    border: 1px solid var(--border);
+  }
+
+  .original-card {
+    background: var(--surface);
+    padding: 28px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  .original-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--accent);
+    transition: height 0.4s ease;
+  }
+
+  .original-card:hover { background: var(--surface-hover); }
+  .original-card:hover::before { height: 100%; }
+
+  .original-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .original-account { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--accent); }
+  .original-views { font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; color: var(--text); }
+  .original-views small { font-size: 10px; color: var(--text-dim); font-weight: 400; letter-spacing: 1px; display: block; text-align: right; }
+  .original-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
+
+  .original-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .tag { font-family: 'Space Mono', monospace; font-size: 9px; padding: 3px 8px; border: 1px solid var(--border-accent); color: var(--text-dim); letter-spacing: 1px; }
+  .tag.highlight { border-color: var(--accent-dim); color: var(--accent); }
+
+  .format-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 2px 8px;
+    background: rgba(200,255,0,0.1);
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .original-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+
+  .original-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(200,255,0,0.05); }
+  .original-link svg { width: 12px; height: 12px; }
+
+  .concepts-list { padding: 0 40px 60px; display: flex; flex-direction: column; gap: 2px; }
+
+  .concept-card { background: var(--surface); border: 1px solid var(--border); overflow: hidden; transition: all 0.3s; }
+  .concept-card:hover { border-color: var(--border-accent); }
+
+  .concept-header {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    align-items: center;
+    padding: 24px 28px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .concept-number { font-family: 'Space Mono', monospace; font-size: 32px; font-weight: 700; color: var(--accent); line-height: 1; }
+
+  .concept-title-wrap { padding-left: 20px; border-left: 1px solid var(--border); }
+  .concept-title { font-family: 'Instrument Serif', serif; font-size: 22px; font-style: italic; }
+  .concept-caption-preview { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+  .concept-toggle {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    color: var(--text-dim);
+    transition: transform 0.3s;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .concept-card.open .concept-toggle { transform: rotate(45deg); color: var(--accent); }
+
+  .concept-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+  .concept-card.open .concept-body { max-height: 2000px; }
+
+  .concept-content {
+    padding: 0 28px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+  }
+
+  .concept-left h4, .concept-right h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .concept-left h4 { color: var(--accent); }
+  .concept-right h4 { color: var(--text-dim); }
+
+  .slide-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .slide-item {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255,255,255,0.02);
+    border-left: 2px solid var(--border-accent);
+  }
+
+  .slide-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent-dim); }
+  .slide-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .slide-products { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .product-chip { font-family: 'Space Mono', monospace; font-size: 9px; padding: 2px 6px; background: rgba(200,255,0,0.08); color: var(--accent); letter-spacing: 0.5px; }
+
+  .concept-detail-block { margin-bottom: 20px; }
+  .concept-detail-block label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 6px; }
+
+  .concept-caption {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--text);
+    padding: 16px;
+    background: rgba(200,255,0,0.03);
+    border-left: 2px solid var(--accent);
+  }
+
+  .concept-hashtags { font-size: 12px; color: var(--text-dim); line-height: 1.8; }
+  .concept-hashtags span { color: var(--blue); }
+
+  .concept-why {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    padding: 12px;
+    background: rgba(255,255,255,0.02);
+    border-left: 2px solid var(--green);
+  }
+
+  .concept-inspired {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.3s;
+    margin-top: 8px;
+  }
+
+  .concept-inspired:hover { border-color: var(--accent-dim); color: var(--text-muted); }
+
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin: 0 40px 40px;
+    border: 1px solid var(--border);
+  }
+
+  .strategy-card { background: var(--surface); padding: 32px; }
+  .strategy-card h3 { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+
+  .order-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .order-item {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.02);
+    font-size: 13px;
+    color: var(--text-muted);
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .order-item:hover { background: rgba(200,255,0,0.03); }
+  .order-num { font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; color: var(--accent-dim); }
+  .order-reason { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text-dim); letter-spacing: 1px; text-align: right; }
+
+  .timing-block { padding: 16px; background: rgba(255,255,255,0.02); margin-bottom: 12px; }
+  .timing-block p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+  .timing-block strong { font-family: 'Space Mono', monospace; color: var(--accent); font-size: 12px; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin: 0 40px 40px;
+    border: 1px solid var(--border);
+  }
+
+  .product-card { background: var(--surface); padding: 20px; text-align: center; transition: all 0.3s; }
+  .product-card:hover { background: var(--surface-hover); }
+  .product-card img { width: 100%; height: 160px; object-fit: contain; filter: brightness(0.95); transition: all 0.3s; margin-bottom: 12px; }
+  .product-card:hover img { filter: brightness(1.05); transform: scale(1.03); }
+  .product-name { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); line-height: 1.4; }
+  .product-cat { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+
+  @media (max-width: 900px) {
+    .hero h1 { font-size: 36px; }
+    .hero { padding: 40px 20px; }
+    .nav-tabs { padding: 0 20px; overflow-x: auto; }
+    .originals-grid { grid-template-columns: 1fr; margin: 0 20px 20px; }
+    .concepts-list { padding: 0 20px 40px; }
+    .concept-content { grid-template-columns: 1fr; }
+    .strategy-grid { grid-template-columns: 1fr; margin: 0 20px 20px; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); margin: 0 20px 20px; }
+    .section-header { padding: 24px 20px 16px; }
+    .header { padding: 12px 20px; }
+    .concept-header { grid-template-columns: 40px 1fr auto; padding: 16px 20px; }
+    .hero-stats { flex-wrap: wrap; gap: 20px; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand"><span>NG</span> NEWGARMENTS</div>
+  <div class="header-title">TikTok Slideshow Playbook</div>
+  <div class="header-date">22 MAR 2026</div>
+</header>
+
+<section class="hero">
+  <h1>Competitor slideshows,<br><em>remade for us.</em></h1>
+  <p class="hero-sub">6 slideshow concepten gebaseerd op bewezen virale formats van streetwear accounts. Elke post is geremaked met NEWGARMENTS producten en brand voice.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-value">6</div><div class="hero-stat-label">Concepts</div></div>
+    <div class="hero-stat"><div class="hero-stat-value">4.2M</div><div class="hero-stat-label">Combined Original Views</div></div>
+    <div class="hero-stat"><div class="hero-stat-value">10</div><div class="hero-stat-label">Products Used</div></div>
+    <div class="hero-stat"><div class="hero-stat-value">5</div><div class="hero-stat-label">Source Accounts</div></div>
+  </div>
+</section>
+
+<nav class="nav-tabs">
+  <div class="nav-tab active" data-tab="originals">Originals</div>
+  <div class="nav-tab" data-tab="concepts">Remakes</div>
+  <div class="nav-tab" data-tab="products">Products</div>
+  <div class="nav-tab" data-tab="strategy">Strategy</div>
+</nav>
+
+<section class="section active" id="originals">
+  <div class="section-header">
+    <h2>Original Posts</h2>
+    <p>De virale competitor posts waar onze concepten op gebaseerd zijn</p>
+  </div>
+  <div class="originals-grid">
+    <div class="original-card" style="animation-delay:0s">
+      <div class="format-badge">Slideshow</div>
+      <div class="original-meta">
+        <div class="original-account">@swaggyfits</div>
+        <div class="original-views">1M<small>views</small></div>
+      </div>
+      <div class="original-desc">"If only my wallet matched my taste" — Pinned slideshow post met streetwear outfit inspo. Bold statement als hook die massale engagement triggert.</div>
+      <div class="original-tags"><span class="tag highlight">slideshow</span><span class="tag">#streetwear</span><span class="tag">#fashiontiktok</span><span class="tag">#outfitinspo</span></div>
+      <a href="https://www.tiktok.com/@swaggyfits/video/7572811586205781255" target="_blank" class="original-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Bekijk op TikTok</a>
+    </div>
+    <div class="original-card" style="animation-delay:0.05s">
+      <div class="format-badge">Slideshow</div>
+      <div class="original-meta">
+        <div class="original-account">@swaggyfits</div>
+        <div class="original-views">314K<small>views</small></div>
+      </div>
+      <div class="original-desc">"Both tuff, help me choose y'all" — Vergelijking van 2 outfits met Timberland boots. Forceert comments met "left or right" keuze.</div>
+      <div class="original-tags"><span class="tag highlight">vergelijking</span><span class="tag">#timberlandboots</span><span class="tag">#outfitinspo</span><span class="tag">#fashionstyle</span></div>
+      <a href="https://www.tiktok.com/@swaggyfits/photo/7585424221656845588" target="_blank" class="original-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Bekijk op TikTok</a>
+    </div>
+    <div class="original-card" style="animation-delay:0.1s">
+      <div class="format-badge">Video</div>
+      <div class="original-meta">
+        <div class="original-account">@kitsue__</div>
+        <div class="original-views">1.5M<small>views</small></div>
+      </div>
+      <div class="original-desc">"cant get over how this dark camo outfit came together" — Street-level outfit shot. Raw aesthetic, phone-shot feel. Baggy jeans + layered accessories.</div>
+      <div class="original-tags"><span class="tag highlight">street shot</span><span class="tag">#ootd</span><span class="tag">#streetwear</span><span class="tag">#outfitinspo</span></div>
+      <a href="https://www.tiktok.com/@kitsue__/video/7556972742935858450" target="_blank" class="original-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Bekijk op TikTok</a>
+    </div>
+    <div class="original-card" style="animation-delay:0.15s">
+      <div class="format-badge">Slideshow</div>
+      <div class="original-meta">
+        <div class="original-account">@kitsue__</div>
+        <div class="original-views">571K<small>views</small></div>
+      </div>
+      <div class="original-desc">"baggy on baggy outfit with layered accessories" — Full outfit slideshow. Baggy jeans + hoodie combo als hero look met OOTD tags.</div>
+      <div class="original-tags"><span class="tag highlight">ootd</span><span class="tag">#outfitcheck</span><span class="tag">#streetwear</span></div>
+      <a href="https://www.tiktok.com/@kitsue__/video/7582212844079435029" target="_blank" class="original-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Bekijk op TikTok</a>
+    </div>
+    <div class="original-card" style="animation-delay:0.2s">
+      <div class="format-badge">Video</div>
+      <div class="original-meta">
+        <div class="original-account">@urbanoutfitdkd</div>
+        <div class="original-views">78.9K<small>views</small></div>
+      </div>
+      <div class="original-desc">"Tienda Streetwear colombiana" — Collectie overview slideshow. Hele drop in 1 post. Werkt als visuele catalogus die mensen saven.</div>
+      <div class="original-tags"><span class="tag highlight">collectie</span><span class="tag">#baggyjeans</span><span class="tag">#streetwear</span><span class="tag">#modaurbana</span></div>
+      <a href="https://www.tiktok.com/@urbanoutfitdkd/video/7596841309193784597" target="_blank" class="original-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Bekijk op TikTok</a>
+    </div>
+    <div class="original-card" style="animation-delay:0.25s">
+      <div class="format-badge">Video</div>
+      <div class="original-meta">
+        <div class="original-account">@drag.is.boring</div>
+        <div class="original-views">26.3K<small>views</small></div>
+      </div>
+      <div class="original-desc">"Streetwear outfit, return to origins" — Europees account. Baggy jeans met custom items, boots en accessoires. Vinted seller.</div>
+      <div class="original-tags"><span class="tag highlight">europees</span><span class="tag">#explore</span><span class="tag">#streetwear</span><span class="tag">#autumnoutfit</span></div>
+      <a href="https://www.tiktok.com/@drag.is.boring/video/7576790000961113347" target="_blank" class="original-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Bekijk op TikTok</a>
+    </div>
+    <div class="original-card" style="animation-delay:0.3s">
+      <div class="format-badge">Slideshow</div>
+      <div class="original-meta">
+        <div class="original-account">@swaggyfits</div>
+        <div class="original-views">5.7K<small>views</small></div>
+      </div>
+      <div class="original-desc">"Both are tuff, but I can't decide which is better" — Baggy jeans vs sweatpants. Simpel 2-slide vergelijkingsformat.</div>
+      <div class="original-tags"><span class="tag highlight">vergelijking</span><span class="tag">#baggyjeans</span><span class="tag">#sweatpants</span></div>
+      <a href="https://www.tiktok.com/@swaggyfits/photo/7586909100416486676" target="_blank" class="original-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Bekijk op TikTok</a>
+    </div>
+    <div class="original-card" style="animation-delay:0.35s">
+      <div class="format-badge">Video</div>
+      <div class="original-meta">
+        <div class="original-account">@meikimm3</div>
+        <div class="original-views">295.5K<small>views</small></div>
+      </div>
+      <div class="original-desc">Y2K outfit slideshow met baggy pants, oversized shirts. Massale views door hashtag stacking en trending audio.</div>
+      <div class="original-tags"><span class="tag highlight">y2k</span><span class="tag">#baggypants</span><span class="tag">#oversizedshirt</span><span class="tag">#y2k</span></div>
+      <a href="https://www.tiktok.com/@meikimm3/video/7472199198650174727" target="_blank" class="original-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Bekijk op TikTok</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="concepts">
+  <div class="section-header">
+    <h2>Remake Concepts</h2>
+    <p>Elk concept is geremaked met NEWGARMENTS producten en brand voice</p>
+  </div>
+  <div class="concepts-list">
+    <div class="concept-card">
+      <div class="concept-header" onclick="toggleConcept(this)">
+        <div class="concept-number">01</div>
+        <div class="concept-title-wrap">
+          <div class="concept-title">"which jeans hit harder"</div>
+          <div class="concept-caption-preview">Simpelste format — start hiermee</div>
+        </div>
+        <div class="concept-toggle">+</div>
+      </div>
+      <div class="concept-body"><div class="concept-content">
+        <div class="concept-left">
+          <h4>Slides</h4>
+          <div class="slide-list">
+            <div class="slide-item"><div class="slide-num">01</div><div><div class="slide-desc">Graphic Lining Jeans — flatlay op donkere achtergrond, washed/distressed look</div><div class="slide-products"><span class="product-chip">Graphic Lining Jeans</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">02</div><div><div class="slide-desc">Embroidered Striped Jeans — flatlay, bold stripes contrasteren met slide 1</div><div class="slide-products"><span class="product-chip">Embroidered Striped Jeans</span></div></div></div>
+          </div>
+        </div>
+        <div class="concept-right">
+          <div class="concept-detail-block"><label>Caption</label><div class="concept-caption">which jeans hit harder. left or right</div></div>
+          <div class="concept-detail-block"><label>Hashtags</label><div class="concept-hashtags"><span>#baggyjeans</span> <span>#streetwear</span> <span>#fashiontiktok</span> <span>#outfitinspo</span> <span>#denim</span></div></div>
+          <div class="concept-detail-block"><label>Waarom dit werkt</label><div class="concept-why">Simpelste format = laagste drempel om te reageren. @swaggyfits doet constant "help me choose" posts. Beide jeans zijn visueel heel verschillend = duidelijke keuze = meer comments.</div></div>
+          <a href="https://www.tiktok.com/@swaggyfits/photo/7586909100416486676" target="_blank" class="concept-inspired">Gebaseerd op @swaggyfits — 5.7K views</a>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header" onclick="toggleConcept(this)">
+        <div class="concept-number">02</div>
+        <div class="concept-title-wrap">
+          <div class="concept-title">"pick your fighter"</div>
+          <div class="concept-caption-preview">Vergelijking van 2 complete outfits</div>
+        </div>
+        <div class="concept-toggle">+</div>
+      </div>
+      <div class="concept-body"><div class="concept-content">
+        <div class="concept-left">
+          <h4>Slides</h4>
+          <div class="slide-list">
+            <div class="slide-item"><div class="slide-num">01</div><div><div class="slide-desc">Outfit A — Clean tones. Checkered Zipper Gray + Graphic Lining Jeans + Ocean Stars Sneakers</div><div class="slide-products"><span class="product-chip">Checkered Zipper Gray</span><span class="product-chip">Graphic Lining Jeans</span><span class="product-chip">Ocean Stars Sneaker</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">02</div><div><div class="slide-desc">Outfit B — Dark edge. Checkered Zipper Black + Embroidered Striped Jeans + Fur Graphic Sneakers</div><div class="slide-products"><span class="product-chip">Checkered Zipper Black</span><span class="product-chip">Embroidered Striped Jeans</span><span class="product-chip">Fur Graphic Sneakers</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">03</div><div><div class="slide-desc">Split screen — Beide outfits naast elkaar, keuze geforceerd</div></div></div>
+          </div>
+        </div>
+        <div class="concept-right">
+          <div class="concept-detail-block"><label>Caption</label><div class="concept-caption">pick your fighter. left or right</div></div>
+          <div class="concept-detail-block"><label>Hashtags</label><div class="concept-hashtags"><span>#streetwear</span> <span>#outfitinspo</span> <span>#fashiontiktok</span> <span>#baggyjeans</span> <span>#ootd</span></div></div>
+          <div class="concept-detail-block"><label>Waarom dit werkt</label><div class="concept-why">@swaggyfits deed exact dit format en haalde 314K views met slechts 1.4K followers. Forceert engagement via comments. Toont 6 producten in 1 post.</div></div>
+          <a href="https://www.tiktok.com/@swaggyfits/photo/7585424221656845588" target="_blank" class="concept-inspired">Gebaseerd op @swaggyfits — 314K views</a>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header" onclick="toggleConcept(this)">
+        <div class="concept-number">03</div>
+        <div class="concept-title-wrap">
+          <div class="concept-title">"3 fits. 1 hoodie."</div>
+          <div class="concept-caption-preview">Versatiliteit = saves = algorithm boost</div>
+        </div>
+        <div class="concept-toggle">+</div>
+      </div>
+      <div class="concept-body"><div class="concept-content">
+        <div class="concept-left">
+          <h4>Slides</h4>
+          <div class="slide-list">
+            <div class="slide-item"><div class="slide-num">01</div><div><div class="slide-desc">Product hero — Checkered Zipper Red, open geritst, plaid lining zichtbaar</div><div class="slide-products"><span class="product-chip">Checkered Zipper Red</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">02</div><div><div class="slide-desc">Fit 1: Clean casual — Dicht geritst + Graphic Lining Jeans + Fur Graphic Sneakers</div><div class="slide-products"><span class="product-chip">Graphic Lining Jeans</span><span class="product-chip">Fur Graphic Sneakers</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">03</div><div><div class="slide-desc">Fit 2: Layered — Open geritst, plaid zichtbaar + Embroidered Striped Jeans + Ocean Stars</div><div class="slide-products"><span class="product-chip">Embroidered Striped Jeans</span><span class="product-chip">Ocean Stars Sneaker</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">04</div><div><div class="slide-desc">Fit 3: Streetwear edge — Over t-shirt, lining naar buiten gevouwen + baggy jeans</div></div></div>
+          </div>
+        </div>
+        <div class="concept-right">
+          <div class="concept-detail-block"><label>Caption</label><div class="concept-caption">3 fits. 1 hoodie. checkered inside out zipper. not made for everyone</div></div>
+          <div class="concept-detail-block"><label>Hashtags</label><div class="concept-hashtags"><span>#outfitideas</span> <span>#streetwear</span> <span>#baggyjeans</span> <span>#fashiontiktok</span> <span>#howistyle</span></div></div>
+          <div class="concept-detail-block"><label>Waarom dit werkt</label><div class="concept-why">Tutorial/how-to slideshows krijgen saves — TikTok's algorithm pusht saves zwaar. Inside-out feature is uniek. 3 fits = 3x de waarde perceptie.</div></div>
+          <a href="https://www.tiktok.com/@kitsue__/video/7582212844079435029" target="_blank" class="concept-inspired">Gebaseerd op tutorial format — 571K views</a>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header" onclick="toggleConcept(this)">
+        <div class="concept-number">04</div>
+        <div class="concept-title-wrap">
+          <div class="concept-title">"stop dressing like a background character"</div>
+          <div class="concept-caption-preview">Brand identity — main character energy</div>
+        </div>
+        <div class="concept-toggle">+</div>
+      </div>
+      <div class="concept-body"><div class="concept-content">
+        <div class="concept-left">
+          <h4>Slides</h4>
+          <div class="slide-list">
+            <div class="slide-item"><div class="slide-num">01</div><div><div class="slide-desc">Street shot — Full outfit op straat, raw/korrelig aesthetic</div><div class="slide-products"><span class="product-chip">Y2K Zip Hoodie Pink</span><span class="product-chip">Graphic Lining Jeans</span><span class="product-chip">Fur Graphic Sneakers</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">02</div><div><div class="slide-desc">Detail collage — Close-up hoodie graphic + jeans distressing + sneaker textuur</div></div></div>
+            <div class="slide-item"><div class="slide-num">03</div><div><div class="slide-desc">Back shot — Dezelfde outfit van achteren, walking away, moody atmosphere</div></div></div>
+          </div>
+        </div>
+        <div class="concept-right">
+          <div class="concept-detail-block"><label>Caption</label><div class="concept-caption">stop dressing like a background character</div></div>
+          <div class="concept-detail-block"><label>Hashtags</label><div class="concept-hashtags"><span>#maincharacter</span> <span>#streetwear</span> <span>#outfitcheck</span> <span>#fashiontiktok</span> <span>#fitcheck</span></div></div>
+          <div class="concept-detail-block"><label>Waarom dit werkt</label><div class="concept-why">@kitsue__ haalt 1.5M views met street shots. "Main character" resoneert zwaar met Gen Z. Raw aesthetic past perfect bij de NEWGARMENTS brand voice.</div></div>
+          <a href="https://www.tiktok.com/@kitsue__/video/7556972742935858450" target="_blank" class="concept-inspired">Gebaseerd op @kitsue__ — 1.5M views</a>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header" onclick="toggleConcept(this)">
+        <div class="concept-number">05</div>
+        <div class="concept-title-wrap">
+          <div class="concept-title">"460 gsm. your hoodie weighs half this."</div>
+          <div class="concept-caption-preview">Quality statement — USP als hook</div>
+        </div>
+        <div class="concept-toggle">+</div>
+      </div>
+      <div class="concept-body"><div class="concept-content">
+        <div class="concept-left">
+          <h4>Slides</h4>
+          <div class="slide-list">
+            <div class="slide-item"><div class="slide-num">01</div><div><div class="slide-desc">Flatlay — Alle 3 Y2K Zip Hoodies naast elkaar op donkere achtergrond</div><div class="slide-products"><span class="product-chip">Y2K Dark Green</span><span class="product-chip">Y2K Black</span><span class="product-chip">Y2K Pink</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">02</div><div><div class="slide-desc">Close-up — Detail shot van stof/textuur, 460 GSM dikte visueel zichtbaar</div></div></div>
+            <div class="slide-item"><div class="slide-num">03</div><div><div class="slide-desc">Outfit — Y2K Dark Green + Graphic Lining Jeans + Ocean Stars op persoon</div><div class="slide-products"><span class="product-chip">Graphic Lining Jeans</span><span class="product-chip">Ocean Stars Sneaker</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">04</div><div><div class="slide-desc">Alle 3 colorways als complete outfits naast elkaar</div></div></div>
+          </div>
+        </div>
+        <div class="concept-right">
+          <div class="concept-detail-block"><label>Caption</label><div class="concept-caption">460 gsm. your hoodie weighs half this</div></div>
+          <div class="concept-detail-block"><label>Hashtags</label><div class="concept-hashtags"><span>#streetwear</span> <span>#heavyweighthoodie</span> <span>#fashiontiktok</span> <span>#qualityoverquantity</span></div></div>
+          <div class="concept-detail-block"><label>Waarom dit werkt</label><div class="concept-why">Het bold statement format van @swaggyfits (1M views) werkt omdat het provoceert. 460 GSM is je USP — maak het visueel. Flatlay + close-up + outfit = complete productervaring.</div></div>
+          <a href="https://www.tiktok.com/@swaggyfits/video/7572811586205781255" target="_blank" class="concept-inspired">Gebaseerd op @swaggyfits — 1M views</a>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="concept-card">
+      <div class="concept-header" onclick="toggleConcept(this)">
+        <div class="concept-number">06</div>
+        <div class="concept-title-wrap">
+          <div class="concept-title">"the full drop. no restock."</div>
+          <div class="concept-caption-preview">Collectie overview — FOMO closer</div>
+        </div>
+        <div class="concept-toggle">+</div>
+      </div>
+      <div class="concept-body"><div class="concept-content">
+        <div class="concept-left">
+          <h4>Slides</h4>
+          <div class="slide-list">
+            <div class="slide-item"><div class="slide-num">01</div><div><div class="slide-desc">Hero — Donkere moody shot, NEWGARMENTS branding subtiel</div></div></div>
+            <div class="slide-item"><div class="slide-num">02</div><div><div class="slide-desc">Checkered Zippers — Alle 3 colorways met plaid linings zichtbaar</div><div class="slide-products"><span class="product-chip">Checkered Gray</span><span class="product-chip">Checkered Black</span><span class="product-chip">Checkered Red</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">03</div><div><div class="slide-desc">Y2K Zip Hoodies — Alle 3 colorways naast elkaar</div><div class="slide-products"><span class="product-chip">Y2K Dark Green</span><span class="product-chip">Y2K Black</span><span class="product-chip">Y2K Pink</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">04</div><div><div class="slide-desc">Baggy Jeans — Graphic Lining + Embroidered Striped side by side</div><div class="slide-products"><span class="product-chip">Graphic Lining</span><span class="product-chip">Embroidered Striped</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">05</div><div><div class="slide-desc">Sneakers — Fur Graphic + Ocean Stars naast elkaar</div><div class="slide-products"><span class="product-chip">Fur Graphic</span><span class="product-chip">Ocean Stars</span></div></div></div>
+            <div class="slide-item"><div class="slide-num">06</div><div><div class="slide-desc">Full outfit — Beste combo als complete look</div></div></div>
+          </div>
+        </div>
+        <div class="concept-right">
+          <div class="concept-detail-block"><label>Caption</label><div class="concept-caption">the full drop. no restock. when it's gone, it's archive</div></div>
+          <div class="concept-detail-block"><label>Hashtags</label><div class="concept-hashtags"><span>#newdrop</span> <span>#streetwear</span> <span>#limitededition</span> <span>#fashiontiktok</span> <span>#baggyjeans</span></div></div>
+          <div class="concept-detail-block"><label>Waarom dit werkt</label><div class="concept-why">@urbanoutfitdkd doet collectie-overzichten (78.9K views). Schaarste messaging creëert urgentie. Mensen saven dit als "catalogus" om later te kopen.</div></div>
+          <a href="https://www.tiktok.com/@urbanoutfitdkd/video/7596841309193784597" target="_blank" class="concept-inspired">Gebaseerd op @urbanoutfitdkd — 78.9K views</a>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="section-header">
+    <h2>Product Catalog</h2>
+    <p>Alle producten beschikbaar voor de slideshow concepten</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card"><img src="content-library/product-refs/checkered-zipper-gray.png" alt=""><div class="product-name">Checkered Inside Out Zipper</div><div class="product-cat">Gray — Tops</div></div>
+    <div class="product-card"><img src="content-library/product-refs/checkered-zipper-black.png" alt=""><div class="product-name">Checkered Inside Out Zipper</div><div class="product-cat">Black — Tops</div></div>
+    <div class="product-card"><img src="content-library/product-refs/checkered-zipper-red.png" alt=""><div class="product-name">Checkered Inside Out Zipper</div><div class="product-cat">Red — Tops</div></div>
+    <div class="product-card"><img src="content-library/product-refs/zip-hoodie-y2k-dark-green.png" alt=""><div class="product-name">Y2K Zip Hoodie</div><div class="product-cat">Dark Green — Tops</div></div>
+    <div class="product-card"><img src="content-library/product-refs/zip-hoodie-y2k-black.png" alt=""><div class="product-name">Y2K Zip Hoodie</div><div class="product-cat">Black — Tops</div></div>
+    <div class="product-card"><img src="content-library/product-refs/zip-hoodie-y2k-pink.png" alt=""><div class="product-name">Y2K Zip Hoodie</div><div class="product-cat">Pink — Tops</div></div>
+    <div class="product-card"><img src="content-library/product-refs/graphic-lining-jeans.png" alt=""><div class="product-name">Graphic Lining Baggy Jeans</div><div class="product-cat">Washed — Bottoms</div></div>
+    <div class="product-card"><img src="content-library/product-refs/embroidered-striped-jeans.png" alt=""><div class="product-name">Embroidered Striped Jeans</div><div class="product-cat">Black/White — Bottoms</div></div>
+    <div class="product-card"><img src="content-library/product-refs/fur-graphic-sneakers.webp" alt=""><div class="product-name">Fur Graphic Sneakers</div><div class="product-cat">Blue/White — Footwear</div></div>
+    <div class="product-card"><img src="content-library/product-refs/ocean-stars-sneaker.jpg" alt=""><div class="product-name">Ocean Stars Sneaker</div><div class="product-cat">White — Footwear</div></div>
+  </div>
+</section>
+
+<section class="section" id="strategy">
+  <div class="section-header">
+    <h2>Posting Strategy</h2>
+    <p>Volgorde, timing en content productie planning</p>
+  </div>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <h3>Post volgorde</h3>
+      <ul class="order-list">
+        <li class="order-item"><span class="order-num">01</span><span>"which jeans hit harder"</span><span class="order-reason">simpelst, test format</span></li>
+        <li class="order-item"><span class="order-num">02</span><span>"pick your fighter"</span><span class="order-reason">bouwt voort op #1</span></li>
+        <li class="order-item"><span class="order-num">03</span><span>"3 fits. 1 hoodie."</span><span class="order-reason">save-worthy content</span></li>
+        <li class="order-item"><span class="order-num">04</span><span>"stop dressing like a background character"</span><span class="order-reason">brand identity</span></li>
+        <li class="order-item"><span class="order-num">05</span><span>"460 gsm. your hoodie weighs half this."</span><span class="order-reason">quality statement</span></li>
+        <li class="order-item"><span class="order-num">06</span><span>"the full drop. no restock."</span><span class="order-reason">closer / catalog</span></li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <h3>Timing & Cadence</h3>
+      <div class="timing-block"><p><strong>18:00 — 21:00 CET</strong></p><p>Europa + US East Coast overlap. Maximale reach voor beide markten.</p></div>
+      <div class="timing-block"><p><strong>1 slideshow per dag</strong></p><p>6 dagen = 1 complete cyclus. Herhaal het best presterende format de week erna.</p></div>
+      <div class="timing-block"><p><strong>Analyse na cyclus</strong></p><p>Meet per concept: views, comments, saves, profile visits. Meeste saves = herhalen. Meeste comments = varianten maken.</p></div>
+      <div class="timing-block"><p><strong>Audio keuze</strong></p><p>Trending lo-fi beats of streetwear sounds. Check TikTok Sounds pagina voor trending audio in fashion niche.</p></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  function toggleConcept(header) {
+    header.closest('.concept-card').classList.toggle('open');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+# Secrets
+.env
+gcp-oauth.keys.json
+*.credentials.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node
+node_modules/
+package-lock.json
+
+# Output / generated
+bot/output/
+pipiads_screenshots/
+tiktok_profile/
+ad-generation/visuals/generated/
+ad-generation/output/
+
+# Debug files
+debug_*.png
+
+# Playwright logs
+.playwright-mcp/
+
+# Snapshots (temp)
+snapshot-*.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large binaries
+claude.exe
+*.exe
+*.zip
+
+# Generated remakes (groot, staan in Drive)
+board_remakes_proper/*.png
+board_remakes_proper/*.jpg
+pipeline/output/
+
+# Large data files
+pipiads_data/*.json
+scout/output/*.json

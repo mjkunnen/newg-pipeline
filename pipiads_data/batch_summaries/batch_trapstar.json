@@ -1,0 +1,18 @@
+{
+  "keyword": "trapstar",
+  "tier": "T3",
+  "mode": "competitor",
+  "pages_visited": 1,
+  "cards_scanned": 10,
+  "cards_captured": 3,
+  "pre_filtered_out": 7,
+  "winners": 0,
+  "possible_winners": 0,
+  "mid": 0,
+  "junk_rate": 0.7,
+  "early_terminated": false,
+  "recommend": "reduce",
+  "reason": "high junk (70%)",
+  "gate_passed": true,
+  "outcome_label": "SATURATED"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "newgarments-ad-system",
+  "version": "1.0.0",
+  "description": "Automated ad creation system for NEWGARMENTS streetwear brand",
+  "private": true,
+  "scripts": {
+    "test-mcps": "node scripts/test-mcps.js",
+    "verify": "node scripts/test-mcps.js"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

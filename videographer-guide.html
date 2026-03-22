@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWGARMENTS — Videographer Shoot Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #131313;
+    --surface2: #1a1a1a;
+    --border: #222;
+    --text: #f0f0f0;
+    --text2: #aaa;
+    --text3: #666;
+    --green: #4ade80;
+    --green-bg: rgba(74,222,128,0.1);
+    --blue: #818cf8;
+    --blue-bg: rgba(129,140,248,0.1);
+    --orange: #fb923c;
+    --orange-bg: rgba(251,146,60,0.1);
+    --pink: #f472b6;
+    --pink-bg: rgba(244,114,182,0.1);
+    --cyan: #22d3ee;
+    --yellow: #fbbf24;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    z-index: 100;
+  }
+
+  .topbar-logo {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+
+  .topbar-logo span { color: var(--text3); font-weight: 400; }
+
+  .topbar-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  .progress-bar {
+    width: 120px;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .topbar-nav {
+    display: flex;
+    gap: 8px;
+  }
+
+  .topbar-nav button {
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text2);
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .topbar-nav button:hover { background: var(--surface2); color: var(--text); }
+  .topbar-nav button:disabled { opacity: 0.3; cursor: default; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-top: 56px;
+    min-height: calc(100vh - 56px);
+  }
+
+  /* ── OVERVIEW SCREEN ── */
+  .overview {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 28px 80px;
+  }
+
+  .overview-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .overview-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+
+  .overview-header p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .idea-card-overview {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .idea-card-overview:hover {
+    background: var(--surface2);
+    border-color: #333;
+    transform: translateY(-1px);
+  }
+
+  .idea-num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--border);
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .idea-card-info { flex: 1; }
+
+  .idea-card-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .idea-card-info p {
+    font-size: 13px;
+    color: var(--text3);
+    line-height: 1.5;
+  }
+
+  .idea-card-meta {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .meta-pill {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: var(--surface2);
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .idea-card-arrow {
+    color: var(--text3);
+    font-size: 20px;
+  }
+
+  .completed-badge {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--green);
+    background: var(--green-bg);
+    padding: 3px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── DETAIL SCREEN ── */
+  .detail-screen {
+    display: none;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 28px 100px;
+  }
+
+  .detail-screen.active { display: block; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text3);
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin-bottom: 24px;
+    padding: 6px 0;
+    transition: color 0.2s;
+  }
+
+  .back-btn:hover { color: var(--text); }
+
+  .detail-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+
+  .detail-title {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+
+  /* Goal Tags */
+  .goal-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .goal-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .goal-tag.conversion { color: var(--green); background: var(--green-bg); }
+  .goal-tag.awareness { color: var(--blue); background: var(--blue-bg); }
+  .goal-tag.trust { color: var(--orange); background: var(--orange-bg); }
+  .goal-tag.fomo { color: var(--pink); background: var(--pink-bg); }
+  .goal-tag.engagement { color: var(--cyan); background: rgba(34,211,238,0.1); }
+  .goal-tag.brand { color: #a78bfa; background: rgba(167,139,250,0.1); }
+
+  /* Info Grid */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .info-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .info-box-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+
+  .info-box-value {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* The Hook Box */
+  .hook-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+  }
+
+  .hook-box-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .hook-box-text {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .hook-box-note {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-text {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.8;
+  }
+
+  .section-text strong { color: var(--text); }
+
+  /* Step Cards */
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .step-header:hover { background: var(--surface2); }
+
+  .step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text2);
+    flex-shrink: 0;
+  }
+
+  .step-number.active-step {
+    background: var(--green-bg);
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .step-summary {
+    flex: 1;
+  }
+
+  .step-summary h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .step-summary p {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  .step-duration {
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .step-toggle {
+    color: var(--text3);
+    font-size: 16px;
+    transition: transform 0.2s;
+  }
+
+  .step-body {
+    display: none;
+    padding: 0 22px 20px 68px;
+    border-top: 1px solid var(--border);
+  }
+
+  .step-body.open { display: block; padding-top: 18px; }
+
+  .step-detail-row {
+    margin-bottom: 14px;
+  }
+
+  .step-detail-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+
+  .step-detail-value {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  .tip-box {
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.15);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 10px;
+  }
+
+  .tip-box-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .tip-box-text {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* Equipment box */
+  .equip-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .equip-list li {
+    font-size: 13px;
+    color: var(--text2);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .equip-list li:last-child { border-bottom: none; }
+
+  .equip-icon {
+    color: var(--green);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Proof box */
+  .proof-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+  }
+
+  .proof-brand {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .proof-detail {
+    font-size: 12px;
+    color: var(--text3);
+    line-height: 1.6;
+  }
+
+  /* Start button */
+  .start-section {
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  .start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 48px;
+    border-radius: 12px;
+    border: none;
+    background: var(--green);
+    color: #000;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .start-btn:hover { background: #6ee7a0; transform: translateY(-1px); }
+
+  .start-btn-sub {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 10px;
+  }
+
+  /* Shoot Mode */
+  .shoot-mode {
+    display: none;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 28px 100px;
+  }
+
+  .shoot-mode.active { display: block; }
+
+  .shoot-step-indicator {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--text3);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .shoot-step-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 32px;
+  }
+
+  .shoot-instruction-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 20px;
+  }
+
+  .shoot-instruction-box h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .shoot-instruction-box p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.8;
+  }
+
+  .shoot-instruction-box .highlight {
+    background: var(--green-bg);
+    color: var(--green);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .shoot-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    gap: 12px;
+  }
+
+  .shoot-nav-btn {
+    padding: 12px 32px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text2);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .shoot-nav-btn:hover { background: var(--surface2); color: var(--text); }
+
+  .shoot-nav-btn.primary {
+    background: var(--green);
+    color: #000;
+    border: none;
+  }
+
+  .shoot-nav-btn.primary:hover { background: #6ee7a0; }
+
+  .shoot-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .shoot-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: all 0.3s;
+  }
+
+  .shoot-dot.active { background: var(--green); }
+  .shoot-dot.done { background: var(--text3); }
+
+  /* Text overlay preview */
+  .text-preview {
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    text-align: center;
+    margin: 16px 0;
+  }
+
+  .text-preview p {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .text-preview small {
+    font-size: 11px;
+    color: var(--text3);
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    padding: 0;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.2s;
+  }
+
+  .check-icon.checked {
+    background: var(--green);
+    border-color: var(--green);
+    color: #000;
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .info-grid { grid-template-columns: repeat(2, 1fr); }
+    .detail-title { font-size: 22px; }
+    .hook-box-text { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">NEWGARMENTS <span>/ Shoot Guide</span></div>
+  <div class="topbar-progress">
+    <span id="progress-text">0 of 30 filmed</span>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+  <div class="topbar-nav">
+    <button onclick="showOverview()">All Ideas</button>
+  </div>
+</div>
+
+<div class="main">
+  <!-- OVERVIEW -->
+  <div class="overview" id="overview-screen">
+    <div class="overview-header">
+      <h1>Shoot Guide</h1>
+      <p>Hey! These are all the content ideas for NEWGARMENTS, sorted by impact. Click any idea to see the full brief — everything you need to film it perfectly. No questions needed.</p>
+    </div>
+    <div id="idea-list"></div>
+  </div>
+
+  <!-- DETAIL -->
+  <div class="detail-screen" id="detail-screen"></div>
+
+  <!-- SHOOT MODE -->
+  <div class="shoot-mode" id="shoot-mode"></div>
+</div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────
+const IDEAS = [
+  {
+    id: 1, title: "The Scale Test", potential: 95, difficulty: 1,
+    tags: ["conversion", "trust"],
+    platforms: ["TikTok", "Reels"], duration: "10-15 sec",
+    hook: "Your hoodie weighs this much... ours weighs this much.",
+    hookNote: "This text appears on screen as you drop each hoodie on the scale. Say nothing — let the numbers speak. The hook IS the weight difference.",
+    textOverlay: "Stop paying premium for paper-thin hoodies.",
+    cta: "Link in bio. No restock.",
+    why: "This is undeniable visual proof. The scale doesn't lie. It bypasses all skepticism because there's no way to fake a number on a scale. When Gen Z sees 340g vs 880g side by side, the decision makes itself. This is the single most effective format for converting skeptical first-time buyers.",
+    psychology: "73% of Gen Z research brands before buying because they've been burned by AliExpress-quality products marketed as premium. The scale gives them the proof they need in 10 seconds. It also makes them question every other hoodie they own — which drives them to buy yours.",
+    proof: [
+      { brand: "Cole Buxton", detail: "Pioneered fabric weight content on TikTok. Their GSM comparison videos consistently hit 100K-500K+ views. They turned 'GSM' into a mainstream streetwear term." },
+      { brand: "Fashion creators", detail: "The 'weigh my hoodie' format gets 200K-1M views regularly. One creator weighing a Zara hoodie vs a premium hoodie got 2.3M views." }
+    ],
+    equipment: ["Kitchen scale or postal scale", "1x NEWGARMENTS hoodie", "1x thin/cheap hoodie (Zara, H&M, any fast fashion)", "Phone with camera", "Clean surface (table or counter)"],
+    steps: [
+      {
+        title: "Set up the scale",
+        action: "Place a kitchen scale or postal scale on a clean, flat surface. Make sure it's zeroed. Use a plain background — white, wood, or dark surface. Nothing distracting.",
+        camera: "Phone mounted overhead looking straight down at the scale. Prop phone on books or use a tripod. Make sure the scale numbers are clearly readable.",
+        angle: "Top-down (bird's eye view). Keep the frame tight — just the scale and hands entering frame.",
+        lighting: "Natural light from a window to the side. Avoid shadows falling on the scale display.",
+        duration: "This setup shot won't be in the final video — it's just prep.",
+        tip: "Turn off the scale between takes so it re-zeros. Clean any fingerprints off the scale surface."
+      },
+      {
+        title: "Drop the cheap hoodie",
+        action: "Pick up the thin/fast fashion hoodie from off-screen. Drop it onto the scale from about 15cm above. Let the camera hold on the number for 2 seconds.",
+        camera: "Keep rolling from the overhead angle. Hand enters frame from the side, drops the hoodie, hand exits. Don't touch the hoodie after dropping.",
+        angle: "Same top-down. The hoodie should land centered on the scale.",
+        lighting: "Same natural sidelight.",
+        duration: "This clip will be about 3-4 seconds in the edit.",
+        tip: "The cheap hoodie should look visibly thin and light. If it's bunched up, it might look heavier than it is — let it land flat and limp. The low number on the scale is the point."
+      },
+      {
+        title: "Clear and re-zero",
+        action: "Remove the cheap hoodie from the scale. Wait for it to zero again. This part gets cut in the edit — but make sure the scale is at zero before the next shot.",
+        camera: "You can stop recording here or just keep rolling and cut this part later.",
+        angle: "Same.",
+        lighting: "Same.",
+        duration: "Not in final video.",
+        tip: "If using a digital scale, wait for the '0.0' to fully settle."
+      },
+      {
+        title: "Drop the NEWGARMENTS hoodie",
+        action: "Pick up the NEWGARMENTS hoodie from off-screen. Drop it onto the scale from the same height (~15cm). It should land with a visible THUD — heavier items make a different sound. Hold the shot on the number for 3 full seconds.",
+        camera: "Same overhead angle. The contrast between the two numbers is the entire video. Make sure the number is sharp and readable.",
+        angle: "Top-down. Same framing as the cheap hoodie shot so the comparison is direct.",
+        lighting: "Same.",
+        duration: "This is the money shot — 4-5 seconds. Hold it. Let the number sink in.",
+        tip: "IMPORTANT: Make sure the audio is on. The sound of the heavyweight hoodie hitting the scale is part of what sells it. That thud vs the soft 'flop' of the cheap one — people notice."
+      },
+      {
+        title: "Optional: wear shot",
+        action: "Quick cut to someone wearing the NEWGARMENTS hoodie. Walking away from camera, or a confident standing shot. This grounds the video — reminds them it's not just a number, it's something you wear.",
+        camera: "Switch to handheld or tripod at eye level. Shoot in portrait (9:16) for TikTok/Reels.",
+        angle: "Slightly below eye level looking up — makes the person look confident and the hoodie look substantial.",
+        lighting: "Natural light, window light, or outdoor golden hour.",
+        duration: "2-3 seconds max.",
+        tip: "This shot is optional but recommended. Without it, the video is just a scale video. With it, it becomes an aspirational video WITH proof."
+      },
+      {
+        title: "Edit instructions",
+        action: "Cut together: cheap hoodie drop (3 sec) → NEWGARMENTS hoodie drop (4 sec) → optional wear shot (2 sec). Add text overlay. Total video: 10-15 seconds.",
+        camera: "N/A — this is the edit phase.",
+        angle: "N/A",
+        lighting: "N/A",
+        duration: "Final video: 10-15 seconds",
+        tip: "Add the text 'Stop paying premium for paper-thin hoodies.' on screen during the NEWGARMENTS hoodie shot. Use a clean sans-serif font, white text, slight drop shadow. Post with caption: 'Link in bio. No restock.' Do NOT add music — the natural sound of the fabric hitting the scale is more powerful."
+      }
+    ]
+  },
+  {
+    id: 2, title: "The Drop Test", potential: 88, difficulty: 1,
+    tags: ["awareness", "trust"],
+    platforms: ["TikTok", "Reels"], duration: "8-12 sec",
+    hook: "180 GSM vs 460 GSM. You can hear the difference.",
+    hookNote: "This is a silent video — no voiceover. The sound of the fabrics is the hook. Text overlay tells the story.",
+    textOverlay: "180 GSM vs 460 GSM. You can hear the difference.",
+    cta: "Pin a comment with the link.",
+    why: "Thin fabric floats like tissue. Heavyweight thuds. The contrast is visceral and the SOUND of the thud is what stops the scroll. People send this to group chats because the visual difference is so obvious.",
+    psychology: "Gen Z distrusts brand claims (only 26% trust brands). But they trust their own eyes and ears. A visual comparison removes the brand's ability to lie — the physics of gravity can't be faked.",
+    proof: [
+      { brand: "Fabric comparison TikToks", detail: "Side-by-side fabric tests are a proven viral format. Simple A/B comparisons consistently outperform polished product videos." },
+      { brand: "Fashion quality creators", detail: "Creators like @wisdm built entire audiences on 'is this worth it?' content using tests like this." }
+    ],
+    equipment: ["1x NEWGARMENTS hoodie", "1x thin/cheap hoodie", "Phone with camera", "A room with minimal background noise (so the sound reads)"],
+    steps: [
+      {
+        title: "Set up the shot",
+        action: "Stand in front of a clean background (plain wall, simple room). You'll be holding hoodies at shoulder height and dropping them. The camera watches from the side.",
+        camera: "Phone on tripod or propped up at waist height, filming in portrait (9:16). Frame from about chest level down to the floor — you need to see the full drop distance.",
+        angle: "Side angle — camera is about 1.5 meters away, pointing at the person from the side. You should see the hoodie clearly in their raised hand AND the floor where it lands.",
+        lighting: "Natural light from window. The hoodie needs to be clearly visible against the background.",
+        duration: "Setup only.",
+        tip: "Film in a quiet room so the audio picks up the difference between the soft 'flop' and the heavy 'thud.' No music, no talking."
+      },
+      {
+        title: "Drop the cheap hoodie",
+        action: "Hold the thin hoodie at shoulder height with one hand. Let go. It should float down slowly, almost like a tissue — light, floppy, no weight. Let it land and hold the shot for 1 second.",
+        camera: "Keep rolling continuously.",
+        angle: "Same side angle.",
+        lighting: "Same.",
+        duration: "3-4 seconds of usable footage.",
+        tip: "If the hoodie doesn't float enough (some cheap hoodies are still somewhat heavy), bunch it up loosely before dropping — it'll open up and drift down slowly."
+      },
+      {
+        title: "Drop the NEWGARMENTS hoodie",
+        action: "Pick up the NEWGARMENTS hoodie. Hold at same shoulder height. Drop. It should fall FAST and land with a visible thud — the fabric barely opens up because it's too heavy. The sound is different. Hold the shot.",
+        camera: "Same angle. Keep rolling.",
+        angle: "Same.",
+        lighting: "Same.",
+        duration: "3-4 seconds.",
+        tip: "THIS IS THE MONEY MOMENT. The difference in how these two fabrics fall is the entire video. The heavyweight should drop like a rock compared to the cheap one. If the sound doesn't read well, try dropping onto a hard floor instead of carpet."
+      },
+      {
+        title: "Optional: slow motion take",
+        action: "Repeat both drops, but film in slow motion (most phones have a slo-mo mode). The slow motion makes the difference even more dramatic — you can see the thin fabric fluttering while the heavyweight just drops straight down.",
+        camera: "Switch phone to slo-mo mode. Same framing.",
+        angle: "Same.",
+        lighting: "Slo-mo needs more light — make sure the room is bright.",
+        duration: "5-6 seconds of slo-mo.",
+        tip: "Slow-mo is optional but makes the video significantly better. Use it as a second clip in the edit — first show real speed, then slow-mo replay of the NEWGARMENTS drop."
+      },
+      {
+        title: "Edit instructions",
+        action: "Cut: cheap hoodie drop (3 sec) → NEWGARMENTS hoodie drop (3 sec) → optional slo-mo replay (3 sec). Add text: '180 GSM vs 460 GSM. You can hear the difference.' Total: 8-12 seconds. NO MUSIC — natural sound only.",
+        camera: "N/A — edit phase.",
+        angle: "N/A",
+        lighting: "N/A",
+        duration: "Final: 8-12 seconds.",
+        tip: "Post on TikTok and Reels. Pin a comment with the product link. Caption can be simple: '460 GSM. That's it. That's the caption.'"
+      }
+    ]
+  },
+  {
+    id: 3, title: "Packing ASMR", potential: 92, difficulty: 1,
+    tags: ["trust", "awareness", "brand"],
+    platforms: ["TikTok", "Reels", "Stories"], duration: "30-45 sec",
+    hook: "Every order. Hand packed. Personal note.",
+    hookNote: "No voiceover. No music. Pure ASMR — the sounds of fabric folding, tissue paper crinkling, pen writing, and package sealing are the content.",
+    textOverlay: "Every order packed by hand with a personal note.",
+    cta: "Pin comment with link.",
+    why: "Packing ASMR videos go viral for small brands — 500K to 2M+ views is normal. The handwritten thank-you note is your secret weapon. In a world of automated everything, a personal touch creates genuine surprise and emotional connection.",
+    psychology: "Shows there's a real person behind the brand. If someone hand-packs your order and writes a personal note, the product must be good. Humanizes the brand in a way no product shot can. Also triggers ASMR response which keeps people watching.",
+    proof: [
+      { brand: "Broken Planet Market", detail: "Their packing content regularly hits 500K+ views. ASMR format builds trust and is satisfying to watch simultaneously." },
+      { brand: "Small brand TikTok", detail: "Packing videos are the #1 recommended format for new brands. Proven track record across thousands of businesses." },
+      { brand: "Scuffers", detail: "Uses packing content weekly to maintain connection with their 'FF FAM' community." }
+    ],
+    equipment: ["NEWGARMENTS product (folded neatly)", "Branded packaging / box", "Tissue paper", "Handwritten thank-you note + pen", "Stickers or tape for sealing", "Phone mounted overhead", "Clean surface"],
+    steps: [
+      {
+        title: "Set up overhead camera",
+        action: "Mount phone directly above a clean surface pointing straight down. The frame should show your workspace — the surface, your hands, and all the packing materials laid out nearby.",
+        camera: "Overhead / bird's eye. Use a tripod, phone mount, or stack books with phone balanced on top. Make sure it's stable — no shaking.",
+        angle: "Straight down. Tight frame — just the workspace, no clutter around the edges.",
+        lighting: "Bright, natural light from a window. No harsh shadows. The surface should be evenly lit so everything looks clean.",
+        duration: "Setup only.",
+        tip: "CRITICAL: Audio quality matters more than video for ASMR. Film in a quiet room. No TV, no music, no people talking in background. The sounds of fabric and paper ARE the content."
+      },
+      {
+        title: "Fold the hoodie",
+        action: "Start with the hoodie laid flat on the surface. Fold it slowly and deliberately — fold the sleeves in, then fold in half, then in half again. Take your time. The fabric sound should be audible.",
+        camera: "Rolling from overhead. Your hands enter and exit frame naturally.",
+        angle: "Top-down.",
+        lighting: "Same bright, even light.",
+        duration: "8-10 seconds of footage.",
+        tip: "Fold SLOWLY. This isn't a race. The satisfying part is the deliberate, careful handling. The heavyweight fabric will make a different sound than thin fabric when folded — make sure the mic picks it up."
+      },
+      {
+        title: "Wrap in tissue paper",
+        action: "Place tissue paper on the surface. Set the folded hoodie on top. Wrap the tissue paper around it — tuck the edges in neatly. The crinkling sound of tissue paper is ASMR gold.",
+        camera: "Still rolling overhead.",
+        angle: "Top-down.",
+        lighting: "Same.",
+        duration: "8-10 seconds.",
+        tip: "Use nice tissue paper — white, branded, or a color that matches your brand. The wrapping should look careful and premium. Every fold matters."
+      },
+      {
+        title: "Write the handwritten note",
+        action: "Pull a blank card or note into frame. Write a personal thank-you message with a pen. The camera should capture the pen moving across the paper. Write something like 'Thank you for being part of this. Wear it well. — NEWGARMENTS'",
+        camera: "Still overhead. You might want to zoom in slightly for this shot, or position the note closer to camera.",
+        angle: "Top-down, slightly tighter frame on just the note and hand.",
+        lighting: "Same.",
+        duration: "8-10 seconds.",
+        tip: "THIS IS THE VIRAL MOMENT. The sound of pen on paper + the surprise of a personal note is what people share. Write slowly and legibly. Use a nice pen (not a cheap ballpoint). If your handwriting is bad, practice the message a few times first."
+      },
+      {
+        title: "Place everything in packaging",
+        action: "Open the branded box or mailer. Place the tissue-wrapped hoodie inside. Tuck the handwritten note on top where the customer will see it first when they open. Add any extras (stickers, cards).",
+        camera: "Still overhead. Show the full process of assembling the package.",
+        angle: "Top-down.",
+        lighting: "Same.",
+        duration: "6-8 seconds.",
+        tip: "Make it look full and premium, not empty with a small item rattling around. The unboxing experience starts with the packing."
+      },
+      {
+        title: "Seal the package",
+        action: "Close the box/mailer. Apply branded tape or sticker to seal it. If you have a branded sticker, place it centered and straight — this small detail looks professional.",
+        camera: "Still overhead for the seal. Then optionally: pick up the sealed package and place it on a stack of other orders (side angle).",
+        angle: "Top-down for sealing. Optional side angle for the stack.",
+        lighting: "Same.",
+        duration: "5-6 seconds.",
+        tip: "The stack of orders at the end is a subtle flex — it shows you have real demand without saying it. Even if it's just 3-4 packages, it reads as 'people actually buy this.'"
+      },
+      {
+        title: "Edit instructions",
+        action: "Cut together all steps in order. Keep the pacing slow and satisfying — don't rush the cuts. Total: 30-45 seconds. NO MUSIC. NO VOICEOVER. Pure ASMR sounds: fabric, paper, pen, tape. Add text overlay at the end: 'Every order packed by hand with a personal note.'",
+        camera: "N/A — edit phase.",
+        angle: "N/A",
+        lighting: "N/A",
+        duration: "Final: 30-45 seconds.",
+        tip: "If the audio isn't clean enough, you can boost the ASMR sounds slightly in editing. But avoid adding music — it kills the ASMR effect. Post on TikTok and Reels. Pin comment with link."
+      }
+    ]
+  },
+  {
+    id: 4, title: "NPC Fit vs Main Character Fit", potential: 90, difficulty: 2,
+    tags: ["awareness", "engagement", "conversion"],
+    platforms: ["TikTok"], duration: "12-18 sec",
+    hook: "NPC fit vs. Main character fit",
+    hookNote: "Text on screen at the start. The entire video is a visual transformation — before (generic outfit) to after (NEWGARMENTS fit). Use a trending transition sound.",
+    textOverlay: "NPC fit → Main character fit",
+    cta: "Link in bio.",
+    why: "'NPC' is Gen Z's worst fashion insult. Being called basic is social death. This weaponizes their deepest fear and positions NEWGARMENTS as the cure. The transition format is native to TikTok.",
+    psychology: "Directly triggers 'NPC anxiety' — the fear of blending in. The before/after makes the purchase feel like a transformation. 'Main character energy' is the aspiration.",
+    proof: [
+      { brand: "TikTok trend", detail: "NPC vs Main Character has billions of cumulative views. Proven engagement because people debate in comments." },
+      { brand: "Streetwear creators", detail: "Fit transformation videos regularly get 500K-2M views." }
+    ],
+    equipment: ["1x generic/basic outfit (thin hoodie, basic joggers, common sneakers)", "1x full NEWGARMENTS outfit", "Phone on tripod", "A model willing to change outfits", "A room with adjustable lighting (optional but ideal)"],
+    steps: [
+      {
+        title: "Film the 'NPC' outfit",
+        action: "Model wears the basic, generic outfit — a thin hoodie, plain joggers, common sneakers. They stand or walk toward camera looking disinterested, low energy, slightly slouched. This should look boring on purpose.",
+        camera: "Phone on tripod, portrait mode (9:16). Full body shot — head to toe visible.",
+        angle: "Straight on at eye level.",
+        lighting: "Intentionally flat and boring — overhead room light, no effort. This makes the 'after' look more dramatic.",
+        duration: "Film 5-6 seconds of this.",
+        tip: "The model should look and feel 'NPC' — no expression, no energy, basic posture. The outfit should look forgettable. This is the 'before' that makes the 'after' hit."
+      },
+      {
+        title: "The transition moment",
+        action: "Model walks toward camera or raises hand toward the lens (to create a wipe transition). You'll cut here in the edit. Or: model spins — the spin is where you cut to the new outfit.",
+        camera: "Same setup. The model's hand or body covers the lens for a split second — that's your cut point.",
+        angle: "Same.",
+        lighting: "Changes in the next shot.",
+        duration: "1-2 seconds.",
+        tip: "The cleanest transition: model walks toward camera, hand reaches toward lens, cut when hand covers the frame. In the next shot, hand pulls away to reveal the new outfit."
+      },
+      {
+        title: "Film the 'Main Character' outfit",
+        action: "Model is now wearing the full NEWGARMENTS fit. They step back from camera (hand pulling away from lens), revealing the outfit. Confident posture — shoulders back, chin up, slight attitude. They walk forward, maybe do a slight turn.",
+        camera: "Same tripod position. But everything else changes to feel more premium.",
+        angle: "Slightly lower angle (camera slightly below eye level looking up) — makes them look more powerful and confident.",
+        lighting: "Better lighting. Turn on a warm lamp, move closer to window, or add any light that gives depth. The difference in lighting between 'NPC' and 'Main Character' shots is subtle but makes the transformation feel real.",
+        duration: "6-8 seconds.",
+        tip: "The heavyweight fabric should be VISIBLE in how it sits on the body. It should look structured and substantial. The model's energy shift matters as much as the outfit — confidence is the real transformation."
+      },
+      {
+        title: "Edit instructions",
+        action: "Cut: NPC outfit (4 sec) → transition (0.5 sec) → Main Character reveal (5-6 sec). Add text: 'NPC fit' on the first shot, 'Main character fit' on the second. Use a trending TikTok sound with a beat drop timed to the transition. Total: 12-18 seconds.",
+        camera: "N/A — edit phase.",
+        angle: "N/A",
+        lighting: "N/A",
+        duration: "Final: 12-18 seconds.",
+        tip: "Search TikTok for trending transition sounds — pick one with a clear beat drop. Time the outfit change to the drop. Caption: 'Link in bio.' This format lives and dies by the sound choice and transition timing."
+      }
+    ]
+  },
+  {
+    id: 5, title: '"Is NEWGARMENTS a Scam?"', potential: 93, difficulty: 2,
+    tags: ["trust", "conversion"],
+    platforms: ["TikTok"], duration: "45-90 sec",
+    hook: "Everyone asks if we're a scam. Fair. Let me show you everything.",
+    hookNote: "Someone from the brand talks directly to camera. Raw, unscripted feeling. Open with the hook line looking straight into the lens. This should feel like a friend showing you something, not a brand selling you something.",
+    textOverlay: "No AliExpress. No Gildan blanks. No BS.",
+    cta: "Judge for yourself. Link in bio.",
+    why: "By naming the objection in the hook, you stop every skeptical scroller. Then you overwhelm them with proof. This builds more trust in 60 seconds than months of polished content. No scam brand would make this video.",
+    psychology: "The audience actively searches '[brand] + scam' before buying. 65% have been burned by IG/TikTok brands. By addressing it first, you flip the dynamic — you look confident and transparent.",
+    proof: [
+      { brand: "Small brand strategy", detail: "Brands that directly address 'is this a scam?' see significantly higher conversion than those who avoid the topic." },
+      { brand: "Broken Planet", detail: "'Why we charge what we charge' transparency content went viral because it addressed pricing skepticism head-on." }
+    ],
+    equipment: ["Phone (handheld or on tripod)", "All NEWGARMENTS products laid out on a table", "Branded packaging, tissue paper, thank-you notes", "Shipping labels / orders ready to go (if available)"],
+    steps: [
+      {
+        title: "The opening — talk to camera",
+        action: "Someone from the brand (ideally the founder) looks directly into the camera and says: 'Everyone asks if we're a scam. Fair. I get it — every TikTok brand looks sketchy. So let me show you everything.' This should feel REAL — don't memorize it, just know the key point and say it naturally.",
+        camera: "Handheld selfie-style or phone on tripod at eye level. Portrait (9:16). Close-up — head and shoulders.",
+        angle: "Eye level, straight on. Looking directly into the camera lens (not the screen).",
+        lighting: "Natural light from a window. Not too dark, not overexposed. The person's face should be clearly visible.",
+        duration: "8-10 seconds.",
+        tip: "Don't read from a script. Don't rehearse until it sounds rehearsed. Stumbling slightly over words is BETTER than sounding polished — it reads as authentic. The first take is usually the best."
+      },
+      {
+        title: "Show all the products",
+        action: "Cut to a table with all NEWGARMENTS products laid out. Pick up each piece one by one. Show the weight (let it hang heavy in your hand), flip it to show the inside, point out the stitching. Say something like: 'This is what we actually make. Feel this — this is 460 GSM.'",
+        camera: "Switch to showing the products. Can be handheld following your hands, or tripod pointed at the table.",
+        angle: "Slightly overhead or eye-level with the table.",
+        lighting: "Same natural light.",
+        duration: "15-20 seconds.",
+        tip: "Don't rush through the products. Pick up each one like it matters. The weight should be visible in how you handle them. Let the fabric drape."
+      },
+      {
+        title: "Show the inside construction",
+        action: "Flip a hoodie inside out. Show the stitching, the seam finishing, the inner fleece. Say: 'This is what's inside. Double stitched. No Gildan blanks. No cheap shortcuts.'",
+        camera: "Close-up on your hands and the product.",
+        angle: "Tight — fill the frame with the inside-out fabric and stitching detail.",
+        lighting: "Bright enough to see stitching detail clearly.",
+        duration: "8-10 seconds.",
+        tip: "Point specifically at the stitching and seams. Your finger pointing at quality details makes them impossible to miss."
+      },
+      {
+        title: "Show the packaging and personal touch",
+        action: "Show the full packaging process quickly: the branded box, the tissue paper, the handwritten note. Say: 'Every order gets packed by hand with a note we actually write ourselves.'",
+        camera: "Show the packaging materials and a finished package.",
+        angle: "Overhead or side angle on the packaging.",
+        lighting: "Same.",
+        duration: "8-10 seconds.",
+        tip: "Show a close-up of the handwritten note. This is the moment that separates you from every faceless brand."
+      },
+      {
+        title: "Show the orders / shipping",
+        action: "Show shipping labels being printed or a stack of packaged orders. Say: 'These are real orders going out today.' If you don't have orders to show, skip this step.",
+        camera: "Quick shot of the orders / shipping setup.",
+        angle: "Any angle that shows real operations.",
+        lighting: "Same.",
+        duration: "5-6 seconds.",
+        tip: "Even 3-4 packages stacked up looks like real demand. Don't fake this — if you only have 2 orders, show 2 orders. Real is better than fake."
+      },
+      {
+        title: "The closing",
+        action: "Back to camera. Say something like: 'We're not hiding anything. This is what we do. Judge for yourself.' Look into the lens. Hold for a beat. End.",
+        camera: "Back to the selfie/eye-level shot from step 1.",
+        angle: "Same as opening.",
+        lighting: "Same.",
+        duration: "5-6 seconds.",
+        tip: "End with confidence, not desperation. Don't say 'please buy from us.' Say 'judge for yourself.' The calm confidence is what separates you from brands that ARE scams."
+      },
+      {
+        title: "Edit instructions",
+        action: "Cut all steps together in order. Keep a fast-ish pace but don't rush — every shot should breathe for a second. Add text overlay: 'No AliExpress. No Gildan blanks. No BS.' Total: 45-90 seconds. Background sound: natural room audio. No music. Caption: 'Judge for yourself. Link in bio.'",
+        camera: "N/A — edit phase.",
+        angle: "N/A",
+        lighting: "N/A",
+        duration: "Final: 45-90 seconds.",
+        tip: "This is your most important trust-building video. Film it first. Post it as one of your first TikToks. It answers the question everyone has but nobody asks out loud."
+      }
+    ]
+  }
+];
+
+// ── State ──
+let completedIds = JSON.parse(localStorage.getItem('ng_completed') || '[]');
+let currentIdea = null;
+let shootStepIndex = 0;
+
+function saveCompleted() {
+  localStorage.setItem('ng_completed', JSON.stringify(completedIds));
+  updateProgress();
+}
+
+function updateProgress() {
+  const pct = Math.round((completedIds.length / IDEAS.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${completedIds.length} of ${IDEAS.length} filmed`;
+}
+
+// ── Overview ──
+function showOverview() {
+  document.getElementById('overview-screen').style.display = 'block';
+  document.getElementById('detail-screen').style.display = 'none';
+  document.getElementById('detail-screen').classList.remove('active');
+  document.getElementById('shoot-mode').style.display = 'none';
+  document.getElementById('shoot-mode').classList.remove('active');
+  window.scrollTo(0, 0);
+  renderList();
+}
+
+function renderList() {
+  const list = document.getElementById('idea-list');
+  const sorted = [...IDEAS].sort((a, b) => b.potential - a.potential);
+  list.innerHTML = sorted.map(idea => {
+    const done = completedIds.includes(idea.id);
+    return `
+      <div class="idea-card-overview" onclick="openIdea(${idea.id})">
+        <div class="idea-num">${String(idea.id).padStart(2,'0')}</div>
+        <div class="idea-card-info">
+          <h3>${idea.title}</h3>
+          <p>"${idea.hook}"</p>
+          <div class="idea-card-meta">
+            ${idea.tags.map(t => `<span class="meta-pill">${t}</span>`).join('')}
+            <span class="meta-pill">${idea.duration}</span>
+            <span class="meta-pill">Difficulty ${idea.difficulty}/3</span>
+            ${done ? '<span class="completed-badge">✓ Filmed</span>' : ''}
+          </div>
+        </div>
+        <div class="idea-card-arrow">→</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── Detail ──
+function openIdea(id) {
+  currentIdea = IDEAS.find(i => i.id === id);
+  if (!currentIdea) return;
+
+  document.getElementById('overview-screen').style.display = 'none';
+  document.getElementById('shoot-mode').style.display = 'none';
+  document.getElementById('shoot-mode').classList.remove('active');
+  const el = document.getElementById('detail-screen');
+  el.style.display = 'block';
+  el.classList.add('active');
+  window.scrollTo(0, 0);
+
+  const done = completedIds.includes(currentIdea.id);
+  const goalColors = { conversion: 'var(--green)', awareness: 'var(--blue)', trust: 'var(--orange)', fomo: 'var(--pink)', engagement: 'var(--cyan)', brand: '#a78bfa' };
+
+  el.innerHTML = `
+    <button class="back-btn" onclick="showOverview()">← Back to all ideas</button>
+    <div class="detail-badge">VIDEO IDEA #${String(currentIdea.id).padStart(2,'0')}</div>
+    <div class="detail-title">${currentIdea.title}</div>
+
+    <div class="goal-tags">
+      ${currentIdea.tags.map(t => `<span class="goal-tag ${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</span>`).join('')}
+    </div>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <div class="info-box-label">Potential</div>
+        <div class="info-box-value" style="color:var(--green)">${currentIdea.potential}/100</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">Difficulty</div>
+        <div class="info-box-value">${'●'.repeat(currentIdea.difficulty)}${'○'.repeat(3-currentIdea.difficulty)}</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">Duration</div>
+        <div class="info-box-value" style="font-size:14px">${currentIdea.duration}</div>
+      </div>
+      <div class="info-box">
+        <div class="info-box-label">Platforms</div>
+        <div class="info-box-value" style="font-size:12px">${currentIdea.platforms.join(', ')}</div>
+      </div>
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-box-label">⚡ THE HOOK — First 3 Seconds</div>
+      <div class="hook-box-text">"${currentIdea.hook}"</div>
+      <div class="hook-box-note">${currentIdea.hookNote}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Text Overlay (add in edit)</div>
+      <div class="text-preview">
+        <p>${currentIdea.textOverlay}</p>
+        <small>Use clean white sans-serif font. Centered on screen.</small>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Call to Action (caption / pin comment)</div>
+      <div class="section-text"><strong>${currentIdea.cta}</strong></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Why This Works</div>
+      <div class="section-text">${currentIdea.why}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Psychology — What Makes People Watch & Buy</div>
+      <div class="section-text">${currentIdea.psychology}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Where This Has Worked Before</div>
+      ${currentIdea.proof.map(p => `
+        <div class="proof-card">
+          <div class="proof-brand">${p.brand}</div>
+          <div class="proof-detail">${p.detail}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="section">
+      <div class="section-title">Equipment Needed</div>
+      <ul class="equip-list">
+        ${currentIdea.equipment.map(e => `<li><span class="equip-icon">✓</span>${e}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Step-by-Step Breakdown (${currentIdea.steps.length} steps)</div>
+      ${currentIdea.steps.map((s, i) => `
+        <div class="step-card">
+          <div class="step-header" onclick="toggleStep(this)">
+            <div class="step-number">${i + 1}</div>
+            <div class="step-summary">
+              <h4>${s.title}</h4>
+              <p>${s.angle !== 'N/A' ? s.angle : 'Editing phase'} · ${s.duration}</p>
+            </div>
+            <div class="step-duration">${s.duration}</div>
+            <div class="step-toggle">▸</div>
+          </div>
+          <div class="step-body">
+            <div class="step-detail-row"><div class="step-detail-label">What to do</div><div class="step-detail-value">${s.action}</div></div>
+            <div class="step-detail-row"><div class="step-detail-label">Camera setup</div><div class="step-detail-value">${s.camera}</div></div>
+            <div class="step-detail-row"><div class="step-detail-label">Angle</div><div class="step-detail-value">${s.angle}</div></div>
+            <div class="step-detail-row"><div class="step-detail-label">Lighting</div><div class="step-detail-value">${s.lighting}</div></div>
+            ${s.tip ? `<div class="tip-box"><div class="tip-box-label">💡 Pro Tip</div><div class="tip-box-text">${s.tip}</div></div>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="start-section">
+      <button class="start-btn" onclick="startShoot(${currentIdea.id})">▶ Start Shooting This Video</button>
+      <div class="start-btn-sub">Step-by-step guided mode — one instruction at a time</div>
+    </div>
+
+    ${done ? '<div style="text-align:center;margin-top:16px;"><span class="completed-badge" style="font-size:12px;padding:6px 16px;">✓ Marked as Filmed</span></div>' : `<div style="text-align:center;margin-top:12px;"><button onclick="markComplete(${currentIdea.id})" style="background:none;border:1px solid var(--border);color:var(--text3);padding:8px 20px;border-radius:8px;font-size:12px;font-family:Inter,sans-serif;cursor:pointer;">Mark as filmed</button></div>`}
+  `;
+}
+
+function toggleStep(header) {
+  const body = header.nextElementSibling;
+  const toggle = header.querySelector('.step-toggle');
+  if (body.classList.contains('open')) {
+    body.classList.remove('open');
+    toggle.textContent = '▸';
+  } else {
+    body.classList.add('open');
+    toggle.textContent = '▾';
+  }
+}
+
+// ── Shoot Mode ──
+function startShoot(id) {
+  currentIdea = IDEAS.find(i => i.id === id);
+  if (!currentIdea) return;
+  shootStepIndex = 0;
+
+  document.getElementById('overview-screen').style.display = 'none';
+  document.getElementById('detail-screen').style.display = 'none';
+  document.getElementById('detail-screen').classList.remove('active');
+  const el = document.getElementById('shoot-mode');
+  el.style.display = 'block';
+  el.classList.add('active');
+  window.scrollTo(0, 0);
+  renderShootStep();
+}
+
+function renderShootStep() {
+  const el = document.getElementById('shoot-mode');
+  const step = currentIdea.steps[shootStepIndex];
+  const total = currentIdea.steps.length;
+  const isLast = shootStepIndex === total - 1;
+  const isFirst = shootStepIndex === 0;
+
+  el.innerHTML = `
+    <button class="back-btn" onclick="openIdea(${currentIdea.id})">← Back to overview</button>
+
+    <div class="shoot-step-indicator">Step ${shootStepIndex + 1} of ${total} — ${currentIdea.title}</div>
+    <div class="shoot-step-title">${step.title}</div>
+
+    <div class="shoot-dots" style="justify-content:center;margin-bottom:32px;">
+      ${currentIdea.steps.map((_, i) => `<div class="shoot-dot ${i < shootStepIndex ? 'done' : ''} ${i === shootStepIndex ? 'active' : ''}"></div>`).join('')}
+    </div>
+
+    <div class="shoot-instruction-box">
+      <h3>📋 What to do</h3>
+      <p>${step.action}</p>
+    </div>
+
+    <div class="shoot-instruction-box">
+      <h3>📷 Camera</h3>
+      <p>${step.camera}</p>
+    </div>
+
+    <div class="shoot-instruction-box">
+      <h3>📐 Angle</h3>
+      <p>${step.angle}</p>
+    </div>
+
+    <div class="shoot-instruction-box">
+      <h3>💡 Lighting</h3>
+      <p>${step.lighting}</p>
+    </div>
+
+    <div class="shoot-instruction-box">
+      <h3>⏱ Duration</h3>
+      <p>${step.duration}</p>
+    </div>
+
+    ${step.tip ? `
+    <div class="tip-box" style="margin-top:20px;">
+      <div class="tip-box-label">💡 Pro Tip</div>
+      <div class="tip-box-text">${step.tip}</div>
+    </div>
+    ` : ''}
+
+    <div class="shoot-nav">
+      <button class="shoot-nav-btn" onclick="prevShootStep()" ${isFirst ? 'disabled style="opacity:0.3"' : ''}>← Previous</button>
+      ${isLast ? `
+        <button class="shoot-nav-btn primary" onclick="finishShoot()">✓ Finish & Mark as Filmed</button>
+      ` : `
+        <button class="shoot-nav-btn primary" onclick="nextShootStep()">Next Step →</button>
+      `}
+    </div>
+  `;
+}
+
+function nextShootStep() {
+  if (shootStepIndex < currentIdea.steps.length - 1) {
+    shootStepIndex++;
+    window.scrollTo(0, 0);
+    renderShootStep();
+  }
+}
+
+function prevShootStep() {
+  if (shootStepIndex > 0) {
+    shootStepIndex--;
+    window.scrollTo(0, 0);
+    renderShootStep();
+  }
+}
+
+function finishShoot() {
+  markComplete(currentIdea.id);
+  showOverview();
+}
+
+function markComplete(id) {
+  if (!completedIds.includes(id)) {
+    completedIds.push(id);
+    saveCompleted();
+  }
+  openIdea(id);
+}
+
+// ── Init ──
+updateProgress();
+renderList();
+</script>
+
+</body>
+</html>

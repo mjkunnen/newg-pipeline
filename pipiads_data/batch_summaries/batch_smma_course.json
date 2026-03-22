@@ -1,0 +1,18 @@
+{
+  "keyword": "smma course",
+  "tier": "T3",
+  "mode": "niche",
+  "pages_visited": 3,
+  "cards_scanned": 1,
+  "cards_captured": 1,
+  "pre_filtered_out": 0,
+  "winners": 0,
+  "possible_winners": 1,
+  "mid": 0,
+  "junk_rate": 0.0,
+  "early_terminated": false,
+  "recommend": "maintain",
+  "reason": "moderate signal",
+  "gate_passed": true,
+  "outcome_label": "LOW_SIGNAL"
+}

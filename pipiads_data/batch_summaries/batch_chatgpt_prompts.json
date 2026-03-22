@@ -1,0 +1,18 @@
+{
+  "keyword": "chatgpt prompts",
+  "tier": "T2",
+  "mode": "niche",
+  "pages_visited": 4,
+  "cards_scanned": 8,
+  "cards_captured": 2,
+  "pre_filtered_out": 6,
+  "winners": 1,
+  "possible_winners": 1,
+  "mid": 0,
+  "junk_rate": 0.75,
+  "early_terminated": false,
+  "recommend": "reduce",
+  "reason": "high junk (75%)",
+  "gate_passed": true,
+  "outcome_label": "MODERATE_SIGNAL"
+}

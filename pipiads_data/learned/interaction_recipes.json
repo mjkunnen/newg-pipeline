@@ -1,0 +1,82 @@
+{
+  "fill_search_input": [
+    {
+      "method": {
+        "selector": "input[placeholder*=\"Search by any ad keyword, land\"]",
+        "stability": "high",
+        "type": "placeholder"
+      },
+      "success_count": 1,
+      "fail_count": 0,
+      "confidence": 1.0,
+      "last_verified_at": "2026-03-14T10:09:44.297729",
+      "notes": "input filled"
+    }
+  ],
+  "submit_search": [
+    {
+      "method": {
+        "selector": "Enter",
+        "type": "keyboard",
+        "stability": "high"
+      },
+      "success_count": 1,
+      "fail_count": 0,
+      "confidence": 1.0,
+      "last_verified_at": "2026-03-14T10:09:44.366743",
+      "notes": "enter key submitted"
+    }
+  ],
+  "open_result_card": [
+    {
+      "method": {
+        "selector": ".item-wrap",
+        "type": "card_root_click",
+        "stability": "medium"
+      },
+      "success_count": 60,
+      "fail_count": 0,
+      "confidence": 1.0,
+      "last_verified_at": "2026-03-14T11:44:57.772904",
+      "notes": "c detail=modal"
+    },
+    {
+      "method": {
+        "selector": ".item-wrap img.el-image__inner",
+        "type": "thumbnail_click",
+        "stability": "low"
+      },
+      "success_count": 0,
+      "fail_count": 2,
+      "confidence": 0.0,
+      "last_verified_at": "2026-03-14T10:10:43.089672",
+      "notes": "click exception: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiti"
+    },
+    {
+      "method": {
+        "selector": ".item-wrap a.link-item",
+        "type": "title_link_click",
+        "stability": "low"
+      },
+      "success_count": 0,
+      "fail_count": 1,
+      "confidence": 0.0,
+      "last_verified_at": "2026-03-14T10:09:50.869753",
+      "notes": "candidate â€” not yet tested"
+    }
+  ],
+  "close_detail": [
+    {
+      "method": {
+        "selector": "Escape",
+        "stability": "high",
+        "type": "keyboard"
+      },
+      "success_count": 82,
+      "fail_count": 0,
+      "confidence": 1.0,
+      "last_verified_at": "2026-03-14T11:45:19.961962",
+      "notes": "c batch close"
+    }
+  ]
+}

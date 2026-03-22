@@ -1,0 +1,72 @@
+{
+  "version": "4.1",
+  "timestamp": "2026-03-14T11:33:21.637662",
+  "keyword": "oversized hoodie",
+  "initial_visible_count": 8,
+  "initial_dom_count": 8,
+  "scroll_context_type": "window",
+  "scroll_container_selector": null,
+  "scroll_container_dimensions": null,
+  "ancestors_checked": 10,
+  "pagination_controls_found": false,
+  "pagination_click_result": null,
+  "load_more_found": true,
+  "load_more_click_result": null,
+  "infinite_scroll_detected": true,
+  "virtualization_detected": false,
+  "continuation_type": "infinite_scroll",
+  "confidence": "high",
+  "evidence_summary": "DOM card count grew by 52 during scrolling (append-style). Batch size ~8. Network requests coincided with batch loads. Old cards retained in DOM, new cards appended at bottom.",
+  "scroll_height_changed": true,
+  "network_requests_during_scroll": 7,
+  "bottom_sentinel_found": false,
+  "result_count_label_found": false,
+  "result_count_label_text": null,
+  "result_count_labels_all": [],
+  "static_evidence": {
+    "max_scroll_reached": false,
+    "bottom_reached_count": 0,
+    "settle_waits_completed": 0,
+    "result_count_label_inspected": true,
+    "internal_scroll_tested": true,
+    "window_scroll_tested": true,
+    "no_dom_growth": false,
+    "no_identity_change": false,
+    "no_pagination_in_result_zone": true,
+    "no_load_more_found": false,
+    "no_continuation_network_requests": false,
+    "no_bottom_sentinel_found": true
+  },
+  "max_scroll_reached": false,
+  "bottom_reached_count": 0,
+  "settle_waits_completed": 0,
+  "internal_scroll_tested": false,
+  "window_scroll_tested": true,
+  "no_dom_growth": false,
+  "no_identity_change": false,
+  "pagination_candidates_inspected": [],
+  "hidden_pagination_found": [],
+  "bottom_zone_elements_found": {
+    "load_more": [
+      {
+        "selector": "button:has([class*=\"load\"])",
+        "tag": "BUTTON",
+        "class": "el-button cursor-default el-button--text",
+        "text": "",
+        "visible": true,
+        "bbox": {
+          "x": 931.5,
+          "y": 1029.796875,
+          "width": 42,
+          "height": 66,
+          "top": 1029.796875,
+          "right": 973.5,
+          "bottom": 1095.796875,
+          "left": 931.5
+        }
+      }
+    ],
+    "sentinels": [],
+    "end_markers": []
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "version": "4.1",
+  "created_at": "2026-03-14T10:10:04.995782",
+  "pipiads_url_context": "https://www.pipiads.com/ad-search",
+  "validation_checks": {
+    "search_input_found": true,
+    "search_submitted": true,
+    "results_verified_multi_signal": true,
+    "card_roots_found": true,
+    "detail_open_tested": true,
+    "detail_close_tested": true,
+    "card_structure_consistency": "high",
+    "detail_open_consistency": "modal_only"
+  },
+  "artifact_status": "valid",
+  "results_verification_evidence": {
+    "verified": true,
+    "evidence": {
+      "url": "https://www.pipiads.com/ad-search?is_participle=false&search_type=1&extend_keywords=%5b%7b%22type%22%3a1,%22keyword%22%3a%22streetwear%22%7d%5d&sort=999&sort_type=desc&current_page=1",
+      "card_container_count": 1,
+      "top_container_repeat_count": 20,
+      "sample_card_text_len": 247,
+      "sample_has_metrics": true,
+      "pagination_candidates": 0,
+      "open_modals": 0,
+      "skeleton_elements": 16,
+      "signals_passing": 5,
+      "signals_total": 7
+    },
+    "signals": {
+      "url_is_search": true,
+      "search_input_visible": true,
+      "repeated_card_containers": true,
+      "known_card_selector_matches": null,
+      "cards_have_expected_features": true,
+      "pagination_or_count_visible": false,
+      "no_blocking_modal": true,
+      "not_loading": false
+    }
+  }
+}

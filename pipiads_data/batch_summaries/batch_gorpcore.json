@@ -1,0 +1,18 @@
+{
+  "keyword": "gorpcore",
+  "tier": "T2",
+  "mode": "niche",
+  "pages_visited": 2,
+  "cards_scanned": 19,
+  "cards_captured": 3,
+  "pre_filtered_out": 16,
+  "winners": 0,
+  "possible_winners": 3,
+  "mid": 0,
+  "junk_rate": 0.84,
+  "early_terminated": false,
+  "recommend": "abandon",
+  "reason": "84% junk, 0 winners",
+  "gate_passed": true,
+  "outcome_label": "JUNK_DOMINATED"
+}

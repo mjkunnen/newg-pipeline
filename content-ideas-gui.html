@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWGARMENTS — Content Ideas Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface-hover: #1a1a1a;
+    --surface-active: #1f1f1f;
+    --border: #222;
+    --border-light: #2a2a2a;
+    --text: #f0f0f0;
+    --text-secondary: #888;
+    --text-muted: #555;
+    --accent: #fff;
+    --conversion: #4ade80;
+    --conversion-bg: rgba(74, 222, 128, 0.08);
+    --awareness: #818cf8;
+    --awareness-bg: rgba(129, 140, 248, 0.08);
+    --trust: #fb923c;
+    --trust-bg: rgba(251, 146, 60, 0.08);
+    --fomo: #f472b6;
+    --fomo-bg: rgba(244, 114, 182, 0.08);
+    --engagement: #22d3ee;
+    --engagement-bg: rgba(34, 211, 238, 0.08);
+    --brand: #a78bfa;
+    --brand-bg: rgba(167, 139, 250, 0.08);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 32px 40px 24px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+    backdrop-filter: blur(20px);
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .logo {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .logo span { color: var(--text-muted); font-weight: 400; }
+
+  .stats-bar {
+    display: flex;
+    gap: 24px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .stats-bar strong { color: var(--text); font-weight: 600; }
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 7px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--text-muted);
+    color: var(--text);
+  }
+
+  .filter-btn.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .filter-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* LAYOUT */
+  .main {
+    display: flex;
+    height: calc(100vh - 120px);
+  }
+
+  /* CARD LIST */
+  .card-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 12px;
+    align-content: start;
+  }
+
+  .card-list::-webkit-scrollbar { width: 6px; }
+  .card-list::-webkit-scrollbar-track { background: transparent; }
+  .card-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-light);
+    transform: translateY(-1px);
+  }
+
+  .card.active {
+    border-color: #444;
+    background: var(--surface-active);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .card-number {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .tag-conversion { color: var(--conversion); background: var(--conversion-bg); }
+  .tag-awareness { color: var(--awareness); background: var(--awareness-bg); }
+  .tag-trust { color: var(--trust); background: var(--trust-bg); }
+  .tag-fomo { color: var(--fomo); background: var(--fomo-bg); }
+  .tag-engagement { color: var(--engagement); background: var(--engagement-bg); }
+  .tag-brand { color: var(--brand); background: var(--brand-bg); }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .card-hook {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .card-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .potential-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+
+  .potential-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+
+  /* DETAIL PANEL */
+  .detail-panel {
+    width: 520px;
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 32px;
+    display: none;
+    background: var(--surface);
+  }
+
+  .detail-panel.open { display: block; }
+
+  .detail-panel::-webkit-scrollbar { width: 6px; }
+  .detail-panel::-webkit-scrollbar-track { background: transparent; }
+  .detail-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .detail-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .detail-close:hover { color: var(--text); background: var(--border); }
+
+  .detail-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .detail-title {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .detail-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .detail-section {
+    margin-bottom: 28px;
+  }
+
+  .detail-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .detail-text strong { color: var(--text); font-weight: 600; }
+
+  .detail-hook-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .detail-hook-box span {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .shot-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .shot-list li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .shot-list li:last-child { border-bottom: none; }
+
+  .shot-num {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 20px;
+    padding-top: 1px;
+  }
+
+  .proof-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+  }
+
+  .proof-brand {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .proof-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .detail-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .metric-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .metric-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .metric-value {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .platform-badges {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .platform-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .difficulty-bar {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .diff-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--border);
+  }
+
+  .diff-dot.filled { background: var(--text); }
+
+  /* EMPTY STATE */
+  .empty-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 40px;
+  }
+
+  .empty-detail svg {
+    margin-bottom: 16px;
+    opacity: 0.3;
+  }
+
+  .empty-detail p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* SEARCH */
+  .search-wrap {
+    position: relative;
+    margin-right: auto;
+    margin-left: 16px;
+  }
+
+  .search-input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 14px 7px 32px;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    width: 200px;
+    transition: all 0.2s;
+  }
+
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-input:focus { outline: none; border-color: var(--text-muted); width: 260px; }
+
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
+  /* SORT */
+  .sort-select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+
+  .sort-select:focus { outline: none; }
+  .sort-select option { background: var(--surface); }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .detail-panel { width: 100%; position: fixed; top: 0; left: 0; z-index: 200; height: 100vh; }
+    .card-list { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo">NEWGARMENTS <span>/ Content Dashboard</span></div>
+    <div class="stats-bar">
+      <span><strong id="total-count">0</strong> ideas</span>
+      <span><strong id="visible-count">0</strong> showing</span>
+    </div>
+  </div>
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="conversion"><span class="filter-dot" style="background:var(--conversion)"></span>Conversion</button>
+    <button class="filter-btn" data-filter="awareness"><span class="filter-dot" style="background:var(--awareness)"></span>Awareness</button>
+    <button class="filter-btn" data-filter="trust"><span class="filter-dot" style="background:var(--trust)"></span>Trust</button>
+    <button class="filter-btn" data-filter="fomo"><span class="filter-dot" style="background:var(--fomo)"></span>FOMO</button>
+    <button class="filter-btn" data-filter="engagement"><span class="filter-dot" style="background:var(--engagement)"></span>Engagement</button>
+    <button class="filter-btn" data-filter="brand"><span class="filter-dot" style="background:var(--brand)"></span>Brand Building</button>
+  </div>
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" class="search-input" id="search" placeholder="Search ideas...">
+    </div>
+    <select class="sort-select" id="sort">
+      <option value="potential">Sort: Highest Potential</option>
+      <option value="easiest">Sort: Easiest to Film</option>
+      <option value="category">Sort: By Category</option>
+    </select>
+  </div>
+</div>
+
+<div class="main">
+  <div class="card-list" id="card-list"></div>
+  <div class="detail-panel" id="detail-panel">
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+const IDEAS = [
+  {
+    id: 1,
+    title: "The Scale Test",
+    hook: "Your hoodie weighs this much... ours weighs this much.",
+    category: "conversion",
+    tags: ["conversion", "trust"],
+    potential: 95,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "10-15 sec",
+    why: "This is undeniable visual proof. The scale doesn't lie. It bypasses all skepticism because there's no way to fake a number on a scale. It directly addresses the #1 pain point: paying premium for thin, lightweight garbage. When Gen Z sees 340g vs 880g, the decision makes itself.",
+    psychology: "Targets the fear of getting scammed on quality. 73% of Gen Z research brands before buying because they've been burned by AliExpress-quality products marketed as premium. The scale gives them the proof they need in 10 seconds.",
+    proof: [
+      { brand: "Cole Buxton", detail: "Pioneered fabric weight content on TikTok. Their GSM comparison videos consistently hit 100K-500K+ views. They turned 'GSM' into a mainstream streetwear term." },
+      { brand: "Generic streetwear creators", detail: "The 'weigh my hoodie' format gets 200K-1M views regularly. One creator weighing a Zara hoodie vs a premium hoodie got 2.3M views." }
+    ],
+    shots: [
+      "Kitchen/postal scale on clean surface, zeroed out",
+      "Hand dropping a thin fast fashion hoodie on the scale — show low number",
+      "Hand dropping NEWGARMENTS hoodie on the scale — show high number (hold 2 sec)",
+      "Optional: quick cut to someone wearing the hoodie, walking away"
+    ],
+    textOverlay: "Stop paying premium for paper-thin hoodies.",
+    cta: "Link in bio. No restock."
+  },
+  {
+    id: 2,
+    title: "The Drop Test",
+    hook: "180 GSM vs 460 GSM. You can hear the difference.",
+    category: "awareness",
+    tags: ["awareness", "trust"],
+    potential: 88,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "8-12 sec",
+    why: "Pure visual, zero words needed. Thin fabric floats like tissue. Heavyweight thuds. The contrast is visceral and the SOUND of the thud is the hook. This is the kind of content people screenshot and send to their group chat.",
+    psychology: "Taps into the 'show don't tell' principle. Gen Z distrusts brand claims (only 26% trust brands per Edelman Trust Barometer). But they trust their own eyes and ears. A visual comparison removes the brand's ability to lie.",
+    proof: [
+      { brand: "Fabric comparison TikToks", detail: "Side-by-side fabric tests are a proven viral format. Simple A/B comparisons consistently outperform polished product videos." },
+      { brand: "Fashion quality creators", detail: "Creators like @wisdm built entire audiences on 'is this worth it?' content using simple tests like this." }
+    ],
+    shots: [
+      "Hold thin hoodie at shoulder height — drop it (floats down slowly)",
+      "Hold NEWGARMENTS hoodie at same height — drop it (thuds down with weight)",
+      "Optional: slow motion of the NEWGARMENTS hoodie dropping"
+    ],
+    textOverlay: "180 GSM vs 460 GSM. You can hear the difference.",
+    cta: "Pin a comment with the link."
+  },
+  {
+    id: 3,
+    title: "Packing ASMR",
+    hook: "Every order. Hand packed. Personal note.",
+    category: "trust",
+    tags: ["trust", "awareness", "brand"],
+    potential: 92,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels", "Stories"],
+    duration: "30-45 sec",
+    why: "Packing ASMR videos consistently go viral for small brands — 500K to 2M+ views is normal. The handwritten thank-you note is your secret weapon. It's the moment people share. In a world of automated everything, a personal touch creates genuine surprise and emotional connection.",
+    psychology: "Addresses trust deficit by showing there's a real person behind the brand. Also triggers the 'care' signal — if someone hand-packs your order and writes you a personal note, the product must be good. It humanizes the brand in a way no product shot can.",
+    proof: [
+      { brand: "Broken Planet Market", detail: "Their packing content regularly hits 500K+ views. The ASMR format works because it's satisfying to watch AND builds trust simultaneously." },
+      { brand: "Small brand TikTok", detail: "Packing videos are the #1 recommended format for new brands on TikTok. The format has a proven track record across thousands of small businesses." },
+      { brand: "Scuffers", detail: "Uses packing content weekly to maintain connection with their 'FF FAM' community. Drives both sales and loyalty." }
+    ],
+    shots: [
+      "Overhead angle: hands folding a hoodie on clean surface",
+      "Wrapping in tissue paper (capture the crinkling sound)",
+      "Writing the handwritten thank-you note (close-up on pen)",
+      "Placing everything in branded packaging",
+      "Sealing the package",
+      "Optional: placing on a stack of other orders (shows demand)"
+    ],
+    textOverlay: "Every order packed by hand with a personal note.",
+    cta: "None needed — pin comment with link."
+  },
+  {
+    id: 4,
+    title: "NPC Fit vs Main Character Fit",
+    hook: "NPC fit vs. Main character fit",
+    category: "awareness",
+    tags: ["awareness", "engagement", "conversion"],
+    potential: 90,
+    difficulty: 2,
+    platforms: ["TikTok"],
+    duration: "12-18 sec",
+    why: "'NPC' is Gen Z's worst fashion insult. Being called basic or mid is social death. This video weaponizes their deepest fear and positions NEWGARMENTS as the cure. The transition format is native to TikTok and feels like entertainment, not an ad.",
+    psychology: "Directly triggers 'NPC anxiety' — the fear of blending in. Research shows Gen Z's #1 fashion fear is being seen as average. They want 'main character energy.' This video creates a clear before/after that makes the purchase feel like a transformation, not a transaction.",
+    proof: [
+      { brand: "TikTok trend format", detail: "NPC vs Main Character content has billions of cumulative views. The format works across fashion, lifestyle, and fitness. It's proven engagement bait because people debate in the comments." },
+      { brand: "Streetwear creators", detail: "Fit transformation videos using this format regularly get 500K-2M views. The outfit reveal moment is inherently shareable." }
+    ],
+    shots: [
+      "BEFORE: person in generic outfit — thin hoodie, basic joggers, common shoes. Flat lighting, slouched posture.",
+      "TRANSITION: quick cut or TikTok transition effect",
+      "AFTER: same person in full NEWGARMENTS fit. Better lighting, confident posture, heavyweight fabric visible."
+    ],
+    textOverlay: "NPC fit → Main character fit",
+    cta: "Link in bio."
+  },
+  {
+    id: 5,
+    title: "\"Is NEWGARMENTS a Scam?\"",
+    hook: "Everyone asks if we're a scam. Fair. Let me show you everything.",
+    category: "trust",
+    tags: ["trust", "conversion"],
+    potential: 93,
+    difficulty: 2,
+    platforms: ["TikTok"],
+    duration: "45-90 sec",
+    why: "By naming the objection in the hook, you stop every skeptical scroller. Then you overwhelm them with proof. This builds more trust in 60 seconds than months of polished brand content. It's disarming because no scam brand would make this video.",
+    psychology: "The audience actively searches '[brand] + scam' before buying. 65% of Gen Z have been burned by IG/TikTok brands. By addressing the elephant in the room first, you flip the dynamic — you look confident and transparent while competitors look like they're hiding something.",
+    proof: [
+      { brand: "Small brand TikTok strategy", detail: "Brands that directly address 'is this a scam?' in their content see significantly higher conversion rates than those who avoid the topic. The format is proven across DTC brands." },
+      { brand: "Broken Planet", detail: "Their 'why we charge what we charge' transparency content went viral precisely because it addressed pricing skepticism head-on." }
+    ],
+    shots: [
+      "Talk to camera — raw, no script feeling. 'Everyone asks if we're a scam. Fair.'",
+      "Walk through products laid out on a table — pick each up, show weight and quality",
+      "Show the stitching, the tags, the inside construction",
+      "Show the packaging process — branded box, tissue paper, handwritten note",
+      "Show shipping labels being printed, orders stacked and ready",
+      "End: 'We're not hiding anything. This is what we do.'"
+    ],
+    textOverlay: "No AliExpress. No Gildan blanks. No BS.",
+    cta: "'Judge for yourself. Link in bio.'"
+  },
+  {
+    id: 6,
+    title: "50 Pieces. Then It's Archive.",
+    hook: "We made 50 of these. When they're gone, they're archive. No restock.",
+    category: "fomo",
+    tags: ["fomo", "conversion"],
+    potential: 87,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels", "Stories"],
+    duration: "15-25 sec",
+    why: "Real scarcity stated factually — no fake countdowns, no 'BIGGEST DROP EVER.' Just a calm statement: this is how many we made, and when they're gone, they're gone. The visual of the pile being real and countable makes the scarcity tangible.",
+    psychology: "FOMO is the #1 emotional driver for streetwear purchases. But fake scarcity destroys trust. Real scarcity stated calmly is 10x more powerful than manufactured urgency. Your audience has been burned by 'limited drops' that restocked — this positions you as the honest alternative.",
+    proof: [
+      { brand: "Corteiz", detail: "Never says 'limited drop.' Items just sell out in hours. 'Sold Out' badges stay visible on site. This approach has built them into one of the most desired streetwear brands in Europe." },
+      { brand: "Trapstar", detail: "Uses an 'Archive Drop' category showing past sold-out items. The visual proof that things actually sell out and never return creates intense FOMO for current drops." }
+    ],
+    shots: [
+      "Overhead shot of all pieces laid out neatly — show the actual limited quantity",
+      "Hands picking up one piece, showing it to camera",
+      "Detail shots: fabric, stitching, label",
+      "Pieces being 'removed' from the pile (simulating orders being packed)",
+      "Final shot: noticeably fewer pieces remaining"
+    ],
+    textOverlay: "50 pieces. Then it's gone forever.",
+    cta: "'Dropping [date]. Set your alarm.'"
+  },
+  {
+    id: 7,
+    title: "What €45 Gets You (Us vs Them)",
+    hook: "What €45 gets you from a TikTok brand vs from us.",
+    category: "conversion",
+    tags: ["conversion", "trust"],
+    potential: 91,
+    difficulty: 2,
+    platforms: ["TikTok", "Reels"],
+    duration: "20-30 sec",
+    why: "Price comparison is one of the most engaging formats on TikTok. It reframes the purchase from 'is this expensive?' to 'this is actually a steal.' When they see a sad thin hoodie in a plastic mailer vs your heavyweight piece in branded packaging with a handwritten note — the decision is obvious.",
+    psychology: "Addresses the value objection directly. Gen Z has limited budgets (€0-1500/month disposable income) so every purchase matters. Showing them what their money ACTUALLY buys vs the alternative makes the rational case alongside the emotional one.",
+    proof: [
+      { brand: "TikTok comparison format", detail: "Price comparison videos ('what $X gets you') consistently rank among the highest-performing formats across all TikTok niches. In fashion specifically, these drive direct conversions because they pre-handle the price objection." },
+      { brand: "Small DTC brands", detail: "Brands that show their packaging, product quality, and extras vs competitors at the same price point see 2-3x higher click-through rates to their stores." }
+    ],
+    shots: [
+      "Left side: pull a thin hoodie from a cheap plastic mailer bag",
+      "Show how light it is, how thin the fabric feels, basic single stitching",
+      "Right side: pull NEWGARMENTS hoodie from branded packaging with tissue paper and note",
+      "Show the weight, the thickness, the double stitching",
+      "Optional: both on the scale for the final comparison"
+    ],
+    textOverlay: "Same price. Not the same hoodie.",
+    cta: "Link in bio."
+  },
+  {
+    id: 8,
+    title: "Fabric Pinch Close-Up",
+    hook: "Can your hoodie do this?",
+    category: "awareness",
+    tags: ["awareness", "trust"],
+    potential: 82,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "8-12 sec",
+    why: "Macro close-ups of fabric are surprisingly mesmerizing. The thickness between two fingers is an instant quality indicator that anyone can understand. No expertise needed to see the difference. This is quick, punchy, and incredibly easy to film.",
+    psychology: "Visual proof that bypasses all marketing language. When they see thick, dense fabric being pinched vs thin fabric that collapses between fingers — the quality argument is made without a single word. Targets the 'I can tell the difference' pride that quality-conscious Gen Z buyers have.",
+    proof: [
+      { brand: "Cole Buxton", detail: "Close-up fabric texture videos are a core part of their content strategy. They turned fabric education into aspirational content." },
+      { brand: "Streetwear TikTok", detail: "Fabric texture and GSM content has become its own subgenre with dedicated audiences seeking quality proof." }
+    ],
+    shots: [
+      "Zoom into fabric — macro or phone zoom",
+      "Pinch the NEWGARMENTS fabric between two fingers, pull it, show thickness",
+      "Do the same with a thin hoodie for contrast",
+      "Optional: run fingers across the surface to show texture density"
+    ],
+    textOverlay: "Can your hoodie do this?",
+    cta: "Pin comment with link."
+  },
+  {
+    id: 9,
+    title: "POV: No More Gildan Blanks",
+    hook: "POV: you finally find a brand that doesn't use Gildan blanks",
+    category: "conversion",
+    tags: ["conversion", "awareness"],
+    potential: 89,
+    difficulty: 2,
+    platforms: ["TikTok"],
+    duration: "15-20 sec",
+    why: "This hook is EXACTLY what your audience thinks every day. 'Gildan blank' is the ultimate insult in streetwear. By naming it, you immediately signal that you're part of the culture and understand their frustration. The POV format is native to TikTok and feels relatable.",
+    psychology: "Validates their frustration and positions NEWGARMENTS as the answer they've been searching for. When someone has been burned multiple times by brands using cheap blanks, finding one that doesn't is an emotional relief — like finally finding a trustworthy plug.",
+    proof: [
+      { brand: "Reddit r/streetwear", detail: "'Gildan blanks' is one of the most common complaints in every thread about IG/TikTok brands. It's shorthand for 'scam brand that puts a logo on cheap fabric.'" },
+      { brand: "POV format on TikTok", detail: "POV videos are a consistently high-performing native format. They feel personal and relatable, which drives saves and shares." }
+    ],
+    shots: [
+      "Person scrolling phone looking bored/frustrated (seeing mid brands)",
+      "They land on NEWGARMENTS content — face changes",
+      "Cut to them holding the actual hoodie — feeling the weight, eyes widen",
+      "They flip it inside out, check the stitching, nod approvingly",
+      "They put it on — fit check in mirror, satisfied"
+    ],
+    textOverlay: "POV: you finally find a brand that doesn't use Gildan blanks",
+    cta: "Link in bio."
+  },
+  {
+    id: 10,
+    title: "Rate This Fit 1-10",
+    hook: "Rate this fit 1-10. Be honest.",
+    category: "engagement",
+    tags: ["engagement", "awareness"],
+    potential: 78,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels", "Feed"],
+    duration: "8-12 sec",
+    why: "Pure engagement bait. People LOVE giving opinions. Comments flood in with ratings, debates start in the replies, and the algorithm pushes the video to more people. It's the simplest content to make and drives reach through raw engagement numbers.",
+    psychology: "Taps into the 'fit check' culture where Gen Z validates each other's style. Asking for a rating gives them permission to engage. The debate in comments ('that's a 9' vs 'nah that's a 6 without the shoes') drives algorithmic reach. Even negative comments help.",
+    proof: [
+      { brand: "Streetwear TikTok", detail: "'Rate my fit' is one of the most consistent formats on the platform with billions of cumulative hashtag views. Works for every brand size." },
+      { brand: "Universal format", detail: "Engagement-bait formats using ratings or 'this or that' consistently outperform in comment counts, which directly boosts algorithmic distribution." }
+    ],
+    shots: [
+      "Full outfit flat lay OR mirror fit check OR someone standing in the fit",
+      "Hold for a few seconds so people can actually see the outfit"
+    ],
+    textOverlay: "Rate this fit 1-10",
+    cta: "None — the comments are the goal."
+  },
+  {
+    id: 11,
+    title: "The Inside-Out Flip",
+    hook: "If a brand won't show you the inside of their hoodie, there's a reason.",
+    category: "trust",
+    tags: ["trust", "awareness"],
+    potential: 85,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "10-15 sec",
+    why: "Flipping a hoodie inside out is the universal quality check. Gen Z knows this. By doing it confidently on camera, you signal you have nothing to hide. The inside construction — fleece quality, seam finishing, stitching — tells the real story about a garment's quality.",
+    psychology: "Positions you as the brand that's transparent when others aren't. The hook implies competitors are hiding something. Gen Z's default state is distrust — this directly addresses it by showing them the one thing most brands avoid showing.",
+    proof: [
+      { brand: "Quality review creators", detail: "The 'flip it inside out' test is standard advice on r/streetwear and r/malefashionadvice. Showing this on TikTok signals you know the culture." },
+      { brand: "Cole Buxton", detail: "Regularly features inside-out shots in their content, showing construction quality as a trust signal." }
+    ],
+    shots: [
+      "Lay the hoodie flat",
+      "Grab the bottom hem and flip the entire thing inside out toward camera in one smooth motion",
+      "Show the inner fleece up close",
+      "Show the seam finishing — how clean and reinforced it is",
+      "Run your fingers along the stitching"
+    ],
+    textOverlay: "If a brand won't show you the inside, there's a reason.",
+    cta: "We show everything. Link in bio."
+  },
+  {
+    id: 12,
+    title: "The Crumple & Release",
+    hook: "Cheap fabric stays crushed. Heavyweight recovers.",
+    category: "awareness",
+    tags: ["awareness", "trust"],
+    potential: 80,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "8-12 sec",
+    why: "Quick, visual, and impossible to fake. When you ball up heavyweight fabric and it springs back, that's a quality indicator anyone can understand. It's satisfying to watch and makes people wonder about their own hoodies.",
+    psychology: "Creates an immediate 'test it yourself' urge. After watching this, viewers will crumple their own hoodie — and when it stays wrinkled, they'll think of NEWGARMENTS. You're planting a quality standard in their mind.",
+    proof: [
+      { brand: "Fabric test videos", detail: "Simple A/B fabric tests are a proven format. The crumple test specifically is used by fashion quality accounts and always gets strong engagement because it's so simple yet revealing." }
+    ],
+    shots: [
+      "Ball up a thin hoodie tight in your fist — release — it stays wrinkled and flat",
+      "Ball up NEWGARMENTS hoodie tight — release — it springs back, holds structure",
+      "Optional: slow motion of the fabric recovering"
+    ],
+    textOverlay: "Cheap fabric stays crushed. Heavyweight recovers.",
+    cta: "Try it with yours."
+  },
+  {
+    id: 13,
+    title: "\"Where'd You Get That?\"",
+    hook: "3 people asked me where I got this today.",
+    category: "conversion",
+    tags: ["conversion", "brand"],
+    potential: 86,
+    difficulty: 2,
+    platforms: ["TikTok", "Reels"],
+    duration: "15-20 sec",
+    why: "'Where did you get that?' is the ultimate compliment for this audience. It means you're wearing something people can't identify — which means it's rare and interesting. This video sells the FEELING of wearing NEWGARMENTS, not just the product.",
+    psychology: "Directly hits the #1 desire: peer recognition without trying. When someone asks where you got something, it means you've achieved the holy grail — standing out naturally. This emotional trigger is more powerful than any spec or feature.",
+    proof: [
+      { brand: "Corteiz", detail: "Their entire brand was built on the 'if you know, you know' dynamic. The 'where'd you get that?' moment is what drives their word-of-mouth growth." },
+      { brand: "Streetwear culture", detail: "Compliment-driven content ('my most complimented piece') consistently performs well because it provides social proof through real-world validation, not online reviews." }
+    ],
+    shots: [
+      "Person talking to camera casually — street, room, cafe",
+      "Quick cut montage showing the piece from different angles",
+      "Close-up on fabric detail while talking",
+      "End on a confident walk-away"
+    ],
+    textOverlay: "They didn't know the brand either. That's the point.",
+    cta: "NEWGARMENTS. Link in bio."
+  },
+  {
+    id: 14,
+    title: "Red Flags When Buying Streetwear Online",
+    hook: "Red flags to look for before buying from any streetwear brand.",
+    category: "trust",
+    tags: ["trust", "awareness", "engagement"],
+    potential: 88,
+    difficulty: 2,
+    platforms: ["TikTok"],
+    duration: "30-45 sec",
+    why: "Educational content that positions you as the honest insider. By teaching them what to look for (permanent sales, stock photos, no fabric specs, no reviews), you implicitly position NEWGARMENTS as the brand that passes every test.",
+    psychology: "Gen Z values brands that educate rather than sell. When you help them avoid bad purchases (even from competitors), you build trust and authority. They'll come back to you because you treated them like smart people, not targets.",
+    proof: [
+      { brand: "Educational TikTok", detail: "'How to spot' and 'red flag' content formats get high saves because viewers bookmark them for future reference. Saves are the most valuable engagement signal for algorithmic reach." },
+      { brand: "Reddit r/streetwear", detail: "'How to tell if a brand is legit' threads are among the most upvoted posts. There's massive demand for this information." }
+    ],
+    shots: [
+      "Talk to camera or text-on-screen format",
+      "Red flag 1: 'They're ALWAYS on sale' — show an example of permanent sale pricing",
+      "Red flag 2: 'No fabric specs on the product page'",
+      "Red flag 3: 'Stock photos, no real product shots'",
+      "Red flag 4: 'No reviews or only 5-star reviews'",
+      "Red flag 5: 'They say limited but keep restocking'",
+      "End: 'Check these before you spend your money anywhere.'"
+    ],
+    textOverlay: "Save this before your next purchase.",
+    cta: "We pass all 5. Check for yourself. Link in bio."
+  },
+  {
+    id: 15,
+    title: "Sold Out Recap",
+    hook: "That was fast.",
+    category: "fomo",
+    tags: ["fomo", "brand"],
+    potential: 84,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels", "Stories"],
+    duration: "10-15 sec",
+    why: "Post this AFTER a drop sells out. Show the empty table or shelf where the stock was. This creates FOMO for the NEXT drop — people who missed out will set alarms. And people who copped feel validated that they made the right call.",
+    psychology: "Proof of demand is the strongest social proof. When people see that something sold out, it triggers 'I need to be faster next time' instinct. It also validates the scarcity claim — you said limited, and you meant it.",
+    proof: [
+      { brand: "Corteiz", detail: "Keeps 'Sold Out' badges visible on their site permanently. Past sold-out items serve as proof that demand is real and that missing a drop means missing forever." },
+      { brand: "Trapstar", detail: "Archive Drop category shows past sold-out items. Visual proof that things actually sell out builds urgency for future releases." }
+    ],
+    shots: [
+      "Empty table/surface where the stock was — maybe a few remnants (tissue paper, a tag)",
+      "Cut to the website showing 'Sold Out'",
+      "Optional: montage of the packing process from when orders came in"
+    ],
+    textOverlay: "Sold out. Next drop: [date].",
+    cta: "Follow so you don't miss the next one."
+  },
+  {
+    id: 16,
+    title: "Build-a-Fit on the Beat",
+    hook: "Building the perfect fit piece by piece.",
+    category: "engagement",
+    tags: ["engagement", "awareness", "conversion"],
+    potential: 83,
+    difficulty: 2,
+    platforms: ["TikTok", "Reels"],
+    duration: "15-20 sec",
+    why: "Start with an empty surface. Place items one by one — shoes, pants, hoodie, accessories — each placed on the beat of a trending sound. The satisfying rhythm + visual of an outfit coming together = saves and shares. Shows styling and the piece in context.",
+    psychology: "Aspirational content that lets viewers picture the full outfit, not just one piece. The beat-sync format is native to TikTok and feels like entertainment. High save rate because people bookmark outfit ideas to recreate later.",
+    proof: [
+      { brand: "Fashion TikTok", detail: "Build-a-fit and outfit assembly videos are a top-performing format. The beat-synchronized placement creates satisfying content that gets shared and saved." },
+      { brand: "Streetwear creators", detail: "Flat lay outfit builds consistently get 100K-500K views when synced to trending sounds." }
+    ],
+    shots: [
+      "Empty clean surface (top-down angle)",
+      "Place shoes on the beat",
+      "Place pants/jeans on the beat",
+      "Place NEWGARMENTS hoodie on the beat (centerpiece)",
+      "Place accessories (hat, chain, etc.) on final beats",
+      "Hold on completed outfit for 2-3 seconds"
+    ],
+    textOverlay: "The full fit. Hoodie drops [date].",
+    cta: "Link in bio."
+  },
+  {
+    id: 17,
+    title: "\"Why I Started This Brand\"",
+    hook: "I was tired of paying premium for garbage quality. So I made my own.",
+    category: "brand",
+    tags: ["brand", "trust"],
+    potential: 85,
+    difficulty: 2,
+    platforms: ["TikTok"],
+    duration: "30-60 sec",
+    why: "Founder stories are the #1 trust builder for emerging brands. Gen Z wants to see the person behind the brand. When they know your story and your 'why,' they root for you. It turns customers into supporters.",
+    psychology: "Every successful small streetwear brand (Corteiz, Broken Planet, Represent, Scuffers) has a visible founder. Gen Z trusts people, not logos. Showing your face and sharing your frustration with the industry makes you relatable. You become 'one of them' instead of 'another brand trying to sell me something.'",
+    proof: [
+      { brand: "Represent Clo", detail: "George and Michael Heaton regularly appear in content telling the brand story. This founder visibility was key to scaling from bedroom brand to multi-million business." },
+      { brand: "Broken Planet", detail: "Founder-led content explaining 'why we exist' and 'why we charge what we charge' drove their initial viral growth." },
+      { brand: "Corteiz", detail: "Clint419's personality IS the brand. His visibility and authenticity are inseparable from Corteiz's success." }
+    ],
+    shots: [
+      "Talk directly to camera — raw, not scripted",
+      "Share the frustration that led to starting NEWGARMENTS",
+      "Show the products as you talk about what you built differently",
+      "Be honest about the journey — imperfection is authentic",
+      "End with your mission: what NEWGARMENTS stands for"
+    ],
+    textOverlay: "Not another brand. A standard.",
+    cta: "This is why we exist. Link in bio."
+  },
+  {
+    id: 18,
+    title: "The Tag / Label Shot",
+    hook: "Not Gildan. Not a blank. Built from scratch.",
+    category: "trust",
+    tags: ["trust"],
+    potential: 75,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "5-8 sec",
+    why: "Simple close-up of your label inside the collar. Quick, easy, kills the biggest suspicion. When people see a brand's own label (not a generic blank label), it signals the product is actually original — not AliExpress with a logo slapped on.",
+    psychology: "The first thing a quality-conscious buyer checks when they receive a product is the label. It tells them if this is a custom-made piece or a wholesale blank. Showing it proactively removes doubt before purchase.",
+    proof: [
+      { brand: "Reddit r/streetwearstartup", detail: "Custom labels and woven tags are consistently cited as the difference between 'legitimate brand' and 'guy printing on Gildan.' It's a cultural quality marker." }
+    ],
+    shots: [
+      "Close-up of the brand tag/label",
+      "Slowly pull it into focus",
+      "Show any woven details, custom text, or design elements"
+    ],
+    textOverlay: "Not Gildan. Not a blank. Built from scratch.",
+    cta: "Link in bio."
+  },
+  {
+    id: 19,
+    title: "\"Would You Cop?\" Poll",
+    hook: "Would you cop? Yes or nah.",
+    category: "engagement",
+    tags: ["engagement", "awareness"],
+    potential: 76,
+    difficulty: 1,
+    platforms: ["TikTok", "Stories"],
+    duration: "8-10 sec",
+    why: "The simplest engagement format. Show the piece, ask yes or no. Comments flood in. For Stories, use the poll sticker. This drives massive engagement which the algorithm rewards, and it also gives you real market feedback on which pieces have the most demand.",
+    psychology: "Giving people a binary choice makes it easy to engage (no friction). Even people who say 'nah' are engaging — and engagement is engagement. Plus, the 'yes' comments create social proof that others want the piece.",
+    proof: [
+      { brand: "Universal TikTok format", detail: "Yes/no engagement content works across every niche. In streetwear, 'would you cop?' is the native language version of a purchase intent survey." }
+    ],
+    shots: [
+      "Show the piece — flat lay, held up, or on body",
+      "That's it. Keep it simple."
+    ],
+    textOverlay: "Would you cop? Yes or nah 👇",
+    cta: "Drop date in comments."
+  },
+  {
+    id: 20,
+    title: "Detail You Missed (Series)",
+    hook: "Details most brands skip.",
+    category: "brand",
+    tags: ["brand", "trust", "awareness"],
+    potential: 81,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "8-12 sec",
+    why: "A repeatable series where each video zooms into ONE specific detail — the drawstring cord thickness, the embroidery texture, the seam reinforcement, the ribbing quality. Shows obsessive attention to detail that separates you from brands that cut corners.",
+    psychology: "Micro-details signal macro-quality. If you care about the drawstring cord, you probably care about everything else. This content also educates the audience to notice details they never looked at before — and once they notice, they can't un-notice. Every future hoodie purchase gets compared to these details.",
+    proof: [
+      { brand: "Cole Buxton", detail: "Built their brand around obsessive detail content — close-ups of knit construction, garment-dye process, yarn selection. Each detail video reinforces the premium positioning." },
+      { brand: "Aime Leon Dore", detail: "Known for small details (custom hardware, hidden labels, unique linings) that become talking points and cultural capital among wearers." }
+    ],
+    shots: [
+      "Extreme close-up on one specific detail",
+      "Fingers pointing to or interacting with the detail",
+      "Pull back slightly to show the detail in context of the full piece"
+    ],
+    textOverlay: "Details most brands skip. Ep. [number]",
+    cta: "Follow for more."
+  },
+  {
+    id: 21,
+    title: "Countdown Drop Teaser Series",
+    hook: "3 days.",
+    category: "fomo",
+    tags: ["fomo", "brand", "awareness"],
+    potential: 86,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels", "Stories"],
+    duration: "5-10 sec each",
+    why: "A 3-day countdown series builds narrative arc. Each post reveals slightly more. Day 3: just a texture/color close-up. Day 2: the silhouette. Day 1: full reveal. Drop day: 'Live now.' It creates anticipation without being cringe because each reveal is calm and factual.",
+    psychology: "The slow reveal creates investment. By day 3, people feel like they've been on a journey. They've already mentally committed to checking out the drop. This is how Corteiz and Trapstar build hype — through anticipation, not desperation.",
+    proof: [
+      { brand: "Corteiz", detail: "Cryptic teasers on Instagram (a color swatch, a single detail, a date) generate massive speculation in comments. The less you show, the more people talk." },
+      { brand: "Trapstar", detail: "Uses phased reveal strategy across Stories and posts. Each layer of information drives engagement as people speculate on what's coming." }
+    ],
+    shots: [
+      "Day 3: Extreme close-up of fabric texture or color. Just a date on screen.",
+      "Day 2: Silhouette of the piece. Maybe a detail shot.",
+      "Day 1: Full product reveal with specs.",
+      "Drop day: 'Live now. Link in bio.'"
+    ],
+    textOverlay: "3 days. / 2 days. / Tomorrow. / Live now.",
+    cta: "Follow to not miss it."
+  },
+  {
+    id: 22,
+    title: "Comment Reply: \"Is This Worth It?\"",
+    hook: "Someone asked if this is actually worth it. Here's my answer.",
+    category: "conversion",
+    tags: ["conversion", "trust", "engagement"],
+    potential: 87,
+    difficulty: 2,
+    platforms: ["TikTok"],
+    duration: "20-30 sec",
+    why: "The 'reply to comment' format is native to TikTok and feels like a genuine conversation, not marketing. By responding to a real (or planted) skeptical comment, you address objections publicly while creating engaging content. Every viewer with the same question gets their answer.",
+    psychology: "When someone asks 'is this worth it?' — every potential customer has that question. By answering it with visual proof (showing the product, flipping it, showing the weight), you answer it for thousands of people at once. The comment-reply format also signals that you engage with your community.",
+    proof: [
+      { brand: "TikTok native format", detail: "Reply-to-comment videos consistently outperform standard posts because TikTok's algorithm favors content that continues conversations. They also get shown to the original commenter's network." },
+      { brand: "Small brand strategy", detail: "Brands that actively reply to skeptical comments with video proof convert doubters into customers at a high rate. It's free objection-handling content." }
+    ],
+    shots: [
+      "Show the comment on screen (screenshot or TikTok's built-in reply feature)",
+      "Pick up the hoodie — show the weight, the fabric, the construction",
+      "Flip it inside out, show stitching",
+      "Quick fit check",
+      "End with: 'You tell me if it's worth it.'"
+    ],
+    textOverlay: "Replying to @[user]",
+    cta: "Link in bio. Judge for yourself."
+  },
+  {
+    id: 23,
+    title: "\"One Piece, Three Ways\"",
+    hook: "1 hoodie. 3 fits. 0 misses.",
+    category: "engagement",
+    tags: ["engagement", "conversion", "awareness"],
+    potential: 82,
+    difficulty: 2,
+    platforms: ["TikTok", "IG Carousel"],
+    duration: "15-20 sec (video) / 4-6 slides (carousel)",
+    why: "Shows versatility — one hoodie styled casually, streetwear, and dressed up. Addresses the 'is this worth it?' question by proving the piece works with multiple outfits. Carousels get 2-3x more saves on Instagram, and saves are the strongest algorithmic signal.",
+    psychology: "When you show one piece working in three different contexts, the viewer does mental math: 'that's not one outfit, that's three.' This increases perceived value. It also helps different audience segments see themselves in the brand — the casual dresser AND the streetwear purist.",
+    proof: [
+      { brand: "Fashion TikTok/Instagram", detail: "Outfit versatility content is a top-saved format. People bookmark these for styling inspiration. High saves = high algorithmic distribution." }
+    ],
+    shots: [
+      "Fit 1: Hoodie + cargos + chunky sneakers (streetwear)",
+      "Fit 2: Hoodie + wide jeans + New Balance (casual)",
+      "Fit 3: Hoodie + joggers + AF1s (relaxed)",
+      "For carousel: one slide per fit + detail slide + final slide with price/link"
+    ],
+    textOverlay: "1 hoodie. 3 fits.",
+    cta: "Which fit is yours? Comment below."
+  },
+  {
+    id: 24,
+    title: "The Slow Reveal",
+    hook: "Something's dropping soon.",
+    category: "fomo",
+    tags: ["fomo", "awareness"],
+    potential: 79,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "8-12 sec",
+    why: "A dark cloth covers the product. You slowly pull it away to reveal the piece underneath, timed to a beat drop. Simple, cinematic, and builds anticipation for drops. The reveal creates a dopamine hit that makes viewers want to see more.",
+    psychology: "Teaser content creates curiosity gaps. The human brain craves completion — when you see something partially hidden, you NEED to see the rest. This drives follows ('I need to see what drops') and saves ('I want to come back to this').",
+    proof: [
+      { brand: "Product reveal TikToks", detail: "Beat-synced reveal videos consistently perform well across product categories. The format works because it combines satisfying visuals with anticipation." }
+    ],
+    shots: [
+      "Clean surface with a dark cloth/fabric draped over the product",
+      "Slowly pull the cloth away — time the full reveal to a beat drop",
+      "Hold on the revealed product for 2-3 seconds"
+    ],
+    textOverlay: "Dropping [date]. No restock.",
+    cta: "Follow to not miss it."
+  },
+  {
+    id: 25,
+    title: "The Hanger Test",
+    hook: "Left: fast fashion. Right: NEWGARMENTS. See the difference.",
+    category: "awareness",
+    tags: ["awareness", "trust"],
+    potential: 77,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "10-15 sec",
+    why: "Hang your hoodie next to a thin one on identical hangers. The difference in how they drape is immediately visible. Heavyweight holds its shape and hangs with structure. Thin fabric droops and looks limp. Simple visual that needs zero explanation.",
+    psychology: "Side-by-side comparisons are the most effective way to communicate quality differences. The hanger is a neutral, everyday object — it feels objective rather than staged. The visual difference is something they'll notice every time they look at their own closet.",
+    proof: [
+      { brand: "Fashion quality content", detail: "A/B visual comparisons are among the most shared formats because they make invisible qualities (fabric weight, construction) visible and obvious." }
+    ],
+    shots: [
+      "Two identical hangers, side by side",
+      "Thin hoodie on left hanger — droopy, limp, no structure",
+      "NEWGARMENTS hoodie on right hanger — structured, substantial, weighted drape",
+      "Camera slowly pans between the two"
+    ],
+    textOverlay: "Left: fast fashion. Right: NEWGARMENTS.",
+    cta: "Link in bio."
+  },
+  {
+    id: 26,
+    title: "Spec Slide Carousel",
+    hook: "Everything you need to know in 6 slides.",
+    category: "conversion",
+    tags: ["conversion", "trust"],
+    potential: 84,
+    difficulty: 1,
+    platforms: ["IG Carousel"],
+    duration: "6-8 slides",
+    why: "Each slide is one close-up detail shot with one spec: GSM, stitching type, fit type, origin, price. Carousels get the highest save rate on Instagram (2-3x single images), and each save tells the algorithm to push this to more people. This is your product page in social format.",
+    psychology: "Information broken into digestible pieces feels premium and trustworthy. Spec-by-spec reveals build a case like a lawyer presenting evidence. By the final slide (price), they've already been convinced of the value through the preceding 5 slides of quality proof.",
+    proof: [
+      { brand: "Instagram algorithm", detail: "Carousels consistently outperform single images in saves and shares. The swipe mechanic increases dwell time, which Instagram's algorithm uses as a quality signal." },
+      { brand: "DTC brands", detail: "Product carousel breakdowns are the highest-converting organic format on Instagram for fashion brands." }
+    ],
+    shots: [
+      "Slide 1: Full piece flat lay — product name",
+      "Slide 2: Fabric close-up — '460 GSM French Terry'",
+      "Slide 3: Stitching close-up — 'Double Stitched Seams'",
+      "Slide 4: Cuff/ribbing — 'Reinforced Ribbing'",
+      "Slide 5: Label — 'Designed in the Netherlands'",
+      "Slide 6: Piece styled or on body — price + 'No restock.'"
+    ],
+    textOverlay: "One spec per slide.",
+    cta: "Link in bio. Limited pieces."
+  },
+  {
+    id: 27,
+    title: "\"This or That\" Colorway Poll",
+    hook: "Which colorway would you cop?",
+    category: "engagement",
+    tags: ["engagement", "awareness"],
+    potential: 77,
+    difficulty: 1,
+    platforms: ["TikTok", "Stories"],
+    duration: "8-10 sec",
+    why: "Show two colorways side by side. Ask which one they'd cop. Comments and poll votes flood in. This is engagement gold AND gives you genuine market data on which colors have the most demand before you drop.",
+    psychology: "Binary choices are irresistible — people can't NOT have an opinion. The debate creates organic reach through comment activity. And by asking their opinion, you make them feel invested in the brand. They're not customers — they're collaborators.",
+    proof: [
+      { brand: "Universal engagement format", detail: "'This or That' works across every platform and niche. In streetwear, colorway debates drive some of the highest comment counts." }
+    ],
+    shots: [
+      "Two pieces side by side — different colorways, same product",
+      "Or: split screen with one on each side"
+    ],
+    textOverlay: "Left or right? 👇",
+    cta: "Winning colorway drops first."
+  },
+  {
+    id: 28,
+    title: "Archive Piece (Past Drop)",
+    hook: "This is archive now. 0 left. 0 restocks.",
+    category: "fomo",
+    tags: ["fomo", "brand"],
+    potential: 83,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "12-18 sec",
+    why: "Show a previous sold-out piece. Explain it's gone forever. This proves your no-restock claim is real AND creates FOMO for the current/next drop. If people see that past items are truly gone, they won't hesitate on future releases.",
+    psychology: "Loss aversion is one of the strongest psychological drivers. Showing something that's permanently unavailable triggers regret — and that regret converts to action on the next drop. 'I'm not making that mistake again' is the thought you want to plant.",
+    proof: [
+      { brand: "Corteiz", detail: "'Sold Out' badges remain visible permanently. This is the single most effective FOMO mechanism — proof that scarcity is real." },
+      { brand: "Trapstar", detail: "'Archive Drop' category exists specifically to show what's gone forever. It turns past products into marketing tools." }
+    ],
+    shots: [
+      "Hold up or show the sold-out piece",
+      "Detail shots — fabric, stitching, design",
+      "Show the website listing as 'Sold Out'",
+      "Text: 'Archive. Never coming back.'"
+    ],
+    textOverlay: "This is archive now. 0 left. 0 restocks. The next drop won't last either.",
+    cta: "Next drop: [date]. Don't sleep."
+  },
+  {
+    id: 29,
+    title: "Mirror Fit Check",
+    hook: "New piece. 460 GSM. Boxy fit. Thoughts?",
+    category: "awareness",
+    tags: ["awareness", "engagement"],
+    potential: 79,
+    difficulty: 1,
+    platforms: ["TikTok", "Reels"],
+    duration: "10-15 sec",
+    why: "The most native streetwear format. You wearing the piece, phone in hand, showing the fit from the front, side, and back. Specs as text overlay. If the founder wears the brand, it instantly adds credibility — you stand behind your own product.",
+    psychology: "Fit checks are how Gen Z validates purchases socially. By posting one yourself, you show confidence in your own product and give potential buyers a real-body reference (not a model). Asking 'thoughts?' invites engagement.",
+    proof: [
+      { brand: "TikTok streetwear", detail: "Fit check videos are the backbone of streetwear TikTok. Billions of cumulative views on #fitcheck. The format is so native that it never feels like marketing." }
+    ],
+    shots: [
+      "Standing in front of a mirror wearing the piece",
+      "Show front, turn to show side, show back",
+      "Specs as text overlay: GSM, fit type, price"
+    ],
+    textOverlay: "[Piece name] / 460 GSM / Boxy fit / €[price]",
+    cta: "Link in bio."
+  },
+  {
+    id: 30,
+    title: "\"Stop Buying Streetwear Until You Watch This\"",
+    hook: "Stop buying streetwear until you watch this.",
+    category: "awareness",
+    tags: ["awareness", "trust", "conversion"],
+    potential: 90,
+    difficulty: 2,
+    platforms: ["TikTok"],
+    duration: "30-45 sec",
+    why: "The strongest pattern-interrupt hook in the list. It demands attention and creates a curiosity gap — 'what do they know that I don't?' Then you deliver value: teach them how to check fabric weight, stitching, blanks. Position your product as the example of what to look for.",
+    psychology: "Commanding hooks ('stop doing X') trigger a primal response — people stop to see if the authority is legitimate. When you then deliver genuine value (quality education), the authority is confirmed. This creates the dynamic of 'brand that educates me' rather than 'brand that sells to me.'",
+    proof: [
+      { brand: "'Stop buying X' format", detail: "One of the highest-performing hook structures on TikTok across all niches. In fashion, it consistently drives 500K+ views because it promises insider knowledge." },
+      { brand: "Cole Buxton", detail: "Education-first content strategy turned them from unknown to one of the most discussed premium streetwear brands. Teaching people about quality creates both trust and demand." }
+    ],
+    shots: [
+      "Talk to camera or voiceover with product in hand",
+      "Show 3 quick quality checks: weight, inside construction, stitching",
+      "Use your hoodie as the positive example for each check",
+      "End: 'Now you know what to look for.'"
+    ],
+    textOverlay: "Save this. Check before you buy anything.",
+    cta: "We pass every test. Link in bio."
+  }
+];
+
+// State
+let activeFilter = 'all';
+let activeCard = null;
+let searchQuery = '';
+let sortMode = 'potential';
+
+function getTagClass(tag) {
+  const map = { conversion: 'tag-conversion', awareness: 'tag-awareness', trust: 'tag-trust', fomo: 'tag-fomo', engagement: 'tag-engagement', brand: 'tag-brand' };
+  return map[tag] || '';
+}
+
+function getTagLabel(tag) {
+  const map = { conversion: 'Conversion', awareness: 'Awareness', trust: 'Trust', fomo: 'FOMO', engagement: 'Engagement', brand: 'Brand' };
+  return map[tag] || tag;
+}
+
+function getColorForTag(tag) {
+  const map = { conversion: 'var(--conversion)', awareness: 'var(--awareness)', trust: 'var(--trust)', fomo: 'var(--fomo)', engagement: 'var(--engagement)', brand: 'var(--brand)' };
+  return map[tag] || 'var(--text)';
+}
+
+function getDifficultyDots(level) {
+  let dots = '';
+  for (let i = 0; i < 3; i++) {
+    dots += `<span class="diff-dot ${i < level ? 'filled' : ''}"></span>`;
+  }
+  return dots;
+}
+
+function filterAndSort() {
+  let filtered = IDEAS.filter(idea => {
+    const matchesFilter = activeFilter === 'all' || idea.tags.includes(activeFilter);
+    const matchesSearch = searchQuery === '' ||
+      idea.title.toLowerCase().includes(searchQuery) ||
+      idea.hook.toLowerCase().includes(searchQuery) ||
+      idea.why.toLowerCase().includes(searchQuery);
+    return matchesFilter && matchesSearch;
+  });
+
+  if (sortMode === 'potential') {
+    filtered.sort((a, b) => b.potential - a.potential);
+  } else if (sortMode === 'easiest') {
+    filtered.sort((a, b) => a.difficulty - b.difficulty || b.potential - a.potential);
+  } else if (sortMode === 'category') {
+    filtered.sort((a, b) => a.category.localeCompare(b.category) || b.potential - a.potential);
+  }
+
+  return filtered;
+}
+
+function renderCards() {
+  const list = document.getElementById('card-list');
+  const filtered = filterAndSort();
+
+  document.getElementById('total-count').textContent = IDEAS.length;
+  document.getElementById('visible-count').textContent = filtered.length;
+
+  list.innerHTML = filtered.map(idea => `
+    <div class="card ${activeCard === idea.id ? 'active' : ''}" data-id="${idea.id}" onclick="openDetail(${idea.id})">
+      <div class="card-header">
+        <span class="card-number">#${String(idea.id).padStart(2, '0')}</span>
+        <div class="card-tags">
+          ${idea.tags.map(t => `<span class="tag ${getTagClass(t)}">${getTagLabel(t)}</span>`).join('')}
+        </div>
+      </div>
+      <div class="card-title">${idea.title}</div>
+      <div class="card-hook">"${idea.hook}"</div>
+      <div class="card-meta">
+        <span>${idea.platforms.join(' / ')}</span>
+        <span>${idea.duration}</span>
+        <span>Difficulty: ${idea.difficulty}/3</span>
+      </div>
+      <div class="potential-bar">
+        <div class="potential-fill" style="width:${idea.potential}%; background:${getColorForTag(idea.category)}"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openDetail(id) {
+  const idea = IDEAS.find(i => i.id === id);
+  if (!idea) return;
+
+  activeCard = id;
+  renderCards();
+
+  const panel = document.getElementById('detail-panel');
+  const content = document.getElementById('detail-content');
+  panel.classList.add('open');
+
+  content.innerHTML = `
+    <button class="detail-close" onclick="closeDetail()">&times;</button>
+
+    <div class="detail-label">Idea #${String(idea.id).padStart(2, '0')}</div>
+    <div class="detail-title">${idea.title}</div>
+
+    <div class="detail-tags">
+      ${idea.tags.map(t => `<span class="tag ${getTagClass(t)}">${getTagLabel(t)}</span>`).join('')}
+    </div>
+
+    <div class="platform-badges">
+      ${idea.platforms.map(p => `<span class="platform-badge">${p}</span>`).join('')}
+    </div>
+
+    <div class="detail-metrics">
+      <div class="metric-box">
+        <div class="metric-label">Potential</div>
+        <div class="metric-value" style="color:${getColorForTag(idea.category)}">${idea.potential}/100</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Difficulty</div>
+        <div class="difficulty-bar">${getDifficultyDots(idea.difficulty)}</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Duration</div>
+        <div class="metric-value" style="font-size:14px">${idea.duration}</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-label">Primary Goal</div>
+        <div class="metric-value" style="font-size:14px; color:${getColorForTag(idea.category)}">${getTagLabel(idea.category)}</div>
+      </div>
+    </div>
+
+    <div class="detail-hook-box">
+      <span>Hook (first 3 seconds)</span>
+      "${idea.hook}"
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Why This Works</div>
+      <div class="detail-text">${idea.why}</div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Psychology Behind It</div>
+      <div class="detail-text">${idea.psychology}</div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Where This Has Worked Before</div>
+      ${idea.proof.map(p => `
+        <div class="proof-box">
+          <div class="proof-brand">${p.brand}</div>
+          <div class="proof-detail">${p.detail}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Shot List (What to Film)</div>
+      <ol class="shot-list">
+        ${idea.shots.map((s, i) => `<li><span class="shot-num">${i + 1}</span>${s}</li>`).join('')}
+      </ol>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Text Overlay</div>
+      <div class="detail-text"><strong>${idea.textOverlay}</strong></div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-section-title">Call to Action</div>
+      <div class="detail-text"><strong>${idea.cta}</strong></div>
+    </div>
+  `;
+
+  // Scroll panel to top
+  panel.scrollTop = 0;
+}
+
+function closeDetail() {
+  document.getElementById('detail-panel').classList.remove('open');
+  activeCard = null;
+  renderCards();
+}
+
+// Filters
+document.getElementById('filters').addEventListener('click', (e) => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = btn.dataset.filter;
+  renderCards();
+});
+
+// Search
+document.getElementById('search').addEventListener('input', (e) => {
+  searchQuery = e.target.value.toLowerCase();
+  renderCards();
+});
+
+// Sort
+document.getElementById('sort').addEventListener('change', (e) => {
+  sortMode = e.target.value;
+  renderCards();
+});
+
+// Keyboard
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeDetail();
+});
+
+// Init
+renderCards();
+</script>
+
+</body>
+</html>

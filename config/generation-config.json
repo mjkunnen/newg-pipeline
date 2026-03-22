@@ -1,0 +1,30 @@
+{
+  "image_model": "fal-ai/nano-banana-2",
+  "image_settings": {
+    "aspect_ratio": "9:16",
+    "style": "photorealistic product photography"
+  },
+  "video_model": "kling-ai/kling-v2",
+  "video_settings": {
+    "duration": "5s",
+    "aspect_ratio": "9:16"
+  },
+  "cost_limits": {
+    "max_per_source_creative_usd": 10,
+    "max_daily_usd": 30
+  },
+  "output_formats": {
+    "pinterest": {
+      "dimensions": "1000x1500",
+      "aspect_ratio": "2:3"
+    },
+    "tiktok": {
+      "dimensions": "1080x1920",
+      "aspect_ratio": "9:16"
+    },
+    "instagram": {
+      "dimensions": "1080x1350",
+      "aspect_ratio": "4:5"
+    }
+  }
+}

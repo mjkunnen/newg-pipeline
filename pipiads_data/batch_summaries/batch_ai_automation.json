@@ -1,0 +1,18 @@
+{
+  "keyword": "ai automation",
+  "tier": "T2",
+  "mode": "niche",
+  "pages_visited": 4,
+  "cards_scanned": 80,
+  "cards_captured": 0,
+  "pre_filtered_out": 80,
+  "winners": 0,
+  "possible_winners": 0,
+  "mid": 0,
+  "junk_rate": 1.0,
+  "early_terminated": false,
+  "recommend": "abandon",
+  "reason": "100% junk, 0 winners",
+  "gate_passed": true,
+  "outcome_label": "EMPTY"
+}

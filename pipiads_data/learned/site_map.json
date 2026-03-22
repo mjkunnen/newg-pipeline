@@ -1,0 +1,95 @@
+{
+  "sections": [
+    {
+      "text": "",
+      "href": "https://www.pipiads.com/",
+      "class": "navbar-brand"
+    },
+    {
+      "text": "Home",
+      "href": "https://www.pipiads.com/dashboard",
+      "class": "menu-item nav-link text-nowrap a-link has-border"
+    },
+    {
+      "text": "Ad Search",
+      "href": "https://www.pipiads.com/ad-search",
+      "class": "menu-item dropdown-toggle nav-link text-nowrap a-link 333 router-link-exact-acti"
+    },
+    {
+      "text": "AI Tools",
+      "href": "https://www.pipiads.com/ai-tools/ai-home",
+      "class": "menu-item dropdown-toggle nav-link text-nowrap a-link 333 has-border"
+    },
+    {
+      "text": "E-commerce",
+      "href": "https://www.pipiads.com/ad-search/ecom_ads",
+      "class": "menu-item nav-link text-nowrap a-link single-link"
+    },
+    {
+      "text": "TikTok Shop",
+      "href": "https://www.pipiads.com/ad-search/tts_ads",
+      "class": "menu-item nav-link text-nowrap a-link single-link"
+    },
+    {
+      "text": "Apps",
+      "href": "https://www.pipiads.com/ad-search/app_ads",
+      "class": "menu-item nav-link text-nowrap a-link single-link"
+    },
+    {
+      "text": "Gaming",
+      "href": "https://www.pipiads.com/ad-search/game_ads",
+      "class": "menu-item nav-link text-nowrap a-link single-link"
+    },
+    {
+      "text": "Drama",
+      "href": "https://www.pipiads.com/ad-search/drama_ads",
+      "class": "menu-item nav-link text-nowrap a-link single-link"
+    },
+    {
+      "text": "AI",
+      "href": "https://www.pipiads.com/ad-search/ai_ads",
+      "class": "menu-item nav-link text-nowrap a-link single-link"
+    },
+    {
+      "text": "Ad creator",
+      "href": "https://www.nextify.ai/",
+      "class": "nextify-text"
+    },
+    {
+      "text": "",
+      "href": "https://www.pipiads.com/pricing",
+      "class": "menu-item nav-link text-nowrap a-link no-text"
+    },
+    {
+      "text": "",
+      "href": "https://www.pipiads.com/my-collections",
+      "class": "menu-item nav-link text-nowrap a-link no-text"
+    },
+    {
+      "text": "API",
+      "href": "https://www.pipispy.com/",
+      "class": "menu-item nav-link text-nowrap a-link link-api"
+    },
+    {
+      "text": "Credits:  28,372",
+      "href": "https://www.pipiads.com/user-center/subscription",
+      "class": "menu-item nav-link text-nowrap a-link link-credit"
+    },
+    {
+      "text": "Privacy",
+      "href": "https://www.pipiads.com/privacy-policy",
+      "class": "link-item"
+    },
+    {
+      "text": "Terms",
+      "href": "https://www.pipiads.com/service-agreement",
+      "class": "link-item"
+    }
+  ],
+  "url_patterns": {
+    "initial": "https://www.pipiads.com/ad-search"
+  },
+  "discovered_at": "20260314_1009",
+  "version": "4.1",
+  "page_title": "Ad Search"
+}

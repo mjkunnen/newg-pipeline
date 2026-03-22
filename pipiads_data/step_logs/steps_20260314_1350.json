@@ -1,0 +1,123 @@
+[
+  {
+    "step_id": 1,
+    "timestamp": "2026-03-14T13:50:52.405635",
+    "phase": "validation",
+    "action": "validate_artifacts",
+    "state_before": "pre_research",
+    "state_after": "validated",
+    "result": "success",
+    "notes": "status=valid, checks=6/6",
+    "screenshot": ""
+  },
+  {
+    "step_id": 2,
+    "timestamp": "2026-03-14T13:50:57.405988",
+    "phase": "reconcile",
+    "action": "fix_platform",
+    "state_before": "missing",
+    "state_after": "applied",
+    "result": "success",
+    "notes": "",
+    "screenshot": ""
+  },
+  {
+    "step_id": 3,
+    "timestamp": "2026-03-14T13:51:00.540431",
+    "phase": "reconcile",
+    "action": "fix_ecommerce",
+    "state_before": "missing",
+    "state_after": "applied",
+    "result": "success",
+    "notes": "",
+    "screenshot": ""
+  },
+  {
+    "step_id": 4,
+    "timestamp": "2026-03-14T13:51:03.625019",
+    "phase": "reconcile",
+    "action": "fix_dropshipping",
+    "state_before": "missing",
+    "state_after": "applied",
+    "result": "success",
+    "notes": "",
+    "screenshot": ""
+  },
+  {
+    "step_id": 5,
+    "timestamp": "2026-03-14T13:51:09.027687",
+    "phase": "reconcile",
+    "action": "fix_category",
+    "state_before": "missing",
+    "state_after": "applied",
+    "result": "success",
+    "notes": "",
+    "screenshot": ""
+  },
+  {
+    "step_id": 6,
+    "timestamp": "2026-03-14T13:51:44.023726",
+    "phase": "reconcile",
+    "action": "fix_app_platform",
+    "state_before": "missing",
+    "state_after": "applied",
+    "result": "success",
+    "notes": "",
+    "screenshot": ""
+  },
+  {
+    "step_id": 7,
+    "timestamp": "2026-03-14T13:51:44.027149",
+    "phase": "filter_lab",
+    "action": "filter_click_Last 3 months",
+    "state_before": "filter_ui",
+    "state_after": "filter_ui",
+    "result": "soft_fail",
+    "notes": "no match for 'Last 3 months' in .filter-time-types",
+    "screenshot": ""
+  },
+  {
+    "step_id": 8,
+    "timestamp": "2026-03-14T13:51:44.029070",
+    "phase": "filter_lab",
+    "action": "filter_click_Last 90 days",
+    "state_before": "filter_ui",
+    "state_after": "filter_ui",
+    "result": "soft_fail",
+    "notes": "no match for 'Last 90 days' in .filter-time-types",
+    "screenshot": ""
+  },
+  {
+    "step_id": 9,
+    "timestamp": "2026-03-14T13:52:17.067810",
+    "phase": "reconcile",
+    "action": "fix_time",
+    "state_before": "missing",
+    "state_after": "applied",
+    "result": "success",
+    "notes": "",
+    "screenshot": ""
+  },
+  {
+    "step_id": 10,
+    "timestamp": "2026-03-14T13:52:21.208908",
+    "phase": "reconcile",
+    "action": "fix_sort",
+    "state_before": "missing",
+    "state_after": "applied",
+    "result": "success",
+    "notes": "",
+    "screenshot": ""
+  },
+  {
+    "step_id": 11,
+    "timestamp": "2026-03-14T13:52:21.234057",
+    "phase": "reconcile",
+    "action": "fix_last_seen",
+    "state_before": "missing",
+    "state_after": "failed",
+    "result": "soft_fail",
+    "notes": "",
+    "screenshot": ""
+  }
+]

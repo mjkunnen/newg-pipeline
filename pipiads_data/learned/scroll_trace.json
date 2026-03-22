@@ -1,0 +1,858 @@
+{
+  "version": "4.1",
+  "keyword": "oversized hoodie",
+  "window_trace": [
+    {
+      "step": 1,
+      "scroll_target": "window",
+      "scroll_y": 800,
+      "viewport_height": 1080,
+      "document_height": 3571,
+      "container_scroll_height": 3571,
+      "container_client_height": 1080,
+      "dom_card_count": 20,
+      "dom_count_delta_from_baseline": 12,
+      "visible_card_count": 20,
+      "first_3_identities": [
+        {
+          "dom_index": 0,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_ea28ae0d7eaf047c62fe.jpg?x-oss-process=image/resize,l_694,m_lfit",
+          "first_link_href": "https://www.pipiads.com/store/60a4f2a30a7ca/",
+          "fingerprint_hash": "|cess=image/resize,l_694,m_lfit",
+          "bbox_top": -95,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 1,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_a9ce45e78c3fd20bda7e5a47c20beee4.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/advertiser-analysis/67441fc7a8f1cc7236aa5d98/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": -95,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 2,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_a9ce45e78c3fd20bda7e5a47c20beee4.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/advertiser-analysis/67441fc7a8f1cc7236aa5d98/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": -95,
+          "bbox_height": 559
+        }
+      ],
+      "last_3_identities": [
+        {
+          "dom_index": 17,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 2141,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 18,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 2141,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 19,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 2141,
+          "bbox_height": 559
+        }
+      ],
+      "new_fingerprints_detected": 3,
+      "lost_fingerprints_detected": 1,
+      "content_swap_detected": true,
+      "sampled_bbox_positions": [
+        {
+          "index": 0,
+          "top": -94.703125
+        },
+        {
+          "index": 19,
+          "top": 2141.296875
+        }
+      ],
+      "loaders_detected": 7,
+      "controls_detected": [],
+      "network_requests_this_step": 3,
+      "request_urls_sample": [
+        "https://www.pipiads.com/v3/api/search4/at/video/search",
+        "https://www.pipiads.com/v1/api/member/usage",
+        "https://www.pipiads.com/v3/api/search4/at/video/get-adlib-search-count"
+      ],
+      "request_types": [
+        "fetch/xhr",
+        "fetch/xhr",
+        "fetch/xhr"
+      ],
+      "response_statuses_sample": [
+        200,
+        200,
+        200
+      ],
+      "likely_result_request_detected": true,
+      "at_bottom": false,
+      "bottom_reached_count": 0,
+      "notes": ""
+    },
+    {
+      "step": 2,
+      "scroll_target": "window",
+      "scroll_y": 1600,
+      "viewport_height": 1080,
+      "document_height": 3571,
+      "container_scroll_height": 3571,
+      "container_client_height": 1080,
+      "dom_card_count": 20,
+      "dom_count_delta_from_baseline": 12,
+      "visible_card_count": 20,
+      "first_3_identities": [
+        {
+          "dom_index": 0,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_ea28ae0d7eaf047c62fe.jpg?x-oss-process=image/resize,l_694,m_lfit",
+          "first_link_href": "https://www.pipiads.com/store/60a4f2a30a7ca/",
+          "fingerprint_hash": "|cess=image/resize,l_694,m_lfit",
+          "bbox_top": -895,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 1,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_a9ce45e78c3fd20bda7e5a47c20beee4.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/advertiser-analysis/67441fc7a8f1cc7236aa5d98/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": -895,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 2,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_a9ce45e78c3fd20bda7e5a47c20beee4.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/advertiser-analysis/67441fc7a8f1cc7236aa5d98/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": -895,
+          "bbox_height": 559
+        }
+      ],
+      "last_3_identities": [
+        {
+          "dom_index": 17,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 1341,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 18,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 1341,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 19,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 1341,
+          "bbox_height": 559
+        }
+      ],
+      "new_fingerprints_detected": 3,
+      "lost_fingerprints_detected": 1,
+      "content_swap_detected": true,
+      "sampled_bbox_positions": [
+        {
+          "index": 0,
+          "top": -894.703125
+        },
+        {
+          "index": 19,
+          "top": 1341.296875
+        }
+      ],
+      "loaders_detected": 4,
+      "controls_detected": [],
+      "network_requests_this_step": 0,
+      "request_urls_sample": [],
+      "request_types": [],
+      "response_statuses_sample": [],
+      "likely_result_request_detected": false,
+      "at_bottom": false,
+      "bottom_reached_count": 0,
+      "notes": ""
+    },
+    {
+      "step": 3,
+      "scroll_target": "window",
+      "scroll_y": 2400,
+      "viewport_height": 1080,
+      "document_height": 3667,
+      "container_scroll_height": 3667,
+      "container_client_height": 1080,
+      "dom_card_count": 20,
+      "dom_count_delta_from_baseline": 12,
+      "visible_card_count": 20,
+      "first_3_identities": [
+        {
+          "dom_index": 0,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_ea28ae0d7eaf047c62fe.jpg?x-oss-process=image/resize,l_694,m_lfit",
+          "first_link_href": "https://www.pipiads.com/store/60a4f2a30a7ca/",
+          "fingerprint_hash": "|cess=image/resize,l_694,m_lfit",
+          "bbox_top": -1695,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 1,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_a9ce45e78c3fd20bda7e5a47c20beee4.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/advertiser-analysis/67441fc7a8f1cc7236aa5d98/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": -1695,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 2,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_a9ce45e78c3fd20bda7e5a47c20beee4.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/advertiser-analysis/67441fc7a8f1cc7236aa5d98/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": -1695,
+          "bbox_height": 559
+        }
+      ],
+      "last_3_identities": [
+        {
+          "dom_index": 17,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_6cf4bebb7f4d420a7ba63c5ca3c8523a.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": 541,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 18,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_d19fa5b9f59ab25041a61dd7b83d5c19.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": 541,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 19,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_5d1f5c85fe13d9bb2259c825657efae9.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": 541,
+          "bbox_height": 559
+        }
+      ],
+      "new_fingerprints_detected": 2,
+      "lost_fingerprints_detected": 1,
+      "content_swap_detected": true,
+      "sampled_bbox_positions": [
+        {
+          "index": 0,
+          "top": -1694.703125
+        },
+        {
+          "index": 19,
+          "top": 541.296875
+        }
+      ],
+      "loaders_detected": 1,
+      "controls_detected": [],
+      "network_requests_this_step": 0,
+      "request_urls_sample": [],
+      "request_types": [],
+      "response_statuses_sample": [],
+      "likely_result_request_detected": false,
+      "at_bottom": false,
+      "bottom_reached_count": 0,
+      "notes": "",
+      "screenshot": "C:\\Users\\maxku\\OneDrive\\Bureaublad\\competitor creative research (NEWG)\\pipiads_screenshots\\20260314_1132_b2_scroll_window_3.png"
+    },
+    {
+      "step": 4,
+      "scroll_target": "window",
+      "scroll_y": 2587.5,
+      "viewport_height": 1080,
+      "document_height": 6366,
+      "container_scroll_height": 6366,
+      "container_client_height": 1080,
+      "dom_card_count": 40,
+      "dom_count_delta_from_baseline": 32,
+      "visible_card_count": 40,
+      "first_3_identities": [
+        {
+          "dom_index": 0,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_ea28ae0d7eaf047c62fe.jpg?x-oss-process=image/resize,l_694,m_lfit",
+          "first_link_href": "https://www.pipiads.com/store/60a4f2a30a7ca/",
+          "fingerprint_hash": "|cess=image/resize,l_694,m_lfit",
+          "bbox_top": -1882,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 1,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_a9ce45e78c3fd20bda7e5a47c20beee4.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/advertiser-analysis/67441fc7a8f1cc7236aa5d98/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": -1882,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 2,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_a9ce45e78c3fd20bda7e5a47c20beee4.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/advertiser-analysis/67441fc7a8f1cc7236aa5d98/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": -1882,
+          "bbox_height": 559
+        }
+      ],
+      "last_3_identities": [
+        {
+          "dom_index": 37,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": 3149,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 38,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": 3149,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 39,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": 3149,
+          "bbox_height": 559
+        }
+      ],
+      "new_fingerprints_detected": 2,
+      "lost_fingerprints_detected": 0,
+      "content_swap_detected": true,
+      "sampled_bbox_positions": [
+        {
+          "index": 0,
+          "top": -1882.203125
+        },
+        {
+          "index": 39,
+          "top": 3148.796875
+        }
+      ],
+      "loaders_detected": 12,
+      "controls_detected": [],
+      "network_requests_this_step": 2,
+      "request_urls_sample": [
+        "https://www.pipiads.com/v3/api/search4/at/video/search",
+        "https://www.pipiads.com/v1/api/member/usage"
+      ],
+      "request_types": [
+        "fetch/xhr",
+        "fetch/xhr"
+      ],
+      "response_statuses_sample": [
+        200,
+        200
+      ],
+      "likely_result_request_detected": true,
+      "at_bottom": false,
+      "bottom_reached_count": 0,
+      "notes": ""
+    },
+    {
+      "step": 5,
+      "scroll_target": "window",
+      "scroll_y": 3387.5,
+      "viewport_height": 1080,
+      "document_height": 6366,
+      "container_scroll_height": 6366,
+      "container_client_height": 1080,
+      "dom_card_count": 40,
+      "dom_count_delta_from_baseline": 32,
+      "visible_card_count": 40,
+      "first_3_identities": [
+        {
+          "dom_index": 0,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -2682,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 1,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -2682,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 2,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -2682,
+          "bbox_height": 559
+        }
+      ],
+      "last_3_identities": [
+        {
+          "dom_index": 37,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 2349,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 38,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/tiktok-shop-store/7495646424580524503/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 2349,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 39,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 2349,
+          "bbox_height": 559
+        }
+      ],
+      "new_fingerprints_detected": 1,
+      "lost_fingerprints_detected": 0,
+      "content_swap_detected": false,
+      "sampled_bbox_positions": [
+        {
+          "index": 0,
+          "top": -2682.203125
+        },
+        {
+          "index": 39,
+          "top": 2348.796875
+        }
+      ],
+      "loaders_detected": 12,
+      "controls_detected": [],
+      "network_requests_this_step": 0,
+      "request_urls_sample": [],
+      "request_types": [],
+      "response_statuses_sample": [],
+      "likely_result_request_detected": false,
+      "at_bottom": false,
+      "bottom_reached_count": 0,
+      "notes": ""
+    },
+    {
+      "step": 6,
+      "scroll_target": "window",
+      "scroll_y": 4187.5,
+      "viewport_height": 1080,
+      "document_height": 6366,
+      "container_scroll_height": 6366,
+      "container_client_height": 1080,
+      "dom_card_count": 40,
+      "dom_count_delta_from_baseline": 32,
+      "visible_card_count": 40,
+      "first_3_identities": [
+        {
+          "dom_index": 0,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -3482,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 1,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -3482,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 2,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -3482,
+          "bbox_height": 559
+        }
+      ],
+      "last_3_identities": [
+        {
+          "dom_index": 37,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 1549,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 38,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/tiktok-shop-store/7495646424580524503/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 1549,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 39,
+          "advertiser_text": "",
+          "first_img_src": "data:image/webp;base64,UklGRnwEAABXRUJQVlA4IHAEAACQUQCdASpsAYQCPp1OpE2oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|oJyeiobToOLATiWlu4XdhG/NOL/A1W",
+          "bbox_top": 1549,
+          "bbox_height": 559
+        }
+      ],
+      "new_fingerprints_detected": 1,
+      "lost_fingerprints_detected": 0,
+      "content_swap_detected": false,
+      "sampled_bbox_positions": [
+        {
+          "index": 0,
+          "top": -3482.203125
+        },
+        {
+          "index": 39,
+          "top": 1548.796875
+        }
+      ],
+      "loaders_detected": 4,
+      "controls_detected": [],
+      "network_requests_this_step": 0,
+      "request_urls_sample": [],
+      "request_types": [],
+      "response_statuses_sample": [],
+      "likely_result_request_detected": false,
+      "at_bottom": false,
+      "bottom_reached_count": 0,
+      "notes": "",
+      "screenshot": "C:\\Users\\maxku\\OneDrive\\Bureaublad\\competitor creative research (NEWG)\\pipiads_screenshots\\20260314_1132_b2_scroll_window_6.png"
+    },
+    {
+      "step": 7,
+      "scroll_target": "window",
+      "scroll_y": 4987.5,
+      "viewport_height": 1080,
+      "document_height": 6462,
+      "container_scroll_height": 6462,
+      "container_client_height": 1080,
+      "dom_card_count": 40,
+      "dom_count_delta_from_baseline": 32,
+      "visible_card_count": 40,
+      "first_3_identities": [
+        {
+          "dom_index": 0,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -4282,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 1,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -4282,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 2,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -4282,
+          "bbox_height": 559
+        }
+      ],
+      "last_3_identities": [
+        {
+          "dom_index": 37,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_6cf4bebb7f4d420a7ba63c5ca3c8523a.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": 749,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 38,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_71c6f8a0f42b37cca7e2ac7ced06fc5e.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/tiktok-shop-store/7495646424580524503/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": 749,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 39,
+          "advertiser_text": "",
+          "first_img_src": "https://cdn-video.pipiads.com/cover_490d749476bb1e297a47f4e85a246d76.jpg?x-oss-process=image/resize,",
+          "first_link_href": "https://www.pipiads.com/store/203a28bd28d19/",
+          "fingerprint_hash": "|pg?x-oss-process=image/resize,",
+          "bbox_top": 749,
+          "bbox_height": 559
+        }
+      ],
+      "new_fingerprints_detected": 1,
+      "lost_fingerprints_detected": 0,
+      "content_swap_detected": false,
+      "sampled_bbox_positions": [
+        {
+          "index": 0,
+          "top": -4282.203125
+        },
+        {
+          "index": 39,
+          "top": 748.796875
+        }
+      ],
+      "loaders_detected": 1,
+      "controls_detected": [],
+      "network_requests_this_step": 0,
+      "request_urls_sample": [],
+      "request_types": [],
+      "response_statuses_sample": [],
+      "likely_result_request_detected": false,
+      "at_bottom": false,
+      "bottom_reached_count": 0,
+      "notes": ""
+    },
+    {
+      "step": 8,
+      "scroll_target": "window",
+      "scroll_y": 5382.5,
+      "viewport_height": 1080,
+      "document_height": 9161,
+      "container_scroll_height": 9161,
+      "container_client_height": 1080,
+      "dom_card_count": 60,
+      "dom_count_delta_from_baseline": 52,
+      "visible_card_count": 60,
+      "first_3_identities": [
+        {
+          "dom_index": 0,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -4677,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 1,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -4677,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 2,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": -4677,
+          "bbox_height": 559
+        }
+      ],
+      "last_3_identities": [
+        {
+          "dom_index": 57,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": 3149,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 58,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": 3149,
+          "bbox_height": 559
+        },
+        {
+          "dom_index": 59,
+          "advertiser_text": "",
+          "first_img_src": "",
+          "first_link_href": "",
+          "fingerprint_hash": "|",
+          "bbox_top": 3149,
+          "bbox_height": 559
+        }
+      ],
+      "new_fingerprints_detected": 0,
+      "lost_fingerprints_detected": 0,
+      "content_swap_detected": false,
+      "sampled_bbox_positions": [
+        {
+          "index": 0,
+          "top": -4677.203125
+        },
+        {
+          "index": 59,
+          "top": 3148.796875
+        }
+      ],
+      "loaders_detected": 12,
+      "controls_detected": [],
+      "network_requests_this_step": 2,
+      "request_urls_sample": [
+        "https://www.pipiads.com/v3/api/search4/at/video/search",
+        "https://www.pipiads.com/v1/api/member/usage"
+      ],
+      "request_types": [
+        "fetch/xhr",
+        "fetch/xhr"
+      ],
+      "response_statuses_sample": [
+        200,
+        200
+      ],
+      "likely_result_request_detected": true,
+      "at_bottom": false,
+      "bottom_reached_count": 0,
+      "notes": "",
+      "screenshot": "C:\\Users\\maxku\\OneDrive\\Bureaublad\\competitor creative research (NEWG)\\pipiads_screenshots\\20260314_1132_b2_scroll_window_8.png"
+    }
+  ],
+  "internal_trace": [],
+  "window_tested": true,
+  "internal_tested": false,
+  "baseline_fingerprints": {
+    "dom_card_count": 8,
+    "visible_card_count": 8,
+    "first_n": [
+      {
+        "dom_index": 0,
+        "advertiser_text": "",
+        "first_img_src": "",
+        "first_link_href": "",
+        "fingerprint_hash": "|",
+        "bbox_top": 705,
+        "bbox_height": 573
+      },
+      {
+        "dom_index": 1,
+        "advertiser_text": "",
+        "first_img_src": "",
+        "first_link_href": "",
+        "fingerprint_hash": "|",
+        "bbox_top": 705,
+        "bbox_height": 573
+      },
+      {
+        "dom_index": 2,
+        "advertiser_text": "",
+        "first_img_src": "",
+        "first_link_href": "",
+        "fingerprint_hash": "|",
+        "bbox_top": 705,
+        "bbox_height": 573
+      }
+    ],
+    "last_n": [
+      {
+        "dom_index": 5,
+        "advertiser_text": "",
+        "first_img_src": "",
+        "first_link_href": "",
+        "fingerprint_hash": "|",
+        "bbox_top": 1278,
+        "bbox_height": 573
+      },
+      {
+        "dom_index": 6,
+        "advertiser_text": "",
+        "first_img_src": "",
+        "first_link_href": "",
+        "fingerprint_hash": "|",
+        "bbox_top": 1278,
+        "bbox_height": 573
+      },
+      {
+        "dom_index": 7,
+        "advertiser_text": "",
+        "first_img_src": "",
+        "first_link_href": "",
+        "fingerprint_hash": "|",
+        "bbox_top": 1278,
+        "bbox_height": 573
+      }
+    ],
+    "sampled_bboxes": [
+      {
+        "index": 0,
+        "top": 705.296875
+      },
+      {
+        "index": 7,
+        "top": 1278.296875
+      }
+    ]
+  }
+}
