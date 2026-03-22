@@ -4,7 +4,7 @@
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
 # Task 1: Daily Pinterest remake at 08:00
-$remakeAction = New-ScheduledTaskAction -Execute "$repoRoot\scripts\daily-remake.bat"
+$remakeAction = New-ScheduledTaskAction -Execute "$repoRoot\scripts\daily-remake-check.bat"
 $remakeTrigger = New-ScheduledTaskTrigger -Daily -At '08:00AM'
 Register-ScheduledTask -TaskName 'NEWGARMENTS_Daily_Remake' -Action $remakeAction -Trigger $remakeTrigger -Description 'Daily Pinterest board auto-remake pipeline' -Force
 
