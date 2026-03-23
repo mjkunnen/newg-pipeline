@@ -1,11 +1,12 @@
 """Test Oxylabs Web Unblocker with non-headless Chromium."""
 import asyncio
+import os
 from playwright.async_api import async_playwright
 
 PROXY = {
     "server": "https://unblock.oxylabs.io:60000",
-    "username": "claude_Jp3lk",
-    "password": "qxEfW4BnzPI8TO=D",
+    "username": os.getenv("OXYLABS_USERNAME", ""),
+    "password": os.getenv("OXYLABS_PASSWORD", ""),
 }
 
 

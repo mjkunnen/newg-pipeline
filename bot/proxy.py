@@ -1,9 +1,10 @@
 """Oxylabs Web Unblocker proxy configuration."""
+import os
 
 OXYLABS_PROXY = {
     "server": "https://unblock.oxylabs.io:60000",
-    "username": "claude_Jp3lk",
-    "password": "qxEfW4BnzPI8TO=D",
+    "username": os.getenv("OXYLABS_USERNAME", ""),
+    "password": os.getenv("OXYLABS_PASSWORD", ""),
 }
 
 # Browser launch args for proxy usage
