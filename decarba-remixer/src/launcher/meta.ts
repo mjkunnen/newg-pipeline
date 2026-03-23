@@ -5,6 +5,9 @@ import type { CampaignDraft, MetaCampaign, RemixResult } from "../scraper/types.
 const GRAPH_API = "https://graph.facebook.com/v21.0";
 const CAMPAIGNS_DIR = join(import.meta.dirname, "../../output/campaigns");
 
+const CAMPAIGN_NAME = "NEWG-Scaling";
+const ADSET_NAME = "AdSet_Broad";
+
 function todayDir(): string {
   return new Date().toISOString().split("T")[0];
 }
@@ -43,44 +46,92 @@ async function graphPost(
   return res.json();
 }
 
-export function prepareAdCampaign(
-  remix: RemixResult,
-  dailyBudget: number = 1000 // €10 in cents
-): CampaignDraft {
-  const adCopy =
-    remix.originalAd.adCopy?.replace(/decarba/gi, "NEWGARMENTS") ||
-    "Discover our latest streetwear collection. Premium quality, unmatched style.";
+async function graphGet(
+  path: string,
+  token: string,
+): Promise<Record<string, unknown>> {
+  const separator = path.includes("?") ? "&" : "?";
+  const res = await fetch(`${GRAPH_API}${path}${separator}access_token=${token}`);
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Meta API GET ${path}: ${res.status} ${err}`);
+  }
+  return res.json();
+}
 
-  const draft: CampaignDraft = {
-    name: `NEWGARMENTS-${todayDir()}-${remix.originalAd.id}`,
+// --- Find or create persistent campaign ---
+
+async function findOrCreateCampaign(
+  actId: string,
+  token: string,
+): Promise<string> {
+  const data = await graphGet(
+    `/${actId}/campaigns?filtering=[{"field":"name","operator":"EQUAL","value":"${CAMPAIGN_NAME}"}]&fields=id,name,status&limit=1`,
+    token,
+  );
+
+  const campaigns = (data.data as Array<{ id: string; name: string }>) || [];
+  const existing = campaigns.find((c) => c.name === CAMPAIGN_NAME);
+
+  if (existing) {
+    console.log(`[meta] Found campaign: ${existing.id}`);
+    return existing.id;
+  }
+
+  console.log(`[meta] Creating campaign: ${CAMPAIGN_NAME}`);
+  const campaign = await graphPost(`/${actId}/campaigns`, {
+    name: CAMPAIGN_NAME,
     objective: "OUTCOME_SALES",
-    adCopy,
-    creativePath: remix.remixedPaths[0],
-    creativeType: remix.originalAd.type,
+    status: "ACTIVE",
+    special_ad_categories: [],
+    is_adset_budget_sharing_enabled: false,
+  }, token);
+  console.log(`[meta] Campaign created: ${campaign.id}`);
+  return campaign.id;
+}
+
+// --- Find or create persistent ad set ---
+
+async function findOrCreateAdSet(
+  actId: string,
+  campaignId: string,
+  token: string,
+  dailyBudget: number,
+): Promise<string> {
+  const data = await graphGet(
+    `/${actId}/adsets?filtering=[{"field":"name","operator":"EQUAL","value":"${ADSET_NAME}"}]&fields=id,name,campaign_id,status&limit=5`,
+    token,
+  );
+
+  const adSets = (data.data as Array<{ id: string; name: string; campaign_id: string }>) || [];
+  const existing = adSets.find((a) => a.name === ADSET_NAME && a.campaign_id === campaignId);
+
+  if (existing) {
+    console.log(`[meta] Found ad set: ${existing.id}`);
+    return existing.id;
+  }
+
+  console.log(`[meta] Creating ad set: ${ADSET_NAME}`);
+  const adSet = await graphPost(`/${actId}/adsets`, {
+    name: ADSET_NAME,
+    campaign_id: campaignId,
+    billing_event: "IMPRESSIONS",
+    optimization_goal: "OFFSITE_CONVERSIONS",
+    promoted_object: { pixel_id: process.env.META_PIXEL_ID, custom_event_type: "PURCHASE" },
+    daily_budget: dailyBudget,
+    bid_strategy: "LOWEST_COST_WITHOUT_CAP",
     targeting: {
-      countries: ["NL", "BE", "DE", "FR"],
-      ageMin: 18,
-      ageMax: 35,
-      interests: ["Streetwear", "Fashion", "Urban fashion"],
-      placements: ["IG Feed", "IG Stories", "IG Reels"],
+      geo_locations: { countries: ["NL", "BE", "DE", "FR", "PL", "IT", "AT"] },
+      age_min: 18,
+      age_max: 30,
     },
-    dailyBudget,
-    originalAdId: remix.originalAd.id,
-  };
-
-  console.log(`[meta] Prepared draft: ${draft.name}`);
-  return draft;
+    status: "ACTIVE",
+  }, token);
+  console.log(`[meta] Ad Set created: ${adSet.id}`);
+  return adSet.id;
 }
 
-export async function saveDrafts(drafts: CampaignDraft[]): Promise<string> {
-  const dir = join(CAMPAIGNS_DIR, todayDir());
-  await mkdir(dir, { recursive: true });
-
-  const path = join(dir, "drafts.json");
-  await writeFile(path, JSON.stringify(drafts, null, 2));
-  console.log(`[meta] Saved ${drafts.length} drafts to ${path}`);
-  return path;
-}
+// --- Upload creative ---
 
 async function uploadCreative(
   filePath: string,
@@ -119,6 +170,8 @@ async function uploadCreative(
   }
 }
 
+// --- Public interfaces ---
+
 export interface SubmissionInput {
   adId: string;
   adCopy: string;
@@ -131,58 +184,13 @@ export interface SubmissionInput {
 
 export interface BatchResult {
   campaignId: string;
-  adSets: { adId: string; adSetId: string; adCreativeId: string; metaAdId: string }[];
-}
-
-const CAMPAIGN_NAME = "NEWG-Remixes";
-
-async function graphGet(
-  path: string,
-  token: string,
-): Promise<Record<string, unknown>> {
-  const separator = path.includes("?") ? "&" : "?";
-  const res = await fetch(`${GRAPH_API}${path}${separator}access_token=${token}`);
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Meta API GET ${path}: ${res.status} ${err}`);
-  }
-  return res.json();
-}
-
-async function findOrCreateCampaign(
-  actId: string,
-  token: string,
-): Promise<string> {
-  // Search for existing NEWG-Remixes campaign
-  const data = await graphGet(
-    `/${actId}/campaigns?filtering=[{"field":"name","operator":"EQUAL","value":"${CAMPAIGN_NAME}"}]&fields=id,name,status&limit=1`,
-    token,
-  );
-
-  const campaigns = (data.data as Array<{ id: string; name: string; status: string }>) || [];
-  const active = campaigns.find((c) => c.name === CAMPAIGN_NAME);
-
-  if (active) {
-    console.log(`[meta] Found existing campaign: ${active.id} (${active.status})`);
-    return active.id;
-  }
-
-  // Create new persistent campaign
-  console.log(`[meta] Creating new campaign: ${CAMPAIGN_NAME}`);
-  const campaign = await graphPost(`/${actId}/campaigns`, {
-    name: CAMPAIGN_NAME,
-    objective: "OUTCOME_SALES",
-    status: "ACTIVE",
-    special_ad_categories: [],
-    is_adset_budget_sharing_enabled: false,
-  }, token);
-  console.log(`[meta] Campaign created: ${campaign.id}`);
-  return campaign.id;
+  adSetId: string;
+  ads: { adId: string; adCreativeId: string; metaAdId: string }[];
 }
 
 /**
- * Add pending submissions as new ad sets to the persistent NEWG-Remixes campaign.
- * Reuses the same campaign across days — no learning phase resets.
+ * Add new creatives as ads to the persistent NEWG-Scaling campaign + AdSet_Broad.
+ * 1 campaign, 1 ad set, N ads. No learning phase resets.
  */
 export async function launchBatch(
   inputs: SubmissionInput[],
@@ -190,44 +198,25 @@ export async function launchBatch(
   const { token, adAccountId, igAccountId } = getConfig();
   const actId = `act_${adAccountId}`;
   const pageId = process.env.META_PAGE_ID || "337283139475030";
+  const dailyBudget = inputs[0]?.dailyBudget || 2500;
 
-  // Find or create the persistent campaign
+  // Find or create persistent campaign + ad set
   const campaignId = await findOrCreateCampaign(actId, token);
-  console.log(`[meta] Adding ${inputs.length} ad set(s) to campaign ${campaignId}`);
+  const adSetId = await findOrCreateAdSet(actId, campaignId, token, dailyBudget);
 
-  const adSets: BatchResult["adSets"] = [];
+  console.log(`[meta] Adding ${inputs.length} ad(s) to ${ADSET_NAME}`);
 
-  // 2. For each submission: ad set + creative + ad
+  const ads: BatchResult["ads"] = [];
+
   for (const input of inputs) {
     const isVideo = input.creativeType === "video";
     const link = input.landingPage || "https://newgarments.nl";
     const adCopy = input.adCopy?.replace(/decarba/gi, "NEWGARMENTS") ||
       "Discover our latest streetwear collection. Premium quality, unmatched style.";
 
-    console.log(`[meta] Creating ad set for ${input.adId}...`);
-
     // Upload creative
     const mediaId = await uploadCreative(input.creativePath, isVideo, token, adAccountId);
-    console.log(`[meta] Uploaded media: ${mediaId}`);
-
-    // Create ad set
-    const adSet = await graphPost(`/${actId}/adsets`, {
-      name: `AdSet_${input.adId}`,
-      campaign_id: campaignId,
-      billing_event: "IMPRESSIONS",
-      optimization_goal: "OFFSITE_CONVERSIONS",
-      promoted_object: { pixel_id: process.env.META_PIXEL_ID, custom_event_type: "PURCHASE" },
-      daily_budget: input.dailyBudget || 2500,
-      bid_strategy: "LOWEST_COST_WITHOUT_CAP",
-      targeting: {
-        geo_locations: { countries: ["NL", "BE", "DE", "FR", "PL", "IT", "AT"] },
-        age_min: 18,
-        age_max: 65,
-      },
-      status: "ACTIVE",
-      start_time: new Date(Date.now() + 3600000).toISOString(),
-    }, token);
-    console.log(`[meta] Ad Set: ${adSet.id}`);
+    console.log(`[meta] Uploaded media for ${input.adId}: ${mediaId}`);
 
     // Create ad creative
     const creativeData: Record<string, unknown> = {
@@ -257,27 +246,66 @@ export async function launchBatch(
     const creative = await graphPost(`/${actId}/adcreatives`, creativeData, token);
     console.log(`[meta] Creative: ${creative.id}`);
 
-    // Create ad
+    // Create ad in the persistent ad set
     const ad = await graphPost(`/${actId}/ads`, {
       name: `Ad_${input.adId}`,
-      adset_id: adSet.id,
+      adset_id: adSetId,
       creative: { creative_id: creative.id },
       status: "ACTIVE",
     }, token);
     console.log(`[meta] Ad: ${ad.id}`);
 
-    adSets.push({
+    ads.push({
       adId: input.adId,
-      adSetId: adSet.id,
       adCreativeId: creative.id,
       metaAdId: ad.id,
     });
   }
 
-  return { campaignId, adSets };
+  return { campaignId, adSetId, ads };
 }
 
-/** Legacy wrapper for index.ts — launches a single draft as its own campaign */
+// --- Legacy functions for index.ts ---
+
+export function prepareAdCampaign(
+  remix: RemixResult,
+  dailyBudget: number = 1000
+): CampaignDraft {
+  const adCopy =
+    remix.originalAd.adCopy?.replace(/decarba/gi, "NEWGARMENTS") ||
+    "Discover our latest streetwear collection. Premium quality, unmatched style.";
+
+  const draft: CampaignDraft = {
+    name: `NEWGARMENTS-${todayDir()}-${remix.originalAd.id}`,
+    objective: "OUTCOME_SALES",
+    adCopy,
+    creativePath: remix.remixedPaths[0],
+    creativeType: remix.originalAd.type,
+    targeting: {
+      countries: ["NL", "BE", "DE", "FR"],
+      ageMin: 18,
+      ageMax: 35,
+      interests: ["Streetwear", "Fashion", "Urban fashion"],
+      placements: ["IG Feed", "IG Stories", "IG Reels"],
+    },
+    dailyBudget,
+    originalAdId: remix.originalAd.id,
+  };
+
+  console.log(`[meta] Prepared draft: ${draft.name}`);
+  return draft;
+}
+
+export async function saveDrafts(drafts: CampaignDraft[]): Promise<string> {
+  const dir = join(CAMPAIGNS_DIR, todayDir());
+  await mkdir(dir, { recursive: true });
+
+  const path = join(dir, "drafts.json");
+  await writeFile(path, JSON.stringify(drafts, null, 2));
+  console.log(`[meta] Saved ${drafts.length} drafts to ${path}`);
+  return path;
+}
+
 export async function launchCampaign(
   draft: CampaignDraft,
   landingPage?: string,
@@ -294,9 +322,9 @@ export async function launchCampaign(
 
   return {
     campaignId: result.campaignId,
-    adSetId: result.adSets[0].adSetId,
-    adId: result.adSets[0].metaAdId,
-    creativeId: result.adSets[0].adCreativeId,
+    adSetId: result.adSetId,
+    adId: result.ads[0].metaAdId,
+    creativeId: result.ads[0].adCreativeId,
     status: "ACTIVE",
   };
 }

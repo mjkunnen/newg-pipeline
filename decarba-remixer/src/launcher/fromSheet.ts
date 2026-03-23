@@ -200,11 +200,11 @@ async function main() {
   // Launch all as one campaign with separate ad sets
   try {
     const result = await launchBatch(inputs);
-    console.log(`[launcher] Campaign ${result.campaignId} created with ${result.adSets.length} ad set(s)`);
+    console.log(`[launcher] Campaign ${result.campaignId} / AdSet ${result.adSetId} — ${result.ads.length} ad(s) added`);
 
     // Update Sheet for each successful ad
-    for (const adSet of result.adSets) {
-      await updateSheetStatus(adSet.adId, "launched", result.campaignId);
+    for (const ad of result.ads) {
+      await updateSheetStatus(ad.adId, "launched", result.campaignId);
     }
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
