@@ -5,3 +5,5 @@ dist/
 *.mp4
 *.avi
 *.mov
+# Allow creatives in docs for GitHub Pages
+!docs/creatives/**

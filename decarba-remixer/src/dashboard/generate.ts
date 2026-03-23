@@ -1,5 +1,5 @@
-import { readdir, readFile, mkdir, writeFile } from "fs/promises";
-import { join } from "path";
+import { readdir, readFile, mkdir, writeFile, copyFile, rm } from "fs/promises";
+import { join, extname } from "path";
 import { existsSync } from "fs";
 import { execSync } from "child_process";
 import sharp from "sharp";
@@ -12,10 +12,11 @@ const RAW_DIR = join(PROJECT_ROOT, "output/raw");
 const DOCS_DIR = join(PROJECT_ROOT, "docs");
 const DATA_DIR = join(DOCS_DIR, "data");
 const THUMBS_DIR = join(DOCS_DIR, "thumbs");
+const CREATIVES_DIR = join(DOCS_DIR, "creatives");
 
 const COMPETITOR = "decarba";
 const THUMB_WIDTH = 400;
-const PPSPY_SEARCH_URL = 'https://app.ppspy.com/ads?extend_keywords=[{"field":"all","value":"decarba","logic_operator":"and"}]&ad_forecast=[3]&order_by=ad_created_at&direction=desc';
+const MAX_DAYS_KEEP = 7;
 
 async function findAllScrapes(): Promise<{ date: string; ads: ScrapedAd[] }[]> {
   if (!existsSync(RAW_DIR)) return [];
@@ -108,6 +109,28 @@ async function generateThumbnail(
   return `thumbs/${thumbFilename}`;
 }
 
+async function copyCreative(ad: ScrapedAd, dateDir: string): Promise<string> {
+  if (!ad.localPath || !existsSync(ad.localPath)) return "";
+  const ext = extname(ad.localPath) || (ad.type === "video" ? ".mp4" : ".jpg");
+  const filename = `${ad.id}${ext}`;
+  const destPath = join(dateDir, filename);
+  if (!existsSync(destPath)) {
+    await copyFile(ad.localPath, destPath);
+  }
+  return filename;
+}
+
+async function cleanupOldCreatives(keepDates: string[]) {
+  if (!existsSync(CREATIVES_DIR)) return;
+  const dirs = await readdir(CREATIVES_DIR);
+  for (const dir of dirs) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dir) && !keepDates.includes(dir)) {
+      console.log(`[dashboard] Removing old creatives: ${dir}`);
+      await rm(join(CREATIVES_DIR, dir), { recursive: true, force: true });
+    }
+  }
+}
+
 async function generate() {
   console.log("[dashboard] Scanning for scrapes...");
   const allScrapes = await findAllScrapes();
@@ -117,20 +140,31 @@ async function generate() {
     return;
   }
 
-  console.log(`[dashboard] Found ${allScrapes.length} date(s)`);
+  // Only keep the latest N days
+  const recentScrapes = allScrapes.slice(0, MAX_DAYS_KEEP);
+  console.log(`[dashboard] Found ${allScrapes.length} date(s), keeping ${recentScrapes.length}`);
 
   await mkdir(DATA_DIR, { recursive: true });
   await mkdir(THUMBS_DIR, { recursive: true });
+  await mkdir(CREATIVES_DIR, { recursive: true });
 
   const dateIndex: DateEntry[] = [];
+  const keepDates: string[] = [];
 
-  for (const { date, ads } of allScrapes) {
+  for (const { date, ads } of recentScrapes) {
     console.log(`[dashboard] Processing ${date} (${ads.length} ads)...`);
+    keepDates.push(date);
 
-    // Generate thumbnails
+    // Create per-date creatives dir
+    const creativeDateDir = join(CREATIVES_DIR, date);
+    await mkdir(creativeDateDir, { recursive: true });
+
+    // Generate thumbnails + copy creatives
     const dashboardAds: DashboardAd[] = [];
     for (const ad of ads) {
       const thumbPath = await generateThumbnail(ad, THUMBS_DIR);
+      const creativeFilename = await copyCreative(ad, creativeDateDir);
+      const downloadPath = creativeFilename ? `creatives/${date}/${creativeFilename}` : "";
       dashboardAds.push({
         id: ad.id,
         type: ad.type,
@@ -142,7 +176,7 @@ async function generate() {
         daysActive: ad.daysActive,
         startDate: ad.startedAt,
         platforms: ad.platforms,
-        ppspySearchUrl: PPSPY_SEARCH_URL,
+        downloadUrl: downloadPath,
       });
     }
 
@@ -164,6 +198,9 @@ async function generate() {
       imageCount: ads.length - videoCount,
     });
   }
+
+  // Cleanup old creatives (keep only recent dates)
+  await cleanupOldCreatives(keepDates);
 
   // Write index
   await writeFile(

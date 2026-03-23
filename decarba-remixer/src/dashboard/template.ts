@@ -9,7 +9,7 @@ export interface DashboardAd {
   daysActive: number;
   startDate: string;
   platforms: string[];
-  ppspySearchUrl: string;
+  downloadUrl: string;
 }
 
 export interface DateEntry {
@@ -526,6 +526,9 @@ body {
   transition: all 0.15s;
 }
 .modal-link:hover { background: var(--accent-light); border-color: var(--accent); }
+.modal-link.download-btn { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; justify-content: center; }
+.modal-link.download-btn:hover { background: var(--text); border-color: var(--text); }
+.modal-link.disabled { color: var(--text-muted); pointer-events: none; opacity: 0.5; justify-content: center; }
 
 .modal-divider { height: 1px; background: var(--border-light); margin: 24px 0; }
 
@@ -897,7 +900,9 @@ function renderAdGrid() {
 }
 
 // ===== MODAL =====
+let currentModalAd = null;
 function openModal(ad) {
+  currentModalAd = ad;
   const status = getStatus(currentDate, ad.id);
   const submission = getSubmission(currentDate, ad.id);
   const statusLabels = { not_started: 'Not Started', in_progress: 'In Progress', done: 'Done' };
@@ -930,9 +935,7 @@ function openModal(ad) {
         \${(ad.platforms || []).map(p => '<span class="plat-tag">' + (platformMap[p] || p) + '</span>').join('')}
       </div>
       <div class="modal-actions">
-        <a class="modal-link" href="\${escapeAttr(ad.ppspySearchUrl) || '#'}" target="_blank" rel="noopener">
-          \\u2197 Bekijk origineel op PPSpy — download in full quality
-        </a>
+        \${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download>\u2B07 Download origineel (full quality)</a>' : '<span class="modal-link disabled">Geen download beschikbaar</span>'}
       </div>
 
       <div class="modal-divider"></div>
