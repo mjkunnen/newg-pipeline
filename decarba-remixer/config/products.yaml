@@ -1,0 +1,39 @@
+- name: Heavyweight Hoodie
+  collection: comfy-vibe
+  keywords: [hoodie, oversized, cozy, relaxed, heavyweight]
+
+- name: Joggers
+  collection: comfy-vibe
+  keywords: [jogger, sweatpants, relaxed, track, pants]
+
+- name: Oversized Knit
+  collection: comfy-vibe
+  keywords: [knit, oversized, cozy, sweater, knitwear]
+
+- name: Signature Longsleeve
+  collection: minimalistic
+  keywords: [longsleeve, clean, minimal, tonal, signature]
+
+- name: Clean Cut Tee
+  collection: minimalistic
+  keywords: [tee, t-shirt, clean, minimal, basic]
+
+- name: Statement Knit
+  collection: graphic-items
+  keywords: [knit, graphic, bold, print, statement]
+
+- name: Rhinestone Denim
+  collection: graphic-items
+  keywords: [denim, rhinestone, embroidered, jacket, embellished]
+
+- name: Barrel Jeans
+  collection: throwback
+  keywords: [jeans, barrel, retro, vintage, denim, wide]
+
+- name: Cargo Pants
+  collection: throwback
+  keywords: [cargo, pants, utility, baggy, Y2K]
+
+- name: Vintage Jacket
+  collection: throwback
+  keywords: [jacket, vintage, retro, washed, bomber]

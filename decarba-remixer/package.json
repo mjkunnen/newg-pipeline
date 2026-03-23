@@ -1,0 +1,26 @@
+{
+  "name": "decarba-remixer",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "scrape": "node dist/scraper/ppspy.js",
+    "remix": "node dist/index.js --skip-scrape",
+    "launch": "node dist/launcher/meta.js",
+    "dashboard": "node dist/dashboard/generate.js"
+  },
+  "dependencies": {
+    "@fal-ai/client": "^1.9.4",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.7",
+    "openai": "^4.77.0",
+    "playwright": "^1.58.2",
+    "sharp": "^0.33.5",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.0"
+  }
+}
