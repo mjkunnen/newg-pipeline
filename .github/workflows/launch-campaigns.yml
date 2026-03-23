@@ -1,8 +1,9 @@
 name: Launch Campaigns
 
 on:
-  schedule:
-    - cron: '0 */4 * * *'  # Every 4 hours
+  workflow_run:
+    workflows: ["Daily Scrape + Dashboard"]
+    types: [completed]
   workflow_dispatch: # manual trigger
 
 permissions:
@@ -11,6 +12,7 @@ permissions:
 jobs:
   launch:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     defaults:
       run:
         working-directory: decarba-remixer
@@ -35,6 +37,8 @@ jobs:
           META_ACCESS_TOKEN=${{ secrets.META_ACCESS_TOKEN }}
           META_AD_ACCOUNT_ID=${{ secrets.META_AD_ACCOUNT_ID }}
           META_INSTAGRAM_ACCOUNT_ID=${{ secrets.META_INSTAGRAM_ACCOUNT_ID }}
+          META_PIXEL_ID=${{ secrets.META_PIXEL_ID }}
+          META_PAGE_ID=${{ secrets.META_PAGE_ID }}
           GOOGLE_SHEET_ID=${{ secrets.GOOGLE_SHEET_ID }}
           ENVEOF
 

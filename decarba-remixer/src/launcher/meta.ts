@@ -129,123 +129,137 @@ export interface SubmissionInput {
   dailyBudget?: number;
 }
 
-export async function launchFromSubmission(
-  input: SubmissionInput,
-): Promise<MetaCampaign> {
-  const draft: CampaignDraft = {
-    name: `NEWG-${input.date}-${input.adId}`,
-    objective: "OUTCOME_SALES",
-    adCopy:
-      input.adCopy?.replace(/decarba/gi, "NEWGARMENTS") ||
-      "Discover our latest streetwear collection. Premium quality, unmatched style.",
-    creativePath: input.creativePath,
-    creativeType: input.creativeType,
-    targeting: {
-      countries: ["NL", "BE", "DE", "FR"],
-      ageMin: 18,
-      ageMax: 35,
-      interests: ["Streetwear", "Fashion", "Urban fashion"],
-      placements: ["IG Feed", "IG Stories", "IG Reels"],
-    },
-    dailyBudget: input.dailyBudget || 1000,
-    originalAdId: input.adId,
-  };
-
-  return launchCampaign(draft, input.landingPage);
+export interface BatchResult {
+  campaignId: string;
+  adSets: { adId: string; adSetId: string; adCreativeId: string; metaAdId: string }[];
 }
 
+/**
+ * Launch all pending submissions as one campaign with separate ad sets.
+ * One campaign per day, each submission gets its own ad set + creative + ad.
+ */
+export async function launchBatch(
+  inputs: SubmissionInput[],
+): Promise<BatchResult> {
+  const { token, adAccountId, igAccountId } = getConfig();
+  const actId = `act_${adAccountId}`;
+  const pageId = process.env.META_PAGE_ID || "337283139475030";
+  const date = todayDir();
+
+  console.log(`[meta] Creating campaign NEWG-${date} with ${inputs.length} ad set(s)`);
+
+  // 1. Create one campaign for the day
+  const campaign = await graphPost(`/${actId}/campaigns`, {
+    name: `NEWG-${date}`,
+    objective: "OUTCOME_SALES",
+    status: "ACTIVE",
+    special_ad_categories: [],
+    is_adset_budget_sharing_enabled: false,
+  }, token);
+  console.log(`[meta] Campaign: ${campaign.id}`);
+
+  const adSets: BatchResult["adSets"] = [];
+
+  // 2. For each submission: ad set + creative + ad
+  for (const input of inputs) {
+    const isVideo = input.creativeType === "video";
+    const link = input.landingPage || "https://newgarments.nl";
+    const adCopy = input.adCopy?.replace(/decarba/gi, "NEWGARMENTS") ||
+      "Discover our latest streetwear collection. Premium quality, unmatched style.";
+
+    console.log(`[meta] Creating ad set for ${input.adId}...`);
+
+    // Upload creative
+    const mediaId = await uploadCreative(input.creativePath, isVideo, token, adAccountId);
+    console.log(`[meta] Uploaded media: ${mediaId}`);
+
+    // Create ad set
+    const adSet = await graphPost(`/${actId}/adsets`, {
+      name: `AdSet_${input.adId}`,
+      campaign_id: campaign.id,
+      billing_event: "IMPRESSIONS",
+      optimization_goal: "OFFSITE_CONVERSIONS",
+      promoted_object: { pixel_id: process.env.META_PIXEL_ID, custom_event_type: "PURCHASE" },
+      daily_budget: input.dailyBudget || 2500,
+      bid_strategy: "LOWEST_COST_WITHOUT_CAP",
+      targeting: {
+        geo_locations: { countries: ["NL", "BE", "DE", "FR", "PL", "IT", "AT"] },
+        age_min: 18,
+        age_max: 65,
+      },
+      status: "ACTIVE",
+      start_time: new Date(Date.now() + 3600000).toISOString(),
+    }, token);
+    console.log(`[meta] Ad Set: ${adSet.id}`);
+
+    // Create ad creative
+    const creativeData: Record<string, unknown> = {
+      name: `Creative_${input.adId}`,
+      object_story_spec: {
+        page_id: pageId,
+        ...(igAccountId ? { instagram_actor_id: igAccountId } : {}),
+        ...(isVideo
+          ? {
+              video_data: {
+                video_id: mediaId,
+                message: adCopy,
+                call_to_action: { type: "SHOP_NOW", value: { link } },
+              },
+            }
+          : {
+              link_data: {
+                message: adCopy,
+                link,
+                image_hash: mediaId,
+                call_to_action: { type: "SHOP_NOW" },
+              },
+            }),
+      },
+    };
+
+    const creative = await graphPost(`/${actId}/adcreatives`, creativeData, token);
+    console.log(`[meta] Creative: ${creative.id}`);
+
+    // Create ad
+    const ad = await graphPost(`/${actId}/ads`, {
+      name: `Ad_${input.adId}`,
+      adset_id: adSet.id,
+      creative: { creative_id: creative.id },
+      status: "ACTIVE",
+    }, token);
+    console.log(`[meta] Ad: ${ad.id}`);
+
+    adSets.push({
+      adId: input.adId,
+      adSetId: adSet.id,
+      adCreativeId: creative.id,
+      metaAdId: ad.id,
+    });
+  }
+
+  return { campaignId: campaign.id, adSets };
+}
+
+/** Legacy wrapper for index.ts — launches a single draft as its own campaign */
 export async function launchCampaign(
   draft: CampaignDraft,
   landingPage?: string,
 ): Promise<MetaCampaign> {
-  const { token, adAccountId, igAccountId } = getConfig();
-  const actId = `act_${adAccountId}`;
-  const isVideo = draft.creativeType === "video";
-  const link = landingPage || "https://newgarments.nl";
-
-  console.log(`[meta] Launching: ${draft.name}`);
-
-  // 1. Upload creative
-  const mediaId = await uploadCreative(draft.creativePath, isVideo, token, adAccountId);
-  console.log(`[meta] Uploaded media: ${mediaId}`);
-
-  // 2. Create campaign (ACTIVE)
-  const campaign = await graphPost(`/${actId}/campaigns`, {
-    name: draft.name,
-    objective: draft.objective,
-    status: "ACTIVE",
-    special_ad_categories: [],
-  }, token);
-  console.log(`[meta] Campaign: ${campaign.id}`);
-
-  // 3. Create ad set — Instagram only
-  const adSet = await graphPost(`/${actId}/adsets`, {
-    name: `AdSet_${draft.originalAdId}`,
-    campaign_id: campaign.id,
-    billing_event: "IMPRESSIONS",
-    optimization_goal: "OFFSITE_CONVERSIONS",
-    daily_budget: draft.dailyBudget,
-    bid_strategy: "LOWEST_COST_WITHOUT_CAP",
-    targeting: {
-      geo_locations: { countries: draft.targeting.countries },
-      age_min: draft.targeting.ageMin,
-      age_max: draft.targeting.ageMax,
-      flexible_spec: [{
-        interests: [
-          { id: "6003384297645", name: "Streetwear" },
-          { id: "6003107902433", name: "Fashion" },
-          { id: "6003236498529", name: "Urban fashion" },
-        ],
-      }],
-      publisher_platforms: ["instagram"],
-      instagram_positions: ["stream", "story", "reels"],
-    },
-    status: "ACTIVE",
-    start_time: new Date(Date.now() + 3600000).toISOString(), // 1 hour from now
-  }, token);
-  console.log(`[meta] Ad Set: ${adSet.id}`);
-
-  // 4. Create ad creative
-  const creativeData: Record<string, unknown> = {
-    name: `Creative_${draft.originalAdId}`,
-    object_story_spec: {
-      ...(igAccountId ? { instagram_actor_id: igAccountId } : {}),
-      ...(isVideo
-        ? {
-            video_data: {
-              video_id: mediaId,
-              message: draft.adCopy,
-              call_to_action: { type: "SHOP_NOW", value: { link } },
-            },
-          }
-        : {
-            link_data: {
-              message: draft.adCopy,
-              link,
-              image_hash: mediaId,
-              call_to_action: { type: "SHOP_NOW" },
-            },
-          }),
-    },
-  };
-
-  const creative = await graphPost(`/${actId}/adcreatives`, creativeData, token);
-  console.log(`[meta] Creative: ${creative.id}`);
-
-  // 5. Create ad (ACTIVE)
-  const ad = await graphPost(`/${actId}/ads`, {
-    name: `Ad_${draft.originalAdId}`,
-    adset_id: adSet.id,
-    creative: { creative_id: creative.id },
-    status: "ACTIVE",
-  }, token);
-  console.log(`[meta] Ad: ${ad.id}`);
+  const result = await launchBatch([{
+    adId: draft.originalAdId,
+    adCopy: draft.adCopy,
+    creativePath: draft.creativePath,
+    creativeType: draft.creativeType,
+    landingPage: landingPage || "https://newgarments.nl",
+    date: new Date().toISOString().split("T")[0],
+    dailyBudget: draft.dailyBudget,
+  }]);
 
   return {
-    campaignId: campaign.id,
-    adSetId: adSet.id,
-    adId: ad.id,
-    creativeId: creative.id,
+    campaignId: result.campaignId,
+    adSetId: result.adSets[0].adSetId,
+    adId: result.adSets[0].metaAdId,
+    creativeId: result.adSets[0].adCreativeId,
     status: "ACTIVE",
   };
 }

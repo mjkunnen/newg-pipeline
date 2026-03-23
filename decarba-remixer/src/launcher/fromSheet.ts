@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { writeFile, mkdir, unlink } from "fs/promises";
 import { join, extname } from "path";
-import { launchFromSubmission } from "./meta.js";
+import { launchBatch, type SubmissionInput } from "./meta.js";
 
 const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbxN7hSUicVX6-JvOpFQMbABsQqc8CxPHMbUCjsYkhRNcNeddjw-4GP2F66PSDXhDrKsjA/exec";
@@ -137,7 +137,6 @@ async function updateSheetStatus(
     if (campaignId) body.campaign_id = campaignId;
     if (error) body.error = error;
 
-    // Use form POST (same as dashboard)
     const params = new URLSearchParams(body);
     await fetch(APPS_SCRIPT_URL, {
       method: "POST",
@@ -151,65 +150,74 @@ async function updateSheetStatus(
   }
 }
 
-async function processSubmission(sub: SheetSubmission): Promise<void> {
-  const platforms = sub.platforms.toLowerCase();
-
-  if (!platforms.includes("meta")) {
-    console.log(`[launcher] Skipping ${sub.ad_id}: no meta platform`);
-    return;
-  }
-
-  let creativePath: string | null = null;
-
-  try {
-    // Download creative from Drive
-    creativePath = await downloadCreative(sub.drive_link, sub.ad_id);
-
-    // Determine creative type from file extension
-    const ext = extname(creativePath).toLowerCase();
-    const creativeType: "image" | "video" =
-      ext === ".mp4" || ext === ".webm" ? "video" : "image";
-
-    // Launch Meta campaign
-    const result = await launchFromSubmission({
-      adId: sub.ad_id,
-      adCopy: sub.ad_copy,
-      creativePath,
-      creativeType,
-      landingPage: sub.landing_page,
-      date: sub.date,
-    });
-
-    // Update Sheet with success
-    await updateSheetStatus(sub.ad_id, "launched", result.campaignId);
-    console.log(`[launcher] ✓ ${sub.ad_id} → Campaign ${result.campaignId}`);
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error(`[launcher] ✗ ${sub.ad_id} failed:`, msg);
-    await updateSheetStatus(sub.ad_id, "failed", undefined, msg.slice(0, 200));
-  } finally {
-    // Cleanup temp file
-    if (creativePath) {
-      try {
-        await unlink(creativePath);
-      } catch {
-        // ignore
-      }
-    }
-  }
-}
-
 async function main() {
   console.log("[launcher] Starting campaign launcher...");
 
-  const submissions = await fetchPendingSubmissions();
+  const allSubmissions = await fetchPendingSubmissions();
+  // Only process meta submissions
+  const submissions = allSubmissions.filter((s) =>
+    s.platforms.toLowerCase().includes("meta"),
+  );
+
   if (submissions.length === 0) {
-    console.log("[launcher] No pending submissions. Done.");
+    console.log("[launcher] No pending meta submissions. Done.");
     return;
   }
 
+  // Download all creatives first
+  const inputs: SubmissionInput[] = [];
+  const tempFiles: string[] = [];
+
   for (const sub of submissions) {
-    await processSubmission(sub);
+    try {
+      const creativePath = await downloadCreative(sub.drive_link, sub.ad_id);
+      tempFiles.push(creativePath);
+
+      const ext = extname(creativePath).toLowerCase();
+      const creativeType: "image" | "video" =
+        ext === ".mp4" || ext === ".webm" ? "video" : "image";
+
+      inputs.push({
+        adId: sub.ad_id,
+        adCopy: sub.ad_copy,
+        creativePath,
+        creativeType,
+        landingPage: sub.landing_page,
+        date: sub.date,
+      });
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error(`[launcher] Failed to download ${sub.ad_id}:`, msg);
+      await updateSheetStatus(sub.ad_id, "failed", undefined, msg.slice(0, 200));
+    }
+  }
+
+  if (inputs.length === 0) {
+    console.log("[launcher] No creatives downloaded successfully. Done.");
+    return;
+  }
+
+  // Launch all as one campaign with separate ad sets
+  try {
+    const result = await launchBatch(inputs);
+    console.log(`[launcher] Campaign ${result.campaignId} created with ${result.adSets.length} ad set(s)`);
+
+    // Update Sheet for each successful ad
+    for (const adSet of result.adSets) {
+      await updateSheetStatus(adSet.adId, "launched", result.campaignId);
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error(`[launcher] Batch launch failed:`, msg);
+    // Mark all as failed
+    for (const input of inputs) {
+      await updateSheetStatus(input.adId, "failed", undefined, msg.slice(0, 200));
+    }
+  } finally {
+    // Cleanup temp files
+    for (const f of tempFiles) {
+      try { await unlink(f); } catch { /* ignore */ }
+    }
   }
 
   console.log("[launcher] Done.");
