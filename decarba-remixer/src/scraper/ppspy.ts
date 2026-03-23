@@ -247,7 +247,7 @@ export async function scrapePPSpy(): Promise<ScrapedAd[]> {
     console.log(`[ppspy] Extracted ${rawAds.length} ads from DOM`);
 
     // Parse into ScrapedAd format
-    const ads: ScrapedAd[] = rawAds.slice(0, 10).map((raw, i) => ({
+    const ads: ScrapedAd[] = rawAds.slice(0, 15).map((raw, i) => ({
       id: `decarba_${todayDir()}_${i}`,
       type: raw.type as "image" | "video",
       creativeUrl: raw.creativeUrl,
