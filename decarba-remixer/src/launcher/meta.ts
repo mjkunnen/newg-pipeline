@@ -119,17 +119,49 @@ async function uploadCreative(
   }
 }
 
-export async function launchCampaign(draft: CampaignDraft): Promise<MetaCampaign> {
-  if (process.env.AUTO_LAUNCH !== "true") {
-    throw new Error(
-      "AUTO_LAUNCH is not 'true'. Set AUTO_LAUNCH=true in .env to enable campaign launching. " +
-      "Review drafts.json first!"
-    );
-  }
+export interface SubmissionInput {
+  adId: string;
+  adCopy: string;
+  creativePath: string;
+  creativeType: "image" | "video";
+  landingPage: string;
+  date: string;
+  dailyBudget?: number;
+}
 
+export async function launchFromSubmission(
+  input: SubmissionInput,
+): Promise<MetaCampaign> {
+  const draft: CampaignDraft = {
+    name: `NEWG-${input.date}-${input.adId}`,
+    objective: "OUTCOME_SALES",
+    adCopy:
+      input.adCopy?.replace(/decarba/gi, "NEWGARMENTS") ||
+      "Discover our latest streetwear collection. Premium quality, unmatched style.",
+    creativePath: input.creativePath,
+    creativeType: input.creativeType,
+    targeting: {
+      countries: ["NL", "BE", "DE", "FR"],
+      ageMin: 18,
+      ageMax: 35,
+      interests: ["Streetwear", "Fashion", "Urban fashion"],
+      placements: ["IG Feed", "IG Stories", "IG Reels"],
+    },
+    dailyBudget: input.dailyBudget || 1000,
+    originalAdId: input.adId,
+  };
+
+  return launchCampaign(draft, input.landingPage);
+}
+
+export async function launchCampaign(
+  draft: CampaignDraft,
+  landingPage?: string,
+): Promise<MetaCampaign> {
   const { token, adAccountId, igAccountId } = getConfig();
   const actId = `act_${adAccountId}`;
   const isVideo = draft.creativeType === "video";
+  const link = landingPage || "https://newgarments.nl";
 
   console.log(`[meta] Launching: ${draft.name}`);
 
@@ -137,11 +169,11 @@ export async function launchCampaign(draft: CampaignDraft): Promise<MetaCampaign
   const mediaId = await uploadCreative(draft.creativePath, isVideo, token, adAccountId);
   console.log(`[meta] Uploaded media: ${mediaId}`);
 
-  // 2. Create campaign
+  // 2. Create campaign (ACTIVE)
   const campaign = await graphPost(`/${actId}/campaigns`, {
     name: draft.name,
     objective: draft.objective,
-    status: "PAUSED",
+    status: "ACTIVE",
     special_ad_categories: [],
   }, token);
   console.log(`[meta] Campaign: ${campaign.id}`);
@@ -168,29 +200,28 @@ export async function launchCampaign(draft: CampaignDraft): Promise<MetaCampaign
       publisher_platforms: ["instagram"],
       instagram_positions: ["stream", "story", "reels"],
     },
-    status: "PAUSED",
-    start_time: new Date(Date.now() + 86400000).toISOString(),
+    status: "ACTIVE",
+    start_time: new Date(Date.now() + 3600000).toISOString(), // 1 hour from now
   }, token);
   console.log(`[meta] Ad Set: ${adSet.id}`);
 
-  // 4. Create ad creative — Instagram account based
+  // 4. Create ad creative
   const creativeData: Record<string, unknown> = {
     name: `Creative_${draft.originalAdId}`,
     object_story_spec: {
-      // Instagram account identity (selected in Ads Manager)
       ...(igAccountId ? { instagram_actor_id: igAccountId } : {}),
       ...(isVideo
         ? {
             video_data: {
               video_id: mediaId,
               message: draft.adCopy,
-              call_to_action: { type: "SHOP_NOW", value: { link: "https://newgarments.nl" } },
+              call_to_action: { type: "SHOP_NOW", value: { link } },
             },
           }
         : {
             link_data: {
               message: draft.adCopy,
-              link: "https://newgarments.nl",
+              link,
               image_hash: mediaId,
               call_to_action: { type: "SHOP_NOW" },
             },
@@ -201,12 +232,12 @@ export async function launchCampaign(draft: CampaignDraft): Promise<MetaCampaign
   const creative = await graphPost(`/${actId}/adcreatives`, creativeData, token);
   console.log(`[meta] Creative: ${creative.id}`);
 
-  // 5. Create ad
+  // 5. Create ad (ACTIVE)
   const ad = await graphPost(`/${actId}/ads`, {
     name: `Ad_${draft.originalAdId}`,
     adset_id: adSet.id,
     creative: { creative_id: creative.id },
-    status: "PAUSED",
+    status: "ACTIVE",
   }, token);
   console.log(`[meta] Ad: ${ad.id}`);
 
@@ -215,6 +246,6 @@ export async function launchCampaign(draft: CampaignDraft): Promise<MetaCampaign
     adSetId: adSet.id,
     adId: ad.id,
     creativeId: creative.id,
-    status: "PAUSED",
+    status: "ACTIVE",
   };
 }

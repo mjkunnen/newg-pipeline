@@ -1,0 +1,46 @@
+name: Launch Campaigns
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # Every 4 hours
+  workflow_dispatch: # manual trigger
+
+permissions:
+  contents: read
+
+jobs:
+  launch:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: decarba-remixer
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: decarba-remixer/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create .env
+        run: |
+          cat > .env << 'ENVEOF'
+          META_ACCESS_TOKEN=${{ secrets.META_ACCESS_TOKEN }}
+          META_AD_ACCOUNT_ID=${{ secrets.META_AD_ACCOUNT_ID }}
+          META_INSTAGRAM_ACCOUNT_ID=${{ secrets.META_INSTAGRAM_ACCOUNT_ID }}
+          GOOGLE_SHEET_ID=${{ secrets.GOOGLE_SHEET_ID }}
+          ENVEOF
+
+      - name: Build
+        run: npm run build
+
+      - name: Launch pending campaigns
+        run: npm run launch
+        timeout-minutes: 5
