@@ -38,8 +38,29 @@ Oxylabs API (PPSpy HTML) → Cheerio parse → Filter top ads → Download creat
 - `npm run build` — compile TS
 - `npm run start` — full pipeline (scrape → analyze → remix → drafts)
 - `npm run scrape` — only scrape PPSpy
+- `npm run dashboard` — generate dashboard HTML + thumbnails + creatives
 - `npm run start -- --skip-scrape` — remix using last scrape
 - `npm run start -- --skip-launch` — skip Meta campaign creation
+
+## Dashboard (GitHub Pages)
+- URL: https://mjkunnen.github.io/newg-pipeline/
+- Source: `docs/` folder, deployed via GitHub Actions (`deploy-pages.yml`)
+- Template: `src/dashboard/template.ts` — single-file SPA with inline CSS/JS
+- Generator: `src/dashboard/generate.ts` — reads scrape data, generates thumbs, copies creatives, writes HTML
+
+## Submissions Pipeline (WERKEND)
+- Dashboard submit → Google Apps Script (form POST via hidden iframe) → Google Sheet
+- Apps Script URL: https://script.google.com/macros/s/AKfycbxN7hSUicVX6-JvOpFQMbABsQqc8CxPHMbUCjsYkhRNcNeddjw-4GP2F66PSDXhDrKsjA/exec
+- Google Sheet: https://docs.google.com/spreadsheets/d/1p8pdlNQKYRoX8HydJAHqAX6NhK_FAMxt2WHmWWps-yw
+- Worksheet: "Data" (niet "Submissions")
+- Zapier webhook is NIET meer in gebruik
+- Dashboard leest Sheet data bij page load via gviz CSV endpoint (publiek leesbaar)
+- Optimistic UI: na submit meteen lokaal zichtbaar, Sheet data gesynct bij page load
+
+## Cron Schedule
+- Daily scrape: 23:00 UTC (06:00 WIB Bali tijd / 00:00 CET)
+- Workflow: `.github/workflows/daily-scrape.yml`
+- Flow: scrape PPSpy → generate dashboard → commit docs/ → deploy Pages
 
 ## Auth / Credentials (.env)
 - OXYLABS_USERNAME / OXYLABS_PASSWORD — Oxylabs Web Scraper API
