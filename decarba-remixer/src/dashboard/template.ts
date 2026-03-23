@@ -1087,6 +1087,7 @@ function togglePlat(el) {
 }
 
 function submitToSheet(data) {
+  console.log('[submit] Sending to Apps Script:', JSON.stringify(data));
   let iframe = document.getElementById('hidden_iframe');
   if (!iframe) {
     iframe = document.createElement('iframe');
@@ -1109,7 +1110,9 @@ function submitToSheet(data) {
   });
   document.body.appendChild(form);
   form.submit();
-  form.remove();
+  // Remove form after iframe has loaded (not immediately)
+  iframe.onload = () => { form.remove(); console.log('[submit] Form POST completed'); };
+  setTimeout(() => form.remove(), 10000);
 }
 
 async function submitAd(adId) {
