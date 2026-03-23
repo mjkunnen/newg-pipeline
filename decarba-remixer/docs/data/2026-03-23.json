@@ -6,13 +6,19 @@
       "id": "decarba_2026-03-23_6",
       "type": "image",
       "thumbPath": "thumbs/decarba_2026-03-23_6.jpg",
-      "adCopy": "S'26 just got real. DCRB Wavey Clogs are LIVE — bold, durabl",
+      "adCopy": "S’26 just got real. DCRB Wavey Clogs are LIVE — bold, durabl",
       "reach": 370500,
       "reachFormatted": "370.5K",
       "reachCost": "",
       "daysActive": 7,
       "startDate": "Feb 27 2026",
-      "platforms": ["facebook", "instagram", "audience_network", "messenger", "threads"],
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
       "downloadUrl": "creatives/2026-03-23/decarba_2026-03-23_6.jpg"
     },
     {
@@ -25,7 +31,13 @@
       "reachCost": "",
       "daysActive": 3,
       "startDate": "Mar 18 2026",
-      "platforms": ["facebook", "instagram", "audience_network", "messenger", "threads"],
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
       "downloadUrl": "creatives/2026-03-23/decarba_2026-03-23_1.mp4"
     },
     {
@@ -38,7 +50,13 @@
       "reachCost": "",
       "daysActive": 7,
       "startDate": "Feb 25 2026",
-      "platforms": ["facebook", "instagram", "audience_network", "messenger", "threads"],
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
       "downloadUrl": "creatives/2026-03-23/decarba_2026-03-23_8.mp4"
     },
     {
@@ -51,7 +69,13 @@
       "reachCost": "",
       "daysActive": 24,
       "startDate": "Feb 20 2026",
-      "platforms": ["facebook", "instagram", "audience_network", "messenger", "threads"],
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
       "downloadUrl": "creatives/2026-03-23/decarba_2026-03-23_9.mp4"
     },
     {
@@ -64,20 +88,32 @@
       "reachCost": "",
       "daysActive": 4,
       "startDate": "Mar 18 2026",
-      "platforms": ["facebook", "instagram", "audience_network", "messenger", "threads"],
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
       "downloadUrl": "creatives/2026-03-23/decarba_2026-03-23_0.mp4"
     },
     {
       "id": "decarba_2026-03-23_4",
       "type": "image",
       "thumbPath": "thumbs/decarba_2026-03-23_4.jpg",
-      "adCopy": "S'26 just got real. DCRB Wavey Clogs are LIVE — bold, durabl",
+      "adCopy": "S’26 just got real. DCRB Wavey Clogs are LIVE — bold, durabl",
       "reach": 174000,
       "reachFormatted": "174.0K",
       "reachCost": "",
       "daysActive": 14,
       "startDate": "Mar 04 2026",
-      "platforms": ["facebook", "instagram", "audience_network", "messenger", "threads"],
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
       "downloadUrl": "creatives/2026-03-23/decarba_2026-03-23_4.jpg"
     }
   ]

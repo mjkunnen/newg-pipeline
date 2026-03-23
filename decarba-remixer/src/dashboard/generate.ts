@@ -181,8 +181,9 @@ async function generate() {
       });
     }
 
-    // Sort by reach descending
+    // Sort by reach descending, keep top 6
     dashboardAds.sort((a, b) => b.reach - a.reach);
+    dashboardAds.splice(6);
 
     // Write per-date JSON
     const dateJsonPath = join(DATA_DIR, `${date}.json`);
@@ -191,12 +192,12 @@ async function generate() {
       JSON.stringify({ date, competitor: COMPETITOR, ads: dashboardAds }, null, 2),
     );
 
-    const videoCount = ads.filter((a) => a.type === "video").length;
+    const videoCount = dashboardAds.filter((a) => a.type === "video").length;
     dateIndex.push({
       date,
-      adCount: ads.length,
+      adCount: dashboardAds.length,
       videoCount,
-      imageCount: ads.length - videoCount,
+      imageCount: dashboardAds.length - videoCount,
     });
   }
 
