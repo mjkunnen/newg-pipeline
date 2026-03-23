@@ -1052,6 +1052,32 @@ function togglePlat(el) {
   el.classList.toggle('selected');
 }
 
+function submitToSheet(data) {
+  let iframe = document.getElementById('hidden_iframe');
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id = 'hidden_iframe';
+    iframe.name = 'hidden_iframe';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+  }
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = WEBHOOK_URL;
+  form.target = 'hidden_iframe';
+  form.style.display = 'none';
+  Object.entries(data).forEach(([key, value]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = String(value);
+    form.appendChild(input);
+  });
+  document.body.appendChild(form);
+  form.submit();
+  form.remove();
+}
+
 async function submitAd(adId) {
   const driveLink = document.getElementById('input-drive').value.trim();
   const landingPage = document.getElementById('input-landing').value.trim();
@@ -1086,12 +1112,7 @@ async function submitAd(adId) {
 
   try {
     if (WEBHOOK_URL) {
-      await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
-      });
+      submitToSheet(payload);
     }
 
     // Optimistic update: save locally so it shows immediately
