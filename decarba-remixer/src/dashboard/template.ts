@@ -713,7 +713,7 @@ body {
 </div>
 
 <script>
-const ZAPIER_WEBHOOK_URL = "${webhookUrl}";
+const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxN7hSUicVX6-JvOpFQMbABsQqc8CxPHMbUCjsYkhRNcNeddjw-4GP2F66PSDXhDrKsjA/exec";
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Submissions";
 const DATES_INDEX = ${datesJson};
 
@@ -1119,10 +1119,11 @@ async function submitAd(adId) {
   errorEl.style.display = 'none';
 
   try {
-    if (ZAPIER_WEBHOOK_URL && ZAPIER_WEBHOOK_URL !== '' && !ZAPIER_WEBHOOK_URL.includes('XXXXX')) {
-      await fetch(ZAPIER_WEBHOOK_URL, {
+    if (WEBHOOK_URL) {
+      await fetch(WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(payload)
       });
     }
