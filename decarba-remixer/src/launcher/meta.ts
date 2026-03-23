@@ -134,9 +134,55 @@ export interface BatchResult {
   adSets: { adId: string; adSetId: string; adCreativeId: string; metaAdId: string }[];
 }
 
+const CAMPAIGN_NAME = "NEWG-Remixes";
+
+async function graphGet(
+  path: string,
+  token: string,
+): Promise<Record<string, unknown>> {
+  const separator = path.includes("?") ? "&" : "?";
+  const res = await fetch(`${GRAPH_API}${path}${separator}access_token=${token}`);
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Meta API GET ${path}: ${res.status} ${err}`);
+  }
+  return res.json();
+}
+
+async function findOrCreateCampaign(
+  actId: string,
+  token: string,
+): Promise<string> {
+  // Search for existing NEWG-Remixes campaign
+  const data = await graphGet(
+    `/${actId}/campaigns?filtering=[{"field":"name","operator":"EQUAL","value":"${CAMPAIGN_NAME}"}]&fields=id,name,status&limit=1`,
+    token,
+  );
+
+  const campaigns = (data.data as Array<{ id: string; name: string; status: string }>) || [];
+  const active = campaigns.find((c) => c.name === CAMPAIGN_NAME);
+
+  if (active) {
+    console.log(`[meta] Found existing campaign: ${active.id} (${active.status})`);
+    return active.id;
+  }
+
+  // Create new persistent campaign
+  console.log(`[meta] Creating new campaign: ${CAMPAIGN_NAME}`);
+  const campaign = await graphPost(`/${actId}/campaigns`, {
+    name: CAMPAIGN_NAME,
+    objective: "OUTCOME_SALES",
+    status: "ACTIVE",
+    special_ad_categories: [],
+    is_adset_budget_sharing_enabled: false,
+  }, token);
+  console.log(`[meta] Campaign created: ${campaign.id}`);
+  return campaign.id;
+}
+
 /**
- * Launch all pending submissions as one campaign with separate ad sets.
- * One campaign per day, each submission gets its own ad set + creative + ad.
+ * Add pending submissions as new ad sets to the persistent NEWG-Remixes campaign.
+ * Reuses the same campaign across days — no learning phase resets.
  */
 export async function launchBatch(
   inputs: SubmissionInput[],
@@ -144,19 +190,10 @@ export async function launchBatch(
   const { token, adAccountId, igAccountId } = getConfig();
   const actId = `act_${adAccountId}`;
   const pageId = process.env.META_PAGE_ID || "337283139475030";
-  const date = todayDir();
 
-  console.log(`[meta] Creating campaign NEWG-${date} with ${inputs.length} ad set(s)`);
-
-  // 1. Create one campaign for the day
-  const campaign = await graphPost(`/${actId}/campaigns`, {
-    name: `NEWG-${date}`,
-    objective: "OUTCOME_SALES",
-    status: "ACTIVE",
-    special_ad_categories: [],
-    is_adset_budget_sharing_enabled: false,
-  }, token);
-  console.log(`[meta] Campaign: ${campaign.id}`);
+  // Find or create the persistent campaign
+  const campaignId = await findOrCreateCampaign(actId, token);
+  console.log(`[meta] Adding ${inputs.length} ad set(s) to campaign ${campaignId}`);
 
   const adSets: BatchResult["adSets"] = [];
 
@@ -176,7 +213,7 @@ export async function launchBatch(
     // Create ad set
     const adSet = await graphPost(`/${actId}/adsets`, {
       name: `AdSet_${input.adId}`,
-      campaign_id: campaign.id,
+      campaign_id: campaignId,
       billing_event: "IMPRESSIONS",
       optimization_goal: "OFFSITE_CONVERSIONS",
       promoted_object: { pixel_id: process.env.META_PIXEL_ID, custom_event_type: "PURCHASE" },
@@ -237,7 +274,7 @@ export async function launchBatch(
     });
   }
 
-  return { campaignId: campaign.id, adSets };
+  return { campaignId, adSets };
 }
 
 /** Legacy wrapper for index.ts — launches a single draft as its own campaign */
