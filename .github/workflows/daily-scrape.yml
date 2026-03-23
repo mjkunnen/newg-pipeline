@@ -2,7 +2,7 @@ name: Daily Scrape + Dashboard
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # 07:00 CET (06:00 UTC)
+    - cron: '0 23 * * *'  # 06:00 WIB / 00:00 CET (23:00 UTC)
   workflow_dispatch: # manual trigger
 
 jobs:
