@@ -688,7 +688,7 @@ body {
     </div>
   </div>
   <div class="detail-top">
-    <button class="back-btn" onclick="showDates()">\\u2190 Terug</button>
+    <button class="back-btn" onclick="showDates()">\u2190 Terug</button>
     <div class="detail-date" id="detail-date-label"></div>
   </div>
   <div class="detail-progress">
@@ -726,10 +726,12 @@ function route() {
     return;
   }
   if (!saved && hash !== '#/') {
-    location.hash = '#/';
-    return;
+    // Allow direct deep links — auto-login as Jerson
+    currentUser = 'Jerson';
+    localStorage.setItem('newg_user', 'Jerson');
+  } else {
+    currentUser = saved;
   }
-  currentUser = saved;
 
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
 
