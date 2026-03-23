@@ -27,6 +27,7 @@ export function formatReach(reach: number): string {
 
 export function renderDashboard(
   webhookUrl: string,
+  sheetId: string,
   dates: DateEntry[],
 ): string {
   const datesJson = JSON.stringify(dates);
@@ -713,6 +714,7 @@ body {
 
 <script>
 const ZAPIER_WEBHOOK_URL = "${webhookUrl}";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Submissions";
 const DATES_INDEX = ${datesJson};
 
 let currentUser = null;
@@ -742,7 +744,8 @@ function route() {
     document.getElementById('screen-login').classList.add('active');
   } else if (hash === '#/dates') {
     document.getElementById('screen-dates').classList.add('active');
-    renderDates();
+    if (!sheetLoaded) loadSheetData().then(() => renderDates()); else renderDates();
+    return;
   } else if (hash.startsWith('#/day/')) {
     currentDate = hash.replace('#/day/', '');
     document.getElementById('screen-detail').classList.add('active');
@@ -771,14 +774,91 @@ function escapeAttr(s) {
   return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// ===== DATES =====
+// ===== SHARED SUBMISSIONS (Google Sheet backed) =====
+let sheetSubmissions = {}; // key: "date_adId" → submission object
+let sheetLoaded = false;
+
+async function loadSheetData() {
+  try {
+    const resp = await fetch(SHEET_CSV_URL);
+    if (!resp.ok) throw new Error('Sheet fetch failed');
+    const csv = await resp.text();
+    const rows = parseCSV(csv);
+    // headers: editor, date, ad_id, ad_copy, original_reach, drive_link, landing_page, platforms, submitted_at, status
+    if (rows.length < 2) { sheetLoaded = true; return; }
+    const headers = rows[0].map(h => h.trim().toLowerCase());
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      if (row.length < headers.length) continue;
+      const obj = {};
+      headers.forEach((h, idx) => obj[h] = row[idx] || '');
+      if (!obj.date || !obj.ad_id) continue;
+      const key = obj.date + '_' + obj.ad_id;
+      // Later rows overwrite earlier ones (latest submission wins)
+      sheetSubmissions[key] = {
+        editor: obj.editor,
+        date: obj.date,
+        ad_id: obj.ad_id,
+        ad_copy: obj.ad_copy,
+        original_reach: obj.original_reach,
+        drive_link: obj.drive_link,
+        landing_page: obj.landing_page,
+        platforms: obj.platforms ? obj.platforms.split(',').map(p => p.trim()) : [],
+        submitted_at: obj.submitted_at,
+        status: obj.status || 'done'
+      };
+    }
+    sheetLoaded = true;
+    console.log('[sheet] Loaded ' + Object.keys(sheetSubmissions).length + ' submissions');
+  } catch (err) {
+    console.warn('[sheet] Failed to load submissions, falling back to localStorage:', err);
+    sheetLoaded = true;
+  }
+}
+
+function parseCSV(text) {
+  const rows = [];
+  let current = [];
+  let field = '';
+  let inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"' && text[i+1] === '"') { field += '"'; i++; }
+      else if (c === '"') { inQuotes = false; }
+      else { field += c; }
+    } else {
+      if (c === '"') { inQuotes = true; }
+      else if (c === ',') { current.push(field); field = ''; }
+      else if (c === '\\n' || (c === '\\r' && text[i+1] === '\\n')) {
+        if (c === '\\r') i++;
+        current.push(field); field = '';
+        if (current.some(f => f !== '')) rows.push(current);
+        current = [];
+      } else { field += c; }
+    }
+  }
+  current.push(field);
+  if (current.some(f => f !== '')) rows.push(current);
+  return rows;
+}
+
+// ===== STATUS (Sheet-backed with localStorage cache) =====
 function getStatus(date, adId) {
+  const key = date + '_' + adId;
+  // Sheet submission = done
+  if (sheetSubmissions[key]) return 'done';
+  // Fall back to localStorage for in_progress
   return localStorage.getItem('newg_status_' + date + '_' + adId) || 'not_started';
 }
 function setStatus(date, adId, status) {
   localStorage.setItem('newg_status_' + date + '_' + adId, status);
 }
 function getSubmission(date, adId) {
+  const key = date + '_' + adId;
+  // Prefer Sheet data (shared across all users)
+  if (sheetSubmissions[key]) return sheetSubmissions[key];
+  // Fall back to localStorage (optimistic after submit)
   const raw = localStorage.getItem('newg_submission_' + date + '_' + adId);
   return raw ? JSON.parse(raw) : null;
 }
@@ -840,6 +920,12 @@ function getDoneCount(date, total) {
 // ===== DAY DETAIL =====
 async function loadDay(date) {
   document.getElementById('detail-date-label').textContent = formatDateLabel(date);
+
+  // Load shared submissions from Google Sheet (once)
+  if (!sheetLoaded) {
+    document.getElementById('ad-grid').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Laden...</div>';
+    await loadSheetData();
+  }
 
   try {
     const resp = await fetch('data/' + date + '.json');
@@ -1015,12 +1101,13 @@ async function submitAd(adId) {
     editor: currentUser,
     date: currentDate,
     ad_id: adId,
-    ad_copy: ad ? ad.adCopy : '',
+    ad_copy: ad ? (ad.adCopy || '').slice(0, 200) : '',
     original_reach: ad ? ad.reach : 0,
     drive_link: driveLink,
     landing_page: landingPage,
-    platforms: platforms,
-    submitted_at: new Date().toISOString()
+    platforms: platforms.join(','),
+    submitted_at: new Date().toISOString(),
+    status: 'done'
   };
 
   const btn = document.querySelector('.submit-btn');
@@ -1041,7 +1128,10 @@ async function submitAd(adId) {
       });
     }
 
-    localStorage.setItem('newg_submission_' + currentDate + '_' + adId, JSON.stringify(payload));
+    // Optimistic update: save locally so it shows immediately
+    const localSubmission = { ...payload, platforms: platforms };
+    localStorage.setItem('newg_submission_' + currentDate + '_' + adId, JSON.stringify(localSubmission));
+    sheetSubmissions[currentDate + '_' + adId] = localSubmission;
     setStatus(currentDate, adId, 'done');
 
     successEl.style.display = 'block';

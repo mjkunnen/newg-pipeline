@@ -210,7 +210,8 @@ async function generate() {
 
   // Generate HTML
   const webhookUrl = process.env.ZAPIER_WEBHOOK_URL || "";
-  const html = renderDashboard(webhookUrl, dateIndex);
+  const sheetId = process.env.GOOGLE_SHEET_ID || "1p8pdlNQKYRoX8HydJAHqAX6NhK_FAMxt2WHmWWps-yw";
+  const html = renderDashboard(webhookUrl, sheetId, dateIndex);
   await writeFile(join(DOCS_DIR, "index.html"), html);
   console.log(`[dashboard] Written: docs/index.html + ${dateIndex.length} date files`);
 
