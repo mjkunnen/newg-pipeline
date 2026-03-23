@@ -1107,7 +1107,7 @@ async function submitAd(adId) {
     landing_page: landingPage,
     platforms: platforms.join(','),
     submitted_at: new Date().toISOString(),
-    status: 'done'
+    status: 'pending'
   };
 
   const btn = document.querySelector('.submit-btn');

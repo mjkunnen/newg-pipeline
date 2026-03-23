@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { readdir, readFile, mkdir, writeFile, copyFile, rm } from "fs/promises";
 import { join, extname } from "path";
 import { existsSync } from "fs";
