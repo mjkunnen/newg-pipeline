@@ -198,7 +198,7 @@ export async function launchBatch(
   const { token, adAccountId, igAccountId } = getConfig();
   const actId = `act_${adAccountId}`;
   const pageId = process.env.META_PAGE_ID || "337283139475030";
-  const dailyBudget = inputs[0]?.dailyBudget || 2500;
+  const dailyBudget = inputs[0]?.dailyBudget || 5000;
 
   // Find or create persistent campaign + ad set
   const campaignId = await findOrCreateCampaign(actId, token);
