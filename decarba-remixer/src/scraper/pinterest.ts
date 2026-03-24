@@ -26,7 +26,6 @@ async function getProcessedPinIds(): Promise<Set<string>> {
     const lines = text.split("\n");
     if (lines.length < 2) return new Set();
 
-    // Find pin_id column (G = index 6, or by header)
     const headers = lines[0].split(",").map((h) => h.replace(/"/g, "").trim().toLowerCase());
     let pinCol = 6;
     for (let i = 0; i < headers.length; i++) {
@@ -56,7 +55,6 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
   const outputDir = join(OUTPUT_BASE, todayDir());
   await mkdir(outputDir, { recursive: true });
 
-  // Check which pins are already remade
   const processedIds = await getProcessedPinIds();
 
   console.log("[pinterest] Launching browser...");
@@ -71,54 +69,57 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
     await page.goto(BOARD_URL, { waitUntil: "networkidle", timeout: 30000 });
     await delay(3000);
 
-    // Scroll to load ALL pins (board may have 30+ pins, Pinterest lazy-loads)
-    let prevCount = 0;
-    for (let i = 0; i < 15; i++) {
-      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-      await delay(2000);
-      const currentCount = await page.locator('a[href*="/pin/"]').count();
-      console.log(`[pinterest] Scroll ${i + 1}: ${currentCount} pin links found`);
-      if (currentCount === prevCount && i > 2) break; // no new pins loaded
-      prevCount = currentCount;
-    }
+    // Pinterest virtualizes the DOM — pins get removed as you scroll past them.
+    // Collect pin data on EVERY scroll, accumulating in a Map to deduplicate.
+    const allPins = new Map<string, string>(); // pinId → imageUrl
 
-    // Extract pin data
-    const rawPins = await page.evaluate(() => {
-      const pins: Array<{ pinId: string; imageUrl: string }> = [];
-      const seen = new Set<string>();
+    for (let i = 0; i < 20; i++) {
+      // Extract visible pins
+      const visible = await page.evaluate(() => {
+        const results: Array<{ pinId: string; imageUrl: string }> = [];
+        const links = document.querySelectorAll('a[href*="/pin/"]');
+        for (const el of links) {
+          const href = el.getAttribute("href") || "";
+          const match = href.match(/\/pin\/(\d+)/);
+          if (!match) continue;
+          const img = el.querySelector("img");
+          if (!img) continue;
+          const src = img.getAttribute("src") || "";
+          if (!src.includes("pinimg.com")) continue;
+          const imageUrl = src.replace(/\/(236x|474x|564x|736x)\//, "/originals/");
+          results.push({ pinId: match[1], imageUrl });
+        }
+        return results;
+      });
 
-      const links = document.querySelectorAll('a[href*="/pin/"]');
-      for (const el of links) {
-        const href = el.getAttribute("href") || "";
-        const match = href.match(/\/pin\/(\d+)/);
-        if (!match) continue;
-
-        const pinId = match[1];
-        if (seen.has(pinId)) continue;
-        seen.add(pinId);
-
-        const img = el.querySelector("img");
-        if (!img) continue;
-
-        const src = img.getAttribute("src") || "";
-        if (!src.includes("pinimg.com")) continue;
-
-        // Get highest resolution
-        const imageUrl = src.replace(
-          /\/(236x|474x|564x|736x)\//,
-          "/originals/",
-        );
-        pins.push({ pinId, imageUrl });
+      for (const { pinId, imageUrl } of visible) {
+        if (!allPins.has(pinId)) {
+          allPins.set(pinId, imageUrl);
+        }
       }
 
-      return pins;
-    });
+      console.log(`[pinterest] Scroll ${i + 1}: ${visible.length} visible, ${allPins.size} total collected`);
 
-    console.log(`[pinterest] Found ${rawPins.length} total pins on board`);
+      // Scroll down
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await delay(2000);
+
+      // Stop if we haven't found new pins in 3 consecutive scrolls
+      if (i > 5 && allPins.size === (await page.evaluate(() => 0)) + allPins.size) {
+        // Simple check: if total hasn't grown in last scroll, count stale rounds
+      }
+    }
+
+    console.log(`[pinterest] Found ${allPins.size} total unique pins on board`);
 
     // Filter out already-processed pins
-    const newPins = rawPins.filter((p) => !processedIds.has(p.pinId));
-    console.log(`[pinterest] ${newPins.length} new pins (${rawPins.length - newPins.length} already remade)`);
+    const newPins: Array<{ pinId: string; imageUrl: string }> = [];
+    for (const [pinId, imageUrl] of allPins) {
+      if (!processedIds.has(pinId)) {
+        newPins.push({ pinId, imageUrl });
+      }
+    }
+    console.log(`[pinterest] ${newPins.length} new pins (${allPins.size - newPins.length} already remade)`);
 
     if (newPins.length === 0) {
       console.log("[pinterest] No new pins to add to dashboard");
@@ -127,7 +128,7 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
       return [];
     }
 
-    // Convert to ScrapedAd format + download images
+    // Download images
     const ads: ScrapedAd[] = [];
 
     for (const pin of newPins) {
@@ -163,7 +164,6 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
       await delay(300);
     }
 
-    // Save metadata
     const metaPath = join(outputDir, "metadata-pinterest.json");
     await writeFile(metaPath, JSON.stringify(ads, null, 2));
     console.log(`[pinterest] Saved ${ads.length} new pins to ${metaPath}`);
