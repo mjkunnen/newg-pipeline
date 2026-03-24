@@ -1,0 +1,30 @@
+name: Daily Pinterest Remake
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 08:00 CET (06:00 UTC)
+  workflow_dispatch: # manual trigger
+
+jobs:
+  pinterest-remake:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install requests python-dotenv
+
+      - name: Run Pinterest remake pipeline
+        env:
+          FAL_KEY: ${{ secrets.FAL_KEY }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          PINTEREST_APPS_SCRIPT_URL: ${{ secrets.PINTEREST_APPS_SCRIPT_URL }}
+        run: python pipeline/cloud_pinterest.py --max 10
