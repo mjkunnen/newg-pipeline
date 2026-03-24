@@ -82,10 +82,14 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
+      - name: Checkout latest
         uses: actions/checkout@v4
         with:
           ref: master
+          fetch-depth: 1
+
+      - name: Pull latest (after scrape push)
+        run: git pull origin master
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
