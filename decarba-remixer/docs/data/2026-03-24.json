@@ -33,9 +33,9 @@
       "downloadUrl": "creatives/2026-03-24/pinterest_1003176885764265947.jpg"
     },
     {
-      "id": "pinterest_31736372372324611",
+      "id": "pinterest_9359111721192099",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_31736372372324611.jpg",
+      "thumbPath": "thumbs/pinterest_9359111721192099.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -45,7 +45,7 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_31736372372324611.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_9359111721192099.jpg"
     },
     {
       "id": "pinterest_49398927159618566",
@@ -78,79 +78,94 @@
       "downloadUrl": "creatives/2026-03-24/pinterest_1055599909138115.jpg"
     },
     {
-      "id": "tiktok_aightfits_clo_7619929270860680468",
+      "id": "pinterest_3870349673145175",
       "type": "image",
-      "thumbPath": "thumbs/tiktok_aightfits_clo_7619929270860680468.jpg",
-      "adCopy": "@aightfits_clo — 6 slides — all clothes from @Zeroux \n\n#matchyfits #matchingoutfit #outfitinspo #ootd #clean ",
-      "reach": 15400,
-      "reachFormatted": "15.4K",
+      "thumbPath": "thumbs/pinterest_3870349673145175.jpg",
+      "adCopy": "",
+      "reach": 0,
+      "reachFormatted": "0",
       "reachCost": "",
       "daysActive": 0,
-      "startDate": "2026-03-22",
+      "startDate": "2026-03-24",
       "platforms": [
-        "tiktok"
+        "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619929270860680468.zip"
+      "downloadUrl": "creatives/2026-03-24/pinterest_3870349673145175.jpg"
     },
     {
-      "id": "tiktok_strhvn2_7620097083105627414",
+      "id": "tiktok_aightfits_clo_7620286710227668245",
       "type": "image",
-      "thumbPath": "thumbs/tiktok_strhvn2_7620097083105627414.jpg",
-      "adCopy": "@strhvn2 — 5 slides — outfitinspo…\n#streetwear #fitcheck #outfitinspo #StreetwearTok ",
-      "reach": 13300,
-      "reachFormatted": "13.3K",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-22",
-      "platforms": [
-        "tiktok"
-      ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_strhvn2_7620097083105627414.zip"
-    },
-    {
-      "id": "tiktok_aightfits_clo_7619901690216451348",
-      "type": "image",
-      "thumbPath": "thumbs/tiktok_aightfits_clo_7619901690216451348.jpg",
-      "adCopy": "@aightfits_clo — 5 slides — call fits from @Zeroux \n\n#clean #outfitinspo #ootd #ukdrip #bro ",
-      "reach": 12800,
-      "reachFormatted": "12.8K",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-22",
-      "platforms": [
-        "tiktok"
-      ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619901690216451348.zip"
-    },
-    {
-      "id": "tiktok_aightfits_clo_7618956630431943957",
-      "type": "image",
-      "thumbPath": "thumbs/tiktok_aightfits_clo_7618956630431943957.jpg",
-      "adCopy": "@aightfits_clo — 5 slides — ALL FITS FROM @Zeroux \n\n#clean #outfitideas #outfitinspo #summer ",
-      "reach": 10000,
-      "reachFormatted": "10.0K",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-19",
-      "platforms": [
-        "tiktok"
-      ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7618956630431943957.zip"
-    },
-    {
-      "id": "tiktok_aightfits_clo_7620504172655283477",
-      "type": "image",
-      "thumbPath": "thumbs/tiktok_aightfits_clo_7620504172655283477.jpg",
-      "adCopy": "@aightfits_clo — 5 slides — all fits from @Zeroux \n\n#outfitinspo #matchyfits #matchingoutfit #ootd #outfitideas ",
-      "reach": 9926,
-      "reachFormatted": "9.9K",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7620286710227668245.jpg",
+      "adCopy": "@aightfits_clo — 5 slides — fits from @Zeroux \n\n#outfitinspo #outfitinspo #outfitideas #fashioninspo #cleanoutfitinspo ",
+      "reach": 9266,
+      "reachFormatted": "9.3K",
       "reachCost": "",
       "daysActive": 0,
       "startDate": "2026-03-23",
       "platforms": [
         "tiktok"
       ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7620504172655283477.zip"
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7620286710227668245.zip"
+    },
+    {
+      "id": "tiktok_outfitinspostreet_7618219641520901398",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfitinspostreet_7618219641520901398.jpg",
+      "adCopy": "@outfitinspostreet — 9 slides — These are too fire🔥 | #outfitinspo #streetwear #fashion #menswear #fyp ",
+      "reach": 9058,
+      "reachFormatted": "9.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-17",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_outfitinspostreet_7618219641520901398.zip"
+    },
+    {
+      "id": "tiktok_outfitinspostreet_7618647974524062998",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfitinspostreet_7618647974524062998.jpg",
+      "adCopy": "@outfitinspostreet — 10 slides — These are genuinely fire🔥 | #outfitinspo #fashion #streetwear #menswear #fyp ",
+      "reach": 7822,
+      "reachFormatted": "7.8K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-18",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_outfitinspostreet_7618647974524062998.zip"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7619198282106981653",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619198282106981653.jpg",
+      "adCopy": "@aightfits_clo — 4 slides — CLOTHES FROM @2K WRLD \n\n#clean #outfitideas #outfitinspo #ootd #fashioninspo ",
+      "reach": 6056,
+      "reachFormatted": "6.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-20",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619198282106981653.zip"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7618990280624147733",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7618990280624147733.jpg",
+      "adCopy": "@aightfits_clo — 4 slides — fits from @2K WRLD \n\n#clean #outfitideas #outfitinspo #ootd #fashioninspo ",
+      "reach": 5166,
+      "reachFormatted": "5.2K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-19",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7618990280624147733.zip"
     }
   ]
 }
