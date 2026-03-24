@@ -160,7 +160,8 @@ async def run_sync():
                     existing_ad.status = ad["status"]
                     existing_ad.name = ad["name"]
                     # Re-fetch image URL if missing or still a tiny thumbnail
-                    if creative_id and not existing_ad.creative_url:
+                    needs_refetch = not existing_ad.creative_url or "p64x64" in (existing_ad.creative_url or "")
+                    if creative_id and needs_refetch:
                         try:
                             existing_ad.creative_url = await meta_client.fetch_creative_thumbnail(creative_id)
                         except Exception:
