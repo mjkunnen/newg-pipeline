@@ -20,6 +20,11 @@ const THUMB_WIDTH = 400;
 const MAX_DAYS_KEEP = 7;
 const SEEN_PPSPY_PATH = join(DATA_DIR, "seen-ppspy.json");
 
+interface SeenPpspy {
+  urls: string[];
+  adCopies: string[];
+}
+
 async function findAllScrapes(): Promise<{ date: string; ads: ScrapedAd[] }[]> {
   if (!existsSync(RAW_DIR)) return [];
 
@@ -168,17 +173,25 @@ async function generate() {
   await mkdir(THUMBS_DIR, { recursive: true });
   await mkdir(CREATIVES_DIR, { recursive: true });
 
-  // Load seen PPSpy creative URLs (persistent across runs)
-  let seenPpspy: string[] = [];
+  // Load seen PPSpy data (persistent across runs)
+  // Track both creative URLs and ad copy text to catch same campaigns with different creative variants
+  let seenData: SeenPpspy = { urls: [], adCopies: [] };
   if (existsSync(SEEN_PPSPY_PATH)) {
     try {
-      seenPpspy = JSON.parse(await readFile(SEEN_PPSPY_PATH, "utf-8"));
+      const raw = JSON.parse(await readFile(SEEN_PPSPY_PATH, "utf-8"));
+      // Migrate from old format (plain string array) to new format
+      if (Array.isArray(raw)) {
+        seenData = { urls: raw, adCopies: [] };
+      } else {
+        seenData = raw;
+      }
     } catch {
-      seenPpspy = [];
+      seenData = { urls: [], adCopies: [] };
     }
   }
-  const seenPpspyUrls = new Set<string>(seenPpspy);
-  console.log(`[dashboard] ${seenPpspyUrls.size} previously seen PPSpy ads`);
+  const seenPpspyUrls = new Set<string>(seenData.urls);
+  const seenPpspyCopies = new Set<string>(seenData.adCopies);
+  console.log(`[dashboard] ${seenPpspyUrls.size} seen URLs, ${seenPpspyCopies.size} seen ad copies`);
 
   const dateIndex: DateEntry[] = [];
   const keepDates: string[] = [];
@@ -195,16 +208,21 @@ async function generate() {
     const ppspyRaw = ads.filter((a) => !a.id.startsWith("pinterest_"));
     const pinterestRaw = ads.filter((a) => a.id.startsWith("pinterest_"));
 
-    // Filter PPSpy: remove already-seen creatives, then take top by reach
-    const newPpspy = ppspyRaw.filter((a) => !seenPpspyUrls.has(a.creativeUrl));
+    // Filter PPSpy: remove already-seen by URL OR ad copy (same campaign = same ad copy)
+    const newPpspy = ppspyRaw.filter((a) => {
+      const copyKey = (a.adCopy || "").trim().toLowerCase();
+      return !seenPpspyUrls.has(a.creativeUrl) && (!copyKey || !seenPpspyCopies.has(copyKey));
+    });
     console.log(`[dashboard] PPSpy: ${newPpspy.length} new of ${ppspyRaw.length} (${ppspyRaw.length - newPpspy.length} already shown before)`);
 
     // Sort by reach, no fixed limit — show whatever is new
     newPpspy.sort((a, b) => b.reach - a.reach);
 
-    // Mark all PPSpy ads as seen (including ones we filtered out)
+    // Mark all PPSpy ads as seen (URLs + ad copies)
     for (const ad of ppspyRaw) {
       seenPpspyUrls.add(ad.creativeUrl);
+      const copyKey = (ad.adCopy || "").trim().toLowerCase();
+      if (copyKey) seenPpspyCopies.add(copyKey);
     }
 
     // Combine new PPSpy + Pinterest pins
@@ -247,9 +265,13 @@ async function generate() {
     });
   }
 
-  // Save seen PPSpy URLs
-  await writeFile(SEEN_PPSPY_PATH, JSON.stringify([...seenPpspyUrls], null, 2));
-  console.log(`[dashboard] Seen PPSpy ads: ${seenPpspyUrls.size} total`);
+  // Save seen PPSpy data (URLs + ad copies)
+  const updatedSeen: SeenPpspy = {
+    urls: [...seenPpspyUrls],
+    adCopies: [...seenPpspyCopies],
+  };
+  await writeFile(SEEN_PPSPY_PATH, JSON.stringify(updatedSeen, null, 2));
+  console.log(`[dashboard] Seen PPSpy: ${seenPpspyUrls.size} URLs, ${seenPpspyCopies.size} ad copies`);
 
   // Cleanup old creatives (keep only recent dates)
   await cleanupOldCreatives(keepDates);
