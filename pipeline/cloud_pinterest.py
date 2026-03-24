@@ -141,7 +141,7 @@ def post_remake_to_sheet(pin_id, pin_url, outfit_combo, status, image_url, filen
 # Pinterest — Playwright headless browser
 # ---------------------------------------------------------------------------
 
-BOARD_URL = "https://www.pinterest.com/newgarmentsclo/inspo-board/"
+BOARD_URL = "https://www.pinterest.com/MyGarmentsEU/ads-newgarments/"
 
 def fetch_board_pins():
     """Fetch pins from Pinterest board using Playwright (scrolls to load all pins)."""
