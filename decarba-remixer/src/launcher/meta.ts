@@ -8,6 +8,90 @@ const CAMPAIGNS_DIR = join(import.meta.dirname, "../../output/campaigns");
 const CAMPAIGN_NAME = "NEWG-Scaling";
 const ADSET_NAME = "AdSet_Broad";
 
+const BRAND_TONE = `You are the copywriter for NEWGARMENTS, a premium Gen Z streetwear brand.
+
+Brand voice:
+- Confident, bold, direct — never try-hard or cringe
+- Short punchy sentences. No fluff, no filler
+- Subtle flex energy — the clothes speak for themselves
+- Mix English with light streetwear slang
+- Never use "🔥" or "💯" — keep emojis minimal and tasteful (max 1-2)
+- Never say "limited edition" or "don't miss out" — that's fast fashion energy
+- Premium feel: quality over hype, style over trends
+
+Examples of good NEWGARMENTS copy:
+- "New drop just hit. You already know."
+- "Built different. Worn by the ones who get it."
+- "Your wardrobe called. It needs an upgrade."
+- "Premium streetwear. No compromises."`;
+
+interface AdCopyResult {
+  primaryText: string;
+  headline: string;
+}
+
+async function rewriteAdCopy(
+  originalCopy: string,
+  landingPage: string,
+): Promise<AdCopyResult> {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    console.log("[meta] No OPENAI_API_KEY, using fallback copy");
+    return {
+      primaryText: originalCopy.replace(/decarba/gi, "NEWGARMENTS"),
+      headline: "NEWGARMENTS",
+    };
+  }
+
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      temperature: 0.8,
+      messages: [
+        { role: "system", content: BRAND_TONE },
+        {
+          role: "user",
+          content: `Rewrite this competitor ad copy for NEWGARMENTS. Keep the same intent/offer but make it ours.
+
+Original copy: "${originalCopy}"
+Landing page: ${landingPage}
+
+Return JSON only, no markdown:
+{"primaryText": "the main ad text (2-3 sentences max, under 125 chars ideal)", "headline": "short punchy headline (under 40 chars)"}`,
+        },
+      ],
+    }),
+  });
+
+  if (!res.ok) {
+    console.error("[meta] OpenAI rewrite failed:", await res.text());
+    return {
+      primaryText: originalCopy.replace(/decarba/gi, "NEWGARMENTS"),
+      headline: "NEWGARMENTS",
+    };
+  }
+
+  const data = await res.json();
+  const content = data.choices?.[0]?.message?.content || "";
+  try {
+    const cleaned = content.replace(/```json?\n?|\n?```/g, "").trim();
+    const parsed: AdCopyResult = JSON.parse(cleaned);
+    console.log(`[meta] Rewritten copy: "${parsed.headline}" / "${parsed.primaryText.slice(0, 50)}..."`);
+    return parsed;
+  } catch {
+    console.error("[meta] Failed to parse rewritten copy, using fallback");
+    return {
+      primaryText: originalCopy.replace(/decarba/gi, "NEWGARMENTS"),
+      headline: "NEWGARMENTS",
+    };
+  }
+}
+
 function todayDir(): string {
   return new Date().toISOString().split("T")[0];
 }
@@ -228,8 +312,10 @@ export async function launchBatch(
   for (const input of inputs) {
     const isVideo = input.creativeType === "video";
     const link = input.landingPage || "https://newgarments.nl";
-    const adCopy = input.adCopy?.replace(/decarba/gi, "NEWGARMENTS") ||
-      "Discover our latest streetwear collection. Premium quality, unmatched style.";
+    const { primaryText: adCopy, headline } = await rewriteAdCopy(
+      input.adCopy || "Discover our latest streetwear collection.",
+      link,
+    );
 
     // Upload creative
     const media = await uploadCreative(input.creativePath, isVideo, token, adAccountId);
@@ -246,7 +332,7 @@ export async function launchBatch(
               video_data: {
                 video_id: media.id,
                 message: adCopy,
-                title: "NEWGARMENTS",
+                title: headline,
                 call_to_action: { type: "SHOP_NOW", value: { link } },
                 image_url: media.thumbnailUrl,
               },
@@ -254,6 +340,7 @@ export async function launchBatch(
           : {
               link_data: {
                 message: adCopy,
+                name: headline,
                 link,
                 image_hash: media.id,
                 call_to_action: { type: "SHOP_NOW" },

@@ -39,6 +39,7 @@ jobs:
           META_INSTAGRAM_ACCOUNT_ID=${{ secrets.META_INSTAGRAM_ACCOUNT_ID }}
           META_PIXEL_ID=${{ secrets.META_PIXEL_ID }}
           META_PAGE_ID=${{ secrets.META_PAGE_ID }}
+          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
           GOOGLE_SHEET_ID=${{ secrets.GOOGLE_SHEET_ID }}
           ENVEOF
 
