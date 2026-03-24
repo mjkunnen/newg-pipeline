@@ -18,6 +18,7 @@ const CREATIVES_DIR = join(DOCS_DIR, "creatives");
 const COMPETITOR = "decarba";
 const THUMB_WIDTH = 400;
 const MAX_DAYS_KEEP = 7;
+const SEEN_PPSPY_PATH = join(DATA_DIR, "seen-ppspy.json");
 
 async function findAllScrapes(): Promise<{ date: string; ads: ScrapedAd[] }[]> {
   if (!existsSync(RAW_DIR)) return [];
@@ -167,9 +168,17 @@ async function generate() {
   await mkdir(THUMBS_DIR, { recursive: true });
   await mkdir(CREATIVES_DIR, { recursive: true });
 
-  // Dedup is handled differently per source:
-  // - PPSpy ads: always show top 5 by reach (they change daily in stats)
-  // - Pinterest pins: filtered by tracking sheet in the scraper already, no extra dedup needed
+  // Load seen PPSpy creative URLs (persistent across runs)
+  let seenPpspy: string[] = [];
+  if (existsSync(SEEN_PPSPY_PATH)) {
+    try {
+      seenPpspy = JSON.parse(await readFile(SEEN_PPSPY_PATH, "utf-8"));
+    } catch {
+      seenPpspy = [];
+    }
+  }
+  const seenPpspyUrls = new Set<string>(seenPpspy);
+  console.log(`[dashboard] ${seenPpspyUrls.size} previously seen PPSpy ads`);
 
   const dateIndex: DateEntry[] = [];
   const keepDates: string[] = [];
@@ -182,9 +191,28 @@ async function generate() {
     const creativeDateDir = join(CREATIVES_DIR, date);
     await mkdir(creativeDateDir, { recursive: true });
 
+    // Split raw ads into PPSpy and Pinterest
+    const ppspyRaw = ads.filter((a) => !a.id.startsWith("pinterest_"));
+    const pinterestRaw = ads.filter((a) => a.id.startsWith("pinterest_"));
+
+    // Filter PPSpy: remove already-seen creatives, then take top by reach
+    const newPpspy = ppspyRaw.filter((a) => !seenPpspyUrls.has(a.creativeUrl));
+    console.log(`[dashboard] PPSpy: ${newPpspy.length} new of ${ppspyRaw.length} (${ppspyRaw.length - newPpspy.length} already shown before)`);
+
+    // Sort by reach, no fixed limit — show whatever is new
+    newPpspy.sort((a, b) => b.reach - a.reach);
+
+    // Mark all PPSpy ads as seen (including ones we filtered out)
+    for (const ad of ppspyRaw) {
+      seenPpspyUrls.add(ad.creativeUrl);
+    }
+
+    // Combine new PPSpy + Pinterest pins
+    const adsToShow = [...newPpspy, ...pinterestRaw];
+
     // Generate thumbnails + copy creatives
     const dashboardAds: DashboardAd[] = [];
-    for (const ad of ads) {
+    for (const ad of adsToShow) {
       const thumbPath = await generateThumbnail(ad, THUMBS_DIR);
       const creativeFilename = await copyCreative(ad, creativeDateDir);
       const downloadPath = creativeFilename ? `creatives/${date}/${creativeFilename}` : "";
@@ -203,16 +231,6 @@ async function generate() {
       });
     }
 
-    // Split PPSpy ads (have reach) and Pinterest pins (reach=0, id starts with pinterest_)
-    const ppspyAds = dashboardAds.filter((a) => !a.id.startsWith("pinterest_"));
-    const pinterestAds = dashboardAds.filter((a) => a.id.startsWith("pinterest_"));
-
-    // Keep top 5 PPSpy ads by reach + all Pinterest pins
-    ppspyAds.sort((a, b) => b.reach - a.reach);
-    ppspyAds.splice(5);
-    dashboardAds.length = 0;
-    dashboardAds.push(...ppspyAds, ...pinterestAds);
-
     // Write per-date JSON
     const dateJsonPath = join(DATA_DIR, `${date}.json`);
     await writeFile(
@@ -228,6 +246,10 @@ async function generate() {
       imageCount: dashboardAds.length - videoCount,
     });
   }
+
+  // Save seen PPSpy URLs
+  await writeFile(SEEN_PPSPY_PATH, JSON.stringify([...seenPpspyUrls], null, 2));
+  console.log(`[dashboard] Seen PPSpy ads: ${seenPpspyUrls.size} total`);
 
   // Cleanup old creatives (keep only recent dates)
   await cleanupOldCreatives(keepDates);
