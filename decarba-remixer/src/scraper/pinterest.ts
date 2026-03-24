@@ -71,9 +71,22 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
 
     // Pinterest virtualizes the DOM — pins get removed as you scroll past them.
     // Collect pin data on EVERY scroll, accumulating in a Map to deduplicate.
+    // IMPORTANT: only collect pins from the board grid, not "More ideas" below.
     const allPins = new Map<string, string>(); // pinId → imageUrl
 
-    for (let i = 0; i < 20; i++) {
+    // First, get the board pin count from the page header
+    const boardPinCount = await page.evaluate(() => {
+      // Look for text like "31 Pins" in the page
+      const allText = document.body.innerText;
+      const match = allText.match(/(\d+)\s*Pins/i);
+      return match ? parseInt(match[1]) : 50; // fallback to 50
+    });
+    console.log(`[pinterest] Board says ${boardPinCount} pins`);
+
+    let staleRounds = 0;
+    for (let i = 0; i < 15; i++) {
+      const prevSize = allPins.size;
+
       // Extract visible pins
       const visible = await page.evaluate(() => {
         const results: Array<{ pinId: string; imageUrl: string }> = [];
@@ -100,14 +113,25 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
 
       console.log(`[pinterest] Scroll ${i + 1}: ${visible.length} visible, ${allPins.size} total collected`);
 
-      // Scroll down
+      // Stop once we've collected at least the board's pin count
+      if (allPins.size >= boardPinCount) {
+        console.log(`[pinterest] Reached board pin count (${boardPinCount}), stopping scroll`);
+        break;
+      }
+
+      // Stop if no new pins found for 2 consecutive scrolls
+      if (allPins.size === prevSize) {
+        staleRounds++;
+        if (staleRounds >= 2) {
+          console.log(`[pinterest] No new pins in ${staleRounds} scrolls, stopping`);
+          break;
+        }
+      } else {
+        staleRounds = 0;
+      }
+
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
       await delay(2000);
-
-      // Stop if we haven't found new pins in 3 consecutive scrolls
-      if (i > 5 && allPins.size === (await page.evaluate(() => 0)) + allPins.size) {
-        // Simple check: if total hasn't grown in last scroll, count stale rounds
-      }
     }
 
     console.log(`[pinterest] Found ${allPins.size} total unique pins on board`);
