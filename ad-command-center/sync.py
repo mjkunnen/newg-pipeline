@@ -71,21 +71,25 @@ async def run_sync():
                 campaign_id = ad.get("campaign", {}).get("id") or ad.get("campaign_id")
                 creative_id = ad.get("creative", {}).get("id")
 
-                # Upsert ad set if we have data
+                # Upsert ad set if we have data (only if campaign exists)
                 if adset_id and adset_data.get("name"):
-                    existing_aset = db.query(AdSet).filter_by(id=adset_id).first()
-                    if not existing_aset:
-                        db.add(AdSet(
-                            id=adset_id, channel="meta", name=adset_data["name"],
-                            campaign_id=campaign_id, status=adset_data.get("status", "ACTIVE"),
-                            daily_budget=int(adset_data.get("daily_budget", 0))
-                        ))
-                    else:
-                        existing_aset.name = adset_data["name"]
-                        existing_aset.status = adset_data.get("status", "ACTIVE")
+                    campaign_exists = not campaign_id or db.query(Campaign).filter_by(id=campaign_id).first()
+                    if campaign_exists:
+                        existing_aset = db.query(AdSet).filter_by(id=adset_id).first()
+                        if not existing_aset:
+                            db.add(AdSet(
+                                id=adset_id, channel="meta", name=adset_data["name"],
+                                campaign_id=campaign_id, status=adset_data.get("status", "ACTIVE"),
+                                daily_budget=int(adset_data.get("daily_budget", 0))
+                            ))
+                            db.flush()
+                        else:
+                            existing_aset.name = adset_data["name"]
+                            existing_aset.status = adset_data.get("status", "ACTIVE")
 
-                # Upsert ad
+                # Upsert ad (only set ad_set_id if it exists in DB)
                 existing_ad = db.query(Ad).filter_by(id=ad_id).first()
+                safe_adset_id = adset_id if (adset_id and db.query(AdSet).filter_by(id=adset_id).first()) else None
                 if not existing_ad:
                     thumb_url = None
                     if creative_id:
@@ -95,7 +99,7 @@ async def run_sync():
                             pass
                     db.add(Ad(
                         id=ad_id, channel="meta", name=ad["name"],
-                        ad_set_id=adset_id, status=ad["status"],
+                        ad_set_id=safe_adset_id, status=ad["status"],
                         creative_url=thumb_url,
                     ))
                 else:
