@@ -45,6 +45,7 @@ jobs:
           META_ACCESS_TOKEN=${{ secrets.META_ACCESS_TOKEN }}
           META_AD_ACCOUNT_ID=${{ secrets.META_AD_ACCOUNT_ID }}
           ZAPIER_WEBHOOK_URL=${{ secrets.ZAPIER_WEBHOOK_URL }}
+          APIFY_TOKEN=${{ secrets.APIFY_TOKEN }}
           DASHBOARD_AUTO_PUSH=false
           ENVEOF
 
@@ -59,6 +60,10 @@ jobs:
         run: npm run scrape:pinterest
         timeout-minutes: 5
 
+      - name: Scrape TikTok carousels
+        run: npm run scrape:tiktok
+        timeout-minutes: 12
+
       - name: Generate dashboard
         run: npm run dashboard
 
@@ -67,7 +72,7 @@ jobs:
           cd ..
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add decarba-remixer/docs/
+          git add decarba-remixer/docs/ scout/processed_tiktok.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else

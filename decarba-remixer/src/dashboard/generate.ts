@@ -64,6 +64,19 @@ async function findAllScrapes(): Promise<{ date: string; ads: ScrapedAd[] }[]> {
       }
     }
 
+    // Load TikTok carousels
+    const tiktokPath = join(RAW_DIR, date, "metadata-tiktok.json");
+    if (existsSync(tiktokPath)) {
+      try {
+        const raw = await readFile(tiktokPath, "utf-8");
+        const tiktokAds: ScrapedAd[] = JSON.parse(raw);
+        ads.push(...tiktokAds);
+        console.log(`[dashboard] ${date}: loaded ${tiktokAds.length} TikTok carousels`);
+      } catch {
+        console.log(`[dashboard] Skipping ${date}/metadata-tiktok.json: invalid`);
+      }
+    }
+
     if (ads.length > 0) {
       results.push({ date, ads });
     }
@@ -204,9 +217,10 @@ async function generate() {
     const creativeDateDir = join(CREATIVES_DIR, date);
     await mkdir(creativeDateDir, { recursive: true });
 
-    // Split raw ads into PPSpy and Pinterest
-    const ppspyRaw = ads.filter((a) => !a.id.startsWith("pinterest_"));
+    // Split raw ads into PPSpy, Pinterest, and TikTok
+    const ppspyRaw = ads.filter((a) => !a.id.startsWith("pinterest_") && !a.id.startsWith("tiktok_"));
     const pinterestRaw = ads.filter((a) => a.id.startsWith("pinterest_"));
+    const tiktokRaw = ads.filter((a) => a.id.startsWith("tiktok_"));
 
     // Filter PPSpy: remove already-seen by URL OR ad copy (same campaign = same ad copy)
     const newPpspy = ppspyRaw.filter((a) => {
@@ -225,8 +239,8 @@ async function generate() {
       if (copyKey) seenPpspyCopies.add(copyKey);
     }
 
-    // Combine new PPSpy + Pinterest pins
-    const adsToShow = [...newPpspy, ...pinterestRaw];
+    // Combine new PPSpy + Pinterest pins + TikTok carousels
+    const adsToShow = [...newPpspy, ...pinterestRaw, ...tiktokRaw];
 
     // Generate thumbnails + copy creatives
     const dashboardAds: DashboardAd[] = [];
