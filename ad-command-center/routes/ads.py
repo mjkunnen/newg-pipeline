@@ -13,7 +13,7 @@ router = APIRouter(dependencies=[Depends(verify_auth)])
 
 @router.get("/api/ads")
 def get_ads(db: Session = Depends(get_db)):
-    ads = db.query(Ad).all()
+    ads = db.query(Ad).filter(Ad.id != "account").all()
     result = []
     for ad in ads:
         latest = db.query(Snapshot).filter_by(ad_id=ad.id).order_by(Snapshot.timestamp.desc()).first()
