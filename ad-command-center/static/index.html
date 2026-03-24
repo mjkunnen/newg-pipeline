@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWG Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1a1a2e;--card:#16213e;--border:#333;
+  --accent:#e04400;--accent-dim:rgba(224,68,0,.15);
+  --green:#4ade80;--red:#ef4444;--amber:#f59e0b;--blue:#3b82f6;
+  --text:#e2e8f0;--text-dim:#94a3b8;--text-muted:#64748b;
+  --radius:12px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
+a{color:var(--accent);text-decoration:none}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ── Login ── */
+#login-screen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;position:fixed;inset:0;z-index:9999;background:var(--bg);
+}
+#login-screen.hidden{display:none}
+.login-box{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:48px 40px;width:380px;max-width:90vw;text-align:center;
+  animation:fadeUp .4s ease;
+}
+.login-box h1{font-size:1.5rem;font-weight:700;margin-bottom:6px}
+.login-box h1 span{color:var(--accent)}
+.login-box p{color:var(--text-dim);font-size:.875rem;margin-bottom:28px}
+.login-box input{
+  width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-family:inherit;font-size:.95rem;
+  outline:none;transition:border .2s;
+}
+.login-box input:focus{border-color:var(--accent)}
+.login-box button{
+  width:100%;margin-top:16px;padding:12px;background:var(--accent);color:#fff;
+  border:none;border-radius:var(--radius-sm);font-family:inherit;font-size:.95rem;
+  font-weight:600;cursor:pointer;transition:opacity .2s;
+}
+.login-box button:hover{opacity:.85}
+.login-error{color:var(--red);font-size:.8rem;margin-top:12px;min-height:1.2em}
+
+/* ── Dashboard ── */
+#dashboard{opacity:0;transition:opacity .4s}
+#dashboard.visible{opacity:1}
+
+/* Header */
+.header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(26,26,46,.85);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);padding:0 32px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.header-title{font-size:1.25rem;font-weight:700;letter-spacing:-.02em}
+.header-title span{color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:16px}
+.sync-info{font-size:.75rem;color:var(--text-muted);display:flex;align-items:center;gap:6px}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.sync-dot.stale{background:var(--amber)}
+.btn-icon{
+  background:none;border:1px solid var(--border);border-radius:var(--radius-sm);
+  color:var(--text);cursor:pointer;width:36px;height:36px;display:flex;
+  align-items:center;justify-content:center;position:relative;transition:border-color .2s,background .2s;
+}
+.btn-icon:hover{border-color:var(--accent);background:var(--accent-dim)}
+.btn-icon svg{width:18px;height:18px}
+.notif-badge{
+  position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;
+  font-size:.65rem;font-weight:700;min-width:16px;height:16px;
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  padding:0 4px;
+}
+.notif-badge.hidden{display:none}
+
+/* Notification dropdown */
+.notif-dropdown{
+  position:absolute;top:44px;right:0;width:340px;max-height:400px;overflow-y:auto;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:0 16px 48px rgba(0,0,0,.4);display:none;z-index:200;
+}
+.notif-dropdown.open{display:block;animation:fadeUp .2s ease}
+.notif-dropdown-header{padding:14px 16px;border-bottom:1px solid var(--border);font-weight:600;font-size:.85rem}
+.notif-item{
+  padding:12px 16px;border-bottom:1px solid rgba(51,51,51,.5);
+  display:flex;align-items:flex-start;gap:10px;font-size:.8rem;transition:background .15s;
+}
+.notif-item:hover{background:rgba(255,255,255,.03)}
+.notif-item .notif-body{flex:1}
+.notif-item .notif-msg{color:var(--text);margin-bottom:2px}
+.notif-item .notif-time{color:var(--text-muted);font-size:.7rem}
+.notif-dismiss{
+  background:none;border:none;color:var(--text-muted);cursor:pointer;
+  font-size:1rem;line-height:1;padding:2px;flex-shrink:0;
+}
+.notif-dismiss:hover{color:var(--red)}
+.notif-empty{padding:24px;text-align:center;color:var(--text-muted);font-size:.85rem}
+
+.main{max-width:1360px;margin:0 auto;padding:28px 32px 64px}
+
+/* Section titles */
+.section-title{
+  font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;
+}
+.section-title::before{content:'';width:3px;height:20px;background:var(--accent);border-radius:2px}
+
+/* ── KPI Cards ── */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:32px}
+.kpi-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s;
+}
+.kpi-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.1)}
+.kpi-label{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.kpi-value{font-size:1.7rem;font-weight:700;margin-bottom:6px}
+.kpi-delta{font-size:.78rem;display:flex;align-items:center;gap:4px}
+.kpi-delta.up{color:var(--green)}.kpi-delta.down{color:var(--red)}
+.kpi-delta.up.inverted{color:var(--red)}.kpi-delta.down.inverted{color:var(--green)}
+.kpi-card.roas-good{border-left:3px solid var(--green)}
+.kpi-card.roas-mid{border-left:3px solid var(--amber)}
+.kpi-card.roas-bad{border-left:3px solid var(--red)}
+.kpi-card .kpi-bg-icon{
+  position:absolute;right:-8px;bottom:-8px;font-size:3.5rem;opacity:.06;pointer-events:none;
+}
+
+/* ── Chart Section ── */
+.chart-section{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;margin-bottom:32px;
+}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.chart-toggles{display:flex;gap:6px}
+.chart-toggle{
+  padding:6px 14px;font-size:.78rem;font-family:inherit;font-weight:500;
+  border:1px solid var(--border);border-radius:20px;background:transparent;
+  color:var(--text-dim);cursor:pointer;transition:all .2s;
+}
+.chart-toggle.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.chart-toggle:hover:not(.active){border-color:var(--text-muted)}
+.chart-wrap{position:relative;height:300px}
+
+/* ── Creative Grid ── */
+.grid-controls{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.sort-select{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);
+  color:var(--text);font-family:inherit;font-size:.82rem;padding:8px 12px;cursor:pointer;outline:none;
+}
+.sort-select:focus{border-color:var(--accent)}
+.ad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.ad-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;
+  display:flex;flex-direction:column;
+}
+.ad-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.ad-card.border-green{border-color:var(--green)}
+.ad-card.border-red{border-color:var(--red)}
+.ad-thumb{
+  width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--bg);display:block;
+}
+.ad-thumb-placeholder{
+  width:100%;aspect-ratio:1/1;background:linear-gradient(135deg,var(--bg),var(--card));
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-muted);font-size:.85rem;text-align:center;padding:16px;
+}
+.ad-body{padding:16px;flex:1;display:flex;flex-direction:column}
+.ad-name{font-weight:600;font-size:.9rem;margin-bottom:8px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ad-parent{font-size:.7rem;color:var(--text-muted);margin-bottom:8px;font-style:italic}
+.ad-status{
+  display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.05em;padding:3px 10px;
+  border-radius:20px;width:fit-content;margin-bottom:12px;
+}
+.ad-status.active{background:rgba(74,222,128,.12);color:var(--green)}
+.ad-status.paused{background:rgba(245,158,11,.12);color:var(--amber)}
+.ad-status.learning{background:rgba(59,130,246,.12);color:var(--blue)}
+.ad-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.ad-metric{text-align:center}
+.ad-metric-label{font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em}
+.ad-metric-value{font-size:.85rem;font-weight:600}
+.ad-actions{display:flex;gap:8px;margin-top:auto}
+.ad-btn{
+  flex:1;padding:8px;font-size:.78rem;font-family:inherit;font-weight:500;
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:transparent;color:var(--text);cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+}
+.ad-btn:hover{border-color:var(--accent);background:var(--accent-dim)}
+.ad-btn.generating{pointer-events:none;opacity:.6}
+.ad-btn .spinner{
+  width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .6s linear infinite;
+}
+
+/* ── Budget Section ── */
+.budget-section{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.budget-info h3{font-size:1rem;font-weight:600;margin-bottom:4px}
+.budget-info .budget-value{font-size:2rem;font-weight:700;color:var(--accent)}
+.budget-btn{
+  padding:10px 24px;background:var(--accent);color:#fff;border:none;
+  border-radius:var(--radius-sm);font-family:inherit;font-size:.9rem;font-weight:600;
+  cursor:pointer;transition:opacity .2s;
+}
+.budget-btn:hover{opacity:.85}
+
+/* Modal */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;z-index:500;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:32px;width:400px;max-width:90vw;animation:fadeUp .25s ease;
+}
+.modal h3{font-size:1.1rem;font-weight:700;margin-bottom:16px}
+.modal input{
+  width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-family:inherit;font-size:.95rem;
+  outline:none;margin-bottom:16px;
+}
+.modal input:focus{border-color:var(--accent)}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end}
+.modal-actions button{
+  padding:10px 20px;border-radius:var(--radius-sm);font-family:inherit;font-size:.85rem;
+  font-weight:600;cursor:pointer;transition:opacity .2s;border:none;
+}
+.modal-actions .modal-confirm{background:var(--accent);color:#fff}
+.modal-actions .modal-cancel{background:transparent;border:1px solid var(--border);color:var(--text)}
+
+/* ── Analysis Section ── */
+.analysis-section{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;margin-bottom:32px;
+}
+.analysis-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.analysis-meta{font-size:.75rem;color:var(--text-muted)}
+.analysis-btn{
+  padding:8px 18px;background:var(--accent);color:#fff;border:none;
+  border-radius:var(--radius-sm);font-family:inherit;font-size:.82rem;font-weight:600;
+  cursor:pointer;transition:opacity .2s;display:flex;align-items:center;gap:6px;
+}
+.analysis-btn:hover{opacity:.85}
+.analysis-btn .spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+.analysis-empty{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:.9rem}
+.analysis-block{margin-bottom:20px}
+.analysis-block:last-child{margin-bottom:0}
+.analysis-block-title{
+  font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--accent);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);
+}
+.analysis-block p,.analysis-block li{font-size:.85rem;color:var(--text-dim);line-height:1.7}
+.analysis-block ul{list-style:none;padding:0}
+.analysis-block ul li::before{content:"\2022";color:var(--accent);font-weight:700;margin-right:8px}
+
+/* ── Footer ── */
+.footer{
+  text-align:center;padding:32px;color:var(--text-muted);font-size:.75rem;
+  border-top:1px solid var(--border);
+}
+.footer span{color:var(--accent);font-weight:600}
+.refresh-indicator{
+  position:fixed;bottom:20px;right:20px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:8px 14px;font-size:.75rem;color:var(--text-dim);
+  display:none;align-items:center;gap:6px;z-index:300;box-shadow:0 4px 16px rgba(0,0,0,.3);
+}
+.refresh-indicator.show{display:flex}
+.refresh-indicator .spinner{width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+
+/* Loading overlay */
+.loading-overlay{
+  display:flex;align-items:center;justify-content:center;padding:60px 20px;
+  color:var(--text-muted);font-size:.9rem;gap:10px;
+}
+.loading-overlay .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.fade-in{animation:fadeIn .4s ease}
+
+/* ── Responsive ── */
+@media(max-width:1100px){
+  .kpi-row{grid-template-columns:repeat(3,1fr)}
+  .ad-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+  .header{padding:0 16px}
+  .main{padding:20px 16px 48px}
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .ad-grid{grid-template-columns:1fr}
+  .budget-section{flex-direction:column;align-items:flex-start}
+  .chart-wrap{height:220px}
+}
+@media(max-width:480px){
+  .kpi-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ Login Screen ═══ -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1><span>NEWG</span> Command Center</h1>
+    <p>Enter your password to continue</p>
+    <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
+    <button onclick="login()">Sign In</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- ═══ Dashboard ═══ -->
+<div id="dashboard">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-title"><span>NEWG</span> Command Center</div>
+    <div class="header-right">
+      <div class="sync-info">
+        <span class="sync-dot" id="sync-dot"></span>
+        <span id="sync-time">--</span>
+      </div>
+      <button class="btn-icon" onclick="manualSync()" title="Sync now" id="sync-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      </button>
+      <div style="position:relative">
+        <button class="btn-icon" onclick="toggleNotifications()" id="notif-btn" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-badge hidden" id="notif-badge">0</span>
+        </button>
+        <div class="notif-dropdown" id="notif-dropdown">
+          <div class="notif-dropdown-header">Notifications</div>
+          <div id="notif-list"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- KPI Cards -->
+    <div class="kpi-row" id="kpi-row">
+      <div class="kpi-card" id="kpi-spend"><div class="kpi-label">Spend</div><div class="kpi-value">--</div><div class="kpi-delta">--</div><div class="kpi-bg-icon">&#128176;</div></div>
+      <div class="kpi-card" id="kpi-roas"><div class="kpi-label">ROAS</div><div class="kpi-value">--</div><div class="kpi-delta">--</div><div class="kpi-bg-icon">&#128200;</div></div>
+      <div class="kpi-card" id="kpi-cpc"><div class="kpi-label">CPC</div><div class="kpi-value">--</div><div class="kpi-delta">--</div><div class="kpi-bg-icon">&#128433;</div></div>
+      <div class="kpi-card" id="kpi-atc"><div class="kpi-label">Add to Carts</div><div class="kpi-value">--</div><div class="kpi-delta">--</div><div class="kpi-bg-icon">&#128722;</div></div>
+      <div class="kpi-card" id="kpi-purchases"><div class="kpi-label">Purchases</div><div class="kpi-value">--</div><div class="kpi-delta">--</div><div class="kpi-bg-icon">&#9989;</div></div>
+    </div>
+
+    <!-- Spend / Revenue Chart -->
+    <div class="chart-section">
+      <div class="chart-header">
+        <div class="section-title" style="margin-bottom:0">Spend &amp; Revenue</div>
+        <div class="chart-toggles">
+          <button class="chart-toggle" data-days="7" onclick="switchChart(7)">7d</button>
+          <button class="chart-toggle active" data-days="14" onclick="switchChart(14)">14d</button>
+          <button class="chart-toggle" data-days="30" onclick="switchChart(30)">30d</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="main-chart"></canvas></div>
+    </div>
+
+    <!-- Creative Grid -->
+    <div class="grid-controls">
+      <div class="section-title" style="margin-bottom:0">Creatives</div>
+      <select class="sort-select" id="sort-select" onchange="sortAds(this.value)">
+        <option value="spend">Sort by Spend</option>
+        <option value="roas">Sort by ROAS</option>
+        <option value="cpc">Sort by CPC</option>
+        <option value="ctr">Sort by CTR</option>
+        <option value="purchases">Sort by Purchases</option>
+      </select>
+    </div>
+    <div class="ad-grid" id="ad-grid">
+      <div class="loading-overlay"><div class="spinner"></div> Loading creatives...</div>
+    </div>
+
+    <!-- Budget -->
+    <div class="section-title">Budget</div>
+    <div class="budget-section">
+      <div class="budget-info">
+        <h3>Daily Ad Set Budget</h3>
+        <div class="budget-value" id="budget-value">--</div>
+      </div>
+      <button class="budget-btn" onclick="openBudgetModal()">Adjust Budget</button>
+    </div>
+
+    <!-- AI Analysis -->
+    <div class="analysis-section">
+      <div class="analysis-header">
+        <div class="section-title" style="margin-bottom:0">AI Creative Analysis</div>
+        <div style="display:flex;align-items:center;gap:14px">
+          <span class="analysis-meta" id="analysis-meta"></span>
+          <button class="analysis-btn" id="analysis-btn" onclick="refreshAnalysis()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Refresh Analysis
+          </button>
+        </div>
+      </div>
+      <div id="analysis-content">
+        <div class="analysis-empty">No analysis yet. Click Refresh to run first analysis.</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    Powered by <span>NEWG Command Center</span> &middot; v1.0.0
+    <br>Auto-refresh every 10 minutes
+  </footer>
+</div>
+
+<!-- Budget Modal -->
+<div class="modal-overlay" id="budget-modal">
+  <div class="modal">
+    <h3>Adjust Daily Budget</h3>
+    <input type="number" id="budget-input" placeholder="New daily budget (EUR)" step="0.01" min="0">
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeBudgetModal()">Cancel</button>
+      <button class="modal-confirm" onclick="submitBudget()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Refresh Indicator -->
+<div class="refresh-indicator" id="refresh-indicator"><div class="spinner"></div> Refreshing...</div>
+
+<script>
+/* ═══════════════════════════════════════
+   NEWG Ad Command Center — Frontend
+   ═══════════════════════════════════════ */
+
+const API_BASE = '';
+let currentAds = [];
+let mainChart = null;
+let currentChartDays = 14;
+let refreshTimer = null;
+
+// ── Auth ──────────────────────────────
+
+function getToken() { return localStorage.getItem('token'); }
+function setToken(t) { localStorage.setItem('token', t); }
+function clearToken() { localStorage.removeItem('token'); }
+
+function showLogin() {
+  document.getElementById('login-screen').classList.remove('hidden');
+  document.getElementById('dashboard').classList.remove('visible');
+}
+
+function showDashboard() {
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('dashboard').classList.add('visible');
+}
+
+async function login() {
+  const pw = document.getElementById('login-password').value.trim();
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+  if (!pw) { errEl.textContent = 'Please enter a password.'; return; }
+  try {
+    const res = await fetch(API_BASE + '/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      errEl.textContent = d.detail || d.error || 'Invalid password.';
+      return;
+    }
+    const data = await res.json();
+    setToken(data.token);
+    document.getElementById('login-password').value = '';
+    showDashboard();
+    loadDashboard();
+    startAutoRefresh();
+  } catch (e) {
+    errEl.textContent = 'Connection error. Is the server running?';
+  }
+}
+
+document.getElementById('login-password').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+
+function checkAuth() {
+  if (getToken()) {
+    showDashboard();
+    loadDashboard();
+    startAutoRefresh();
+  } else {
+    showLogin();
+  }
+}
+
+// ── API Fetch Wrapper ─────────────────
+
+async function apiFetch(url, opts = {}) {
+  const token = getToken();
+  if (!token) { showLogin(); throw new Error('No token'); }
+  const headers = { 'Authorization': 'Bearer ' + token, ...(opts.headers || {}) };
+  if (opts.body && typeof opts.body === 'string') headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+  const res = await fetch(API_BASE + url, { ...opts, headers });
+  if (res.status === 401) { clearToken(); showLogin(); throw new Error('Unauthorized'); }
+  if (!res.ok) throw new Error('API error: ' + res.status);
+  return res.json();
+}
+
+// ── Load Dashboard ────────────────────
+
+async function loadDashboard() {
+  await Promise.allSettled([
+    loadKPIs(),
+    loadChart(currentChartDays),
+    loadAds(),
+    loadNotifications(),
+    loadAnalysis()
+  ]);
+}
+
+// ── KPIs ──────────────────────────────
+
+async function loadKPIs() {
+  try {
+    const data = await apiFetch('/api/kpis');
+    renderKPIs(data);
+  } catch (e) { console.warn('KPI load failed:', e); }
+}
+
+function renderKPIs(data) {
+  const map = {
+    spend:     { id: 'kpi-spend',     fmt: v => '\u20AC' + num(v, 2), inv: false },
+    roas:      { id: 'kpi-roas',      fmt: v => num(v, 2) + 'x',     inv: false },
+    cpc:       { id: 'kpi-cpc',       fmt: v => '\u20AC' + num(v, 2), inv: true  },
+    atc:       { id: 'kpi-atc',       fmt: v => num(v, 0),            inv: false },
+    purchases: { id: 'kpi-purchases', fmt: v => num(v, 0),            inv: false },
+  };
+  for (const [key, cfg] of Object.entries(map)) {
+    const el = document.getElementById(cfg.id);
+    if (!el) continue;
+    const val = data[key];
+    const change = data[key + '_change'];
+    el.querySelector('.kpi-value').textContent = val != null ? cfg.fmt(val) : '--';
+    const deltaEl = el.querySelector('.kpi-delta');
+    if (change != null && change !== 0) {
+      const up = change > 0;
+      const arrow = up ? '\u2191' : '\u2193';
+      const abs = Math.abs(change);
+      deltaEl.textContent = arrow + ' ' + (key === 'roas' ? num(abs, 2) + 'x' : key === 'cpc' || key === 'spend' ? '\u20AC' + num(abs, 2) : num(abs, 0));
+      deltaEl.className = 'kpi-delta ' + (up ? 'up' : 'down') + (cfg.inv ? ' inverted' : '');
+    } else {
+      deltaEl.textContent = '\u2014 no change';
+      deltaEl.className = 'kpi-delta';
+    }
+    // ROAS color coding
+    el.classList.remove('roas-good', 'roas-mid', 'roas-bad');
+    if (key === 'roas' && val != null) {
+      el.classList.add(val >= 2 ? 'roas-good' : val >= 1 ? 'roas-mid' : 'roas-bad');
+    }
+  }
+  document.getElementById('sync-time').textContent = 'Synced ' + new Date().toLocaleTimeString();
+  document.getElementById('sync-dot').classList.remove('stale');
+}
+
+function num(v, d) { return Number(v).toFixed(d); }
+
+// ── Chart ─────────────────────────────
+
+async function loadChart(days) {
+  try {
+    const data = await apiFetch('/api/kpis/history?days=' + days);
+    renderChart(data, days);
+  } catch (e) { console.warn('Chart load failed:', e); }
+}
+
+function renderChart(data, days) {
+  const ctx = document.getElementById('main-chart');
+  const labels = (data.dates || []).map(d => {
+    const dt = new Date(d);
+    return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  });
+  const spendData = data.spend || [];
+  const revenueData = data.revenue || [];
+
+  if (mainChart) mainChart.destroy();
+
+  mainChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Spend (\u20AC)',
+          data: spendData,
+          backgroundColor: 'rgba(224,68,0,.6)',
+          borderColor: '#e04400',
+          borderWidth: 1,
+          borderRadius: 4,
+          order: 2,
+          yAxisID: 'y'
+        },
+        {
+          label: 'Revenue (\u20AC)',
+          data: revenueData,
+          type: 'line',
+          borderColor: '#4ade80',
+          backgroundColor: 'rgba(74,222,128,.1)',
+          borderWidth: 2,
+          pointRadius: 3,
+          pointBackgroundColor: '#4ade80',
+          tension: 0.3,
+          fill: true,
+          order: 1,
+          yAxisID: 'y'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: '#94a3b8', font: { family: 'DM Sans', size: 12 }, boxWidth: 12, padding: 16 } },
+        tooltip: {
+          backgroundColor: '#16213e',
+          titleColor: '#e2e8f0',
+          bodyColor: '#94a3b8',
+          borderColor: '#333',
+          borderWidth: 1,
+          padding: 12,
+          titleFont: { family: 'DM Sans', weight: '600' },
+          bodyFont: { family: 'DM Sans' },
+          callbacks: {
+            label: ctx => ctx.dataset.label + ': \u20AC' + Number(ctx.raw).toFixed(2)
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(51,51,51,.5)' }, ticks: { color: '#64748b', font: { family: 'DM Sans', size: 11 } } },
+        y: { grid: { color: 'rgba(51,51,51,.5)' }, ticks: { color: '#64748b', font: { family: 'DM Sans', size: 11 }, callback: v => '\u20AC' + v } }
+      }
+    }
+  });
+}
+
+function switchChart(days) {
+  currentChartDays = days;
+  document.querySelectorAll('.chart-toggle').forEach(b => b.classList.toggle('active', Number(b.dataset.days) === days));
+  loadChart(days);
+}
+
+// ── Ads ───────────────────────────────
+
+async function loadAds() {
+  try {
+    const data = await apiFetch('/api/ads');
+    currentAds = data.ads || data || [];
+    const budgetVal = data.budget || (currentAds.length > 0 && currentAds[0].daily_budget);
+    if (budgetVal) document.getElementById('budget-value').textContent = '\u20AC' + num(budgetVal, 2);
+    sortAds(document.getElementById('sort-select').value);
+  } catch (e) {
+    console.warn('Ads load failed:', e);
+    document.getElementById('ad-grid').innerHTML = '<div class="loading-overlay">Failed to load creatives.</div>';
+  }
+}
+
+function sortAds(by) {
+  const sorted = [...currentAds];
+  sorted.sort((a, b) => {
+    const va = parseFloat(a[by]) || 0;
+    const vb = parseFloat(b[by]) || 0;
+    return by === 'cpc' ? va - vb : vb - va;
+  });
+  renderAds(sorted);
+}
+
+function renderAds(ads) {
+  const grid = document.getElementById('ad-grid');
+  if (!ads || ads.length === 0) {
+    grid.innerHTML = '<div class="loading-overlay">No creatives found.</div>';
+    return;
+  }
+  grid.innerHTML = ads.map(ad => {
+    const roas = parseFloat(ad.roas) || 0;
+    const borderClass = roas >= 2 ? 'border-green' : roas < 1 && roas > 0 ? 'border-red' : '';
+    const status = (ad.status || 'ACTIVE').toUpperCase();
+    const statusClass = status === 'ACTIVE' ? 'active' : status === 'PAUSED' ? 'paused' : 'learning';
+    const statusLabel = status === 'ACTIVE' ? 'Active' : status === 'PAUSED' ? 'Paused' : 'Learning';
+    const thumb = ad.thumbnail
+      ? `<img class="ad-thumb" src="data:image/jpeg;base64,${ad.thumbnail}" alt="${esc(ad.name)}" loading="lazy">`
+      : `<div class="ad-thumb-placeholder">${esc(ad.name || 'Ad Creative')}</div>`;
+    const parentNote = ad.parent_ad_id ? `<div class="ad-parent">Iteration of ${esc(ad.parent_ad_id)}</div>` : '';
+    const toggleBtn = status === 'ACTIVE'
+      ? `<button class="ad-btn" onclick="pauseAd('${esc(ad.id)}')">&#9199; Pause</button>`
+      : `<button class="ad-btn" onclick="activateAd('${esc(ad.id)}')">&#9654; Activate</button>`;
+
+    return `<div class="ad-card fade-in ${borderClass}">
+      ${thumb}
+      <div class="ad-body">
+        <div class="ad-name">${esc(ad.name || 'Unnamed Ad')}</div>
+        ${parentNote}
+        <div class="ad-status ${statusClass}">${statusLabel}</div>
+        <div class="ad-metrics">
+          <div class="ad-metric"><div class="ad-metric-label">Spend</div><div class="ad-metric-value">\u20AC${num(ad.spend || 0, 2)}</div></div>
+          <div class="ad-metric"><div class="ad-metric-label">ROAS</div><div class="ad-metric-value">${num(roas, 2)}x</div></div>
+          <div class="ad-metric"><div class="ad-metric-label">CPC</div><div class="ad-metric-value">\u20AC${num(ad.cpc || 0, 2)}</div></div>
+          <div class="ad-metric"><div class="ad-metric-label">CTR</div><div class="ad-metric-value">${num(ad.ctr || 0, 2)}%</div></div>
+          <div class="ad-metric"><div class="ad-metric-label">ATCs</div><div class="ad-metric-value">${num(ad.atc || ad.add_to_carts || 0, 0)}</div></div>
+          <div class="ad-metric"><div class="ad-metric-label">Purchases</div><div class="ad-metric-value">${num(ad.purchases || 0, 0)}</div></div>
+        </div>
+        <div class="ad-actions">
+          ${toggleBtn}
+          <button class="ad-btn" id="iterate-${esc(ad.id)}" onclick="iterateAd('${esc(ad.id)}')">&#9889; Iterate</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+async function pauseAd(id) {
+  try {
+    await apiFetch('/api/ads/' + id + '/pause', { method: 'POST' });
+    await loadAds();
+  } catch (e) { console.error('Pause failed:', e); }
+}
+
+async function activateAd(id) {
+  try {
+    await apiFetch('/api/ads/' + id + '/activate', { method: 'POST' });
+    await loadAds();
+  } catch (e) { console.error('Activate failed:', e); }
+}
+
+async function iterateAd(id) {
+  const btn = document.getElementById('iterate-' + id);
+  if (btn) {
+    btn.classList.add('generating');
+    btn.innerHTML = '<div class="spinner"></div> Generating...';
+  }
+  try {
+    await apiFetch('/api/ads/' + id + '/iterate', { method: 'POST' });
+    await loadAds();
+  } catch (e) {
+    console.error('Iterate failed:', e);
+    if (btn) { btn.classList.remove('generating'); btn.innerHTML = '&#9889; Iterate'; }
+  }
+}
+
+// ── Notifications ─────────────────────
+
+async function loadNotifications() {
+  try {
+    const data = await apiFetch('/api/notifications');
+    renderNotifications(data);
+  } catch (e) { console.warn('Notifications load failed:', e); }
+}
+
+function renderNotifications(data) {
+  const items = data.notifications || data || [];
+  const unread = items.filter(n => !n.read);
+  const badge = document.getElementById('notif-badge');
+  if (unread.length > 0) {
+    badge.textContent = unread.length;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+  const list = document.getElementById('notif-list');
+  if (items.length === 0) {
+    list.innerHTML = '<div class="notif-empty">All caught up!</div>';
+    return;
+  }
+  list.innerHTML = items.map(n => `
+    <div class="notif-item" id="notif-${n.id}">
+      <div class="notif-body">
+        <div class="notif-msg">${esc(n.message || n.text || '')}</div>
+        <div class="notif-time">${n.created_at ? timeAgo(n.created_at) : ''}</div>
+      </div>
+      ${!n.read ? `<button class="notif-dismiss" onclick="dismissNotification('${n.id}')" title="Mark as read">&times;</button>` : ''}
+    </div>
+  `).join('');
+}
+
+async function dismissNotification(id) {
+  try {
+    await apiFetch('/api/notifications/' + id + '/read', { method: 'POST' });
+    const el = document.getElementById('notif-' + id);
+    if (el) el.remove();
+    await loadNotifications();
+  } catch (e) { console.error('Dismiss failed:', e); }
+}
+
+function toggleNotifications() {
+  document.getElementById('notif-dropdown').classList.toggle('open');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', e => {
+  const dd = document.getElementById('notif-dropdown');
+  const btn = document.getElementById('notif-btn');
+  if (dd.classList.contains('open') && !dd.contains(e.target) && !btn.contains(e.target)) {
+    dd.classList.remove('open');
+  }
+});
+
+function timeAgo(ts) {
+  const diff = (Date.now() - new Date(ts).getTime()) / 1000;
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  return Math.floor(diff / 86400) + 'd ago';
+}
+
+// ── Budget Modal ──────────────────────
+
+function openBudgetModal() {
+  document.getElementById('budget-modal').classList.add('open');
+  document.getElementById('budget-input').focus();
+}
+
+function closeBudgetModal() {
+  document.getElementById('budget-modal').classList.remove('open');
+  document.getElementById('budget-input').value = '';
+}
+
+function submitBudget() {
+  const val = parseFloat(document.getElementById('budget-input').value);
+  if (isNaN(val) || val <= 0) return;
+  console.log('Budget adjustment requested:', val, 'EUR — endpoint not yet implemented');
+  document.getElementById('budget-value').textContent = '\u20AC' + num(val, 2);
+  closeBudgetModal();
+}
+
+document.getElementById('budget-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('budget-modal')) closeBudgetModal();
+});
+
+// ── Analysis ──────────────────────────
+
+async function loadAnalysis() {
+  try {
+    const data = await apiFetch('/api/analysis');
+    renderAnalysis(data);
+  } catch (e) { console.warn('Analysis load failed:', e); }
+}
+
+function renderAnalysis(data) {
+  const container = document.getElementById('analysis-content');
+  const meta = document.getElementById('analysis-meta');
+
+  if (!data || (!data.analysis && !data.top_vs_bottom)) {
+    container.innerHTML = '<div class="analysis-empty">No analysis yet. Click Refresh to run first analysis.</div>';
+    meta.textContent = '';
+    return;
+  }
+
+  if (data.updated_at || data.timestamp) {
+    const ts = new Date(data.updated_at || data.timestamp);
+    meta.textContent = 'Last updated: ' + ts.toLocaleString();
+  }
+
+  // Handle both flat structure and nested analysis object
+  const a = data.analysis || data;
+
+  let html = '';
+
+  if (a.top_vs_bottom) {
+    html += `<div class="analysis-block"><div class="analysis-block-title">Top vs Bottom Performers</div><p>${esc(typeof a.top_vs_bottom === 'string' ? a.top_vs_bottom : JSON.stringify(a.top_vs_bottom))}</p></div>`;
+  }
+  if (a.visual_patterns) {
+    html += `<div class="analysis-block"><div class="analysis-block-title">Visual Patterns</div><p>${esc(typeof a.visual_patterns === 'string' ? a.visual_patterns : JSON.stringify(a.visual_patterns))}</p></div>`;
+  }
+  if (a.copy_patterns) {
+    html += `<div class="analysis-block"><div class="analysis-block-title">Copy Patterns</div><p>${esc(typeof a.copy_patterns === 'string' ? a.copy_patterns : JSON.stringify(a.copy_patterns))}</p></div>`;
+  }
+  if (a.recommendations && Array.isArray(a.recommendations)) {
+    html += `<div class="analysis-block"><div class="analysis-block-title">Recommendations</div><ul>${a.recommendations.map(r => '<li>' + esc(r) + '</li>').join('')}</ul></div>`;
+  }
+  if (a.iterate_on) {
+    html += `<div class="analysis-block"><div class="analysis-block-title">Iterate On</div><p>${esc(typeof a.iterate_on === 'string' ? a.iterate_on : JSON.stringify(a.iterate_on))}</p></div>`;
+  }
+
+  container.innerHTML = html || '<div class="analysis-empty">Analysis data is empty.</div>';
+}
+
+async function refreshAnalysis() {
+  const btn = document.getElementById('analysis-btn');
+  btn.innerHTML = '<div class="spinner"></div> Analyzing...';
+  btn.style.pointerEvents = 'none';
+  try {
+    await apiFetch('/api/analysis/refresh', { method: 'POST' });
+    await loadAnalysis();
+  } catch (e) {
+    console.error('Analysis refresh failed:', e);
+  }
+  btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Refresh Analysis';
+  btn.style.pointerEvents = '';
+}
+
+// ── Sync ──────────────────────────────
+
+async function manualSync() {
+  const indicator = document.getElementById('refresh-indicator');
+  indicator.classList.add('show');
+  try {
+    await apiFetch('/api/sync', { method: 'POST' });
+  } catch (e) { console.warn('Sync endpoint not available, refreshing data...'); }
+  await loadDashboard();
+  indicator.classList.remove('show');
+}
+
+// ── Auto Refresh ──────────────────────
+
+function startAutoRefresh() {
+  if (refreshTimer) clearInterval(refreshTimer);
+  refreshTimer = setInterval(autoRefresh, 600000);
+}
+
+async function autoRefresh() {
+  if (!getToken()) return;
+  const indicator = document.getElementById('refresh-indicator');
+  indicator.classList.add('show');
+  await loadDashboard();
+  setTimeout(() => indicator.classList.remove('show'), 1500);
+}
+
+// ── Init ──────────────────────────────
+checkAuth();
+</script>
+</body>
+</html>
