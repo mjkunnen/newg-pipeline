@@ -52,7 +52,12 @@ def get_ads(days: int = 7, db: Session = Depends(get_db)):
             "roas": round(revenue / spend, 2) if spend > 0 else 0,
         })
     result.sort(key=lambda a: a["spend"], reverse=True)
-    return result
+    # Sum daily budgets from active campaigns (stored in cents)
+    from models import Campaign
+    total_budget_cents = db.query(func.sum(Campaign.daily_budget)).filter(
+        Campaign.status == "ACTIVE"
+    ).scalar() or 0
+    return {"ads": result, "budget": round(total_budget_cents / 100, 2)}
 
 @router.get("/api/ads/{ad_id}")
 def get_ad_detail(ad_id: str, db: Session = Depends(get_db)):
