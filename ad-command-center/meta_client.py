@@ -70,8 +70,9 @@ async def fetch_ad_insights(ad_id: str, date_preset: str = "today") -> dict | No
     return results[0] if results else None
 
 async def fetch_creative_thumbnail(creative_id: str) -> str | None:
-    data = await graph_get(f"/{creative_id}?fields=thumbnail_url,image_url,object_story_spec")
-    return data.get("thumbnail_url") or data.get("image_url")
+    data = await graph_get(f"/{creative_id}?fields=image_url,thumbnail_url,object_story_spec")
+    # Prefer full-size image_url over tiny thumbnail_url
+    return data.get("image_url") or data.get("thumbnail_url")
 
 async def download_image(url: str) -> bytes:
     client = await _get_client()

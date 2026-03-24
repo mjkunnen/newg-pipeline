@@ -370,6 +370,7 @@ a{color:var(--accent);text-decoration:none}
       <div class="chart-header">
         <div class="section-title" style="margin-bottom:0">Spend &amp; Revenue</div>
         <div class="chart-toggles">
+          <button class="chart-toggle" data-days="1" onclick="switchChart(1)">1d</button>
           <button class="chart-toggle" data-days="7" onclick="switchChart(7)">7d</button>
           <button class="chart-toggle active" data-days="14" onclick="switchChart(14)">14d</button>
           <button class="chart-toggle" data-days="30" onclick="switchChart(30)">30d</button>
@@ -703,9 +704,11 @@ function renderAds(ads) {
     const status = (ad.status || 'ACTIVE').toUpperCase();
     const statusClass = status === 'ACTIVE' ? 'active' : status === 'PAUSED' ? 'paused' : 'learning';
     const statusLabel = status === 'ACTIVE' ? 'Active' : status === 'PAUSED' ? 'Paused' : 'Learning';
-    const thumb = ad.thumbnail
-      ? `<img class="ad-thumb" src="data:image/jpeg;base64,${ad.thumbnail}" alt="${esc(ad.name)}" loading="lazy">`
-      : `<div class="ad-thumb-placeholder">${esc(ad.name || 'Ad Creative')}</div>`;
+    const thumb = ad.creative_url
+      ? `<img class="ad-thumb" src="${esc(ad.creative_url)}" alt="${esc(ad.name)}" loading="lazy" onerror="this.outerHTML='<div class=ad-thumb-placeholder>${esc(ad.name || 'Ad Creative')}</div>'">`
+      : ad.thumbnail
+        ? `<img class="ad-thumb" src="data:image/jpeg;base64,${ad.thumbnail}" alt="${esc(ad.name)}" loading="lazy">`
+        : `<div class="ad-thumb-placeholder">${esc(ad.name || 'Ad Creative')}</div>`;
     const parentNote = ad.parent_ad_id ? `<div class="ad-parent">Iteration of ${esc(ad.parent_ad_id)}</div>` : '';
     const toggleBtn = status === 'ACTIVE'
       ? `<button class="ad-btn" onclick="pauseAd('${esc(ad.id)}')">&#9199; Pause</button>`

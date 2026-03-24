@@ -27,17 +27,16 @@ def get_ads(db: Session = Depends(get_db)):
             "ad_copy": ad.ad_copy,
             "parent_ad_id": ad.parent_ad_id,
             "thumbnail": thumb_b64,
-            "metrics": {
-                "spend": latest.spend if latest else 0,
-                "impressions": latest.impressions if latest else 0,
-                "clicks": latest.clicks if latest else 0,
-                "ctr": latest.ctr if latest else 0,
-                "cpc": latest.cpc if latest else 0,
-                "add_to_carts": latest.add_to_carts if latest else 0,
-                "purchases": latest.purchases if latest else 0,
-                "revenue": latest.revenue if latest else 0,
-                "roas": latest.roas if latest else 0,
-            }
+            "creative_url": ad.creative_url,
+            "spend": latest.spend if latest else 0,
+            "impressions": latest.impressions if latest else 0,
+            "clicks": latest.clicks if latest else 0,
+            "ctr": latest.ctr if latest else 0,
+            "cpc": latest.cpc if latest else 0,
+            "add_to_carts": latest.add_to_carts if latest else 0,
+            "purchases": latest.purchases if latest else 0,
+            "revenue": latest.revenue if latest else 0,
+            "roas": latest.roas if latest else 0,
         })
     result.sort(key=lambda a: a["metrics"]["spend"], reverse=True)
     return result

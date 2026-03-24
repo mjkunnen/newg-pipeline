@@ -38,16 +38,21 @@ def get_kpis(db: Session = Depends(get_db)):
 
     t = day_totals(today)
     y = day_totals(yesterday)
+    # Flat format the frontend expects
     return {
-        "today": t,
-        "yesterday": y,
-        "changes": {
-            "spend": round(t["spend"] - y["spend"], 2),
-            "roas": round(t["roas"] - y["roas"], 2),
-            "cpc": round(t["cpc"] - y["cpc"], 2),
-            "add_to_carts": t["add_to_carts"] - y["add_to_carts"],
-            "purchases": t["purchases"] - y["purchases"],
-        }
+        "spend": t["spend"],
+        "roas": t["roas"],
+        "cpc": t["cpc"],
+        "atc": t["add_to_carts"],
+        "purchases": t["purchases"],
+        "revenue": t["revenue"],
+        "clicks": t["clicks"],
+        "impressions": t["impressions"],
+        "spend_change": round(t["spend"] - y["spend"], 2),
+        "roas_change": round(t["roas"] - y["roas"], 2),
+        "cpc_change": round(t["cpc"] - y["cpc"], 2),
+        "atc_change": t["add_to_carts"] - y["add_to_carts"],
+        "purchases_change": t["purchases"] - y["purchases"],
     }
 
 @router.get("/api/kpis/history")
@@ -65,13 +70,11 @@ def get_kpis_history(days: int = 30, db: Session = Depends(get_db)):
         cast(Snapshot.timestamp, Date)
     ).order_by("date").all()
 
-    return [
-        {
-            "date": str(r.date),
-            "spend": round(r.spend or 0, 2),
-            "revenue": round(r.revenue or 0, 2),
-            "clicks": r.clicks or 0,
-            "impressions": r.impressions or 0,
-        }
-        for r in rows
-    ]
+    # Frontend expects {dates:[], spend:[], revenue:[]}
+    return {
+        "dates": [str(r.date) for r in rows],
+        "spend": [round(r.spend or 0, 2) for r in rows],
+        "revenue": [round(r.revenue or 0, 2) for r in rows],
+        "clicks": [r.clicks or 0 for r in rows],
+        "impressions": [r.impressions or 0 for r in rows],
+    }
