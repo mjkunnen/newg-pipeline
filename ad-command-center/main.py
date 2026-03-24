@@ -15,22 +15,34 @@ logger = logging.getLogger(__name__)
 
 scheduler = AsyncIOScheduler()
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    init_db()
-    scheduler.add_job(run_sync, "interval", minutes=SYNC_INTERVAL_MINUTES, id="meta_sync")
-    scheduler.add_job(run_analysis, "cron", hour=0, minute=0, id="daily_analysis")
-    scheduler.start()
-    logger.info(f"Scheduler started: sync every {SYNC_INTERVAL_MINUTES}min, analysis daily at midnight")
-    # Run initial sync
+async def safe_sync():
     try:
         await run_sync()
     except Exception as e:
-        logger.error(f"Initial sync failed: {e}")
+        logger.error(f"Sync failed (will retry next interval): {e}")
+
+def safe_analysis():
+    try:
+        run_analysis()
+    except Exception as e:
+        logger.error(f"Analysis failed: {e}")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    scheduler.add_job(safe_sync, "interval", minutes=SYNC_INTERVAL_MINUTES, id="meta_sync")
+    scheduler.add_job(safe_analysis, "cron", hour=0, minute=0, id="daily_analysis")
+    scheduler.start()
+    logger.info(f"Scheduler started: sync every {SYNC_INTERVAL_MINUTES}min, analysis daily at midnight")
     yield
     scheduler.shutdown()
 
 app = FastAPI(lifespan=lifespan)
+
+# Health check - MUST be before static mount
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
 
 # Routes
 app.include_router(auth.router)
@@ -45,9 +57,9 @@ async def trigger_sync():
     await run_sync()
     return {"status": "done"}
 
-# Serve frontend
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
+# Serve frontend - MUST be last (catches all unmatched routes)
 @app.get("/")
 async def serve_frontend():
     return FileResponse("static/index.html")
+
+app.mount("/static", StaticFiles(directory="static"), name="static")

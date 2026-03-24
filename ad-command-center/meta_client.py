@@ -1,30 +1,40 @@
+import asyncio
 import httpx
 from config import GRAPH_API, META_ACCESS_TOKEN, META_AD_ACCOUNT_ID
 
+# Reuse a single client and add delays to avoid rate limiting
+_client = None
+
+async def _get_client() -> httpx.AsyncClient:
+    global _client
+    if _client is None or _client.is_closed:
+        _client = httpx.AsyncClient(timeout=30)
+    return _client
+
 async def graph_get(path: str) -> dict:
-    async with httpx.AsyncClient() as client:
-        r = await client.get(
-            f"{GRAPH_API}{path}",
-            params={"access_token": META_ACCESS_TOKEN},
-            timeout=30,
-        )
-        data = r.json()
-        if "error" in data:
-            raise Exception(f"Meta API error: {data['error'].get('message', data['error'])}")
-        return data
+    await asyncio.sleep(0.5)  # Rate limit: max 2 requests/sec
+    client = await _get_client()
+    r = await client.get(
+        f"{GRAPH_API}{path}",
+        params={"access_token": META_ACCESS_TOKEN},
+    )
+    data = r.json()
+    if "error" in data:
+        raise Exception(f"Meta API error: {data['error'].get('message', data['error'])}")
+    return data
 
 async def graph_post(path: str, body: dict) -> dict:
-    async with httpx.AsyncClient() as client:
-        r = await client.post(
-            f"{GRAPH_API}{path}",
-            params={"access_token": META_ACCESS_TOKEN},
-            json=body,
-            timeout=30,
-        )
-        data = r.json()
-        if "error" in data:
-            raise Exception(f"Meta API error: {data['error'].get('message', data['error'])}")
-        return data
+    await asyncio.sleep(0.5)
+    client = await _get_client()
+    r = await client.post(
+        f"{GRAPH_API}{path}",
+        params={"access_token": META_ACCESS_TOKEN},
+        json=body,
+    )
+    data = r.json()
+    if "error" in data:
+        raise Exception(f"Meta API error: {data['error'].get('message', data['error'])}")
+    return data
 
 def act_id():
     return f"act_{META_AD_ACCOUNT_ID}"
@@ -54,9 +64,9 @@ async def fetch_creative_thumbnail(creative_id: str) -> str | None:
     return data.get("thumbnail_url") or data.get("image_url")
 
 async def download_image(url: str) -> bytes:
-    async with httpx.AsyncClient() as client:
-        r = await client.get(url, timeout=30)
-        return r.content
+    client = await _get_client()
+    r = await client.get(url, timeout=30)
+    return r.content
 
 async def pause_ad(ad_id: str) -> dict:
     return await graph_post(f"/{ad_id}", {"status": "PAUSED"})
