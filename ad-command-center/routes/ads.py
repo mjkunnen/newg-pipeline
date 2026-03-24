@@ -12,31 +12,44 @@ import base64
 router = APIRouter(dependencies=[Depends(verify_auth)])
 
 @router.get("/api/ads")
-def get_ads(db: Session = Depends(get_db)):
+def get_ads(days: int = 7, db: Session = Depends(get_db)):
+    from datetime import timedelta
+    since = datetime.utcnow().date() - timedelta(days=days)
     ads = db.query(Ad).filter(Ad.id != "account").all()
     result = []
     for ad in ads:
-        latest = db.query(Snapshot).filter_by(ad_id=ad.id).order_by(Snapshot.timestamp.desc()).first()
-        thumb_b64 = None
-        if ad.creative_cached:
-            thumb_b64 = base64.b64encode(ad.creative_cached).decode()
+        # Aggregate snapshots over the selected period
+        totals = db.query(
+            func.sum(Snapshot.spend),
+            func.sum(Snapshot.impressions),
+            func.sum(Snapshot.clicks),
+            func.sum(Snapshot.add_to_carts),
+            func.sum(Snapshot.purchases),
+            func.sum(Snapshot.revenue),
+        ).filter(
+            Snapshot.ad_id == ad.id,
+            cast(Snapshot.timestamp, Date) >= since
+        ).first()
+        spend = totals[0] or 0
+        clicks = totals[2] or 0
+        impressions = totals[1] or 0
+        revenue = totals[5] or 0
         result.append({
             "id": ad.id,
             "name": ad.name,
             "status": ad.status,
             "ad_copy": ad.ad_copy,
             "parent_ad_id": ad.parent_ad_id,
-            "thumbnail": thumb_b64,
             "creative_url": ad.creative_url,
-            "spend": latest.spend if latest else 0,
-            "impressions": latest.impressions if latest else 0,
-            "clicks": latest.clicks if latest else 0,
-            "ctr": latest.ctr if latest else 0,
-            "cpc": latest.cpc if latest else 0,
-            "add_to_carts": latest.add_to_carts if latest else 0,
-            "purchases": latest.purchases if latest else 0,
-            "revenue": latest.revenue if latest else 0,
-            "roas": latest.roas if latest else 0,
+            "spend": round(spend, 2),
+            "impressions": impressions,
+            "clicks": clicks,
+            "ctr": round(clicks / impressions * 100, 2) if impressions > 0 else 0,
+            "cpc": round(spend / clicks, 2) if clicks > 0 else 0,
+            "add_to_carts": totals[3] or 0,
+            "purchases": totals[4] or 0,
+            "revenue": round(revenue, 2),
+            "roas": round(revenue / spend, 2) if spend > 0 else 0,
         })
     result.sort(key=lambda a: a["spend"], reverse=True)
     return result

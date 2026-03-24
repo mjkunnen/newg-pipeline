@@ -9,11 +9,13 @@ from datetime import datetime, timedelta
 router = APIRouter(dependencies=[Depends(verify_auth)])
 
 @router.get("/api/kpis")
-def get_kpis(db: Session = Depends(get_db)):
+def get_kpis(days: int = 1, db: Session = Depends(get_db)):
     today = datetime.utcnow().date()
-    yesterday = today - timedelta(days=1)
+    since = today - timedelta(days=days - 1)  # days=1 means today only
+    prev_start = since - timedelta(days=days)
+    prev_end = since - timedelta(days=1)
 
-    def day_totals(date):
+    def period_totals(start_date, end_date):
         rows = db.query(
             func.sum(Snapshot.spend),
             func.sum(Snapshot.clicks),
@@ -22,23 +24,24 @@ def get_kpis(db: Session = Depends(get_db)):
             func.sum(Snapshot.purchases),
             func.sum(Snapshot.revenue),
         ).filter(
-            cast(Snapshot.timestamp, Date) == date
+            cast(Snapshot.timestamp, Date) >= start_date,
+            cast(Snapshot.timestamp, Date) <= end_date,
         ).first()
         spend = rows[0] or 0
+        clicks = rows[1] or 0
         return {
             "spend": round(spend, 2),
-            "clicks": rows[1] or 0,
+            "clicks": clicks,
             "impressions": rows[2] or 0,
             "add_to_carts": rows[3] or 0,
             "purchases": rows[4] or 0,
             "revenue": round(rows[5] or 0, 2),
             "roas": round((rows[5] or 0) / spend, 2) if spend > 0 else 0,
-            "cpc": round(spend / (rows[1] or 1), 2),
+            "cpc": round(spend / clicks, 2) if clicks > 0 else 0,
         }
 
-    t = day_totals(today)
-    y = day_totals(yesterday)
-    # Flat format the frontend expects
+    t = period_totals(since, today)
+    p = period_totals(prev_start, prev_end)
     return {
         "spend": t["spend"],
         "roas": t["roas"],
@@ -48,11 +51,11 @@ def get_kpis(db: Session = Depends(get_db)):
         "revenue": t["revenue"],
         "clicks": t["clicks"],
         "impressions": t["impressions"],
-        "spend_change": round(t["spend"] - y["spend"], 2),
-        "roas_change": round(t["roas"] - y["roas"], 2),
-        "cpc_change": round(t["cpc"] - y["cpc"], 2),
-        "atc_change": t["add_to_carts"] - y["add_to_carts"],
-        "purchases_change": t["purchases"] - y["purchases"],
+        "spend_change": round(t["spend"] - p["spend"], 2),
+        "roas_change": round(t["roas"] - p["roas"], 2),
+        "cpc_change": round(t["cpc"] - p["cpc"], 2),
+        "atc_change": t["add_to_carts"] - p["add_to_carts"],
+        "purchases_change": t["purchases"] - p["purchases"],
     }
 
 @router.get("/api/kpis/history")

@@ -71,8 +71,36 @@ async def fetch_ad_insights(ad_id: str, date_preset: str = "today") -> dict | No
 
 async def fetch_creative_thumbnail(creative_id: str) -> str | None:
     data = await graph_get(f"/{creative_id}?fields=image_url,thumbnail_url,object_story_spec")
-    # Prefer full-size image_url over tiny thumbnail_url
-    return data.get("image_url") or data.get("thumbnail_url")
+    # Try to get full-size image from object_story_spec
+    oss = data.get("object_story_spec", {})
+    full_url = None
+    for key in ("link_data", "photo_data", "video_data"):
+        sub = oss.get(key, {})
+        full_url = sub.get("image_url") or sub.get("picture") or sub.get("image_hash")
+        if full_url and full_url.startswith("http"):
+            break
+        # Check child_attachments for carousel ads
+        for child in sub.get("child_attachments", []):
+            full_url = child.get("image_url") or child.get("picture")
+            if full_url:
+                break
+        if full_url:
+            break
+    if full_url:
+        return full_url
+    # Fallback: strip size restriction from thumbnail URL
+    url = data.get("image_url") or data.get("thumbnail_url")
+    if url:
+        return _strip_thumb_size(url)
+    return None
+
+
+def _strip_thumb_size(url: str) -> str:
+    """Remove Meta's p64x64 size restriction from image URLs."""
+    import re
+    # Remove stp=...p64x64... or similar size params
+    url = re.sub(r'[&?]stp=[^&]*p\d+x\d+[^&]*', '', url)
+    return url
 
 async def download_image(url: str) -> bytes:
     client = await _get_client()

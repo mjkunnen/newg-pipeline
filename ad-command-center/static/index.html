@@ -538,9 +538,10 @@ async function loadDashboard() {
 
 // ── KPIs ──────────────────────────────
 
-async function loadKPIs() {
+async function loadKPIs(days) {
   try {
-    const data = await apiFetch('/api/kpis');
+    const d = days || currentChartDays;
+    const data = await apiFetch('/api/kpis?days=' + d);
     renderKPIs(data);
   } catch (e) { console.warn('KPI load failed:', e); }
 }
@@ -665,13 +666,16 @@ function switchChart(days) {
   currentChartDays = days;
   document.querySelectorAll('.chart-toggle').forEach(b => b.classList.toggle('active', Number(b.dataset.days) === days));
   loadChart(days);
+  loadKPIs(days);
+  loadAds(days);
 }
 
 // ── Ads ───────────────────────────────
 
-async function loadAds() {
+async function loadAds(days) {
   try {
-    const data = await apiFetch('/api/ads');
+    const d = days || currentChartDays;
+    const data = await apiFetch('/api/ads?days=' + d);
     currentAds = data.ads || data || [];
     const budgetVal = data.budget || (currentAds.length > 0 && currentAds[0].daily_budget);
     if (budgetVal) document.getElementById('budget-value').textContent = '\u20AC' + num(budgetVal, 2);
