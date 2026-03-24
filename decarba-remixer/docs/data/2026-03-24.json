@@ -3,9 +3,9 @@
   "competitor": "decarba",
   "ads": [
     {
-      "id": "pinterest_8233211826607894",
+      "id": "pinterest_1003176885764265972",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_8233211826607894.jpg",
+      "thumbPath": "thumbs/pinterest_1003176885764265972.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -15,12 +15,12 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_8233211826607894.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_1003176885764265972.jpg"
     },
     {
-      "id": "pinterest_11188699075138912",
+      "id": "pinterest_1003176885764265947",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_11188699075138912.jpg",
+      "thumbPath": "thumbs/pinterest_1003176885764265947.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -30,12 +30,12 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_11188699075138912.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_1003176885764265947.jpg"
     },
     {
-      "id": "pinterest_48484133483193040",
+      "id": "pinterest_9359111721192099",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_48484133483193040.jpg",
+      "thumbPath": "thumbs/pinterest_9359111721192099.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -45,12 +45,12 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_48484133483193040.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_9359111721192099.jpg"
     },
     {
-      "id": "pinterest_59602395063378260",
+      "id": "pinterest_308637380734370920",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_59602395063378260.jpg",
+      "thumbPath": "thumbs/pinterest_308637380734370920.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -60,12 +60,12 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_59602395063378260.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_308637380734370920.jpg"
     },
     {
-      "id": "pinterest_44543483813092708",
+      "id": "pinterest_3659243441278702",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_44543483813092708.jpg",
+      "thumbPath": "thumbs/pinterest_3659243441278702.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -75,12 +75,12 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_44543483813092708.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_3659243441278702.jpg"
     },
     {
-      "id": "pinterest_5559199534842354",
+      "id": "pinterest_3870349673145175",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_5559199534842354.jpg",
+      "thumbPath": "thumbs/pinterest_3870349673145175.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -90,82 +90,7 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_5559199534842354.jpg"
-    },
-    {
-      "id": "pinterest_7388786884544990",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_7388786884544990.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-24",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_7388786884544990.jpg"
-    },
-    {
-      "id": "pinterest_15270086237586933",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_15270086237586933.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-24",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_15270086237586933.jpg"
-    },
-    {
-      "id": "pinterest_407364728815749748",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_407364728815749748.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-24",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_407364728815749748.jpg"
-    },
-    {
-      "id": "pinterest_23855073022310062",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_23855073022310062.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-24",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_23855073022310062.jpg"
-    },
-    {
-      "id": "pinterest_47006389855804692",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_47006389855804692.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-24",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_47006389855804692.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_3870349673145175.jpg"
     }
   ]
 }
