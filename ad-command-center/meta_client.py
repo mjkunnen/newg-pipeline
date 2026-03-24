@@ -76,13 +76,15 @@ async def fetch_creative_thumbnail(creative_id: str) -> str | None:
     full_url = None
     for key in ("link_data", "photo_data", "video_data"):
         sub = oss.get(key, {})
-        full_url = sub.get("image_url") or sub.get("picture") or sub.get("image_hash")
+        full_url = sub.get("image_url") or sub.get("picture")
         if full_url and full_url.startswith("http"):
             break
+        full_url = None
         # Check child_attachments for carousel ads
         for child in sub.get("child_attachments", []):
-            full_url = child.get("image_url") or child.get("picture")
-            if full_url:
+            candidate = child.get("image_url") or child.get("picture")
+            if candidate and candidate.startswith("http"):
+                full_url = candidate
                 break
         if full_url:
             break
