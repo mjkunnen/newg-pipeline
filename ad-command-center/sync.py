@@ -28,7 +28,10 @@ async def run_sync():
     logger.info("Starting Meta sync...")
     db = SessionLocal()
     try:
-        campaigns = await meta_client.fetch_campaigns()
+        all_campaigns = await meta_client.fetch_campaigns()
+        # Only sync ACTIVE campaigns to avoid rate limiting (25+ old campaigns)
+        campaigns = [c for c in all_campaigns if c.get("status") == "ACTIVE"]
+        logger.info(f"Found {len(campaigns)} active campaigns (of {len(all_campaigns)} total)")
         for c in campaigns:
             try:
                 existing = db.query(Campaign).filter_by(id=c["id"]).first()

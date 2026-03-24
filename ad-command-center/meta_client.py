@@ -12,7 +12,7 @@ async def _get_client() -> httpx.AsyncClient:
     return _client
 
 async def graph_get(path: str) -> dict:
-    await asyncio.sleep(0.5)  # Rate limit: max 2 requests/sec
+    await asyncio.sleep(2)  # Rate limit: max 2 requests/sec
     client = await _get_client()
     r = await client.get(
         f"{GRAPH_API}{path}",
@@ -24,7 +24,7 @@ async def graph_get(path: str) -> dict:
     return data
 
 async def graph_post(path: str, body: dict) -> dict:
-    await asyncio.sleep(0.5)
+    await asyncio.sleep(2)
     client = await _get_client()
     r = await client.post(
         f"{GRAPH_API}{path}",
@@ -40,7 +40,7 @@ def act_id():
     return f"act_{META_AD_ACCOUNT_ID}"
 
 async def fetch_campaigns() -> list[dict]:
-    data = await graph_get(f"/{act_id()}/campaigns?fields=id,name,status,daily_budget")
+    data = await graph_get(f"/{act_id()}/campaigns?fields=id,name,status,daily_budget&filtering=[{{'field':'effective_status','operator':'IN','value':['ACTIVE','PAUSED']}}]&limit=50")
     return data.get("data", [])
 
 async def fetch_ad_sets(campaign_id: str) -> list[dict]:
