@@ -106,14 +106,14 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
       });
 
       for (const { pinId, imageUrl } of visible) {
-        if (!allPins.has(pinId)) {
+        if (!allPins.has(pinId) && allPins.size < boardPinCount) {
           allPins.set(pinId, imageUrl);
         }
       }
 
       console.log(`[pinterest] Scroll ${i + 1}: ${visible.length} visible, ${allPins.size} total collected`);
 
-      // Stop once we've collected at least the board's pin count
+      // Stop once we've collected the board's pin count (no more = "More ideas" territory)
       if (allPins.size >= boardPinCount) {
         console.log(`[pinterest] Reached board pin count (${boardPinCount}), stopping scroll`);
         break;
@@ -136,14 +136,19 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
 
     console.log(`[pinterest] Found ${allPins.size} total unique pins on board`);
 
-    // Filter out already-processed pins
+    // Filter out already-processed pins — only keep the newest unprocessed ones.
+    // Pinterest boards show newest pins first, so the first entries in allPins
+    // (insertion order) are the most recently saved pins.
+    const MAX_NEW_PINS = 5;
     const newPins: Array<{ pinId: string; imageUrl: string }> = [];
     for (const [pinId, imageUrl] of allPins) {
       if (!processedIds.has(pinId)) {
         newPins.push({ pinId, imageUrl });
+        if (newPins.length >= MAX_NEW_PINS) break;
       }
     }
-    console.log(`[pinterest] ${newPins.length} new pins (${allPins.size - newPins.length} already remade)`);
+    const totalNew = [...allPins.keys()].filter((id) => !processedIds.has(id)).length;
+    console.log(`[pinterest] ${totalNew} unprocessed pins, taking newest ${newPins.length}`);
 
     if (newPins.length === 0) {
       console.log("[pinterest] No new pins to add to dashboard");
