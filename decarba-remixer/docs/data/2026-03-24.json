@@ -3,6 +3,101 @@
   "competitor": "decarba",
   "ads": [
     {
+      "id": "decarba_2026-03-24_11",
+      "type": "video",
+      "thumbPath": "thumbs/decarba_2026-03-24_11.jpg",
+      "adCopy": "NEW Collection is live. Sizes go fast 💨",
+      "reach": 379400,
+      "reachFormatted": "379.4K",
+      "reachCost": "",
+      "daysActive": 26,
+      "startDate": "Feb 19 2026",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-24/decarba_2026-03-24_11.mp4"
+    },
+    {
+      "id": "decarba_2026-03-24_6",
+      "type": "image",
+      "thumbPath": "thumbs/decarba_2026-03-24_6.jpg",
+      "adCopy": "S’26 just got real. DCRB Wavey Clogs are LIVE — bold, durabl",
+      "reach": 370500,
+      "reachFormatted": "370.5K",
+      "reachCost": "",
+      "daysActive": 7,
+      "startDate": "Feb 27 2026",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-24/decarba_2026-03-24_6.jpg"
+    },
+    {
+      "id": "decarba_2026-03-24_1",
+      "type": "video",
+      "thumbPath": "thumbs/decarba_2026-03-24_1.jpg",
+      "adCopy": "NEW Collection is live. Sizes go fast 💨",
+      "reach": 303000,
+      "reachFormatted": "303.0K",
+      "reachCost": "",
+      "daysActive": 3,
+      "startDate": "Mar 18 2026",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-24/decarba_2026-03-24_1.mp4"
+    },
+    {
+      "id": "decarba_2026-03-24_12",
+      "type": "video",
+      "thumbPath": "thumbs/decarba_2026-03-24_12.jpg",
+      "adCopy": "NEW Collection is live. Sizes go fast 💨",
+      "reach": 287100,
+      "reachFormatted": "287.1K",
+      "reachCost": "",
+      "daysActive": 25,
+      "startDate": "Feb 19 2026",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-24/decarba_2026-03-24_12.mp4"
+    },
+    {
+      "id": "decarba_2026-03-24_8",
+      "type": "video",
+      "thumbPath": "thumbs/decarba_2026-03-24_8.jpg",
+      "adCopy": "Secure your new fit. 🔥 Up to 70% OFF End of the Season Sale",
+      "reach": 235400,
+      "reachFormatted": "235.4K",
+      "reachCost": "",
+      "daysActive": 7,
+      "startDate": "Feb 25 2026",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-24/decarba_2026-03-24_8.mp4"
+    },
+    {
       "id": "pinterest_1003176885764265972",
       "type": "image",
       "thumbPath": "thumbs/pinterest_1003176885764265972.jpg",
@@ -33,9 +128,9 @@
       "downloadUrl": "creatives/2026-03-24/pinterest_1003176885764265947.jpg"
     },
     {
-      "id": "pinterest_9359111721192099",
+      "id": "pinterest_31736372372324611",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_9359111721192099.jpg",
+      "thumbPath": "thumbs/pinterest_31736372372324611.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -45,7 +140,7 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_9359111721192099.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_31736372372324611.jpg"
     },
     {
       "id": "pinterest_308637380734370920",
