@@ -172,11 +172,22 @@ async function main() {
     return;
   }
 
+  // Dedup: only keep the last submission per ad_id (skip already-launched duplicates)
+  const seen = new Set<string>();
+  const deduped = [...submissions].reverse().filter((s) => {
+    if (seen.has(s.ad_id)) {
+      console.log(`[launcher] Skipping duplicate ad_id: ${s.ad_id}`);
+      return false;
+    }
+    seen.add(s.ad_id);
+    return true;
+  }).reverse();
+
   // Download all creatives first
   const inputs: SubmissionInput[] = [];
   const tempFiles: string[] = [];
 
-  for (const sub of submissions) {
+  for (const sub of deduped) {
     try {
       const creativePath = await downloadCreative(sub.drive_link, sub.ad_id);
       tempFiles.push(creativePath);
