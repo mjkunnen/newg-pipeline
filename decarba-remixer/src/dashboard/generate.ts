@@ -4,9 +4,10 @@ import { join, extname } from "path";
 import { existsSync } from "fs";
 import { execSync } from "child_process";
 import sharp from "sharp";
-import type { ScrapedAd } from "../scraper/types.js";
+import YAML from "yaml";
+import type { ScrapedAd, Product } from "../scraper/types.js";
 import { renderDashboard, formatReach } from "./template.js";
-import type { DashboardAd, DateEntry } from "./template.js";
+import type { DashboardAd, DateEntry, SuggestedProduct } from "./template.js";
 
 const PROJECT_ROOT = join(import.meta.dirname, "../..");
 const RAW_DIR = join(PROJECT_ROOT, "output/raw");
@@ -152,17 +153,27 @@ async function copyCreative(ad: ScrapedAd, dateDir: string): Promise<string> {
   if (ad.id.startsWith("tiktok_") && ad.localPath) {
     const rawDir = join(ad.localPath, ".."); // localPath is slide_1.jpg inside slides dir
     const zipSource = join(rawDir, "..", `${ad.id}.zip`);
+    const zipFilename = `${ad.id}.zip`;
+    const destPath = join(dateDir, zipFilename);
     if (existsSync(zipSource)) {
-      const zipFilename = `${ad.id}.zip`;
-      const destPath = join(dateDir, zipFilename);
       if (!existsSync(destPath)) {
         await copyFile(zipSource, destPath);
       }
       return zipFilename;
     }
+    // Already copied from a previous run
+    if (existsSync(destPath)) return zipFilename;
   }
 
-  if (!ad.localPath || !existsSync(ad.localPath)) return "";
+  // Check if already copied from a previous run (try common extensions)
+  if (!ad.localPath || !existsSync(ad.localPath)) {
+    for (const ext of [".jpg", ".mp4", ".png", ".webp", ".zip"]) {
+      const candidate = join(dateDir, `${ad.id}${ext}`);
+      if (existsSync(candidate)) return `${ad.id}${ext}`;
+    }
+    return "";
+  }
+
   const ext = extname(ad.localPath) || (ad.type === "video" ? ".mp4" : ".jpg");
   const filename = `${ad.id}${ext}`;
   const destPath = join(dateDir, filename);
@@ -183,8 +194,51 @@ async function cleanupOldCreatives(keepDates: string[]) {
   }
 }
 
+async function loadProductCatalog(): Promise<Product[]> {
+  const configPath = join(PROJECT_ROOT, "config/products.yaml");
+  if (!existsSync(configPath)) return [];
+  const raw = await readFile(configPath, "utf-8");
+  return YAML.parse(raw) as Product[];
+}
+
+function assignProducts(ad: ScrapedAd, allProducts: Product[]): SuggestedProduct[] {
+  const tops = allProducts
+    .filter((p) => p.collection === "bestseller-tops")
+    .sort((a, b) => (a.sales_rank || 99) - (b.sales_rank || 99));
+  const bottoms = allProducts
+    .filter((p) => p.collection === "bestseller-bottoms")
+    .sort((a, b) => (a.sales_rank || 99) - (b.sales_rank || 99));
+  const shoes = allProducts
+    .filter((p) => p.collection === "bestseller-shoes")
+    .sort((a, b) => (a.sales_rank || 99) - (b.sales_rank || 99));
+
+  // Use ad id hash to rotate through products so not every ad gets the same combo
+  let hash = 0;
+  for (const ch of ad.id) hash = ((hash << 5) - hash + ch.charCodeAt(0)) | 0;
+  hash = Math.abs(hash);
+
+  const result: SuggestedProduct[] = [];
+
+  if (tops.length > 0) {
+    const top = tops[hash % tops.length];
+    result.push({ name: top.name, collection: top.collection, role: "top" });
+  }
+  if (bottoms.length > 0) {
+    const bottom = bottoms[(hash >> 3) % bottoms.length];
+    result.push({ name: bottom.name, collection: bottom.collection, role: "bottom" });
+  }
+  if (shoes.length > 0) {
+    const shoe = shoes[(hash >> 6) % shoes.length];
+    result.push({ name: shoe.name, collection: shoe.collection, role: "shoes" });
+  }
+
+  return result;
+}
+
 async function generate() {
   console.log("[dashboard] Scanning for scrapes...");
+  const productCatalog = await loadProductCatalog();
+  console.log(`[dashboard] Loaded ${productCatalog.length} products from catalog`);
   const allScrapes = await findAllScrapes();
 
   if (allScrapes.length === 0) {
@@ -262,6 +316,9 @@ async function generate() {
       const thumbPath = await generateThumbnail(ad, THUMBS_DIR);
       const creativeFilename = await copyCreative(ad, creativeDateDir);
       const downloadPath = creativeFilename ? `creatives/${date}/${creativeFilename}` : "";
+      const suggestedProducts = productCatalog.length > 0
+        ? assignProducts(ad, productCatalog)
+        : undefined;
       dashboardAds.push({
         id: ad.id,
         type: ad.type,
@@ -274,6 +331,7 @@ async function generate() {
         startDate: ad.startedAt,
         platforms: ad.platforms,
         downloadUrl: downloadPath,
+        suggestedProducts,
       });
     }
 
