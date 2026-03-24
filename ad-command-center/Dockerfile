@@ -2,7 +2,7 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# Cache bust: v8
+# Cache bust: v9
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 

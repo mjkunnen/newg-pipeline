@@ -25,13 +25,19 @@ def parse_action_values(action_values: list[dict] | None, action_type: str) -> f
     return 0.0
 
 async def run_sync():
+    """Sync Meta ads data using minimal API calls to avoid rate limiting.
+
+    Strategy: Use account-level ads endpoint to fetch everything in ~3 calls
+    instead of traversing campaigns → ad sets → ads (N*M*K calls).
+    """
     logger.info("Starting Meta sync...")
     db = SessionLocal()
     try:
+        # Step 1: Fetch all active campaigns (1 API call)
         all_campaigns = await meta_client.fetch_campaigns()
-        # Only sync ACTIVE campaigns to avoid rate limiting (25+ old campaigns)
         campaigns = [c for c in all_campaigns if c.get("status") == "ACTIVE"]
         logger.info(f"Found {len(campaigns)} active campaigns (of {len(all_campaigns)} total)")
+
         for c in campaigns:
             try:
                 existing = db.query(Campaign).filter_by(id=c["id"]).first()
@@ -44,108 +50,101 @@ async def run_sync():
                         id=c["id"], channel="meta", name=c["name"],
                         status=c["status"], daily_budget=int(c.get("daily_budget", 0))
                     ))
-                db.flush()
             except Exception as e:
                 logger.warning(f"Failed to sync campaign {c.get('id')}: {e}")
-                continue
+        db.flush()
 
+        # Step 2: Fetch ALL ads at account level (1 API call instead of N*M)
+        try:
+            all_ads = await meta_client.fetch_all_ads()
+            logger.info(f"Fetched {len(all_ads)} ads at account level")
+        except Exception as e:
+            logger.error(f"Failed to fetch ads: {e}")
+            all_ads = []
+
+        for ad in all_ads:
             try:
-                ad_sets = await meta_client.fetch_ad_sets(c["id"])
-            except Exception as e:
-                logger.warning(f"Failed to fetch ad sets for campaign {c['id']}: {e}")
-                continue
+                ad_id = ad["id"]
+                adset_data = ad.get("adset", {})
+                adset_id = adset_data.get("id") or ad.get("adset_id")
+                campaign_id = ad.get("campaign", {}).get("id") or ad.get("campaign_id")
+                creative_id = ad.get("creative", {}).get("id")
 
-            for aset in ad_sets:
-                try:
-                    existing_aset = db.query(AdSet).filter_by(id=aset["id"]).first()
-                    if existing_aset:
-                        existing_aset.name = aset["name"]
-                        existing_aset.status = aset["status"]
-                        existing_aset.daily_budget = int(aset.get("daily_budget", 0))
-                    else:
+                # Upsert ad set if we have data
+                if adset_id and adset_data.get("name"):
+                    existing_aset = db.query(AdSet).filter_by(id=adset_id).first()
+                    if not existing_aset:
                         db.add(AdSet(
-                            id=aset["id"], channel="meta", name=aset["name"],
-                            campaign_id=c["id"], status=aset["status"],
-                            daily_budget=int(aset.get("daily_budget", 0))
+                            id=adset_id, channel="meta", name=adset_data["name"],
+                            campaign_id=campaign_id, status=adset_data.get("status", "ACTIVE"),
+                            daily_budget=int(adset_data.get("daily_budget", 0))
                         ))
-                    db.flush()
-                except Exception as e:
-                    logger.warning(f"Failed to sync ad set {aset.get('id')}: {e}")
-                    continue
+                    else:
+                        existing_aset.name = adset_data["name"]
+                        existing_aset.status = adset_data.get("status", "ACTIVE")
 
-                try:
-                    ads = await meta_client.fetch_ads(aset["id"])
-                except Exception as e:
-                    logger.warning(f"Failed to fetch ads for ad set {aset['id']}: {e}")
-                    continue
-
-                for ad in ads:
-                    try:
-                        ad_id = ad["id"]
-                        creative_id = ad.get("creative", {}).get("id")
-
-                        existing_ad = db.query(Ad).filter_by(id=ad_id).first()
-                        if not existing_ad:
-                            thumb_url = None
-                            thumb_bytes = None
-                            if creative_id:
-                                try:
-                                    thumb_url = await meta_client.fetch_creative_thumbnail(creative_id)
-                                    if thumb_url:
-                                        thumb_bytes = await meta_client.download_image(thumb_url)
-                                except Exception:
-                                    pass
-                            db.add(Ad(
-                                id=ad_id, channel="meta", name=ad["name"],
-                                ad_set_id=aset["id"], status=ad["status"],
-                                creative_url=thumb_url, creative_cached=thumb_bytes,
-                            ))
-                        else:
-                            existing_ad.status = ad["status"]
-                            existing_ad.name = ad["name"]
-                        db.flush()
-
+                # Upsert ad
+                existing_ad = db.query(Ad).filter_by(id=ad_id).first()
+                if not existing_ad:
+                    thumb_url = None
+                    thumb_bytes = None
+                    if creative_id:
                         try:
-                            insights = await meta_client.fetch_ad_insights(ad_id)
+                            thumb_url = await meta_client.fetch_creative_thumbnail(creative_id)
+                            if thumb_url:
+                                thumb_bytes = await meta_client.download_image(thumb_url)
                         except Exception:
-                            insights = None
+                            pass
+                    db.add(Ad(
+                        id=ad_id, channel="meta", name=ad["name"],
+                        ad_set_id=adset_id, status=ad["status"],
+                        creative_url=thumb_url, creative_cached=thumb_bytes,
+                    ))
+                else:
+                    existing_ad.status = ad["status"]
+                    existing_ad.name = ad["name"]
+                db.flush()
 
-                        if insights:
-                            spend = float(insights.get("spend", 0))
-                            purchases = parse_actions(insights.get("actions"), "purchase")
-                            revenue = parse_action_values(insights.get("action_values"), "purchase")
-                            roas = revenue / spend if spend > 0 else 0
+                # Parse inline insights (already included in the API response)
+                insights_data = ad.get("insights", {}).get("data", [])
+                insights = insights_data[0] if insights_data else None
 
-                            snapshot = Snapshot(
-                                channel="meta", ad_id=ad_id,
-                                spend=spend,
-                                impressions=int(insights.get("impressions", 0)),
-                                clicks=int(insights.get("clicks", 0)),
-                                ctr=float(insights.get("ctr", 0)),
-                                cpc=float(insights.get("cpc", 0)),
-                                add_to_carts=parse_actions(insights.get("actions"), "add_to_cart"),
-                                purchases=purchases,
-                                revenue=revenue,
-                                roas=roas,
-                            )
-                            db.add(snapshot)
+                if insights:
+                    spend = float(insights.get("spend", 0))
+                    purchases = parse_actions(insights.get("actions"), "purchase")
+                    revenue = parse_action_values(insights.get("action_values"), "purchase")
+                    roas = revenue / spend if spend > 0 else 0
 
-                            # Generate alerts
-                            if spend > 5 and roas < ROAS_ALERT_THRESHOLD:
-                                db.add(Notification(
-                                    type="roas_low",
-                                    message=f"Ad '{ad['name']}' ROAS is {roas:.1f}x (below {ROAS_ALERT_THRESHOLD}x threshold)"
-                                ))
-                            if purchases > 0:
-                                cpa = spend / purchases
-                                if cpa > CPA_ALERT_THRESHOLD:
-                                    db.add(Notification(
-                                        type="cpa_high",
-                                        message=f"Ad '{ad['name']}' CPA is \u20ac{cpa:.2f} (above \u20ac{CPA_ALERT_THRESHOLD} threshold)"
-                                    ))
-                    except Exception as e:
-                        logger.warning(f"Failed to sync ad {ad.get('id')}: {e}")
-                        continue
+                    snapshot = Snapshot(
+                        channel="meta", ad_id=ad_id,
+                        spend=spend,
+                        impressions=int(insights.get("impressions", 0)),
+                        clicks=int(insights.get("clicks", 0)),
+                        ctr=float(insights.get("ctr", 0)),
+                        cpc=float(insights.get("cpc", 0)),
+                        add_to_carts=parse_actions(insights.get("actions"), "add_to_cart"),
+                        purchases=purchases,
+                        revenue=revenue,
+                        roas=roas,
+                    )
+                    db.add(snapshot)
+
+                    # Generate alerts
+                    if spend > 5 and roas < ROAS_ALERT_THRESHOLD:
+                        db.add(Notification(
+                            type="roas_low",
+                            message=f"Ad '{ad['name']}' ROAS is {roas:.1f}x (below {ROAS_ALERT_THRESHOLD}x threshold)"
+                        ))
+                    if purchases > 0:
+                        cpa = spend / purchases
+                        if cpa > CPA_ALERT_THRESHOLD:
+                            db.add(Notification(
+                                type="cpa_high",
+                                message=f"Ad '{ad['name']}' CPA is \u20ac{cpa:.2f} (above \u20ac{CPA_ALERT_THRESHOLD} threshold)"
+                            ))
+            except Exception as e:
+                logger.warning(f"Failed to sync ad {ad.get('id')}: {e}")
+                continue
 
         db.commit()
         logger.info("Meta sync complete")
