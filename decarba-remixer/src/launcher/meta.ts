@@ -224,7 +224,7 @@ export async function launchBatch(
       name: `Creative_${input.adId}`,
       object_story_spec: {
         page_id: pageId,
-        ...(igAccountId ? { instagram_actor_id: igAccountId } : {}),
+        ...(igAccountId ? { instagram_user_id: igAccountId } : {}),
         ...(isVideo
           ? {
               video_data: {
