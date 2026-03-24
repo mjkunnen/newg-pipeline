@@ -136,19 +136,14 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
 
     console.log(`[pinterest] Found ${allPins.size} total unique pins on board`);
 
-    // Filter out already-processed pins — only keep the newest unprocessed ones.
-    // Pinterest boards show newest pins first, so the first entries in allPins
-    // (insertion order) are the most recently saved pins.
-    const MAX_NEW_PINS = 5;
+    // Show all board pins that are NOT in the tracking sheet
     const newPins: Array<{ pinId: string; imageUrl: string }> = [];
     for (const [pinId, imageUrl] of allPins) {
       if (!processedIds.has(pinId)) {
         newPins.push({ pinId, imageUrl });
-        if (newPins.length >= MAX_NEW_PINS) break;
       }
     }
-    const totalNew = [...allPins.keys()].filter((id) => !processedIds.has(id)).length;
-    console.log(`[pinterest] ${totalNew} unprocessed pins, taking newest ${newPins.length}`);
+    console.log(`[pinterest] ${newPins.length} pins not in sheet (${allPins.size - newPins.length} already in sheet)`);
 
     if (newPins.length === 0) {
       console.log("[pinterest] No new pins to add to dashboard");
