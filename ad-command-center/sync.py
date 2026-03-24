@@ -174,17 +174,24 @@ async def run_sync():
         db.commit()
 
         # Backfill: if we have no historical snapshots, fetch last 30 days of account-level data
-        oldest_snap = db.query(Snapshot).order_by(Snapshot.timestamp.asc()).first()
-        today = datetime.utcnow().date()
-        if not oldest_snap or oldest_snap.timestamp.date() == today:
-            logger.info("No historical data found, backfilling last 30 days...")
-            try:
+        # Use a fresh session to avoid autoflush issues from earlier errors
+        db2 = SessionLocal()
+        try:
+            oldest_snap = db2.query(Snapshot).order_by(Snapshot.timestamp.asc()).first()
+            today = datetime.utcnow().date()
+            if not oldest_snap or oldest_snap.timestamp.date() == today:
+                logger.info("No historical data found, backfilling last 30 days...")
+                # Ensure "account" placeholder ad exists for account-level snapshots
+                if not db2.query(Ad).filter_by(id="account").first():
+                    db2.add(Ad(id="account", channel="meta", name="Account Total", status="ACTIVE"))
+                    db2.commit()
                 daily_data = await meta_client.fetch_account_insights_daily(30)
+                added = 0
                 for day in daily_data:
                     day_date = datetime.strptime(day["date_start"], "%Y-%m-%d").date()
                     if day_date == today:
-                        continue  # Already have today's per-ad data
-                    existing = db.query(Snapshot).filter(
+                        continue
+                    existing = db2.query(Snapshot).filter(
                         Snapshot.ad_id == "account",
                         cast(Snapshot.timestamp, Date) == day_date
                     ).first()
@@ -193,7 +200,7 @@ async def run_sync():
                     spend = float(day.get("spend", 0))
                     purchases = parse_actions(day.get("actions"), "purchase")
                     revenue = parse_action_values(day.get("action_values"), "purchase")
-                    db.add(Snapshot(
+                    db2.add(Snapshot(
                         channel="meta", ad_id="account",
                         timestamp=datetime(day_date.year, day_date.month, day_date.day),
                         spend=spend,
@@ -206,10 +213,14 @@ async def run_sync():
                         revenue=revenue,
                         roas=round(revenue / spend, 2) if spend > 0 else 0,
                     ))
-                db.commit()
-                logger.info(f"Backfilled {len(daily_data)} days of historical data")
-            except Exception as e:
-                logger.warning(f"Historical backfill failed: {e}")
+                    added += 1
+                db2.commit()
+                logger.info(f"Backfilled {added} days of historical data")
+        except Exception as e:
+            db2.rollback()
+            logger.warning(f"Historical backfill failed: {e}")
+        finally:
+            db2.close()
 
         logger.info("Meta sync complete")
     except Exception as e:
