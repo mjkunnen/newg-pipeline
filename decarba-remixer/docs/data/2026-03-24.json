@@ -33,9 +33,9 @@
       "downloadUrl": "creatives/2026-03-24/pinterest_1003176885764265947.jpg"
     },
     {
-      "id": "pinterest_9359111721192099",
+      "id": "pinterest_31736372372324611",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_9359111721192099.jpg",
+      "thumbPath": "thumbs/pinterest_31736372372324611.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -45,12 +45,12 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_9359111721192099.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_31736372372324611.jpg"
     },
     {
-      "id": "pinterest_308637380734370920",
+      "id": "pinterest_75998312462096335",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_308637380734370920.jpg",
+      "thumbPath": "thumbs/pinterest_75998312462096335.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -60,12 +60,12 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_308637380734370920.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_75998312462096335.jpg"
     },
     {
-      "id": "pinterest_1055599909138115",
+      "id": "pinterest_966514770061080898",
       "type": "image",
-      "thumbPath": "thumbs/pinterest_1055599909138115.jpg",
+      "thumbPath": "thumbs/pinterest_966514770061080898.jpg",
       "adCopy": "",
       "reach": 0,
       "reachFormatted": "0",
@@ -75,82 +75,382 @@
       "platforms": [
         "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-24/pinterest_1055599909138115.jpg"
+      "downloadUrl": "creatives/2026-03-24/pinterest_966514770061080898.jpg"
     },
     {
-      "id": "tiktok_nfits_18_7618662395690437910",
+      "id": "tiktok_aightfits_clo_7619531066243697940_slide1",
       "type": "image",
-      "thumbPath": "thumbs/tiktok_nfits_18_7618662395690437910.jpg",
-      "adCopy": "@nfits_18 — 7 slides",
-      "reach": 49400,
-      "reachFormatted": "49.4K",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-18",
-      "platforms": [
-        "tiktok"
-      ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_nfits_18_7618662395690437910.jpg"
-    },
-    {
-      "id": "tiktok_aightfits_clo_7619720298878864661",
-      "type": "image",
-      "thumbPath": "thumbs/tiktok_aightfits_clo_7619720298878864661.jpg",
-      "adCopy": "@aightfits_clo — 4 slides",
-      "reach": 47600,
-      "reachFormatted": "47.6K",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619531066243697940_slide1.jpg",
+      "adCopy": "@aightfits_clo — slide 1/4",
+      "reach": 24600,
+      "reachFormatted": "24.6K",
       "reachCost": "",
       "daysActive": 0,
       "startDate": "2026-03-21",
       "platforms": [
         "tiktok"
       ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619720298878864661.jpg"
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619531066243697940_slide1.jpg"
     },
     {
-      "id": "tiktok_aightfits_clo_7618217364244581653",
+      "id": "tiktok_aightfits_clo_7619531066243697940_slide2",
       "type": "image",
-      "thumbPath": "thumbs/tiktok_aightfits_clo_7618217364244581653.jpg",
-      "adCopy": "@aightfits_clo — 5 slides",
-      "reach": 41200,
-      "reachFormatted": "41.2K",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619531066243697940_slide2.jpg",
+      "adCopy": "@aightfits_clo — slide 2/4",
+      "reach": 24600,
+      "reachFormatted": "24.6K",
       "reachCost": "",
       "daysActive": 0,
-      "startDate": "2026-03-17",
+      "startDate": "2026-03-21",
       "platforms": [
         "tiktok"
       ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7618217364244581653.jpg"
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619531066243697940_slide2.jpg"
     },
     {
-      "id": "tiktok_outfits.nstra_7618345517944409366",
+      "id": "tiktok_aightfits_clo_7619531066243697940_slide3",
       "type": "image",
-      "thumbPath": "thumbs/tiktok_outfits.nstra_7618345517944409366.jpg",
-      "adCopy": "@outfits.nstra — 4 slides",
-      "reach": 39100,
-      "reachFormatted": "39.1K",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619531066243697940_slide3.jpg",
+      "adCopy": "@aightfits_clo — slide 3/4",
+      "reach": 24600,
+      "reachFormatted": "24.6K",
       "reachCost": "",
       "daysActive": 0,
-      "startDate": "2026-03-17",
+      "startDate": "2026-03-21",
       "platforms": [
         "tiktok"
       ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_outfits.nstra_7618345517944409366.jpg"
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619531066243697940_slide3.jpg"
     },
     {
-      "id": "tiktok_aightfits_clo_7618567539584650516",
+      "id": "tiktok_aightfits_clo_7619531066243697940_slide4",
       "type": "image",
-      "thumbPath": "thumbs/tiktok_aightfits_clo_7618567539584650516.jpg",
-      "adCopy": "@aightfits_clo — 4 slides",
-      "reach": 38100,
-      "reachFormatted": "38.1K",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619531066243697940_slide4.jpg",
+      "adCopy": "@aightfits_clo — slide 4/4",
+      "reach": 24600,
+      "reachFormatted": "24.6K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619531066243697940_slide4.jpg"
+    },
+    {
+      "id": "tiktok_outfits.nstra_7619821709486640387_slide1",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfits.nstra_7619821709486640387_slide1.jpg",
+      "adCopy": "@outfits.nstra — slide 1/4",
+      "reach": 21100,
+      "reachFormatted": "21.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_outfits.nstra_7619821709486640387_slide1.jpg"
+    },
+    {
+      "id": "tiktok_outfits.nstra_7619821709486640387_slide2",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfits.nstra_7619821709486640387_slide2.jpg",
+      "adCopy": "@outfits.nstra — slide 2/4",
+      "reach": 21100,
+      "reachFormatted": "21.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_outfits.nstra_7619821709486640387_slide2.jpg"
+    },
+    {
+      "id": "tiktok_outfits.nstra_7619821709486640387_slide3",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfits.nstra_7619821709486640387_slide3.jpg",
+      "adCopy": "@outfits.nstra — slide 3/4",
+      "reach": 21100,
+      "reachFormatted": "21.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_outfits.nstra_7619821709486640387_slide3.jpg"
+    },
+    {
+      "id": "tiktok_outfits.nstra_7619821709486640387_slide4",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfits.nstra_7619821709486640387_slide4.jpg",
+      "adCopy": "@outfits.nstra — slide 4/4",
+      "reach": 21100,
+      "reachFormatted": "21.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_outfits.nstra_7619821709486640387_slide4.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7619641913779473685_slide1",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619641913779473685_slide1.jpg",
+      "adCopy": "@aightfits_clo — slide 1/5",
+      "reach": 19300,
+      "reachFormatted": "19.3K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619641913779473685_slide1.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7619641913779473685_slide2",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619641913779473685_slide2.jpg",
+      "adCopy": "@aightfits_clo — slide 2/5",
+      "reach": 19300,
+      "reachFormatted": "19.3K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619641913779473685_slide2.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7619641913779473685_slide3",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619641913779473685_slide3.jpg",
+      "adCopy": "@aightfits_clo — slide 3/5",
+      "reach": 19300,
+      "reachFormatted": "19.3K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619641913779473685_slide3.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7619641913779473685_slide4",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619641913779473685_slide4.jpg",
+      "adCopy": "@aightfits_clo — slide 4/5",
+      "reach": 19300,
+      "reachFormatted": "19.3K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619641913779473685_slide4.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7619641913779473685_slide5",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7619641913779473685_slide5.jpg",
+      "adCopy": "@aightfits_clo — slide 5/5",
+      "reach": 19300,
+      "reachFormatted": "19.3K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-21",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7619641913779473685_slide5.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7618457773377883413_slide1",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7618457773377883413_slide1.jpg",
+      "adCopy": "@aightfits_clo — slide 1/5",
+      "reach": 19100,
+      "reachFormatted": "19.1K",
       "reachCost": "",
       "daysActive": 0,
       "startDate": "2026-03-18",
       "platforms": [
         "tiktok"
       ],
-      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7618567539584650516.jpg"
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7618457773377883413_slide1.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7618457773377883413_slide2",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7618457773377883413_slide2.jpg",
+      "adCopy": "@aightfits_clo — slide 2/5",
+      "reach": 19100,
+      "reachFormatted": "19.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-18",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7618457773377883413_slide2.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7618457773377883413_slide3",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7618457773377883413_slide3.jpg",
+      "adCopy": "@aightfits_clo — slide 3/5",
+      "reach": 19100,
+      "reachFormatted": "19.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-18",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7618457773377883413_slide3.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7618457773377883413_slide4",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7618457773377883413_slide4.jpg",
+      "adCopy": "@aightfits_clo — slide 4/5",
+      "reach": 19100,
+      "reachFormatted": "19.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-18",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7618457773377883413_slide4.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7618457773377883413_slide5",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7618457773377883413_slide5.jpg",
+      "adCopy": "@aightfits_clo — slide 5/5",
+      "reach": 19100,
+      "reachFormatted": "19.1K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-18",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7618457773377883413_slide5.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7620397358139952404_slide1",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7620397358139952404_slide1.jpg",
+      "adCopy": "@aightfits_clo — slide 1/7",
+      "reach": 17000,
+      "reachFormatted": "17.0K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-23",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7620397358139952404_slide1.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7620397358139952404_slide2",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7620397358139952404_slide2.jpg",
+      "adCopy": "@aightfits_clo — slide 2/7",
+      "reach": 17000,
+      "reachFormatted": "17.0K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-23",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7620397358139952404_slide2.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7620397358139952404_slide3",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7620397358139952404_slide3.jpg",
+      "adCopy": "@aightfits_clo — slide 3/7",
+      "reach": 17000,
+      "reachFormatted": "17.0K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-23",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7620397358139952404_slide3.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7620397358139952404_slide4",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7620397358139952404_slide4.jpg",
+      "adCopy": "@aightfits_clo — slide 4/7",
+      "reach": 17000,
+      "reachFormatted": "17.0K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-23",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7620397358139952404_slide4.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7620397358139952404_slide5",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7620397358139952404_slide5.jpg",
+      "adCopy": "@aightfits_clo — slide 5/7",
+      "reach": 17000,
+      "reachFormatted": "17.0K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-23",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7620397358139952404_slide5.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7620397358139952404_slide6",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7620397358139952404_slide6.jpg",
+      "adCopy": "@aightfits_clo — slide 6/7",
+      "reach": 17000,
+      "reachFormatted": "17.0K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-23",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7620397358139952404_slide6.jpg"
+    },
+    {
+      "id": "tiktok_aightfits_clo_7620397358139952404_slide7",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7620397358139952404_slide7.jpg",
+      "adCopy": "@aightfits_clo — slide 7/7",
+      "reach": 17000,
+      "reachFormatted": "17.0K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-23",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-24/tiktok_aightfits_clo_7620397358139952404_slide7.jpg"
     }
   ]
 }
