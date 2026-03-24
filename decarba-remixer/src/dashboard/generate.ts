@@ -18,7 +18,6 @@ const CREATIVES_DIR = join(DOCS_DIR, "creatives");
 const COMPETITOR = "decarba";
 const THUMB_WIDTH = 400;
 const MAX_DAYS_KEEP = 7;
-const SEEN_ADS_PATH = join(DATA_DIR, "seen-ads.json");
 
 async function findAllScrapes(): Promise<{ date: string; ads: ScrapedAd[] }[]> {
   if (!existsSync(RAW_DIR)) return [];
@@ -168,29 +167,15 @@ async function generate() {
   await mkdir(THUMBS_DIR, { recursive: true });
   await mkdir(CREATIVES_DIR, { recursive: true });
 
-  // Load persistent seen-ads list (survives across runs via git commit)
-  let seenAds: string[] = [];
-  if (existsSync(SEEN_ADS_PATH)) {
-    try {
-      seenAds = JSON.parse(await readFile(SEEN_ADS_PATH, "utf-8"));
-    } catch {
-      seenAds = [];
-    }
-  }
-  const seenCreativeUrls = new Set<string>(seenAds);
-  const previouslySeen = seenCreativeUrls.size;
+  // Dedup is handled differently per source:
+  // - PPSpy ads: always show top 5 by reach (they change daily in stats)
+  // - Pinterest pins: filtered by tracking sheet in the scraper already, no extra dedup needed
 
   const dateIndex: DateEntry[] = [];
   const keepDates: string[] = [];
 
   for (const { date, ads } of recentScrapes) {
-    // Deduplicate: skip ads already shown on ANY previous day (persistent)
-    const uniqueAds = ads.filter((ad) => {
-      if (seenCreativeUrls.has(ad.creativeUrl)) return false;
-      seenCreativeUrls.add(ad.creativeUrl);
-      return true;
-    });
-    console.log(`[dashboard] Processing ${date} (${uniqueAds.length} new of ${ads.length} scraped, ${previouslySeen} previously seen)...`);
+    console.log(`[dashboard] Processing ${date} (${ads.length} ads)...`);
     keepDates.push(date);
 
     // Create per-date creatives dir
@@ -199,7 +184,7 @@ async function generate() {
 
     // Generate thumbnails + copy creatives
     const dashboardAds: DashboardAd[] = [];
-    for (const ad of uniqueAds) {
+    for (const ad of ads) {
       const thumbPath = await generateThumbnail(ad, THUMBS_DIR);
       const creativeFilename = await copyCreative(ad, creativeDateDir);
       const downloadPath = creativeFilename ? `creatives/${date}/${creativeFilename}` : "";
@@ -243,10 +228,6 @@ async function generate() {
       imageCount: dashboardAds.length - videoCount,
     });
   }
-
-  // Save persistent seen-ads list
-  await writeFile(SEEN_ADS_PATH, JSON.stringify([...seenCreativeUrls], null, 2));
-  console.log(`[dashboard] Seen ads: ${previouslySeen} → ${seenCreativeUrls.size} (${seenCreativeUrls.size - previouslySeen} new)`);
 
   // Cleanup old creatives (keep only recent dates)
   await cleanupOldCreatives(keepDates);
