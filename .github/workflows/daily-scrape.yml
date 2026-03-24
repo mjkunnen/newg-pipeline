@@ -103,6 +103,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: decarba-remixer/docs
+          retention-days: 1
 
       - name: Deploy to GitHub Pages
         id: deployment
