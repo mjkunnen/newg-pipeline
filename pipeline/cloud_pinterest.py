@@ -3,7 +3,7 @@ Cloud Pinterest Remake Pipeline — runs in GitHub Actions, no local auth needed
 
 Reads processed pins from public Google Sheet CSV.
 Writes new remakes via Google Apps Script POST (uploads image to Drive + adds row).
-Fetches Pinterest pins via Apify Pinterest Scraper (no browser needed).
+Fetches Pinterest pins via Playwright (headless browser scrolls board).
 Remakes with fal.ai Nano Banana 2 edit endpoint.
 
 Usage:
@@ -34,9 +34,6 @@ FAL_HEADERS = {
     "Authorization": f"Key {FAL_KEY}",
     "Content-Type": "application/json",
 }
-
-# Apify
-APIFY_TOKEN = os.getenv("APIFY_TOKEN", "apify_api_1yG1ww6aCJVRapIXivxCaa2uipcTnc2qd5GV")
 
 # IDs
 BOARD_ID = "1003176954437607618"
@@ -141,69 +138,54 @@ def post_remake_to_sheet(pin_id, pin_url, outfit_combo, status, image_url, filen
 
 
 # ---------------------------------------------------------------------------
-# Pinterest — Apify scraper
+# Pinterest — Playwright headless browser
 # ---------------------------------------------------------------------------
 
 BOARD_URL = "https://www.pinterest.com/newgarmentsclo/inspo-board/"
 
 def fetch_board_pins():
-    """Fetch pins from Pinterest board using Apify actor (run-sync-get-dataset-items)."""
-    actor_id = "epctex~pinterest-scraper"
-    url = f"https://api.apify.com/v2/acts/{actor_id}/run-sync-get-dataset-items"
-
-    payload = {
-        "startUrls": [{"url": BOARD_URL}],
-        "maxItems": 100,
-    }
-
-    log.info(f"Apify: starting Pinterest scrape for {BOARD_URL}")
-    try:
-        resp = requests.post(
-            url,
-            params={"token": APIFY_TOKEN},
-            json=payload,
-            timeout=300,
-        )
-        resp.raise_for_status()
-        items = resp.json()
-    except Exception as e:
-        log.error(f"Apify request failed: {e}")
-        return []
+    """Fetch pins from Pinterest board using Playwright (scrolls to load all pins)."""
+    from playwright.sync_api import sync_playwright
 
     pins = []
     seen = set()
-    for item in items:
-        pin_id = str(item.get("id", item.get("pin_id", "")))
-        if not pin_id or pin_id in seen:
-            continue
-        seen.add(pin_id)
 
-        # Try different field names for image URL
-        image_url = (
-            item.get("imageUrl")
-            or item.get("image_url")
-            or item.get("imageLargeUrl")
-            or item.get("images", {}).get("orig", {}).get("url", "")
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         )
-        if not image_url:
-            # Try nested image structure
-            images = item.get("images") or item.get("media") or {}
-            if isinstance(images, dict):
-                for key in ("orig", "original", "736x", "564x"):
-                    if key in images:
-                        url_val = images[key]
-                        image_url = url_val.get("url", url_val) if isinstance(url_val, dict) else url_val
-                        break
+        page.goto(BOARD_URL, wait_until="networkidle", timeout=30000)
+        time.sleep(3)
 
-        if not image_url:
-            log.warning(f"Pin {pin_id}: no image URL found, skipping")
-            continue
+        for scroll_round in range(5):
+            page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            time.sleep(2)
 
-        # Upgrade to highest resolution
-        image_url = re.sub(r'/(236x|474x|564x|736x)/', '/originals/', image_url)
-        pins.append({"pin_id": pin_id, "image_url": image_url})
+        pin_elements = page.query_selector_all('a[href*="/pin/"]')
+        for el in pin_elements:
+            href = el.get_attribute("href") or ""
+            match = re.search(r'/pin/(\d+)', href)
+            if not match:
+                continue
+            pin_id = match.group(1)
+            if pin_id in seen:
+                continue
+            seen.add(pin_id)
 
-    log.info(f"Apify: fetched {len(pins)} pins from board")
+            img = el.query_selector("img")
+            if not img:
+                continue
+            src = img.get_attribute("src") or ""
+            if "pinimg.com" not in src:
+                continue
+
+            image_url = re.sub(r'/(236x|474x|564x|736x)/', '/originals/', src)
+            pins.append({"pin_id": pin_id, "image_url": image_url})
+
+        browser.close()
+
+    log.info(f"Playwright: fetched {len(pins)} pins from board")
     return pins
 
 

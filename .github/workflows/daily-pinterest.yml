@@ -20,11 +20,12 @@ jobs:
           cache: pip
 
       - name: Install dependencies
-        run: pip install requests python-dotenv
+        run: |
+          pip install requests python-dotenv playwright
+          playwright install chromium --with-deps
 
       - name: Run Pinterest remake pipeline
         env:
           FAL_KEY: ${{ secrets.FAL_KEY }}
-          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
           PINTEREST_APPS_SCRIPT_URL: ${{ secrets.PINTEREST_APPS_SCRIPT_URL }}
         run: python pipeline/cloud_pinterest.py --max 10
