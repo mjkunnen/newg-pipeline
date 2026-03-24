@@ -134,12 +134,26 @@ async function findOrCreateAdSet(
 
 // --- Upload creative ---
 
+async function waitForVideoThumbnail(
+  videoId: string,
+  token: string,
+  maxAttempts = 10,
+): Promise<string> {
+  for (let i = 0; i < maxAttempts; i++) {
+    const data = await graphGet(`/${videoId}?fields=thumbnails`, token);
+    const thumbs = (data.thumbnails as { data?: Array<{ uri: string }> })?.data;
+    if (thumbs && thumbs.length > 0) return thumbs[0].uri;
+    await new Promise((r) => setTimeout(r, 3000));
+  }
+  throw new Error(`Video ${videoId} thumbnail not ready after ${maxAttempts * 3}s`);
+}
+
 async function uploadCreative(
   filePath: string,
   isVideo: boolean,
   token: string,
   adAccountId: string
-): Promise<string> {
+): Promise<{ id: string; thumbnailUrl?: string }> {
   const fileBuffer = await readFile(filePath);
 
   if (isVideo) {
@@ -153,7 +167,9 @@ async function uploadCreative(
     });
     if (!res.ok) throw new Error(`Video upload failed: ${await res.text()}`);
     const data: Record<string, string> = await res.json();
-    return data.id;
+    console.log(`[meta] Video uploaded: ${data.id}, waiting for thumbnail...`);
+    const thumbnailUrl = await waitForVideoThumbnail(data.id, token);
+    return { id: data.id, thumbnailUrl };
   } else {
     const formData = new FormData();
     formData.append("access_token", token);
@@ -167,7 +183,7 @@ async function uploadCreative(
     const data = await res.json();
     const images = data.images || {};
     const firstKey = Object.keys(images)[0];
-    return images[firstKey]?.hash;
+    return { id: images[firstKey]?.hash };
   }
 }
 
@@ -216,8 +232,8 @@ export async function launchBatch(
       "Discover our latest streetwear collection. Premium quality, unmatched style.";
 
     // Upload creative
-    const mediaId = await uploadCreative(input.creativePath, isVideo, token, adAccountId);
-    console.log(`[meta] Uploaded media for ${input.adId}: ${mediaId}`);
+    const media = await uploadCreative(input.creativePath, isVideo, token, adAccountId);
+    console.log(`[meta] Uploaded media for ${input.adId}: ${media.id}`);
 
     // Create ad creative
     const creativeData: Record<string, unknown> = {
@@ -228,16 +244,18 @@ export async function launchBatch(
         ...(isVideo
           ? {
               video_data: {
-                video_id: mediaId,
+                video_id: media.id,
                 message: adCopy,
+                title: "NEWGARMENTS",
                 call_to_action: { type: "SHOP_NOW", value: { link } },
+                image_url: media.thumbnailUrl,
               },
             }
           : {
               link_data: {
                 message: adCopy,
                 link,
-                image_hash: mediaId,
+                image_hash: media.id,
                 call_to_action: { type: "SHOP_NOW" },
               },
             }),
