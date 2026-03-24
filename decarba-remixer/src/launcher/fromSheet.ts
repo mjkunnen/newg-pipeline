@@ -102,7 +102,8 @@ async function downloadCreative(
     /\/d\/([a-zA-Z0-9_-]+)/,
   );
   if (fileIdMatch) {
-    downloadUrl = `https://drive.google.com/uc?export=download&id=${fileIdMatch[1]}`;
+    // confirm=t bypasses the "virus scan" confirmation page for larger files
+    downloadUrl = `https://drive.google.com/uc?export=download&confirm=t&id=${fileIdMatch[1]}`;
   }
 
   console.log(`[launcher] Downloading creative for ${adId}...`);
@@ -116,6 +117,13 @@ async function downloadCreative(
   else if (contentType.includes("webp")) ext = ".webp";
 
   const buffer = Buffer.from(await resp.arrayBuffer());
+
+  // Verify we got actual media, not an HTML confirmation page
+  const head = buffer.subarray(0, 20).toString("utf8");
+  if (head.includes("<!DOCTYPE") || head.includes("<html")) {
+    throw new Error(`Download returned HTML page instead of media file — is the Drive file shared publicly?`);
+  }
+
   const filePath = join(TMP_DIR, `${adId}${ext}`);
   await writeFile(filePath, buffer);
   console.log(`[launcher] Downloaded: ${filePath} (${(buffer.length / 1024).toFixed(0)}KB)`);
