@@ -18,6 +18,7 @@ const CREATIVES_DIR = join(DOCS_DIR, "creatives");
 const COMPETITOR = "decarba";
 const THUMB_WIDTH = 400;
 const MAX_DAYS_KEEP = 7;
+const SEEN_ADS_PATH = join(DATA_DIR, "seen-ads.json");
 
 async function findAllScrapes(): Promise<{ date: string; ads: ScrapedAd[] }[]> {
   if (!existsSync(RAW_DIR)) return [];
@@ -31,17 +32,35 @@ async function findAllScrapes(): Promise<{ date: string; ads: ScrapedAd[] }[]> {
   const results: { date: string; ads: ScrapedAd[] }[] = [];
 
   for (const date of dateDirs) {
+    const ads: ScrapedAd[] = [];
+
+    // Load PPSpy ads
     const metaPath = join(RAW_DIR, date, "metadata.json");
     if (existsSync(metaPath)) {
       try {
         const raw = await readFile(metaPath, "utf-8");
-        const ads: ScrapedAd[] = JSON.parse(raw);
-        if (ads.length > 0) {
-          results.push({ date, ads });
-        }
+        const ppspyAds: ScrapedAd[] = JSON.parse(raw);
+        ads.push(...ppspyAds);
       } catch {
-        console.log(`[dashboard] Skipping ${date}: invalid metadata.json`);
+        console.log(`[dashboard] Skipping ${date}/metadata.json: invalid`);
       }
+    }
+
+    // Load Pinterest pins
+    const pinterestPath = join(RAW_DIR, date, "metadata-pinterest.json");
+    if (existsSync(pinterestPath)) {
+      try {
+        const raw = await readFile(pinterestPath, "utf-8");
+        const pinterestAds: ScrapedAd[] = JSON.parse(raw);
+        ads.push(...pinterestAds);
+        console.log(`[dashboard] ${date}: loaded ${pinterestAds.length} Pinterest pins`);
+      } catch {
+        console.log(`[dashboard] Skipping ${date}/metadata-pinterest.json: invalid`);
+      }
+    }
+
+    if (ads.length > 0) {
+      results.push({ date, ads });
     }
   }
 
@@ -149,11 +168,29 @@ async function generate() {
   await mkdir(THUMBS_DIR, { recursive: true });
   await mkdir(CREATIVES_DIR, { recursive: true });
 
+  // Load persistent seen-ads list (survives across runs via git commit)
+  let seenAds: string[] = [];
+  if (existsSync(SEEN_ADS_PATH)) {
+    try {
+      seenAds = JSON.parse(await readFile(SEEN_ADS_PATH, "utf-8"));
+    } catch {
+      seenAds = [];
+    }
+  }
+  const seenCreativeUrls = new Set<string>(seenAds);
+  const previouslySeen = seenCreativeUrls.size;
+
   const dateIndex: DateEntry[] = [];
   const keepDates: string[] = [];
 
   for (const { date, ads } of recentScrapes) {
-    console.log(`[dashboard] Processing ${date} (${ads.length} ads)...`);
+    // Deduplicate: skip ads already shown on ANY previous day (persistent)
+    const uniqueAds = ads.filter((ad) => {
+      if (seenCreativeUrls.has(ad.creativeUrl)) return false;
+      seenCreativeUrls.add(ad.creativeUrl);
+      return true;
+    });
+    console.log(`[dashboard] Processing ${date} (${uniqueAds.length} new of ${ads.length} scraped, ${previouslySeen} previously seen)...`);
     keepDates.push(date);
 
     // Create per-date creatives dir
@@ -162,7 +199,7 @@ async function generate() {
 
     // Generate thumbnails + copy creatives
     const dashboardAds: DashboardAd[] = [];
-    for (const ad of ads) {
+    for (const ad of uniqueAds) {
       const thumbPath = await generateThumbnail(ad, THUMBS_DIR);
       const creativeFilename = await copyCreative(ad, creativeDateDir);
       const downloadPath = creativeFilename ? `creatives/${date}/${creativeFilename}` : "";
@@ -181,9 +218,15 @@ async function generate() {
       });
     }
 
-    // Sort by reach descending, keep top 6
-    dashboardAds.sort((a, b) => b.reach - a.reach);
-    dashboardAds.splice(6);
+    // Split PPSpy ads (have reach) and Pinterest pins (reach=0, id starts with pinterest_)
+    const ppspyAds = dashboardAds.filter((a) => !a.id.startsWith("pinterest_"));
+    const pinterestAds = dashboardAds.filter((a) => a.id.startsWith("pinterest_"));
+
+    // Keep top 5 PPSpy ads by reach + all Pinterest pins
+    ppspyAds.sort((a, b) => b.reach - a.reach);
+    ppspyAds.splice(5);
+    dashboardAds.length = 0;
+    dashboardAds.push(...ppspyAds, ...pinterestAds);
 
     // Write per-date JSON
     const dateJsonPath = join(DATA_DIR, `${date}.json`);
@@ -200,6 +243,10 @@ async function generate() {
       imageCount: dashboardAds.length - videoCount,
     });
   }
+
+  // Save persistent seen-ads list
+  await writeFile(SEEN_ADS_PATH, JSON.stringify([...seenCreativeUrls], null, 2));
+  console.log(`[dashboard] Seen ads: ${previouslySeen} → ${seenCreativeUrls.size} (${seenCreativeUrls.size - previouslySeen} new)`);
 
   // Cleanup old creatives (keep only recent dates)
   await cleanupOldCreatives(keepDates);

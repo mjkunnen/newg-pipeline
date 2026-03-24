@@ -2,7 +2,7 @@ name: Daily Scrape + Dashboard
 
 on:
   schedule:
-    - cron: '0 23 * * *'  # 06:00 WIB / 00:00 CET (23:00 UTC)
+    - cron: '0 1 * * *'  # 09:00 WITA Bali (01:00 UTC)
   workflow_dispatch: # manual trigger
 
 permissions:
@@ -54,6 +54,10 @@ jobs:
       - name: Scrape PPSpy
         run: npm run scrape
         timeout-minutes: 10
+
+      - name: Scrape Pinterest board
+        run: npm run scrape:pinterest
+        timeout-minutes: 5
 
       - name: Generate dashboard
         run: npm run dashboard
