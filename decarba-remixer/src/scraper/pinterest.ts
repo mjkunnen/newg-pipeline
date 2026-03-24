@@ -4,7 +4,7 @@ import { join } from "path";
 import type { ScrapedAd } from "./types.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
-const BOARD_URL = "https://www.pinterest.com/MyGarmentsEU/ads-newgarments/";
+const BOARD_URL = "https://www.pinterest.com/mygarmentseu/ads-newgarments/";
 
 // Pinterest remake tracking sheet (same one used by cloud_pinterest.py)
 const SHEET_ID = "1BQ54wjilxW3F8rQFnVjwCRJtBTPDrSj3U5D0XYHjsgY";
@@ -71,10 +71,15 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
     await page.goto(BOARD_URL, { waitUntil: "networkidle", timeout: 30000 });
     await delay(3000);
 
-    // Scroll to load more pins
-    for (let i = 0; i < 5; i++) {
+    // Scroll to load ALL pins (board may have 30+ pins, Pinterest lazy-loads)
+    let prevCount = 0;
+    for (let i = 0; i < 15; i++) {
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
       await delay(2000);
+      const currentCount = await page.locator('a[href*="/pin/"]').count();
+      console.log(`[pinterest] Scroll ${i + 1}: ${currentCount} pin links found`);
+      if (currentCount === prevCount && i > 2) break; // no new pins loaded
+      prevCount = currentCount;
     }
 
     // Extract pin data
