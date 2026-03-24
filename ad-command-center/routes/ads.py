@@ -38,7 +38,7 @@ def get_ads(db: Session = Depends(get_db)):
             "revenue": latest.revenue if latest else 0,
             "roas": latest.roas if latest else 0,
         })
-    result.sort(key=lambda a: a["metrics"]["spend"], reverse=True)
+    result.sort(key=lambda a: a["spend"], reverse=True)
     return result
 
 @router.get("/api/ads/{ad_id}")
