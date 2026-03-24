@@ -2,6 +2,7 @@ import "dotenv/config";
 import { writeFile, mkdir, readFile } from "fs/promises";
 import { join } from "path";
 import { existsSync } from "fs";
+import { execSync } from "child_process";
 import type { ScrapedAd } from "./types.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
@@ -230,50 +231,66 @@ export async function scrapeTiktok(): Promise<ScrapedAd[]> {
 
   for (const carousel of carousels) {
     const baseId = `tiktok_${carousel.username}_${carousel.postId}`;
-    let downloadedAny = false;
 
-    // Download ALL slides for this carousel
+    // Create subfolder for this carousel's slides
+    const slidesDir = join(outputDir, baseId);
+    await mkdir(slidesDir, { recursive: true });
+
+    // Download ALL slides
+    const slidePaths: string[] = [];
     for (let si = 0; si < carousel.slides.length; si++) {
       const slide = carousel.slides[si];
       const slideUrl = slide?.downloadLink || slide?.tiktokLink || "";
       if (!slideUrl) continue;
 
-      const slideNum = si + 1;
-      const id = `${baseId}_slide${slideNum}`;
-      const filename = `${id}.jpg`;
-      const filepath = join(outputDir, filename);
+      const filename = `slide_${si + 1}.jpg`;
+      const filepath = join(slidesDir, filename);
 
       const ok = await downloadSlideImage(slideUrl, filepath);
       if (!ok) {
-        console.log(`[tiktok] Failed to download ${filename}`);
+        console.log(`[tiktok] Failed to download slide ${si + 1} for ${baseId}`);
         continue;
       }
 
       const sizeKB = ((await readFile(filepath)).length / 1024).toFixed(0);
-      console.log(`[tiktok] Downloaded: ${filename} (${sizeKB}KB)`);
-      downloadedAny = true;
-
-      ads.push({
-        id,
-        type: "image",
-        creativeUrl: carousel.webUrl || slideUrl,
-        localPath: filepath,
-        adCopy: `@${carousel.username} — slide ${slideNum}/${carousel.numSlides}`,
-        reach: carousel.playCount,
-        daysActive: 0,
-        startedAt: carousel.createDate.split("T")[0] || todayDir(),
-        platforms: ["tiktok"],
-        scrapedAt: new Date().toISOString(),
-      });
-
+      console.log(`[tiktok] Downloaded: ${baseId}/slide_${si + 1}.jpg (${sizeKB}KB)`);
+      slidePaths.push(filepath);
       await delay(300);
     }
 
-    if (downloadedAny) {
-      console.log(`[tiktok] @${carousel.username} — ${carousel.numSlides} slides downloaded`);
+    if (slidePaths.length === 0) {
+      console.log(`[tiktok] No slides downloaded for ${baseId}, skipping`);
+      continue;
     }
 
-    // Mark as processed so we don't show it again tomorrow
+    console.log(`[tiktok] @${carousel.username} — ${slidePaths.length}/${carousel.numSlides} slides downloaded`);
+
+    // Create ZIP of all slides
+    const zipPath = join(outputDir, `${baseId}.zip`);
+    try {
+      execSync(`cd "${slidesDir}" && zip -j "${zipPath}" *.jpg`, { stdio: "pipe" });
+      console.log(`[tiktok] Created ZIP: ${baseId}.zip`);
+    } catch (err) {
+      console.error(`[tiktok] ZIP creation failed for ${baseId}:`, err);
+    }
+
+    // One entry per carousel — slide 1 as thumbnail, ZIP as download
+    const thumbPath = join(slidesDir, "slide_1.jpg");
+    ads.push({
+      id: baseId,
+      type: "image",
+      creativeUrl: carousel.webUrl || "",
+      localPath: existsSync(thumbPath) ? thumbPath : slidePaths[0],
+      adCopy: `@${carousel.username} — ${slidePaths.length} slides — ${carousel.text}`,
+      reach: carousel.playCount,
+      daysActive: 0,
+      startedAt: carousel.createDate.split("T")[0] || todayDir(),
+      platforms: ["tiktok"],
+      scrapedAt: new Date().toISOString(),
+      // ZIP path stored via naming convention: {id}.zip in same dir
+    });
+
+    // Mark as processed so it won't appear again
     await saveProcessedId(carousel.postId);
   }
 

@@ -148,6 +148,20 @@ async function generateThumbnail(
 }
 
 async function copyCreative(ad: ScrapedAd, dateDir: string): Promise<string> {
+  // TikTok carousels: copy ZIP file instead of single image
+  if (ad.id.startsWith("tiktok_") && ad.localPath) {
+    const rawDir = join(ad.localPath, ".."); // localPath is slide_1.jpg inside slides dir
+    const zipSource = join(rawDir, "..", `${ad.id}.zip`);
+    if (existsSync(zipSource)) {
+      const zipFilename = `${ad.id}.zip`;
+      const destPath = join(dateDir, zipFilename);
+      if (!existsSync(destPath)) {
+        await copyFile(zipSource, destPath);
+      }
+      return zipFilename;
+    }
+  }
+
   if (!ad.localPath || !existsSync(ad.localPath)) return "";
   const ext = extname(ad.localPath) || (ad.type === "video" ? ".mp4" : ".jpg");
   const filename = `${ad.id}${ext}`;
