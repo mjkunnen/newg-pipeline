@@ -229,42 +229,52 @@ export async function scrapeTiktok(): Promise<ScrapedAd[]> {
   const ads: ScrapedAd[] = [];
 
   for (const carousel of carousels) {
-    // Download slide 1 as thumbnail for dashboard
-    const slideUrl =
-      carousel.slides[0]?.downloadLink || carousel.slides[0]?.tiktokLink || "";
-    if (!slideUrl) continue;
+    const baseId = `tiktok_${carousel.username}_${carousel.postId}`;
+    let downloadedAny = false;
 
-    const id = `tiktok_${carousel.username}_${carousel.postId}`;
-    const filename = `${id}.jpg`;
-    const filepath = join(outputDir, filename);
+    // Download ALL slides for this carousel
+    for (let si = 0; si < carousel.slides.length; si++) {
+      const slide = carousel.slides[si];
+      const slideUrl = slide?.downloadLink || slide?.tiktokLink || "";
+      if (!slideUrl) continue;
 
-    const ok = await downloadSlideImage(slideUrl, filepath);
-    if (!ok) {
-      console.log(`[tiktok] Failed to download slide for ${id}`);
-      continue;
+      const slideNum = si + 1;
+      const id = `${baseId}_slide${slideNum}`;
+      const filename = `${id}.jpg`;
+      const filepath = join(outputDir, filename);
+
+      const ok = await downloadSlideImage(slideUrl, filepath);
+      if (!ok) {
+        console.log(`[tiktok] Failed to download ${filename}`);
+        continue;
+      }
+
+      const sizeKB = ((await readFile(filepath)).length / 1024).toFixed(0);
+      console.log(`[tiktok] Downloaded: ${filename} (${sizeKB}KB)`);
+      downloadedAny = true;
+
+      ads.push({
+        id,
+        type: "image",
+        creativeUrl: carousel.webUrl || slideUrl,
+        localPath: filepath,
+        adCopy: `@${carousel.username} — slide ${slideNum}/${carousel.numSlides}`,
+        reach: carousel.playCount,
+        daysActive: 0,
+        startedAt: carousel.createDate.split("T")[0] || todayDir(),
+        platforms: ["tiktok"],
+        scrapedAt: new Date().toISOString(),
+      });
+
+      await delay(300);
     }
 
-    const sizeKB = (
-      (await readFile(filepath)).length / 1024
-    ).toFixed(0);
-    console.log(`[tiktok] Downloaded: ${filename} (${sizeKB}KB) — ${carousel.numSlides} slides`);
+    if (downloadedAny) {
+      console.log(`[tiktok] @${carousel.username} — ${carousel.numSlides} slides downloaded`);
+    }
 
-    ads.push({
-      id,
-      type: "image",
-      creativeUrl: carousel.webUrl || slideUrl,
-      localPath: filepath,
-      adCopy: `@${carousel.username} — ${carousel.numSlides} slides`,
-      reach: carousel.playCount,
-      daysActive: 0,
-      startedAt: carousel.createDate.split("T")[0] || todayDir(),
-      platforms: ["tiktok"],
-      scrapedAt: new Date().toISOString(),
-    });
-
-    // Mark as processed so we don't show it again
+    // Mark as processed so we don't show it again tomorrow
     await saveProcessedId(carousel.postId);
-    await delay(300);
   }
 
   const metaPath = join(outputDir, "metadata-tiktok.json");
