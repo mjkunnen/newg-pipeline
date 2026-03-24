@@ -124,6 +124,7 @@ async function findOrCreateAdSet(
       geo_locations: { countries: ["NL", "BE", "DE", "FR", "PL", "IT", "AT"] },
       age_min: 18,
       age_max: 30,
+      targeting_automation: { advantage_audience: 0 },
     },
     status: "ACTIVE",
   }, token);
