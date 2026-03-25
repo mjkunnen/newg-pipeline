@@ -3,218 +3,54 @@
   "competitor": "decarba",
   "ads": [
     {
-      "id": "decarba_2026-03-25_0",
-      "type": "video",
-      "thumbPath": "thumbs/decarba_2026-03-25_0.jpg",
-      "adCopy": "Step into Spring with the Broken Creme Sneakers\nand get 3 FR",
-      "reach": 100700,
-      "reachFormatted": "100.7K",
+      "id": "pinterest_1003176885764319372",
+      "type": "image",
+      "thumbPath": "thumbs/pinterest_1003176885764319372.jpg",
+      "adCopy": "",
+      "reach": 0,
+      "reachFormatted": "0",
       "reachCost": "",
-      "daysActive": 6,
-      "startDate": "Mar 18 2026",
+      "daysActive": 0,
+      "startDate": "2026-03-25",
       "platforms": [
-        "facebook",
-        "instagram",
-        "audience_network",
-        "messenger",
-        "threads"
+        "pinterest"
       ],
-      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_0.mp4",
+      "downloadUrl": "creatives/2026-03-25/pinterest_1003176885764319372.jpg",
+      "suggestedProducts": [
+        {
+          "name": "'Distorted' Knit",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "'Weathered' Baggy Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ]
+    },
+    {
+      "id": "pinterest_1003176885764319356",
+      "type": "image",
+      "thumbPath": "thumbs/pinterest_1003176885764319356.jpg",
+      "adCopy": "",
+      "reach": 0,
+      "reachFormatted": "0",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-25",
+      "platforms": [
+        "pinterest"
+      ],
+      "downloadUrl": "creatives/2026-03-25/pinterest_1003176885764319356.jpg",
       "suggestedProducts": [
         {
           "name": "Heavyweight Zipped Hoodie",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Denim Striped Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "Ocean Stars Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "pinterest_1003176885764319292",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_1003176885764319292.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-25",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-25/pinterest_1003176885764319292.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Graphic Puff Print Zip-Up Hoodie",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Embroidered Striped Baggy Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "pinterest_1003176885764319281",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_1003176885764319281.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-25",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-25/pinterest_1003176885764319281.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Zip Hoodie Y2K",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Retro Patchwork Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "pinterest_1003176885764319277",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_1003176885764319277.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-25",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-25/pinterest_1003176885764319277.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Checkered Inside Out Zipper",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "'Graphic Lining' Baggy Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "pinterest_1003176885764290400",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_1003176885764290400.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-25",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-25/pinterest_1003176885764290400.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Heavyweight Zipped Hoodie",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "'Graphic Lining' Baggy Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "pinterest_1081004716790995841",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_1081004716790995841.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-25",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-25/pinterest_1081004716790995841.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Zip Hoodie Y2K",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "'Graphic Lining' Baggy Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "Ocean Stars Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "pinterest_579768152045176313",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_579768152045176313.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-25",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-25/pinterest_579768152045176313.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Graphic Puff Print Zip-Up Hoodie",
           "collection": "bestseller-tops",
           "role": "top"
         },
@@ -224,97 +60,26 @@
           "role": "bottom"
         },
         {
-          "name": "Ocean Stars Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "pinterest_958703839434712031",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_958703839434712031.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-25",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-25/pinterest_958703839434712031.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Heavyweight Zipped Hoodie",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Denim Striped Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "Ocean Stars Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "tiktok_thefitscene_7620268951611788547",
-      "type": "image",
-      "thumbPath": "thumbs/tiktok_thefitscene_7620268951611788547.jpg",
-      "adCopy": "@thefitscene — 5 slides — Outfitinspo…\n#fyp #streetwear #fitcheck #outfitinspo ",
-      "reach": 1900,
-      "reachFormatted": "1.9K",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-23",
-      "platforms": [
-        "tiktok"
-      ],
-      "downloadUrl": "creatives/2026-03-25/tiktok_thefitscene_7620268951611788547.zip",
-      "suggestedProducts": [
-        {
-          "name": "'Structure' Graphic Knitted Sweater",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Denim Striped Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
           "name": "StarSign Graphic Sneaker",
           "collection": "bestseller-shoes",
           "role": "shoes"
         }
-      ],
-      "slides": [
-        "creatives/2026-03-25/tiktok_thefitscene_7620268951611788547_slide1.jpg",
-        "creatives/2026-03-25/tiktok_thefitscene_7620268951611788547_slide2.jpg",
-        "creatives/2026-03-25/tiktok_thefitscene_7620268951611788547_slide3.jpg",
-        "creatives/2026-03-25/tiktok_thefitscene_7620268951611788547_slide4.jpg",
-        "creatives/2026-03-25/tiktok_thefitscene_7620268951611788547_slide5.jpg"
       ]
     },
     {
-      "id": "tiktok_outfitinspostreet_7620945712792014102",
+      "id": "tiktok_aightfits_clo_7620699007710498069",
       "type": "image",
-      "thumbPath": "thumbs/tiktok_outfitinspostreet_7620945712792014102.jpg",
-      "adCopy": "@outfitinspostreet — 9 slides — Chiic finds 🔥 | #outfitinspo #streetwear #fashion #menswear #fyp ",
-      "reach": 1684,
-      "reachFormatted": "1.7K",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7620699007710498069.jpg",
+      "adCopy": "@aightfits_clo — 6 slides — clothes from @Zeroux \n\n#outfitinspo #matchyfits #ootd #inspo #outfitideas ",
+      "reach": 30500,
+      "reachFormatted": "30.5K",
       "reachCost": "",
       "daysActive": 0,
       "startDate": "2026-03-24",
       "platforms": [
         "tiktok"
       ],
-      "downloadUrl": "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102.zip",
+      "downloadUrl": "creatives/2026-03-25/tiktok_aightfits_clo_7620699007710498069.zip",
       "suggestedProducts": [
         {
           "name": "Heavyweight Zipped Hoodie",
@@ -333,15 +98,51 @@
         }
       ],
       "slides": [
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide1.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide2.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide3.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide4.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide5.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide6.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide7.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide8.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide9.jpg"
+        "creatives/2026-03-25/tiktok_aightfits_clo_7620699007710498069_slide1.jpg",
+        "creatives/2026-03-25/tiktok_aightfits_clo_7620699007710498069_slide2.jpg",
+        "creatives/2026-03-25/tiktok_aightfits_clo_7620699007710498069_slide3.jpg",
+        "creatives/2026-03-25/tiktok_aightfits_clo_7620699007710498069_slide4.jpg",
+        "creatives/2026-03-25/tiktok_aightfits_clo_7620699007710498069_slide5.jpg",
+        "creatives/2026-03-25/tiktok_aightfits_clo_7620699007710498069_slide6.jpg"
+      ]
+    },
+    {
+      "id": "tiktok_strhvn2_7620837369402461462",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_strhvn2_7620837369402461462.jpg",
+      "adCopy": "@strhvn2 — 5 slides — outfitinspo…\n#streetwear #fitcheck #outfitinspo #StreetwearTok ",
+      "reach": 10200,
+      "reachFormatted": "10.2K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-24",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-25/tiktok_strhvn2_7620837369402461462.zip",
+      "suggestedProducts": [
+        {
+          "name": "Zip Hoodie Y2K",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "Retro Patchwork Barrel Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-25/tiktok_strhvn2_7620837369402461462_slide1.jpg",
+        "creatives/2026-03-25/tiktok_strhvn2_7620837369402461462_slide2.jpg",
+        "creatives/2026-03-25/tiktok_strhvn2_7620837369402461462_slide3.jpg",
+        "creatives/2026-03-25/tiktok_strhvn2_7620837369402461462_slide4.jpg",
+        "creatives/2026-03-25/tiktok_strhvn2_7620837369402461462_slide5.jpg"
       ]
     }
   ]
