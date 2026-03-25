@@ -51,11 +51,14 @@ async def fetch_ads(adset_id: str) -> list[dict]:
     data = await graph_get(f"/{adset_id}/ads?fields=id,name,status,creative")
     return data.get("data", [])
 
-async def fetch_all_ads() -> list[dict]:
-    """Fetch ALL ads at account level with insights inline — single API call."""
+async def fetch_all_ads(date_preset: str = "today") -> list[dict]:
+    """Fetch ALL ads at account level with insights inline — single API call.
+
+    date_preset options: today, yesterday, last_7d, last_14d, last_30d, lifetime
+    """
     data = await graph_get(
         f"/{act_id()}/ads?fields=id,name,status,creative,campaign{{id,name}},adset{{id,name,status,daily_budget}},"
-        f"insights.date_preset(today){{spend,impressions,clicks,cpc,ctr,actions,action_values}}"
+        f"insights.date_preset({date_preset}){{spend,impressions,clicks,cpc,ctr,actions,action_values}}"
         f"&filtering=[{{'field':'effective_status','operator':'IN','value':['ACTIVE','PAUSED']}}]"
         f"&limit=100"
     )
