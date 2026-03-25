@@ -141,10 +141,22 @@ async function generateThumbnail(
     return `thumbs/${thumbFilename}`;
   }
 
-  await sharp(sourceBuffer)
-    .resize(THUMB_WIDTH)
-    .jpeg({ quality: 80 })
-    .toFile(thumbPath);
+  try {
+    await sharp(sourceBuffer)
+      .resize(THUMB_WIDTH)
+      .jpeg({ quality: 80 })
+      .toFile(thumbPath);
+  } catch (err) {
+    console.warn(`[dashboard] Thumbnail failed for ${ad.id}: ${err}. Using placeholder.`);
+    const svg = `<svg width="${THUMB_WIDTH}" height="${THUMB_WIDTH}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#e5e0d8"/>
+      <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#b0a99e" font-size="18" font-family="sans-serif">${ad.type.toUpperCase()}</text>
+    </svg>`;
+    await sharp(Buffer.from(svg))
+      .resize(THUMB_WIDTH)
+      .jpeg({ quality: 80 })
+      .toFile(thumbPath);
+  }
   return `thumbs/${thumbFilename}`;
 }
 
@@ -181,6 +193,35 @@ async function copyCreative(ad: ScrapedAd, dateDir: string): Promise<string> {
     await copyFile(ad.localPath, destPath);
   }
   return filename;
+}
+
+/** Copy individual TikTok carousel slides and return their relative paths */
+async function copyTiktokSlides(ad: ScrapedAd, dateDir: string, date: string): Promise<string[]> {
+  if (!ad.id.startsWith("tiktok_") || !ad.localPath) return [];
+
+  const slidesDir = join(ad.localPath, ".."); // localPath points to slide_1.jpg
+  if (!existsSync(slidesDir)) return [];
+
+  const files = await readdir(slidesDir);
+  const slideFiles = files
+    .filter((f) => /^slide_\d+\.jpg$/i.test(f))
+    .sort((a, b) => {
+      const numA = parseInt(a.match(/\d+/)?.[0] || "0");
+      const numB = parseInt(b.match(/\d+/)?.[0] || "0");
+      return numA - numB;
+    });
+
+  const paths: string[] = [];
+  for (const sf of slideFiles) {
+    const slideNum = sf.match(/\d+/)?.[0] || "0";
+    const destName = `${ad.id}_slide${slideNum}.jpg`;
+    const destPath = join(dateDir, destName);
+    if (!existsSync(destPath)) {
+      await copyFile(join(slidesDir, sf), destPath);
+    }
+    paths.push(`creatives/${date}/${destName}`);
+  }
+  return paths;
 }
 
 async function cleanupOldCreatives(keepDates: string[]) {
@@ -319,6 +360,8 @@ async function generate() {
       const suggestedProducts = productCatalog.length > 0
         ? assignProducts(ad, productCatalog)
         : undefined;
+      // Copy individual slides for TikTok carousels
+      const slides = await copyTiktokSlides(ad, creativeDateDir, date);
       dashboardAds.push({
         id: ad.id,
         type: ad.type,
@@ -332,6 +375,7 @@ async function generate() {
         platforms: ad.platforms,
         downloadUrl: downloadPath,
         suggestedProducts,
+        ...(slides.length > 0 ? { slides } : {}),
       });
     }
 

@@ -26,7 +26,7 @@ const TIKTOK_ACCOUNTS = [
   "havenfit",
 ];
 
-const MAX_CAROUSELS = 5;
+const MAX_CAROUSELS = 2;
 const MAX_AGE_DAYS = 7;
 const RESULTS_PER_PAGE = 20;
 

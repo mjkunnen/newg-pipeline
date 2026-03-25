@@ -153,7 +153,7 @@ def fetch_all_posts(accounts, results_per_page=20):
     return items
 
 
-def select_top_carousels(posts, processed_ids, max_age_days=7, top_n=3):
+def select_top_carousels(posts, processed_ids, max_age_days=7, top_n=2):
     """Filter to new carousel posts from last N days, sorted by views."""
     cutoff = datetime.now() - timedelta(days=max_age_days)
     cutoff_ts = cutoff.timestamp()
