@@ -3,21 +3,9 @@
   "dates": [
     {
       "date": "2026-03-25",
-      "adCount": 9,
-      "videoCount": 3,
-      "imageCount": 6
-    },
-    {
-      "date": "2026-03-24",
-      "adCount": 9,
+      "adCount": 2,
       "videoCount": 0,
-      "imageCount": 9
-    },
-    {
-      "date": "2026-03-23",
-      "adCount": 0,
-      "videoCount": 0,
-      "imageCount": 0
+      "imageCount": 2
     }
   ]
 }
