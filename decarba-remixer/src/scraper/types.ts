@@ -38,6 +38,9 @@ export interface Product {
   url?: string;
   imageUrl?: string;
   keywords: string[];
+  sales_rank?: number;
+  units_sold?: number;
+  colors?: string[];
 }
 
 export interface RemixResult {
@@ -70,6 +73,33 @@ export interface MetaCampaign {
   adId: string;
   creativeId: string;
   status: string;
+}
+
+export interface SizeChartEntry {
+  size: string;
+  chest?: number;
+  length?: number;
+  shoulder?: number;
+  sleeve?: number;
+  waist?: number;
+  hip?: number;
+  [key: string]: string | number | undefined;
+}
+
+export interface TaobaoProduct {
+  id: string;
+  url: string;
+  title: string;
+  titleOriginal?: string;
+  priceCNY: number;
+  priceEUR: number;
+  images: string[];
+  colors: { name: string; imgUrl: string; price: string }[];
+  sizes: string[];
+  sizeChart?: SizeChartEntry[];
+  shopName: string | null;
+  shopId: string;
+  scrapedAt: string;
 }
 
 export interface Settings {

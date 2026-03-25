@@ -1,39 +1,96 @@
-- name: Heavyweight Hoodie
-  collection: comfy-vibe
-  keywords: [hoodie, oversized, cozy, relaxed, heavyweight]
+# NEWGARMENTS Product Catalog — based on sales data (2026-03-07 to 2026-03-24)
+# Products ranked by actual units sold, grouped by category
 
-- name: Joggers
-  collection: comfy-vibe
-  keywords: [jogger, sweatpants, relaxed, track, pants]
+# === BESTSELLER TOPS (hoodies, knits, sweaters) ===
+- name: Checkered Inside Out Zipper
+  collection: bestseller-tops
+  sales_rank: 1
+  units_sold: 69
+  colors: [Gray, Black, Red]
+  keywords: [zipper, checkered, inside-out, hoodie, zip-up, checked, plaid]
 
-- name: Oversized Knit
-  collection: comfy-vibe
-  keywords: [knit, oversized, cozy, sweater, knitwear]
+- name: Zip Hoodie Y2K
+  collection: bestseller-tops
+  sales_rank: 5
+  units_sold: 17
+  colors: [Dark Green]
+  keywords: [hoodie, zip, Y2K, green, zipped, oversized]
 
-- name: Signature Longsleeve
-  collection: minimalistic
-  keywords: [longsleeve, clean, minimal, tonal, signature]
+- name: Graphic Puff Print Zip-Up Hoodie
+  collection: bestseller-tops
+  sales_rank: 10
+  units_sold: 6
+  keywords: [hoodie, zip-up, graphic, puff-print, streetwear]
 
-- name: Clean Cut Tee
-  collection: minimalistic
-  keywords: [tee, t-shirt, clean, minimal, basic]
+- name: Heavyweight Zipped Hoodie
+  collection: bestseller-tops
+  sales_rank: 11
+  units_sold: 6
+  colors: [Black]
+  keywords: [hoodie, heavyweight, zipped, zip, black, basic, premium]
 
-- name: Statement Knit
-  collection: graphic-items
-  keywords: [knit, graphic, bold, print, statement]
+- name: "'Distorted' Knit"
+  collection: bestseller-tops
+  sales_rank: 9
+  units_sold: 7
+  keywords: [knit, graphic, sweater, distorted, pattern, knitwear]
 
-- name: Rhinestone Denim
-  collection: graphic-items
-  keywords: [denim, rhinestone, embroidered, jacket, embellished]
+- name: "'Structure' Graphic Knitted Sweater"
+  collection: bestseller-tops
+  sales_rank: 13
+  units_sold: 9
+  colors: [Moss Green, Black]
+  keywords: [knit, graphic, sweater, structure, pattern, knitwear]
 
-- name: Barrel Jeans
-  collection: throwback
-  keywords: [jeans, barrel, retro, vintage, denim, wide]
+# === BESTSELLER BOTTOMS (jeans, pants) ===
+- name: "'Graphic Lining' Baggy Jeans"
+  collection: bestseller-bottoms
+  sales_rank: 3
+  units_sold: 22
+  keywords: [jeans, baggy, graphic, lining, denim, wide, streetwear]
 
-- name: Cargo Pants
-  collection: throwback
-  keywords: [cargo, pants, utility, baggy, Y2K]
+- name: Embroidered Striped Baggy Jeans
+  collection: bestseller-bottoms
+  sales_rank: 6
+  units_sold: 15
+  colors: [Black/White]
+  keywords: [jeans, baggy, embroidered, striped, denim, black, white]
 
-- name: Vintage Jacket
-  collection: throwback
-  keywords: [jacket, vintage, retro, washed, bomber]
+- name: Denim Striped Barrel Jeans
+  collection: bestseller-bottoms
+  sales_rank: 7
+  units_sold: 12
+  colors: [Blue]
+  keywords: [jeans, barrel, denim, striped, blue, retro, wide]
+
+- name: Retro Patchwork Barrel Jeans
+  collection: bestseller-bottoms
+  sales_rank: 8
+  units_sold: 10
+  colors: [Blue]
+  keywords: [jeans, barrel, patchwork, retro, denim, blue, vintage]
+
+- name: Cupid Graphic Baggy Jeans
+  collection: bestseller-bottoms
+  sales_rank: 12
+  units_sold: 5
+  keywords: [jeans, baggy, graphic, cupid, denim, streetwear]
+
+- name: "'Weathered' Baggy Jeans"
+  collection: bestseller-bottoms
+  sales_rank: 14
+  units_sold: 5
+  keywords: [jeans, baggy, weathered, washed, distressed, denim]
+
+# === BESTSELLER SHOES ===
+- name: StarSign Graphic Sneaker
+  collection: bestseller-shoes
+  sales_rank: 2
+  units_sold: 43
+  keywords: [sneaker, star, graphic, shoes, streetwear, starsign]
+
+- name: Ocean Stars Sneaker
+  collection: bestseller-shoes
+  sales_rank: 4
+  units_sold: 20
+  keywords: [sneaker, ocean, stars, shoes, blue, streetwear]

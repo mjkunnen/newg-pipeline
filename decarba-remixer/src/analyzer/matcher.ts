@@ -29,7 +29,7 @@ export async function matchProducts(
 
   if (candidates.length === 0) candidates = allProducts;
 
-  // Score by keyword matches against analysis
+  // Score by keyword matches against analysis, with sales_rank bonus
   const searchText =
     `${analysis.product_type} ${analysis.vibe} ${analysis.model_description} ${analysis.colors.join(" ")}`.toLowerCase();
 
@@ -38,6 +38,10 @@ export async function matchProducts(
     for (const keyword of product.keywords) {
       if (searchText.includes(keyword.toLowerCase())) score++;
     }
+    // Boost bestsellers: lower sales_rank = higher bonus
+    if (product.sales_rank && score > 0) {
+      score += Math.max(0, (15 - product.sales_rank) * 0.5);
+    }
     return { product, score };
   });
 
@@ -45,17 +49,19 @@ export async function matchProducts(
   scored.sort((a, b) => b.score - a.score);
   const matches = scored.filter((s) => s.score > 0).map((s) => s.product);
 
-  // If no keyword matches, return first 2 from collection by vibe
+  // If no keyword matches, return top sellers from relevant category by vibe
   if (matches.length === 0) {
     const vibe = analysis.vibe.toLowerCase();
-    if (vibe.includes("cozy") || vibe.includes("comfort") || vibe.includes("relax")) {
-      return candidates.filter((p) => p.collection === "comfy-vibe").slice(0, 2);
-    } else if (vibe.includes("clean") || vibe.includes("minimal")) {
-      return candidates.filter((p) => p.collection === "minimalistic").slice(0, 2);
-    } else if (vibe.includes("bold") || vibe.includes("graphic") || vibe.includes("statement")) {
-      return candidates.filter((p) => p.collection === "graphic-items").slice(0, 2);
+    const productType = analysis.product_type.toLowerCase();
+    if (productType.includes("jean") || productType.includes("pant") || productType.includes("trouser")) {
+      return candidates.filter((p) => p.collection === "bestseller-bottoms").slice(0, 2);
+    } else if (productType.includes("sneaker") || productType.includes("shoe")) {
+      return candidates.filter((p) => p.collection === "bestseller-shoes").slice(0, 2);
+    } else if (vibe.includes("cozy") || vibe.includes("comfort") || productType.includes("hoodie") || productType.includes("knit") || productType.includes("sweater")) {
+      return candidates.filter((p) => p.collection === "bestseller-tops").slice(0, 2);
     }
-    return candidates.slice(0, 2);
+    // Default: return highest-selling products
+    return [...candidates].sort((a, b) => (a.sales_rank || 99) - (b.sales_rank || 99)).slice(0, 2);
   }
 
   console.log(`[matcher] Matched ${matches.length} products: ${matches.map((m) => m.name).join(", ")}`);

@@ -1,7 +1,8 @@
 max_ads: 5
 trim_seconds: 2
 collections_to_use:
-  - Graphic Items
-  - Comfy Vibe
+  - bestseller-tops
+  - bestseller-bottoms
+  - bestseller-shoes
 auto_upload_drive: false
 auto_launch_meta: false

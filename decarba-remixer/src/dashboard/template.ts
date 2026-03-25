@@ -1,3 +1,9 @@
+export interface SuggestedProduct {
+  name: string;
+  collection: string;
+  role: "top" | "bottom" | "shoes" | "accessory";
+}
+
 export interface DashboardAd {
   id: string;
   type: "image" | "video";
@@ -10,6 +16,7 @@ export interface DashboardAd {
   startDate: string;
   platforms: string[];
   downloadUrl: string;
+  suggestedProducts?: SuggestedProduct[];
 }
 
 export interface DateEntry {
@@ -647,6 +654,37 @@ body {
 .done-summary-row a { color: var(--accent); text-decoration: none; word-break: break-all; }
 .done-summary-row a:hover { text-decoration: underline; }
 
+/* ===== PRODUCT TAGS ===== */
+.products-section {
+  margin-bottom: 20px;
+}
+.products-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
+}
+.product-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.product-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border);
+}
+.product-tag.role-top { background: #f0f4ff; color: #3b5998; border-color: #c8d6f0; }
+.product-tag.role-bottom { background: #f5f0ff; color: #6b4fa0; border-color: #d8cef0; }
+.product-tag.role-shoes { background: #fff5f0; color: #c05621; border-color: #f0d8c8; }
+.product-tag.role-accessory { background: #f0faf5; color: #276749; border-color: #c8e6d8; }
+.product-tag .role-icon { font-size: 11px; }
+
+.product-tags-compact {
+  display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;
+}
+.product-tag-sm {
+  font-size: 10px; font-weight: 600; padding: 2px 7px;
+  border-radius: 4px; background: var(--bg); color: var(--text-secondary);
+  white-space: nowrap; max-width: 160px; overflow: hidden; text-overflow: ellipsis;
+}
+
 @media (max-width: 700px) {
   .ad-grid { grid-template-columns: 1fr; }
   .dates-title { font-size: 28px; }
@@ -970,6 +1008,7 @@ function renderAdGrid() {
             <span class="status-badge \${status}">\${statusLabels[status]}</span>
           </div>
           <div class="ad-copy-preview">\${escapeHtml((ad.adCopy || '').slice(0, 60))}</div>
+          \${ad.suggestedProducts && ad.suggestedProducts.length > 0 ? '<div class="product-tags-compact">' + ad.suggestedProducts.map(p => '<span class="product-tag-sm">' + escapeHtml(p.name) + '</span>').join('') + '</div>' : ''}
           <div class="ad-stats">
             <span><strong>\${ad.reachFormatted || formatNum(ad.reach)}</strong> reach</span>
             <span><strong>\${ad.daysActive || ad.duration || 0}d</strong> active</span>
@@ -1026,6 +1065,18 @@ function openModal(ad) {
       <div class="modal-actions">
         \${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download>\u2B07 Download origineel (full quality)</a>' : '<span class="modal-link disabled">Geen download beschikbaar</span>'}
       </div>
+
+      \${ad.suggestedProducts && ad.suggestedProducts.length > 0 ? \`
+      <div class="modal-divider"></div>
+      <div class="products-section">
+        <div class="products-label">Gebruik deze producten</div>
+        <div class="product-tags">
+          \${ad.suggestedProducts.map(p => {
+            const icons = { top: '\\ud83d\\udc55', bottom: '\\ud83d\\udc56', shoes: '\\ud83d\\udc5f', accessory: '\\ud83d\\udc8d' };
+            return '<span class="product-tag role-' + p.role + '"><span class="role-icon">' + (icons[p.role] || '') + '</span>' + escapeHtml(p.name) + '</span>';
+          }).join('')}
+        </div>
+      </div>\` : ''}
 
       <div class="modal-divider"></div>
 
