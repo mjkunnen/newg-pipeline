@@ -644,119 +644,60 @@ body {
   white-space: nowrap; max-width: 160px; overflow: hidden; text-overflow: ellipsis;
 }
 
-/* ===== OLIVIER POST CARDS ===== */
-.post-card {
+/* ===== OLIVIER VIEW ===== */
+.olivier-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  overflow: hidden;
   box-shadow: var(--shadow);
-  margin-bottom: 4px;
-}
-.post-card-header {
-  padding: 16px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--border-light);
+  gap: 16px;
+  padding: 16px 20px;
 }
-.post-card-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-}
-.post-card-meta {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-.post-slides {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 0;
-}
-.post-slide {
-  position: relative;
-  border-right: 1px solid var(--border-light);
-  border-bottom: 1px solid var(--border-light);
-}
-.post-slide img {
-  width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  display: block;
-}
-.post-slide-num {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 28px; height: 28px;
+.olivier-card.done { border-color: #b8e6c8; background: var(--success-bg); }
+.olivier-num {
+  width: 40px; height: 40px;
   background: var(--text);
   color: #fff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 800;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  flex-shrink: 0;
 }
-.post-slide-dl {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
-  padding: 24px 8px 10px;
-  text-align: center;
+.olivier-card.done .olivier-num { background: var(--success); }
+.olivier-links { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.olivier-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.olivier-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  text-decoration: none; padding: 8px 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); transition: all 0.15s;
 }
-.post-slide-dl a {
-  display: inline-block;
-  background: #fff;
-  color: var(--text);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.15s;
-}
-.post-slide-dl a:hover { background: var(--accent); color: #fff; }
-.post-card-footer {
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--border-light);
-  background: var(--surface);
-}
-.post-card-footer a {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent);
-  text-decoration: none;
-}
-.post-card-footer a:hover { text-decoration: underline; }
-.post-done-check {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-muted);
-  cursor: pointer;
-  user-select: none;
-}
-.post-done-check.checked { color: var(--success); }
-.post-done-box {
-  width: 22px; height: 22px;
+.olivier-link:hover { background: var(--accent-light); border-color: var(--accent); }
+.olivier-link.drive { background: var(--accent); color: #fff; border-color: var(--accent); }
+.olivier-link.drive:hover { background: var(--text); border-color: var(--text); }
+.olivier-link.disabled { color: var(--text-muted); pointer-events: none; opacity: 0.5; }
+.olivier-check {
+  width: 36px; height: 36px;
   border: 2px solid var(--border);
-  border-radius: 6px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
   transition: all 0.15s;
+  color: transparent;
+  user-select: none;
 }
-.post-done-check.checked .post-done-box {
+.olivier-check:hover { border-color: var(--success); }
+.olivier-check.checked {
   background: var(--success);
   border-color: var(--success);
   color: #fff;
@@ -807,10 +748,8 @@ body {
   .dates-title { font-size: 28px; }
   .modal { margin: 16px auto; }
   .slide-dl { opacity: 1; }
-  .post-slides { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
-  .post-slide-dl a { font-size: 10px; padding: 4px 10px; }
-  .post-slide-num { width: 24px; height: 24px; font-size: 11px; }
-  .post-card-header { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .olivier-card { flex-wrap: wrap; gap: 10px; padding: 14px; }
+  .olivier-links { width: 100%; }
 }
 </style>
 </head>
@@ -1107,9 +1046,20 @@ async function loadDay(date) {
   }
 
   if (currentUser === 'Olivier') {
-    currentAds = currentAds.filter(a => a.slides && a.slides.length > 0);
+    // Olivier sees only ads that Jerson submitted for TikTok
+    currentAds = currentAds.filter(a => {
+      const sub = getSubmission(currentDate, a.id);
+      return sub && sub.platforms && (
+        (Array.isArray(sub.platforms) && sub.platforms.includes('tiktok')) ||
+        (typeof sub.platforms === 'string' && sub.platforms.includes('tiktok'))
+      );
+    });
+    document.getElementById('ad-grid').style.gridTemplateColumns = '1fr';
+    document.getElementById('ad-grid').style.maxWidth = '560px';
     renderOlivierGrid();
   } else {
+    document.getElementById('ad-grid').style.gridTemplateColumns = '';
+    document.getElementById('ad-grid').style.maxWidth = '';
     renderAdGrid();
   }
 }
@@ -1166,51 +1116,44 @@ function renderOlivierGrid() {
   grid.innerHTML = '';
 
   if (currentAds.length === 0) {
-    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Geen TikTok posts voor deze datum</div>';
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Nog geen TikTok posts klaar voor vandaag</div>';
     document.getElementById('detail-progress-text').textContent = '0 posts';
+    document.getElementById('detail-progress-bar').style.width = '0%';
     return;
   }
 
   let doneCount = 0;
   currentAds.forEach((ad, idx) => {
-    const isDone = getStatus(currentDate, ad.id) === 'done';
+    const sub = getSubmission(currentDate, ad.id);
+    const isDone = localStorage.getItem('newg_olivier_' + currentDate + '_' + ad.id) === 'done';
     if (isDone) doneCount++;
 
-    // Extract username from ad id (tiktok_username_postid)
-    const parts = ad.id.split('_');
-    const username = parts.length >= 3 ? '@' + parts.slice(1, -1).join('_') : ad.id;
+    const originalUrl = ad.id.startsWith('tiktok_') ? (function() {
+      const parts = ad.id.split('_');
+      const postId = parts[parts.length - 1];
+      const username = parts.slice(1, -1).join('_');
+      return 'https://www.tiktok.com/@' + username + '/video/' + postId;
+    })() : '';
 
     const card = document.createElement('div');
-    card.className = 'post-card' + (isDone ? ' status-done' : '');
-    card.id = 'post-' + ad.id;
-
-    const slidesHtml = (ad.slides || []).map((s, i) =>
-      '<div class="post-slide">' +
-        '<img src="' + s + '" alt="Slide ' + (i+1) + '" loading="lazy">' +
-        '<div class="post-slide-num">' + (i+1) + '</div>' +
-        '<div class="post-slide-dl"><a href="' + s + '" download>Download</a></div>' +
-      '</div>'
-    ).join('');
+    card.className = 'olivier-card' + (isDone ? ' done' : '');
 
     card.innerHTML =
-      '<div class="post-card-header">' +
-        '<div>' +
-          '<div class="post-card-title">Post ' + (idx + 1) + ' — ' + escapeHtml(username) + '</div>' +
-          '<div class="post-card-meta">' + (ad.slides || []).length + ' slides</div>' +
-        '</div>' +
-        '<div class="post-done-check' + (isDone ? ' checked' : '') + '" onclick="toggleOlivierDone(\'' + ad.id + '\')">' +
-          '<div class="post-done-box">' + (isDone ? '\u2713' : '') + '</div>' +
-          (isDone ? 'Klaar' : 'Markeer klaar') +
-        '</div>' +
+      '<div class="olivier-num">' + (idx + 1) + '</div>' +
+      '<div class="olivier-links">' +
+        '<div class="olivier-title">Post ' + (idx + 1) + '</div>' +
+        (originalUrl ? '<a class="olivier-link" href="' + originalUrl + '" target="_blank">Originele post openen</a>' : '') +
+        (sub && sub.drive_link ? '<a class="olivier-link drive" href="' + escapeAttr(sub.drive_link) + '" target="_blank">Drive — download content</a>' : '<span class="olivier-link disabled">Nog geen Drive link</span>') +
       '</div>' +
-      '<div class="post-slides">' + slidesHtml + '</div>' +
-      (ad.downloadUrl ? '<div class="post-card-footer"><a href="' + ad.downloadUrl + '" download>\u2B07 Download alles (ZIP)</a><span class="post-card-meta">' + escapeHtml((ad.adCopy || '').slice(0, 80)) + '</span></div>' : '');
+      '<div class="olivier-check' + (isDone ? ' checked' : '') + '" onclick="event.stopPropagation();toggleOlivierDone(\'' + ad.id + '\')">' +
+        (isDone ? '\u2713' : '') +
+      '</div>';
 
     grid.appendChild(card);
   });
 
   const total = currentAds.length;
-  document.getElementById('detail-progress-text').textContent = doneCount + ' / ' + total + ' klaar';
+  document.getElementById('detail-progress-text').textContent = doneCount + ' / ' + total + ' gepost';
   const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
   const bar = document.getElementById('detail-progress-bar');
   bar.style.width = pct + '%';
@@ -1218,9 +1161,9 @@ function renderOlivierGrid() {
 }
 
 function toggleOlivierDone(adId) {
-  const current = getStatus(currentDate, adId);
-  const next = current === 'done' ? 'not_started' : 'done';
-  setStatus(currentDate, adId, next);
+  const key = 'newg_olivier_' + currentDate + '_' + adId;
+  const current = localStorage.getItem(key);
+  localStorage.setItem(key, current === 'done' ? '' : 'done');
   renderOlivierGrid();
 }
 
