@@ -1,5 +1,5 @@
 name = "claudereal"
-client_id = "04e5c3005fb72b8e8c8c2b643e8f4439"
+# client_id loaded from SHOPIFY_CLIENT_ID env var — do NOT hardcode here
 application_url = "http://localhost:9999"
 embedded = false
 
@@ -16,4 +16,4 @@ redirect_urls = ["http://localhost:9999/callback"]
 api_version = "2024-10"
 
 [build]
-dev_store_url = "2fgppd-7k.myshopify.com"
+# dev_store_url loaded from SHOPIFY_SHOP env var

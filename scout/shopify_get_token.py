@@ -6,9 +6,14 @@ import json
 import webbrowser
 import ssl
 
-SHOP = "2fgppd-7k.myshopify.com"
-CLIENT_ID = "04e5c3005fb72b8e8c8c2b643e8f4439"
-CLIENT_SECRET = "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"
+from dotenv import load_dotenv
+load_dotenv()
+
+SHOP = os.getenv("SHOPIFY_SHOP", "2fgppd-7k.myshopify.com")
+CLIENT_ID = os.getenv("SHOPIFY_CLIENT_ID")
+CLIENT_SECRET = os.getenv("SHOPIFY_CLIENT_SECRET")
+if not CLIENT_ID or not CLIENT_SECRET:
+    raise RuntimeError("SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET not set – add them to .env")
 REDIRECT_URI = "http://localhost:9999/callback"
 SCOPES = "read_products,write_products,read_orders,write_orders,read_inventory,write_inventory,read_themes,write_themes,read_content,write_content,read_files,write_files,read_customers,write_customers,read_fulfillments,write_fulfillments,read_locations,read_discounts,write_discounts"
 

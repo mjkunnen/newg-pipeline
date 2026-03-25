@@ -3,7 +3,12 @@ import time
 import os
 import json
 
-FAL_KEY = "995ba237-b123-4a7f-b582-74024c92c132:3d3350082ae43c0431a00910ed3abf29"
+from dotenv import load_dotenv
+load_dotenv()
+
+FAL_KEY = os.getenv("FAL_KEY")
+if not FAL_KEY:
+    raise RuntimeError("FAL_KEY not set – add it to .env")
 QUEUE_URL = "https://queue.fal.run/fal-ai/nano-banana-2/edit"
 HEADERS = {
     "Authorization": f"Key {FAL_KEY}",

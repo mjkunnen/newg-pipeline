@@ -6,7 +6,10 @@ from pathlib import Path
 import time
 import os
 
-os.environ["FAL_KEY"] = "995ba237-b123-4a7f-b582-74024c92c132:3d3350082ae43c0431a00910ed3abf29"
+from dotenv import load_dotenv
+load_dotenv(Path(__file__).parent.parent.parent / ".env")
+if not os.getenv("FAL_KEY"):
+    raise RuntimeError("FAL_KEY not set – add it to .env")
 
 BASE = Path(__file__).parent
 SOURCES = BASE / "pinterest_sources"

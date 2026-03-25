@@ -29,7 +29,9 @@ OUTPUT.mkdir(parents=True, exist_ok=True)
 # Config
 SHEET_ID = "1BQ54wjilxW3F8rQFnVjwCRJtBTPDrSj3U5D0XYHjsgY"
 DRIVE_FOLDER = "1BsWTXQT8lQDwUjqo4Suelo3Gy7lKQro5"
-FAL_KEY = os.environ.get("FAL_KEY", "995ba237-b123-4a7f-b582-74024c92c132:3d3350082ae43c0431a00910ed3abf29")
+FAL_KEY = os.environ.get("FAL_KEY")
+if not FAL_KEY:
+    raise RuntimeError("FAL_KEY not set – add it to .env")
 
 # Products to cycle through for remakes
 PRODUCTS = [

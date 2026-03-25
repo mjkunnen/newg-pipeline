@@ -4,7 +4,9 @@ import urllib.request
 import os
 import sys
 
-TOKEN = "apify_api_1yG1ww6aCJVRapIXivxCaa2uipcTnc2qd5GV"
+TOKEN = os.getenv("APIFY_TOKEN")
+if not TOKEN:
+    raise RuntimeError("APIFY_TOKEN not set – add it to .env")
 OUTDIR = r"C:\Users\maxku\OneDrive\Bureaublad\competitor creative research (NEWG)\scout\output"
 
 # All run IDs (batch 1 + batch 2)
