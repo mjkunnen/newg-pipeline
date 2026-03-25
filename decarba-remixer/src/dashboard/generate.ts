@@ -227,8 +227,19 @@ async function copyTiktokSlides(ad: ScrapedAd, dateDir: string, date: string): P
 async function cleanupOldCreatives(keepDates: string[]) {
   if (!existsSync(CREATIVES_DIR)) return;
   const dirs = await readdir(CREATIVES_DIR);
+  const keepSet = new Set(keepDates);
+
+  // Also preserve any date that already has a JSON data file (manually curated content)
+  if (existsSync(DATA_DIR)) {
+    const dataFiles = await readdir(DATA_DIR);
+    for (const f of dataFiles) {
+      const match = f.match(/^(\d{4}-\d{2}-\d{2})\.json$/);
+      if (match) keepSet.add(match[1]);
+    }
+  }
+
   for (const dir of dirs) {
-    if (/^\d{4}-\d{2}-\d{2}$/.test(dir) && !keepDates.includes(dir)) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dir) && !keepSet.has(dir)) {
       console.log(`[dashboard] Removing old creatives: ${dir}`);
       await rm(join(CREATIVES_DIR, dir), { recursive: true, force: true });
     }
@@ -394,19 +405,35 @@ async function generate() {
       });
     }
 
-    // Write per-date JSON
+    // Merge with existing date JSON (preserve manually-added ads)
     const dateJsonPath = join(DATA_DIR, `${date}.json`);
+    let mergedAds = dashboardAds;
+    if (existsSync(dateJsonPath)) {
+      try {
+        const existing = JSON.parse(await readFile(dateJsonPath, "utf-8"));
+        const newIds = new Set(dashboardAds.map((a) => a.id));
+        const preserved = (existing.ads || []).filter(
+          (a: DashboardAd) => !newIds.has(a.id),
+        );
+        if (preserved.length > 0) {
+          console.log(`[dashboard] ${date}: preserving ${preserved.length} existing ad(s) not in current scrape`);
+          mergedAds = [...dashboardAds, ...preserved];
+        }
+      } catch {
+        // existing file corrupt, overwrite
+      }
+    }
     await writeFile(
       dateJsonPath,
-      JSON.stringify({ date, competitor: COMPETITOR, ads: dashboardAds }, null, 2),
+      JSON.stringify({ date, competitor: COMPETITOR, ads: mergedAds }, null, 2),
     );
 
-    const videoCount = dashboardAds.filter((a) => a.type === "video").length;
+    const videoCount = mergedAds.filter((a) => a.type === "video").length;
     dateIndex.push({
       date,
-      adCount: dashboardAds.length,
+      adCount: mergedAds.length,
       videoCount,
-      imageCount: dashboardAds.length - videoCount,
+      imageCount: mergedAds.length - videoCount,
     });
   }
 
@@ -418,7 +445,35 @@ async function generate() {
   await writeFile(SEEN_PPSPY_PATH, JSON.stringify(updatedSeen, null, 2));
   console.log(`[dashboard] Seen PPSpy: ${seenPpspyUrls.size} URLs, ${seenPpspyCopies.size} ad copies`);
 
-  // Cleanup old creatives (keep only recent dates)
+  // Include existing date JSONs not covered by current scrape (manually curated dates)
+  const indexedDates = new Set(dateIndex.map((d) => d.date));
+  if (existsSync(DATA_DIR)) {
+    const dataFiles = await readdir(DATA_DIR);
+    for (const f of dataFiles) {
+      const match = f.match(/^(\d{4}-\d{2}-\d{2})\.json$/);
+      if (match && !indexedDates.has(match[1])) {
+        try {
+          const existing = JSON.parse(await readFile(join(DATA_DIR, f), "utf-8"));
+          const ads: DashboardAd[] = existing.ads || [];
+          const videoCount = ads.filter((a) => a.type === "video").length;
+          dateIndex.push({
+            date: match[1],
+            adCount: ads.length,
+            videoCount,
+            imageCount: ads.length - videoCount,
+          });
+          keepDates.push(match[1]);
+          console.log(`[dashboard] Preserved existing date: ${match[1]} (${ads.length} ads)`);
+        } catch {
+          // skip corrupt files
+        }
+      }
+    }
+    // Sort dateIndex newest-first
+    dateIndex.sort((a, b) => b.date.localeCompare(a.date));
+  }
+
+  // Cleanup old creatives (keep only recent + preserved dates)
   await cleanupOldCreatives(keepDates);
 
   // Write index
