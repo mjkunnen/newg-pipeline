@@ -378,6 +378,15 @@ body {
   text-overflow: ellipsis;
   margin-bottom: 6px;
 }
+.tiktok-source-link {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  margin-bottom: 4px;
+}
+.tiktok-source-link:hover { text-decoration: underline; }
 .ad-stats {
   display: flex;
   gap: 12px;
@@ -644,10 +653,112 @@ body {
   white-space: nowrap; max-width: 160px; overflow: hidden; text-overflow: ellipsis;
 }
 
+/* ===== OLIVIER VIEW ===== */
+.olivier-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+}
+.olivier-card.done { border-color: #b8e6c8; background: var(--success-bg); }
+.olivier-num {
+  width: 40px; height: 40px;
+  background: var(--text);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.olivier-card.done .olivier-num { background: var(--success); }
+.olivier-links { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.olivier-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.olivier-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  text-decoration: none; padding: 8px 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); transition: all 0.15s;
+}
+.olivier-link:hover { background: var(--accent-light); border-color: var(--accent); }
+.olivier-link.drive { background: var(--accent); color: #fff; border-color: var(--accent); }
+.olivier-link.drive:hover { background: var(--text); border-color: var(--text); }
+.olivier-link.disabled { color: var(--text-muted); pointer-events: none; opacity: 0.5; }
+.olivier-check {
+  width: 36px; height: 36px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  color: transparent;
+  user-select: none;
+}
+.olivier-check:hover { border-color: var(--success); }
+.olivier-check.checked {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+
+/* ===== SLIDES GALLERY (TikTok) ===== */
+.slides-gallery { margin-bottom: 20px; }
+.slides-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;
+}
+.slides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+.slide-item {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--border-light);
+}
+.slide-item img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+}
+.slide-dl {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  text-align: center;
+  padding: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.slide-item:hover .slide-dl { opacity: 1; }
+
 @media (max-width: 700px) {
   .ad-grid { grid-template-columns: 1fr; }
   .dates-title { font-size: 28px; }
   .modal { margin: 16px auto; }
+  .slide-dl { opacity: 1; }
+  .olivier-card { flex-wrap: wrap; gap: 10px; padding: 14px; }
+  .olivier-links { width: 100%; }
 }
 </style>
 </head>
@@ -662,6 +773,7 @@ body {
   <div class="login-prompt">Who's working today?</div>
   <div class="login-buttons">
     <button class="login-btn" onclick="selectUser('Jerson')">Jerson</button>
+    <button class="login-btn" onclick="selectUser('Olivier')">Olivier</button>
     <button class="login-btn" onclick="selectUser('Boss')">Boss</button>
   </div>
 </div>
@@ -676,8 +788,8 @@ body {
     </div>
   </div>
   <div class="dates-hero">
-    <div class="dates-title">Opdrachten</div>
-    <div class="dates-sub">Winning ads — dagelijks vernieuwd</div>
+    <div class="dates-title" id="dates-title">Opdrachten</div>
+    <div class="dates-sub" id="dates-sub">Winning ads — dagelijks vernieuwd</div>
   </div>
   <div class="dates-list" id="dates-list"></div>
 </div>
@@ -715,7 +827,7 @@ body {
 <script>
 const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxN7hSUicVX6-JvOpFQMbABsQqc8CxPHMbUCjsYkhRNcNeddjw-4GP2F66PSDXhDrKsjA/exec";
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1p8pdlNQKYRoX8HydJAHqAX6NhK_FAMxt2WHmWWps-yw/gviz/tq?tqx=out:csv&sheet=Submissions";
-const DATES_INDEX = [{"date":"2026-03-25","adCount":4,"videoCount":0,"imageCount":4}];
+const DATES_INDEX = [{"date":"2026-03-23","adCount":0,"videoCount":0,"imageCount":0}];
 
 let currentUser = null;
 let currentDate = null;
@@ -731,9 +843,10 @@ function route() {
     return;
   }
   if (!saved && hash !== '#/') {
-    // Allow direct deep links — auto-login as Jerson
-    currentUser = 'Jerson';
-    localStorage.setItem('newg_user', 'Jerson');
+    // No saved user but deep link — send to login
+    location.hash = '#/';
+    document.getElementById('screen-login').classList.add('active');
+    return;
   } else {
     currentUser = saved;
   }
@@ -878,6 +991,10 @@ function renderDates() {
   const list = document.getElementById('dates-list');
   list.innerHTML = '';
 
+  const isOlivier = currentUser === 'Olivier';
+  document.getElementById('dates-title').textContent = isOlivier ? 'TikTok Posts' : 'Opdrachten';
+  document.getElementById('dates-sub').textContent = isOlivier ? 'Download slides en post ze op TikTok' : 'Winning ads — dagelijks vernieuwd';
+
   if (DATES_INDEX.length === 1) {
     location.hash = '#/day/' + DATES_INDEX[0].date;
     return;
@@ -937,7 +1054,23 @@ async function loadDay(date) {
     return;
   }
 
-  renderAdGrid();
+  if (currentUser === 'Olivier') {
+    // Olivier sees only ads that Jerson submitted for TikTok
+    currentAds = currentAds.filter(a => {
+      const sub = getSubmission(currentDate, a.id);
+      return sub && sub.platforms && (
+        (Array.isArray(sub.platforms) && sub.platforms.includes('tiktok')) ||
+        (typeof sub.platforms === 'string' && sub.platforms.includes('tiktok'))
+      );
+    });
+    document.getElementById('ad-grid').style.gridTemplateColumns = '1fr';
+    document.getElementById('ad-grid').style.maxWidth = '560px';
+    renderOlivierGrid();
+  } else {
+    document.getElementById('ad-grid').style.gridTemplateColumns = '';
+    document.getElementById('ad-grid').style.maxWidth = '';
+    renderAdGrid();
+  }
 }
 
 function renderAdGrid() {
@@ -955,6 +1088,13 @@ function renderAdGrid() {
 
     const statusLabels = { not_started: 'Not Started', in_progress: 'In Progress', done: 'Done' };
 
+    const tiktokSource = ad.id.startsWith('tiktok_') ? (function() {
+      const parts = ad.id.split('_');
+      const postId = parts[parts.length - 1];
+      const username = parts.slice(1, -1).join('_');
+      return { username, url: 'https://www.tiktok.com/@' + username + '/video/' + postId };
+    })() : null;
+
     card.innerHTML = `
       <div class="ad-card-compact">
         <div class="ad-thumb">
@@ -967,6 +1107,7 @@ function renderAdGrid() {
             <span class="status-badge ${status}">${statusLabels[status]}</span>
           </div>
           <div class="ad-copy-preview">${escapeHtml((ad.adCopy || '').slice(0, 60))}</div>
+          ${tiktokSource ? '<a class="tiktok-source-link" href="' + tiktokSource.url + '" target="_blank" onclick="event.stopPropagation()">@' + escapeHtml(tiktokSource.username) + ' \u2197</a>' : ''}
           ${ad.suggestedProducts && ad.suggestedProducts.length > 0 ? '<div class="product-tags-compact">' + ad.suggestedProducts.map(p => '<span class="product-tag-sm">' + escapeHtml(p.name) + '</span>').join('') + '</div>' : ''}
           <div class="ad-stats">
             <span><strong>${ad.reachFormatted || formatNum(ad.reach)}</strong> reach</span>
@@ -984,6 +1125,63 @@ function renderAdGrid() {
   const bar = document.getElementById('detail-progress-bar');
   bar.style.width = pct + '%';
   bar.className = 'progress-fill ' + (doneCount === total && total > 0 ? 'complete' : 'partial');
+}
+
+// ===== OLIVIER VIEW =====
+function renderOlivierGrid() {
+  const grid = document.getElementById('ad-grid');
+  grid.innerHTML = '';
+
+  if (currentAds.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Nog geen TikTok posts klaar voor vandaag</div>';
+    document.getElementById('detail-progress-text').textContent = '0 posts';
+    document.getElementById('detail-progress-bar').style.width = '0%';
+    return;
+  }
+
+  let doneCount = 0;
+  currentAds.forEach((ad, idx) => {
+    const sub = getSubmission(currentDate, ad.id);
+    const isDone = localStorage.getItem('newg_olivier_' + currentDate + '_' + ad.id) === 'done';
+    if (isDone) doneCount++;
+
+    const originalUrl = ad.id.startsWith('tiktok_') ? (function() {
+      const parts = ad.id.split('_');
+      const postId = parts[parts.length - 1];
+      const username = parts.slice(1, -1).join('_');
+      return 'https://www.tiktok.com/@' + username + '/video/' + postId;
+    })() : '';
+
+    const card = document.createElement('div');
+    card.className = 'olivier-card' + (isDone ? ' done' : '');
+
+    card.innerHTML =
+      '<div class="olivier-num">' + (idx + 1) + '</div>' +
+      '<div class="olivier-links">' +
+        '<div class="olivier-title">Post ' + (idx + 1) + '</div>' +
+        (originalUrl ? '<a class="olivier-link" href="' + originalUrl + '" target="_blank">Originele post openen</a>' : '') +
+        (sub && sub.drive_link ? '<a class="olivier-link drive" href="' + escapeAttr(sub.drive_link) + '" target="_blank">Drive — download content</a>' : '<span class="olivier-link disabled">Nog geen Drive link</span>') +
+      '</div>' +
+      '<div class="olivier-check' + (isDone ? ' checked' : '') + '" onclick="event.stopPropagation();toggleOlivierDone(\'' + ad.id + '\')">' +
+        (isDone ? '\u2713' : '') +
+      '</div>';
+
+    grid.appendChild(card);
+  });
+
+  const total = currentAds.length;
+  document.getElementById('detail-progress-text').textContent = doneCount + ' / ' + total + ' gepost';
+  const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+  const bar = document.getElementById('detail-progress-bar');
+  bar.style.width = pct + '%';
+  bar.className = 'progress-fill ' + (doneCount === total && total > 0 ? 'complete' : 'partial');
+}
+
+function toggleOlivierDone(adId) {
+  const key = 'newg_olivier_' + currentDate + '_' + adId;
+  const current = localStorage.getItem(key);
+  localStorage.setItem(key, current === 'done' ? '' : 'done');
+  renderOlivierGrid();
 }
 
 // ===== MODAL =====
@@ -1021,9 +1219,26 @@ function openModal(ad) {
       <div class="modal-platforms">
         ${(ad.platforms || []).map(p => '<span class="plat-tag">' + (platformMap[p] || p) + '</span>').join('')}
       </div>
-      <div class="modal-actions">
-        ${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download>⬇ Download origineel (full quality)</a>' : '<span class="modal-link disabled">Geen download beschikbaar</span>'}
+      ${ad.id.startsWith('tiktok_') ? (function() {
+        const parts = ad.id.split('_');
+        const postId = parts[parts.length - 1];
+        const username = parts.slice(1, -1).join('_');
+        const srcUrl = 'https://www.tiktok.com/@' + username + '/video/' + postId;
+        return '<a class="modal-link" href="' + srcUrl + '" target="_blank" style="margin-bottom:8px">\ud83d\udd17 Originele TikTok van @' + username + '</a>';
+      })() : ''}
+      ${ad.slides && ad.slides.length > 0 ? `
+      <div class="slides-gallery">
+        <div class="slides-label">Slides (${ad.slides.length})</div>
+        <div class="slides-grid">
+          ${ad.slides.map((s, i) => '<div class="slide-item"><img src="' + s + '" alt="Slide ' + (i+1) + '" onclick="event.stopPropagation()"><a class="slide-dl" href="' + s + '" download title="Download slide ' + (i+1) + '">\u2B07 ' + (i+1) + '</a></div>').join('')}
+        </div>
+        ${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download style="margin-top:10px">\u2B07 Download alles (ZIP)</a>' : ''}
       </div>
+      ` : `
+      <div class="modal-actions">
+        ${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download>\u2B07 Download origineel (full quality)</a>' : '<span class="modal-link disabled">Geen download beschikbaar</span>'}
+      </div>
+      `}
 
       ${ad.suggestedProducts && ad.suggestedProducts.length > 0 ? `
       <div class="modal-divider"></div>
