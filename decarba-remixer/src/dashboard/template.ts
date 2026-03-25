@@ -17,6 +17,7 @@ export interface DashboardAd {
   platforms: string[];
   downloadUrl: string;
   suggestedProducts?: SuggestedProduct[];
+  slides?: string[]; // Individual slide paths for TikTok carousels
 }
 
 export interface DateEntry {
@@ -419,6 +420,15 @@ body {
   text-overflow: ellipsis;
   margin-bottom: 6px;
 }
+.tiktok-source-link {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  margin-bottom: 4px;
+}
+.tiktok-source-link:hover { text-decoration: underline; }
 .ad-stats {
   display: flex;
   gap: 12px;
@@ -685,10 +695,112 @@ body {
   white-space: nowrap; max-width: 160px; overflow: hidden; text-overflow: ellipsis;
 }
 
+/* ===== OLIVIER VIEW ===== */
+.olivier-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+}
+.olivier-card.done { border-color: #b8e6c8; background: var(--success-bg); }
+.olivier-num {
+  width: 40px; height: 40px;
+  background: var(--text);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.olivier-card.done .olivier-num { background: var(--success); }
+.olivier-links { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.olivier-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.olivier-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  text-decoration: none; padding: 8px 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); transition: all 0.15s;
+}
+.olivier-link:hover { background: var(--accent-light); border-color: var(--accent); }
+.olivier-link.drive { background: var(--accent); color: #fff; border-color: var(--accent); }
+.olivier-link.drive:hover { background: var(--text); border-color: var(--text); }
+.olivier-link.disabled { color: var(--text-muted); pointer-events: none; opacity: 0.5; }
+.olivier-check {
+  width: 36px; height: 36px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  color: transparent;
+  user-select: none;
+}
+.olivier-check:hover { border-color: var(--success); }
+.olivier-check.checked {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+
+/* ===== SLIDES GALLERY (TikTok) ===== */
+.slides-gallery { margin-bottom: 20px; }
+.slides-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;
+}
+.slides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+.slide-item {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--border-light);
+}
+.slide-item img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+}
+.slide-dl {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  text-align: center;
+  padding: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.slide-item:hover .slide-dl { opacity: 1; }
+
 @media (max-width: 700px) {
   .ad-grid { grid-template-columns: 1fr; }
   .dates-title { font-size: 28px; }
   .modal { margin: 16px auto; }
+  .slide-dl { opacity: 1; }
+  .olivier-card { flex-wrap: wrap; gap: 10px; padding: 14px; }
+  .olivier-links { width: 100%; }
 }
 </style>
 </head>
@@ -703,6 +815,7 @@ body {
   <div class="login-prompt">Who's working today?</div>
   <div class="login-buttons">
     <button class="login-btn" onclick="selectUser('Jerson')">Jerson</button>
+    <button class="login-btn" onclick="selectUser('Olivier')">Olivier</button>
     <button class="login-btn" onclick="selectUser('Boss')">Boss</button>
   </div>
 </div>
@@ -717,8 +830,8 @@ body {
     </div>
   </div>
   <div class="dates-hero">
-    <div class="dates-title">Opdrachten</div>
-    <div class="dates-sub">Winning ads — dagelijks vernieuwd</div>
+    <div class="dates-title" id="dates-title">Opdrachten</div>
+    <div class="dates-sub" id="dates-sub">Winning ads — refreshed daily</div>
   </div>
   <div class="dates-list" id="dates-list"></div>
 </div>
@@ -733,7 +846,7 @@ body {
     </div>
   </div>
   <div class="detail-top">
-    <button class="back-btn" onclick="showDates()">\u2190 Terug</button>
+    <button class="back-btn" onclick="showDates()">\u2190 Back</button>
     <div class="detail-date" id="detail-date-label"></div>
   </div>
   <div class="detail-progress">
@@ -772,9 +885,10 @@ function route() {
     return;
   }
   if (!saved && hash !== '#/') {
-    // Allow direct deep links — auto-login as Jerson
-    currentUser = 'Jerson';
-    localStorage.setItem('newg_user', 'Jerson');
+    // No saved user but deep link — send to login
+    location.hash = '#/';
+    document.getElementById('screen-login').classList.add('active');
+    return;
   } else {
     currentUser = saved;
   }
@@ -919,6 +1033,10 @@ function renderDates() {
   const list = document.getElementById('dates-list');
   list.innerHTML = '';
 
+  const isOlivier = currentUser === 'Olivier';
+  document.getElementById('dates-title').textContent = isOlivier ? 'TikTok Posts' : 'Tasks';
+  document.getElementById('dates-sub').textContent = isOlivier ? 'Download slides and post them on TikTok' : 'Winning ads — refreshed daily';
+
   if (DATES_INDEX.length === 1) {
     location.hash = '#/day/' + DATES_INDEX[0].date;
     return;
@@ -964,7 +1082,7 @@ async function loadDay(date) {
 
   // Load shared submissions from Google Sheet (once)
   if (!sheetLoaded) {
-    document.getElementById('ad-grid').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Laden...</div>';
+    document.getElementById('ad-grid').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Loading...</div>';
     await loadSheetData();
   }
 
@@ -974,11 +1092,27 @@ async function loadDay(date) {
     const data = await resp.json();
     currentAds = data.ads || data;
   } catch {
-    document.getElementById('ad-grid').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Geen data voor deze datum</div>';
+    document.getElementById('ad-grid').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">No data for this date</div>';
     return;
   }
 
-  renderAdGrid();
+  if (currentUser === 'Olivier') {
+    // Olivier sees only ads that Jerson submitted for TikTok
+    currentAds = currentAds.filter(a => {
+      const sub = getSubmission(currentDate, a.id);
+      return sub && sub.platforms && (
+        (Array.isArray(sub.platforms) && sub.platforms.includes('tiktok')) ||
+        (typeof sub.platforms === 'string' && sub.platforms.includes('tiktok'))
+      );
+    });
+    document.getElementById('ad-grid').style.gridTemplateColumns = '1fr';
+    document.getElementById('ad-grid').style.maxWidth = '560px';
+    renderOlivierGrid();
+  } else {
+    document.getElementById('ad-grid').style.gridTemplateColumns = '';
+    document.getElementById('ad-grid').style.maxWidth = '';
+    renderAdGrid();
+  }
 }
 
 function renderAdGrid() {
@@ -996,6 +1130,13 @@ function renderAdGrid() {
 
     const statusLabels = { not_started: 'Not Started', in_progress: 'In Progress', done: 'Done' };
 
+    const tiktokSource = ad.id.startsWith('tiktok_') ? (function() {
+      const parts = ad.id.split('_');
+      const postId = parts[parts.length - 1];
+      const username = parts.slice(1, -1).join('_');
+      return { username, url: 'https://www.tiktok.com/@' + username + '/video/' + postId };
+    })() : null;
+
     card.innerHTML = \`
       <div class="ad-card-compact">
         <div class="ad-thumb">
@@ -1008,6 +1149,7 @@ function renderAdGrid() {
             <span class="status-badge \${status}">\${statusLabels[status]}</span>
           </div>
           <div class="ad-copy-preview">\${escapeHtml((ad.adCopy || '').slice(0, 60))}</div>
+          \${tiktokSource ? '<a class="tiktok-source-link" href="' + tiktokSource.url + '" target="_blank" onclick="event.stopPropagation()">@' + escapeHtml(tiktokSource.username) + ' \\u2197</a>' : ''}
           \${ad.suggestedProducts && ad.suggestedProducts.length > 0 ? '<div class="product-tags-compact">' + ad.suggestedProducts.map(p => '<span class="product-tag-sm">' + escapeHtml(p.name) + '</span>').join('') + '</div>' : ''}
           <div class="ad-stats">
             <span><strong>\${ad.reachFormatted || formatNum(ad.reach)}</strong> reach</span>
@@ -1021,10 +1163,67 @@ function renderAdGrid() {
 
   const total = currentAds.length;
   const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
-  document.getElementById('detail-progress-text').textContent = doneCount + ' / ' + total + ' klaar';
+  document.getElementById('detail-progress-text').textContent = doneCount + ' / ' + total + ' done';
   const bar = document.getElementById('detail-progress-bar');
   bar.style.width = pct + '%';
   bar.className = 'progress-fill ' + (doneCount === total && total > 0 ? 'complete' : 'partial');
+}
+
+// ===== OLIVIER VIEW =====
+function renderOlivierGrid() {
+  const grid = document.getElementById('ad-grid');
+  grid.innerHTML = '';
+
+  if (currentAds.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">No TikTok posts ready for today</div>';
+    document.getElementById('detail-progress-text').textContent = '0 posts';
+    document.getElementById('detail-progress-bar').style.width = '0%';
+    return;
+  }
+
+  let doneCount = 0;
+  currentAds.forEach((ad, idx) => {
+    const sub = getSubmission(currentDate, ad.id);
+    const isDone = localStorage.getItem('newg_olivier_' + currentDate + '_' + ad.id) === 'done';
+    if (isDone) doneCount++;
+
+    const originalUrl = ad.id.startsWith('tiktok_') ? (function() {
+      const parts = ad.id.split('_');
+      const postId = parts[parts.length - 1];
+      const username = parts.slice(1, -1).join('_');
+      return 'https://www.tiktok.com/@' + username + '/video/' + postId;
+    })() : '';
+
+    const card = document.createElement('div');
+    card.className = 'olivier-card' + (isDone ? ' done' : '');
+
+    card.innerHTML =
+      '<div class="olivier-num">' + (idx + 1) + '</div>' +
+      '<div class="olivier-links">' +
+        '<div class="olivier-title">Post ' + (idx + 1) + '</div>' +
+        (originalUrl ? '<a class="olivier-link" href="' + originalUrl + '" target="_blank">Open original post</a>' : '') +
+        (sub && sub.drive_link ? '<a class="olivier-link drive" href="' + escapeAttr(sub.drive_link) + '" target="_blank">Drive — download content</a>' : '<span class="olivier-link disabled">No Drive link yet</span>') +
+      '</div>' +
+      '<div class="olivier-check' + (isDone ? ' checked' : '') + '" onclick="event.stopPropagation();toggleOlivierDone(\\'' + ad.id + '\\')">' +
+        (isDone ? '\\u2713' : '') +
+      '</div>';
+
+    grid.appendChild(card);
+  });
+
+  const total = currentAds.length;
+  document.getElementById('detail-progress-text').textContent = doneCount + ' / ' + total + ' posted';
+  const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+  const bar = document.getElementById('detail-progress-bar');
+  bar.style.width = pct + '%';
+  bar.className = 'progress-fill ' + (doneCount === total && total > 0 ? 'complete' : 'partial');
+}
+
+function toggleOlivierDone(adId) {
+  const key = 'newg_olivier_' + currentDate + '_' + adId;
+  const current = localStorage.getItem(key);
+  localStorage.setItem(key, current === 'done' ? '' : 'done');
+  renderOlivierGrid();
 }
 
 // ===== MODAL =====
@@ -1062,14 +1261,31 @@ function openModal(ad) {
       <div class="modal-platforms">
         \${(ad.platforms || []).map(p => '<span class="plat-tag">' + (platformMap[p] || p) + '</span>').join('')}
       </div>
-      <div class="modal-actions">
-        \${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download>\u2B07 Download origineel (full quality)</a>' : '<span class="modal-link disabled">Geen download beschikbaar</span>'}
+      \${ad.id.startsWith('tiktok_') ? (function() {
+        const parts = ad.id.split('_');
+        const postId = parts[parts.length - 1];
+        const username = parts.slice(1, -1).join('_');
+        const srcUrl = 'https://www.tiktok.com/@' + username + '/video/' + postId;
+        return '<a class="modal-link" href="' + srcUrl + '" target="_blank" style="margin-bottom:8px">\\ud83d\\udd17 Original TikTok by @' + username + '</a>';
+      })() : ''}
+      \${ad.slides && ad.slides.length > 0 ? \`
+      <div class="slides-gallery">
+        <div class="slides-label">Slides (\${ad.slides.length})</div>
+        <div class="slides-grid">
+          \${ad.slides.map((s, i) => '<div class="slide-item"><img src="' + s + '" alt="Slide ' + (i+1) + '" onclick="event.stopPropagation()"><a class="slide-dl" href="' + s + '" download title="Download slide ' + (i+1) + '">\\u2B07 ' + (i+1) + '</a></div>').join('')}
+        </div>
+        \${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download style="margin-top:10px">\\u2B07 Download all (ZIP)</a>' : ''}
       </div>
+      \` : \`
+      <div class="modal-actions">
+        \${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download>\\u2B07 Download original (full quality)</a>' : '<span class="modal-link disabled">No download available</span>'}
+      </div>
+      \`}
 
       \${ad.suggestedProducts && ad.suggestedProducts.length > 0 ? \`
       <div class="modal-divider"></div>
       <div class="products-section">
-        <div class="products-label">Gebruik deze producten</div>
+        <div class="products-label">Use these products</div>
         <div class="product-tags">
           \${ad.suggestedProducts.map(p => {
             const icons = { top: '\\ud83d\\udc55', bottom: '\\ud83d\\udc56', shoes: '\\ud83d\\udc5f', accessory: '\\ud83d\\udc8d' };
@@ -1106,8 +1322,8 @@ function openModal(ad) {
           </div>
         </div>
         <button class="submit-btn" onclick="submitAd('\${ad.id}')">Submit</button>
-        <div class="submit-success" id="submit-success">Submitted! Je remake wordt gelaunched.</div>
-        <div class="submit-error" id="submit-error">Indienen mislukt, probeer opnieuw.</div>
+        <div class="submit-success" id="submit-success">Submitted! Your remake will be launched.</div>
+        <div class="submit-error" id="submit-error">Submission failed, please try again.</div>
       </div>
 
       \${submission ? \`

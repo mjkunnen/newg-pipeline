@@ -71,12 +71,14 @@ OUTFITS = [
 ]
 
 # Logging
+_log_dir = BASE_DIR / "logs"
+_log_dir.mkdir(exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler(BASE_DIR / "logs" / "daily-remake.log", encoding="utf-8"),
+        logging.FileHandler(_log_dir / "daily-remake.log", encoding="utf-8"),
     ],
 )
 log = logging.getLogger("vps_remake")
@@ -92,6 +94,13 @@ def get_google_credentials():
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive",
     ]
+    # CI: load from GOOGLE_SERVICE_ACCOUNT_JSON env var (JSON string)
+    sa_json = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
+    if sa_json:
+        import json as _json
+        info = _json.loads(sa_json)
+        return Credentials.from_service_account_info(info, scopes=scopes)
+    # Local: load from file
     return Credentials.from_service_account_file(str(SERVICE_ACCOUNT_FILE), scopes=scopes)
 
 
@@ -328,8 +337,8 @@ def main():
     if not FAL_KEY:
         log.error("FAL_KEY not set in .env")
         sys.exit(1)
-    if not SERVICE_ACCOUNT_FILE.exists():
-        log.error(f"Service account file not found: {SERVICE_ACCOUNT_FILE}")
+    if not os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON") and not SERVICE_ACCOUNT_FILE.exists():
+        log.error(f"No GOOGLE_SERVICE_ACCOUNT_JSON env var and service account file not found: {SERVICE_ACCOUNT_FILE}")
         sys.exit(1)
 
     # Step 1: Google auth
