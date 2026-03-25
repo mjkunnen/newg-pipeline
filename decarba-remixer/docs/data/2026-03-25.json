@@ -3,78 +3,6 @@
   "competitor": "decarba",
   "ads": [
     {
-      "id": "decarba_2026-03-25_12",
-      "type": "video",
-      "thumbPath": "thumbs/decarba_2026-03-25_12.jpg",
-      "adCopy": "NEW Collection is live. Sizes go fast 💨",
-      "reach": 379400,
-      "reachFormatted": "379.4K",
-      "reachCost": "",
-      "daysActive": 26,
-      "startDate": "Feb 19 2026",
-      "platforms": [
-        "facebook",
-        "instagram",
-        "audience_network",
-        "messenger",
-        "threads"
-      ],
-      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_12.mp4",
-      "suggestedProducts": [
-        {
-          "name": "'Structure' Graphic Knitted Sweater",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Denim Striped Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "Ocean Stars Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "decarba_2026-03-25_2",
-      "type": "video",
-      "thumbPath": "thumbs/decarba_2026-03-25_2.jpg",
-      "adCopy": "NEW Collection is live. Sizes go fast 💨",
-      "reach": 303000,
-      "reachFormatted": "303.0K",
-      "reachCost": "",
-      "daysActive": 3,
-      "startDate": "Mar 18 2026",
-      "platforms": [
-        "facebook",
-        "instagram",
-        "audience_network",
-        "messenger",
-        "threads"
-      ],
-      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_2.mp4",
-      "suggestedProducts": [
-        {
-          "name": "Checkered Inside Out Zipper",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Denim Striped Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "Ocean Stars Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
       "id": "decarba_2026-03-25_10",
       "type": "video",
       "thumbPath": "thumbs/decarba_2026-03-25_10.jpg",
@@ -111,15 +39,15 @@
       ]
     },
     {
-      "id": "decarba_2026-03-25_11",
-      "type": "video",
-      "thumbPath": "thumbs/decarba_2026-03-25_11.jpg",
-      "adCopy": "NEW Collection is live. Sizes go fast 💨",
-      "reach": 152500,
-      "reachFormatted": "152.5K",
+      "id": "decarba_2026-03-25_6",
+      "type": "image",
+      "thumbPath": "thumbs/decarba_2026-03-25_6.jpg",
+      "adCopy": "S’26 just got real. DCRB Wavey Clogs are LIVE — bold, durabl",
+      "reach": 134900,
+      "reachFormatted": "134.9K",
       "reachCost": "",
-      "daysActive": 3,
-      "startDate": "Feb 20 2026",
+      "daysActive": 10,
+      "startDate": "Feb 28 2026",
       "platforms": [
         "facebook",
         "instagram",
@@ -127,7 +55,7 @@
         "messenger",
         "threads"
       ],
-      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_11.mp4",
+      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_6.jpg",
       "suggestedProducts": [
         {
           "name": "Heavyweight Zipped Hoodie",
@@ -172,6 +100,78 @@
         },
         {
           "name": "Retro Patchwork Barrel Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "Ocean Stars Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ]
+    },
+    {
+      "id": "decarba_2026-03-25_3",
+      "type": "image",
+      "thumbPath": "thumbs/decarba_2026-03-25_3.jpg",
+      "adCopy": "S’26 just got real. DCRB Wavey Clogs are LIVE — bold, durabl",
+      "reach": 118400,
+      "reachFormatted": "118.4K",
+      "reachCost": "",
+      "daysActive": 9,
+      "startDate": "Mar 07 2026",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_3.jpg",
+      "suggestedProducts": [
+        {
+          "name": "Zip Hoodie Y2K",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "Denim Striped Barrel Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "Ocean Stars Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ]
+    },
+    {
+      "id": "decarba_2026-03-25_0",
+      "type": "video",
+      "thumbPath": "thumbs/decarba_2026-03-25_0.jpg",
+      "adCopy": "Step into Spring with the Broken Creme Sneakers\nand get 3 FR",
+      "reach": 100700,
+      "reachFormatted": "100.7K",
+      "reachCost": "",
+      "daysActive": 6,
+      "startDate": "Mar 18 2026",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_0.mp4",
+      "suggestedProducts": [
+        {
+          "name": "Heavyweight Zipped Hoodie",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "Denim Striped Barrel Jeans",
           "collection": "bestseller-bottoms",
           "role": "bottom"
         },
