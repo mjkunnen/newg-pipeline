@@ -174,6 +174,12 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
         const sizeKB = (buffer.length / 1024).toFixed(0);
         console.log(`[pinterest] Downloaded: ${filename} (${sizeKB}KB)`);
 
+        // Skip corrupt/empty images
+        if (buffer.length < 1024) {
+          console.warn(`[pinterest] Skipping ${filename} — too small (${buffer.length} bytes), likely corrupt`);
+          continue;
+        }
+
         ads.push({
           id,
           type: "image",

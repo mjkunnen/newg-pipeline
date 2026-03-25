@@ -348,8 +348,23 @@ async function generate() {
       if (copyKey) seenPpspyCopies.add(copyKey);
     }
 
-    // Combine new PPSpy + Pinterest pins + TikTok carousels
-    const adsToShow = [...newPpspy, ...pinterestRaw, ...tiktokRaw];
+    // Limit Pinterest to top 2 per day
+    const MAX_PINTEREST = 2;
+    const pinterestToShow = pinterestRaw.slice(0, MAX_PINTEREST);
+    if (pinterestRaw.length > MAX_PINTEREST) {
+      console.log(`[dashboard] Pinterest: showing ${MAX_PINTEREST} of ${pinterestRaw.length} pins`);
+    }
+
+    // Limit TikTok to top 2 by reach (views), highest first
+    const MAX_TIKTOK = 2;
+    tiktokRaw.sort((a, b) => b.reach - a.reach);
+    const tiktokToShow = tiktokRaw.slice(0, MAX_TIKTOK);
+    if (tiktokRaw.length > MAX_TIKTOK) {
+      console.log(`[dashboard] TikTok: showing top ${MAX_TIKTOK} of ${tiktokRaw.length} carousels by views`);
+    }
+
+    // Combine new PPSpy + limited Pinterest + top TikTok
+    const adsToShow = [...newPpspy, ...pinterestToShow, ...tiktokToShow];
 
     // Generate thumbnails + copy creatives
     const dashboardAds: DashboardAd[] = [];
