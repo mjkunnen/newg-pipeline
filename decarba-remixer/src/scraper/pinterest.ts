@@ -143,7 +143,12 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
         newPins.push({ pinId, imageUrl });
       }
     }
+    const MAX_NEW_PINS = 2;
     console.log(`[pinterest] ${newPins.length} pins not in sheet (${allPins.size - newPins.length} already in sheet)`);
+    if (newPins.length > MAX_NEW_PINS) {
+      console.log(`[pinterest] Limiting to ${MAX_NEW_PINS} new pins per day`);
+      newPins.splice(MAX_NEW_PINS);
+    }
 
     if (newPins.length === 0) {
       console.log("[pinterest] No new pins to add to dashboard");
