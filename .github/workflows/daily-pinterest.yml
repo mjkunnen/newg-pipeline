@@ -28,4 +28,4 @@ jobs:
         env:
           FAL_KEY: ${{ secrets.FAL_KEY }}
           PINTEREST_APPS_SCRIPT_URL: ${{ secrets.PINTEREST_APPS_SCRIPT_URL }}
-        run: python pipeline/cloud_pinterest.py --max 10
+        run: python pipeline/cloud_pinterest.py --max 2

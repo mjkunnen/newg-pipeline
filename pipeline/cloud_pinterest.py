@@ -158,30 +158,44 @@ def fetch_board_pins():
         page.goto(BOARD_URL, wait_until="networkidle", timeout=30000)
         time.sleep(3)
 
-        for scroll_round in range(5):
+        # Get board pin count to avoid "More ideas" section
+        board_pin_count = page.evaluate("""() => {
+            const match = document.body.innerText.match(/(\\d+)\\s*Pins/i);
+            return match ? parseInt(match[1]) : 50;
+        }""")
+        log.info(f"Board says {board_pin_count} pins")
+
+        for scroll_round in range(15):
+            # Collect visible pins each scroll
+            visible = page.evaluate("""() => {
+                const results = [];
+                const links = document.querySelectorAll('a[href*="/pin/"]');
+                for (const el of links) {
+                    const href = el.getAttribute("href") || "";
+                    const match = href.match(/\\/pin\\/(\\d+)/);
+                    if (!match) continue;
+                    const img = el.querySelector("img");
+                    if (!img) continue;
+                    const src = img.getAttribute("src") || "";
+                    if (!src.includes("pinimg.com")) continue;
+                    const imageUrl = src.replace(/\\/(236x|474x|564x|736x)\\//, "/originals/");
+                    results.push({pinId: match[1], imageUrl});
+                }
+                return results;
+            }""")
+
+            for v in visible:
+                if v["pinId"] not in seen and len(pins) < board_pin_count:
+                    seen.add(v["pinId"])
+                    pins.append({"pin_id": v["pinId"], "image_url": v["imageUrl"]})
+
+            # Stop once we've collected the board's pin count
+            if len(pins) >= board_pin_count:
+                log.info(f"Reached board pin count ({board_pin_count}), stopping scroll")
+                break
+
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
             time.sleep(2)
-
-        pin_elements = page.query_selector_all('a[href*="/pin/"]')
-        for el in pin_elements:
-            href = el.get_attribute("href") or ""
-            match = re.search(r'/pin/(\d+)', href)
-            if not match:
-                continue
-            pin_id = match.group(1)
-            if pin_id in seen:
-                continue
-            seen.add(pin_id)
-
-            img = el.query_selector("img")
-            if not img:
-                continue
-            src = img.get_attribute("src") or ""
-            if "pinimg.com" not in src:
-                continue
-
-            image_url = re.sub(r'/(236x|474x|564x|736x)/', '/originals/', src)
-            pins.append({"pin_id": pin_id, "image_url": image_url})
 
         browser.close()
 
@@ -250,7 +264,7 @@ def poll_fal_result(queue_response):
 def main():
     parser = argparse.ArgumentParser(description="NEWGARMENTS cloud Pinterest remake pipeline")
     parser.add_argument("--dry-run", action="store_true", help="List new pins without generating")
-    parser.add_argument("--max", type=int, default=10, help="Max pins to process per run (default: 10)")
+    parser.add_argument("--max", type=int, default=2, help="Max pins to process per run (default: 2)")
     args = parser.parse_args()
 
     log.info("=" * 60)
