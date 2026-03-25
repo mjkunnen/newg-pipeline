@@ -644,10 +644,173 @@ body {
   white-space: nowrap; max-width: 160px; overflow: hidden; text-overflow: ellipsis;
 }
 
+/* ===== OLIVIER POST CARDS ===== */
+.post-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 4px;
+}
+.post-card-header {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+}
+.post-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+.post-card-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.post-slides {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0;
+}
+.post-slide {
+  position: relative;
+  border-right: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+.post-slide img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+.post-slide-num {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 28px; height: 28px;
+  background: var(--text);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.post-slide-dl {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 24px 8px 10px;
+  text-align: center;
+}
+.post-slide-dl a {
+  display: inline-block;
+  background: #fff;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.post-slide-dl a:hover { background: var(--accent); color: #fff; }
+.post-card-footer {
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-light);
+  background: var(--surface);
+}
+.post-card-footer a {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.post-card-footer a:hover { text-decoration: underline; }
+.post-done-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+.post-done-check.checked { color: var(--success); }
+.post-done-box {
+  width: 22px; height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+.post-done-check.checked .post-done-box {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+
+/* ===== SLIDES GALLERY (TikTok) ===== */
+.slides-gallery { margin-bottom: 20px; }
+.slides-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;
+}
+.slides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+.slide-item {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--border-light);
+}
+.slide-item img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  cursor: zoom-in;
+}
+.slide-dl {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  text-align: center;
+  padding: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.slide-item:hover .slide-dl { opacity: 1; }
+
 @media (max-width: 700px) {
   .ad-grid { grid-template-columns: 1fr; }
   .dates-title { font-size: 28px; }
   .modal { margin: 16px auto; }
+  .slide-dl { opacity: 1; }
+  .post-slides { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  .post-slide-dl a { font-size: 10px; padding: 4px 10px; }
+  .post-slide-num { width: 24px; height: 24px; font-size: 11px; }
+  .post-card-header { flex-direction: column; gap: 10px; align-items: flex-start; }
 }
 </style>
 </head>
@@ -662,6 +825,7 @@ body {
   <div class="login-prompt">Who's working today?</div>
   <div class="login-buttons">
     <button class="login-btn" onclick="selectUser('Jerson')">Jerson</button>
+    <button class="login-btn" onclick="selectUser('Olivier')">Olivier</button>
     <button class="login-btn" onclick="selectUser('Boss')">Boss</button>
   </div>
 </div>
@@ -676,8 +840,8 @@ body {
     </div>
   </div>
   <div class="dates-hero">
-    <div class="dates-title">Opdrachten</div>
-    <div class="dates-sub">Winning ads — dagelijks vernieuwd</div>
+    <div class="dates-title" id="dates-title">Opdrachten</div>
+    <div class="dates-sub" id="dates-sub">Winning ads — dagelijks vernieuwd</div>
   </div>
   <div class="dates-list" id="dates-list"></div>
 </div>
@@ -715,7 +879,7 @@ body {
 <script>
 const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxN7hSUicVX6-JvOpFQMbABsQqc8CxPHMbUCjsYkhRNcNeddjw-4GP2F66PSDXhDrKsjA/exec";
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1p8pdlNQKYRoX8HydJAHqAX6NhK_FAMxt2WHmWWps-yw/gviz/tq?tqx=out:csv&sheet=Submissions";
-const DATES_INDEX = [{"date":"2026-03-25","adCount":10,"videoCount":1,"imageCount":9}];
+const DATES_INDEX = [{"date":"2026-03-23","adCount":0,"videoCount":0,"imageCount":0}];
 
 let currentUser = null;
 let currentDate = null;
@@ -731,9 +895,10 @@ function route() {
     return;
   }
   if (!saved && hash !== '#/') {
-    // Allow direct deep links — auto-login as Jerson
-    currentUser = 'Jerson';
-    localStorage.setItem('newg_user', 'Jerson');
+    // No saved user but deep link — send to login
+    location.hash = '#/';
+    document.getElementById('screen-login').classList.add('active');
+    return;
   } else {
     currentUser = saved;
   }
@@ -878,6 +1043,10 @@ function renderDates() {
   const list = document.getElementById('dates-list');
   list.innerHTML = '';
 
+  const isOlivier = currentUser === 'Olivier';
+  document.getElementById('dates-title').textContent = isOlivier ? 'TikTok Posts' : 'Opdrachten';
+  document.getElementById('dates-sub').textContent = isOlivier ? 'Download slides en post ze op TikTok' : 'Winning ads — dagelijks vernieuwd';
+
   if (DATES_INDEX.length === 1) {
     location.hash = '#/day/' + DATES_INDEX[0].date;
     return;
@@ -937,7 +1106,12 @@ async function loadDay(date) {
     return;
   }
 
-  renderAdGrid();
+  if (currentUser === 'Olivier') {
+    currentAds = currentAds.filter(a => a.slides && a.slides.length > 0);
+    renderOlivierGrid();
+  } else {
+    renderAdGrid();
+  }
 }
 
 function renderAdGrid() {
@@ -986,6 +1160,70 @@ function renderAdGrid() {
   bar.className = 'progress-fill ' + (doneCount === total && total > 0 ? 'complete' : 'partial');
 }
 
+// ===== OLIVIER VIEW =====
+function renderOlivierGrid() {
+  const grid = document.getElementById('ad-grid');
+  grid.innerHTML = '';
+
+  if (currentAds.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Geen TikTok posts voor deze datum</div>';
+    document.getElementById('detail-progress-text').textContent = '0 posts';
+    return;
+  }
+
+  let doneCount = 0;
+  currentAds.forEach((ad, idx) => {
+    const isDone = getStatus(currentDate, ad.id) === 'done';
+    if (isDone) doneCount++;
+
+    // Extract username from ad id (tiktok_username_postid)
+    const parts = ad.id.split('_');
+    const username = parts.length >= 3 ? '@' + parts.slice(1, -1).join('_') : ad.id;
+
+    const card = document.createElement('div');
+    card.className = 'post-card' + (isDone ? ' status-done' : '');
+    card.id = 'post-' + ad.id;
+
+    const slidesHtml = (ad.slides || []).map((s, i) =>
+      '<div class="post-slide">' +
+        '<img src="' + s + '" alt="Slide ' + (i+1) + '" loading="lazy">' +
+        '<div class="post-slide-num">' + (i+1) + '</div>' +
+        '<div class="post-slide-dl"><a href="' + s + '" download>Download</a></div>' +
+      '</div>'
+    ).join('');
+
+    card.innerHTML =
+      '<div class="post-card-header">' +
+        '<div>' +
+          '<div class="post-card-title">Post ' + (idx + 1) + ' — ' + escapeHtml(username) + '</div>' +
+          '<div class="post-card-meta">' + (ad.slides || []).length + ' slides</div>' +
+        '</div>' +
+        '<div class="post-done-check' + (isDone ? ' checked' : '') + '" onclick="toggleOlivierDone(\'' + ad.id + '\')">' +
+          '<div class="post-done-box">' + (isDone ? '\u2713' : '') + '</div>' +
+          (isDone ? 'Klaar' : 'Markeer klaar') +
+        '</div>' +
+      '</div>' +
+      '<div class="post-slides">' + slidesHtml + '</div>' +
+      (ad.downloadUrl ? '<div class="post-card-footer"><a href="' + ad.downloadUrl + '" download>\u2B07 Download alles (ZIP)</a><span class="post-card-meta">' + escapeHtml((ad.adCopy || '').slice(0, 80)) + '</span></div>' : '');
+
+    grid.appendChild(card);
+  });
+
+  const total = currentAds.length;
+  document.getElementById('detail-progress-text').textContent = doneCount + ' / ' + total + ' klaar';
+  const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+  const bar = document.getElementById('detail-progress-bar');
+  bar.style.width = pct + '%';
+  bar.className = 'progress-fill ' + (doneCount === total && total > 0 ? 'complete' : 'partial');
+}
+
+function toggleOlivierDone(adId) {
+  const current = getStatus(currentDate, adId);
+  const next = current === 'done' ? 'not_started' : 'done';
+  setStatus(currentDate, adId, next);
+  renderOlivierGrid();
+}
+
 // ===== MODAL =====
 let currentModalAd = null;
 function openModal(ad) {
@@ -1021,9 +1259,19 @@ function openModal(ad) {
       <div class="modal-platforms">
         ${(ad.platforms || []).map(p => '<span class="plat-tag">' + (platformMap[p] || p) + '</span>').join('')}
       </div>
-      <div class="modal-actions">
-        ${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download>⬇ Download origineel (full quality)</a>' : '<span class="modal-link disabled">Geen download beschikbaar</span>'}
+      ${ad.slides && ad.slides.length > 0 ? `
+      <div class="slides-gallery">
+        <div class="slides-label">Slides (${ad.slides.length})</div>
+        <div class="slides-grid">
+          ${ad.slides.map((s, i) => '<div class="slide-item"><img src="' + s + '" alt="Slide ' + (i+1) + '" onclick="event.stopPropagation()"><a class="slide-dl" href="' + s + '" download title="Download slide ' + (i+1) + '">\u2B07 ' + (i+1) + '</a></div>').join('')}
+        </div>
+        ${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download style="margin-top:10px">\u2B07 Download alles (ZIP)</a>' : ''}
       </div>
+      ` : `
+      <div class="modal-actions">
+        ${ad.downloadUrl ? '<a class="modal-link download-btn" href="' + ad.downloadUrl + '" download>\u2B07 Download origineel (full quality)</a>' : '<span class="modal-link disabled">Geen download beschikbaar</span>'}
+      </div>
+      `}
 
       ${ad.suggestedProducts && ad.suggestedProducts.length > 0 ? `
       <div class="modal-divider"></div>
