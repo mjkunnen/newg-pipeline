@@ -2,7 +2,9 @@ name: Daily Pinterest Remake
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # 08:00 CET (06:00 UTC)
+    - cron: '0 6 * * *'   # 08:00 CET (06:00 UTC) — primary
+    - cron: '0 9 * * *'   # 11:00 CET (09:00 UTC) — backup 1
+    - cron: '0 12 * * *'  # 14:00 CET (12:00 UTC) — backup 2
   workflow_dispatch: # manual trigger
 
 jobs:
@@ -12,19 +14,38 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
+
+      - name: Skip if already ran today
+        id: check
+        run: |
+          TODAY=$(date -u +%Y-%m-%d)
+          if gh run list --workflow=daily-pinterest.yml --json createdAt,conclusion,event --jq "[.[] | select(.createdAt >= \"${TODAY}T00:00:00Z\" and .conclusion == \"success\")] | length" | grep -qv '^0$'; then
+            echo "already_ran=true" >> "$GITHUB_OUTPUT"
+            echo "Pinterest remake already succeeded today ($TODAY), skipping."
+          else
+            echo "already_ran=false" >> "$GITHUB_OUTPUT"
+            echo "No successful Pinterest remake yet for $TODAY, proceeding."
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Setup Python
+        if: steps.check.outputs.already_ran == 'false'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: pip
 
       - name: Install dependencies
+        if: steps.check.outputs.already_ran == 'false'
         run: |
           pip install requests python-dotenv playwright
           playwright install chromium --with-deps
 
       - name: Run Pinterest remake pipeline
+        if: steps.check.outputs.already_ran == 'false'
         env:
           FAL_KEY: ${{ secrets.FAL_KEY }}
           PINTEREST_APPS_SCRIPT_URL: ${{ secrets.PINTEREST_APPS_SCRIPT_URL }}
