@@ -3,6 +3,115 @@
   "competitor": "decarba",
   "ads": [
     {
+      "id": "pinterest_1003176885764319277",
+      "type": "image",
+      "thumbPath": "thumbs/pinterest_1003176885764319277.jpg",
+      "adCopy": "",
+      "reach": 0,
+      "reachFormatted": "0",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-26",
+      "platforms": [
+        "pinterest"
+      ],
+      "downloadUrl": "creatives/2026-03-26/pinterest_1003176885764319277.jpg",
+      "suggestedProducts": [
+        {
+          "name": "Checkered Inside Out Zipper",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "'Graphic Lining' Baggy Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ]
+    },
+    {
+      "id": "tiktok_outfits.nstra_7621321854317284630",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfits.nstra_7621321854317284630.jpg",
+      "adCopy": "@outfits.nstra — 4 slides — Outfit ideas for you #fyp #outfit #streetstyle #streetwear #pourtoi ",
+      "reach": 2946,
+      "reachFormatted": "2.9K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-25",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-26/tiktok_outfits.nstra_7621321854317284630.zip",
+      "suggestedProducts": [
+        {
+          "name": "Zip Hoodie Y2K",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "'Graphic Lining' Baggy Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "Ocean Stars Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-26/tiktok_outfits.nstra_7621321854317284630_slide1.jpg",
+        "creatives/2026-03-26/tiktok_outfits.nstra_7621321854317284630_slide2.jpg",
+        "creatives/2026-03-26/tiktok_outfits.nstra_7621321854317284630_slide3.jpg",
+        "creatives/2026-03-26/tiktok_outfits.nstra_7621321854317284630_slide4.jpg"
+      ]
+    },
+    {
+      "id": "tiktok_thefitscene_7620268951611788547",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_thefitscene_7620268951611788547.jpg",
+      "adCopy": "@thefitscene — 5 slides — Outfitinspo…\n#fyp #streetwear #fitcheck #outfitinspo ",
+      "reach": 2275,
+      "reachFormatted": "2.3K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-23",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-26/tiktok_thefitscene_7620268951611788547.zip",
+      "suggestedProducts": [
+        {
+          "name": "'Structure' Graphic Knitted Sweater",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "Denim Striped Barrel Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-26/tiktok_thefitscene_7620268951611788547_slide1.jpg",
+        "creatives/2026-03-26/tiktok_thefitscene_7620268951611788547_slide2.jpg",
+        "creatives/2026-03-26/tiktok_thefitscene_7620268951611788547_slide3.jpg",
+        "creatives/2026-03-26/tiktok_thefitscene_7620268951611788547_slide4.jpg",
+        "creatives/2026-03-26/tiktok_thefitscene_7620268951611788547_slide5.jpg"
+      ]
+    },
+    {
       "id": "decarba_2026-03-26_4",
       "type": "image",
       "thumbPath": "thumbs/decarba_2026-03-26_4.jpg",
@@ -28,38 +137,6 @@
         },
         {
           "name": "Denim Striped Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "pinterest_1003176885764319277",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_1003176885764319277.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-26",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-26/pinterest_1003176885764319277.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Checkered Inside Out Zipper",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "'Graphic Lining' Baggy Jeans",
           "collection": "bestseller-bottoms",
           "role": "bottom"
         },
