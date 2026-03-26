@@ -3,6 +3,42 @@
   "competitor": "decarba",
   "ads": [
     {
+      "id": "decarba_2026-03-26_4",
+      "type": "image",
+      "thumbPath": "thumbs/decarba_2026-03-26_4.jpg",
+      "adCopy": "New streetwear pieces just landed 🔥\n\nRelaxed fits, bold des",
+      "reach": 317200,
+      "reachFormatted": "317.2K",
+      "reachCost": "",
+      "daysActive": 10,
+      "startDate": "Mar 09 2026",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-26/decarba_2026-03-26_4.jpg",
+      "suggestedProducts": [
+        {
+          "name": "Graphic Puff Print Zip-Up Hoodie",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "Denim Striped Barrel Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ]
+    },
+    {
       "id": "pinterest_1003176885764319277",
       "type": "image",
       "thumbPath": "thumbs/pinterest_1003176885764319277.jpg",
@@ -32,6 +68,84 @@
           "collection": "bestseller-shoes",
           "role": "shoes"
         }
+      ]
+    },
+    {
+      "id": "tiktok_thebrand4u_7620909605933141280",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_thebrand4u_7620909605933141280.jpg",
+      "adCopy": "@thebrand4u — 6 slides — Streetwear outfit inspiration || #outfit #outfits #ootd #streetwearstyle #streetoutfit ",
+      "reach": 4895,
+      "reachFormatted": "4.9K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-24",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-26/tiktok_thebrand4u_7620909605933141280.zip",
+      "suggestedProducts": [
+        {
+          "name": "Heavyweight Zipped Hoodie",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "'Graphic Lining' Baggy Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-26/tiktok_thebrand4u_7620909605933141280_slide1.jpg",
+        "creatives/2026-03-26/tiktok_thebrand4u_7620909605933141280_slide2.jpg",
+        "creatives/2026-03-26/tiktok_thebrand4u_7620909605933141280_slide3.jpg",
+        "creatives/2026-03-26/tiktok_thebrand4u_7620909605933141280_slide4.jpg",
+        "creatives/2026-03-26/tiktok_thebrand4u_7620909605933141280_slide5.jpg",
+        "creatives/2026-03-26/tiktok_thebrand4u_7620909605933141280_slide6.jpg"
+      ]
+    },
+    {
+      "id": "tiktok_outfits.nstra_7620953383297404182",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfits.nstra_7620953383297404182.jpg",
+      "adCopy": "@outfits.nstra — 4 slides — Outfit ideas for you #fyp #outfit #streetstyle #streetwear #pourtoi ",
+      "reach": 3703,
+      "reachFormatted": "3.7K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-24",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-26/tiktok_outfits.nstra_7620953383297404182.zip",
+      "suggestedProducts": [
+        {
+          "name": "Zip Hoodie Y2K",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "'Weathered' Baggy Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "Ocean Stars Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-26/tiktok_outfits.nstra_7620953383297404182_slide1.jpg",
+        "creatives/2026-03-26/tiktok_outfits.nstra_7620953383297404182_slide2.jpg",
+        "creatives/2026-03-26/tiktok_outfits.nstra_7620953383297404182_slide3.jpg",
+        "creatives/2026-03-26/tiktok_outfits.nstra_7620953383297404182_slide4.jpg"
       ]
     },
     {
