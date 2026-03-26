@@ -3,6 +3,116 @@
   "competitor": "decarba",
   "ads": [
     {
+      "id": "pinterest_1003176885764319277",
+      "type": "image",
+      "thumbPath": "thumbs/pinterest_1003176885764319277.jpg",
+      "adCopy": "",
+      "reach": 0,
+      "reachFormatted": "0",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-26",
+      "platforms": [
+        "pinterest"
+      ],
+      "downloadUrl": "creatives/2026-03-26/pinterest_1003176885764319277.jpg",
+      "suggestedProducts": [
+        {
+          "name": "Checkered Inside Out Zipper",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "'Graphic Lining' Baggy Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ]
+    },
+    {
+      "id": "tiktok_aightfits_clo_7621149075781455124",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7621149075781455124.jpg",
+      "adCopy": "@aightfits_clo — 5 slides — clothes from @2K WRLD \n\n#outfitinspo #ootd #outfitideas #fashioninspo #cleanoutfitinspo ",
+      "reach": 30200,
+      "reachFormatted": "30.2K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-25",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-26/tiktok_aightfits_clo_7621149075781455124.zip",
+      "suggestedProducts": [
+        {
+          "name": "Zip Hoodie Y2K",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "Retro Patchwork Barrel Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621149075781455124_slide1.jpg",
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621149075781455124_slide2.jpg",
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621149075781455124_slide3.jpg",
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621149075781455124_slide4.jpg",
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621149075781455124_slide5.jpg"
+      ]
+    },
+    {
+      "id": "tiktok_aightfits_clo_7621041440025496852",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_aightfits_clo_7621041440025496852.jpg",
+      "adCopy": "@aightfits_clo — 5 slides — clothes from @2K WRLD \n\n#outfitinspo #ootd #outfitideas #fashioninspo #cleanoutfitinspo ",
+      "reach": 8480,
+      "reachFormatted": "8.5K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-25",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-26/tiktok_aightfits_clo_7621041440025496852.zip",
+      "suggestedProducts": [
+        {
+          "name": "Checkered Inside Out Zipper",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "'Weathered' Baggy Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "Ocean Stars Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621041440025496852_slide1.jpg",
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621041440025496852_slide2.jpg",
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621041440025496852_slide3.jpg",
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621041440025496852_slide4.jpg",
+        "creatives/2026-03-26/tiktok_aightfits_clo_7621041440025496852_slide5.jpg"
+      ]
+    },
+    {
       "id": "pinterest_1003176885764319292",
       "type": "image",
       "thumbPath": "thumbs/pinterest_1003176885764319292.jpg",
