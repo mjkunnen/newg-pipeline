@@ -83,30 +83,46 @@ log = logging.getLogger("cloud_pinterest")
 # ---------------------------------------------------------------------------
 
 def get_processed_pin_ids():
-    """Read all pin_id values from column G via public CSV export."""
+    """Read all pin_id AND image URL hashes from sheet via public CSV export.
+    Returns (set of pin_ids, set of image hashes) for dual dedup."""
     try:
         resp = requests.get(SHEET_CSV_URL, timeout=15)
         resp.raise_for_status()
         reader = csv.reader(io.StringIO(resp.text))
         rows = list(reader)
         if len(rows) < 2:
-            return set()
-        # Find pin_id column (G = index 6, or by header name)
+            return set(), set()
+        # Find columns by header name
         headers = [h.strip().lower() for h in rows[0]]
         pin_col = 6  # default: column G
+        url_col = 5  # default: column F (pin_url)
         for i, h in enumerate(headers):
             if h == "pin_id":
                 pin_col = i
-                break
+            elif h == "pin_url":
+                url_col = i
         pin_ids = set()
+        image_hashes = set()
         for row in rows[1:]:
             if len(row) > pin_col and row[pin_col].strip():
                 pin_ids.add(row[pin_col].strip())
-        log.info(f"Sheet: {len(pin_ids)} processed pin IDs found")
-        return pin_ids
+            if len(row) > url_col and row[url_col].strip():
+                img_hash = _extract_image_hash(row[url_col].strip())
+                if img_hash:
+                    image_hashes.add(img_hash)
+        log.info(f"Sheet: {len(pin_ids)} processed pin IDs, {len(image_hashes)} unique image hashes")
+        return pin_ids, image_hashes
     except Exception as e:
         log.error(f"Failed to read sheet: {e}")
-        return set()
+        return set(), set()
+
+
+def _extract_image_hash(url):
+    """Extract the unique image filename hash from a pinimg URL.
+    e.g. 'https://i.pinimg.com/originals/ff/2a/23/ff2a2327760cc855125dbca3a2977490.jpg' → 'ff2a2327760cc855125dbca3a2977490'
+    """
+    match = re.search(r'/([a-f0-9]{32})\.\w+$', url)
+    return match.group(1) if match else None
 
 
 def post_remake_to_sheet(pin_id, pin_url, outfit_combo, status, image_url, filename):
@@ -144,7 +160,8 @@ def post_remake_to_sheet(pin_id, pin_url, outfit_combo, status, image_url, filen
 BOARD_URL = "https://www.pinterest.com/MyGarmentsEU/ads-newgarments/"
 
 def fetch_board_pins():
-    """Fetch pins from Pinterest board using Playwright (scrolls to load all pins)."""
+    """Fetch pins from Pinterest board using Playwright (scrolls to load all pins).
+    Stops before 'More ideas' section to avoid non-board pins."""
     from playwright.sync_api import sync_playwright
 
     pins = []
@@ -165,7 +182,19 @@ def fetch_board_pins():
         }""")
         log.info(f"Board says {board_pin_count} pins")
 
+        prev_count = 0
+        stale_rounds = 0
+
         for scroll_round in range(15):
+            # Check for "More ideas" / "More like this" section — hard stop
+            has_more_ideas = page.evaluate("""() => {
+                const text = document.body.innerText;
+                return /More ideas|More like this|Meer idee/i.test(text);
+            }""")
+            if has_more_ideas and len(pins) > 0:
+                log.info(f"Detected 'More ideas' section after {len(pins)} pins — stopping")
+                break
+
             # Collect visible pins each scroll
             visible = page.evaluate("""() => {
                 const results = [];
@@ -193,6 +222,16 @@ def fetch_board_pins():
             if len(pins) >= board_pin_count:
                 log.info(f"Reached board pin count ({board_pin_count}), stopping scroll")
                 break
+
+            # Stale scroll detection — no new pins for 2 rounds = stop
+            if len(pins) == prev_count:
+                stale_rounds += 1
+                if stale_rounds >= 2:
+                    log.info(f"No new pins for {stale_rounds} scroll rounds — stopping at {len(pins)} pins")
+                    break
+            else:
+                stale_rounds = 0
+            prev_count = len(pins)
 
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
             time.sleep(2)
@@ -280,7 +319,7 @@ def main():
         sys.exit(1)
 
     # Step 1: Read processed pins from Sheet (public CSV)
-    processed = get_processed_pin_ids()
+    processed_ids, processed_hashes = get_processed_pin_ids()
 
     # Step 2: Fetch pins from board
     all_pins = fetch_board_pins()
@@ -290,9 +329,17 @@ def main():
         log.info("No pins found on board")
         sys.exit(0)
 
-    # Step 3: Filter new pins
-    new_pins = [p for p in all_pins if p["pin_id"] not in processed]
-    log.info(f"{len(new_pins)} new pins to process")
+    # Step 3: Filter new pins — dedup by BOTH pin_id AND image URL hash
+    new_pins = []
+    for p in all_pins:
+        if p["pin_id"] in processed_ids:
+            continue
+        img_hash = _extract_image_hash(p["image_url"])
+        if img_hash and img_hash in processed_hashes:
+            log.info(f"Skipping pin {p['pin_id']} — same image already remade (hash: {img_hash[:12]}…)")
+            continue
+        new_pins.append(p)
+    log.info(f"{len(new_pins)} new pins to process (after pin_id + image dedup)")
 
     if not new_pins:
         log.info("All pins already processed!")
