@@ -326,6 +326,10 @@ async function generate() {
   const seenPpspyCopies = new Set<string>(seenData.adCopies);
   console.log(`[dashboard] ${seenPpspyUrls.size} seen URLs, ${seenPpspyCopies.size} seen ad copies`);
 
+  // Cross-day dedup for TikTok (by post ID) and Pinterest (by pin ID)
+  const seenTiktokPostIds = new Set<string>();
+  const seenPinterestPinIds = new Set<string>();
+
   const dateIndex: DateEntry[] = [];
   const keepDates: string[] = [];
 
@@ -359,19 +363,33 @@ async function generate() {
       if (copyKey) seenPpspyCopies.add(copyKey);
     }
 
-    // Limit Pinterest to top 2 per day
+    // Limit Pinterest to top 2 per day, dedup across dates by pin ID
     const MAX_PINTEREST = 2;
-    const pinterestToShow = pinterestRaw.slice(0, MAX_PINTEREST);
-    if (pinterestRaw.length > MAX_PINTEREST) {
-      console.log(`[dashboard] Pinterest: showing ${MAX_PINTEREST} of ${pinterestRaw.length} pins`);
+    const newPinterest = pinterestRaw.filter((a) => {
+      const pinId = a.id.replace("pinterest_", "");
+      if (seenPinterestPinIds.has(pinId)) return false;
+      seenPinterestPinIds.add(pinId);
+      return true;
+    });
+    const pinterestToShow = newPinterest.slice(0, MAX_PINTEREST);
+    if (pinterestRaw.length > pinterestToShow.length) {
+      console.log(`[dashboard] Pinterest: showing ${pinterestToShow.length} of ${pinterestRaw.length} pins (${pinterestRaw.length - newPinterest.length} dupes skipped)`);
     }
 
-    // Limit TikTok to top 2 by reach (views), highest first
+    // Limit TikTok to top 2 by reach (views), dedup across dates by post ID
     const MAX_TIKTOK = 2;
-    tiktokRaw.sort((a, b) => b.reach - a.reach);
-    const tiktokToShow = tiktokRaw.slice(0, MAX_TIKTOK);
-    if (tiktokRaw.length > MAX_TIKTOK) {
-      console.log(`[dashboard] TikTok: showing top ${MAX_TIKTOK} of ${tiktokRaw.length} carousels by views`);
+    const newTiktok = tiktokRaw.filter((a) => {
+      // Extract post ID from id format: tiktok_{username}_{postId}
+      const parts = a.id.split("_");
+      const postId = parts.length >= 3 ? parts.slice(2).join("_") : a.id;
+      if (seenTiktokPostIds.has(postId)) return false;
+      seenTiktokPostIds.add(postId);
+      return true;
+    });
+    newTiktok.sort((a, b) => b.reach - a.reach);
+    const tiktokToShow = newTiktok.slice(0, MAX_TIKTOK);
+    if (tiktokRaw.length > tiktokToShow.length) {
+      console.log(`[dashboard] TikTok: showing top ${tiktokToShow.length} of ${tiktokRaw.length} carousels (${tiktokRaw.length - newTiktok.length} dupes skipped)`);
     }
 
     // Combine new PPSpy + limited Pinterest + top TikTok
