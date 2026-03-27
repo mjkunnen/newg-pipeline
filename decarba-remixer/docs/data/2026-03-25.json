@@ -3,106 +3,6 @@
   "competitor": "decarba",
   "ads": [
     {
-      "id": "decarba_2026-03-25_0",
-      "type": "video",
-      "thumbPath": "thumbs/decarba_2026-03-25_0.jpg",
-      "adCopy": "Step into Spring with the Broken Creme Sneakers\nand get 3 FR",
-      "reach": 100700,
-      "reachFormatted": "100.7K",
-      "reachCost": "",
-      "daysActive": 6,
-      "startDate": "2026-03-18",
-      "platforms": [
-        "facebook",
-        "instagram",
-        "audience_network",
-        "messenger",
-        "threads"
-      ],
-      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_0.mp4",
-      "suggestedProducts": []
-    },
-    {
-      "id": "decarba_2026-03-25_3",
-      "type": "image",
-      "thumbPath": "thumbs/decarba_2026-03-25_3.jpg",
-      "adCopy": "S'26 just got real. DCRB Wavey Clogs are LIVE \u00e2\u20ac\u201d bold, durabl",
-      "reach": 118400,
-      "reachFormatted": "118.4K",
-      "reachCost": "",
-      "daysActive": 9,
-      "startDate": "2026-03-07",
-      "platforms": [
-        "facebook",
-        "instagram",
-        "audience_network",
-        "messenger",
-        "threads"
-      ],
-      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_3.jpg",
-      "suggestedProducts": []
-    },
-    {
-      "id": "decarba_2026-03-25_6",
-      "type": "image",
-      "thumbPath": "thumbs/decarba_2026-03-25_6.jpg",
-      "adCopy": "S'26 just got real. DCRB Wavey Clogs are LIVE \u00e2\u20ac\u201d bold, durabl",
-      "reach": 134900,
-      "reachFormatted": "134.9K",
-      "reachCost": "",
-      "daysActive": 10,
-      "startDate": "2026-02-28",
-      "platforms": [
-        "facebook",
-        "instagram",
-        "audience_network",
-        "messenger",
-        "threads"
-      ],
-      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_6.jpg",
-      "suggestedProducts": []
-    },
-    {
-      "id": "decarba_2026-03-25_8",
-      "type": "video",
-      "thumbPath": "thumbs/decarba_2026-03-25_8.jpg",
-      "adCopy": "NEW Collection is live. Sizes go fast \u00f0\u0178\u2019\u00a8",
-      "reach": 134100,
-      "reachFormatted": "134.1K",
-      "reachCost": "",
-      "daysActive": 20,
-      "startDate": "2026-02-27",
-      "platforms": [
-        "facebook",
-        "instagram",
-        "audience_network",
-        "messenger",
-        "threads"
-      ],
-      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_8.mp4",
-      "suggestedProducts": []
-    },
-    {
-      "id": "decarba_2026-03-25_10",
-      "type": "video",
-      "thumbPath": "thumbs/decarba_2026-03-25_10.jpg",
-      "adCopy": "NEW Collection is live. Sizes go fast \u00f0\u0178\u2019\u00a8",
-      "reach": 232500,
-      "reachFormatted": "232.5K",
-      "reachCost": "",
-      "daysActive": 24,
-      "startDate": "2026-02-20",
-      "platforms": [
-        "facebook",
-        "instagram",
-        "audience_network",
-        "messenger",
-        "threads"
-      ],
-      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_10.mp4",
-      "suggestedProducts": []
-    },
-    {
       "id": "pinterest_1003176885764319372",
       "type": "image",
       "thumbPath": "thumbs/pinterest_1003176885764319372.jpg",
@@ -170,7 +70,7 @@
       "id": "tiktok_outfitinspostreet_7620553408390434070",
       "type": "image",
       "thumbPath": "thumbs/tiktok_outfitinspostreet_7620553408390434070.jpg",
-      "adCopy": "@outfitinspostreet \u00e2\u20ac\u201d 10 slides \u00e2\u20ac\u201d Chiic fashion pieces | #fashion #streetwear #outfitinspo #menswear #fyp ",
+      "adCopy": "@outfitinspostreet — 10 slides — Chiic fashion pieces | #fashion #streetwear #outfitinspo #menswear #fyp ",
       "reach": 6335,
       "reachFormatted": "6.3K",
       "reachCost": "",
@@ -179,7 +79,7 @@
       "platforms": [
         "tiktok"
       ],
-      "downloadUrl": "creatives/2026-03-25/tiktok_outfitinspostreet_7620553408390434070.jpg",
+      "downloadUrl": "creatives/2026-03-25/tiktok_outfitinspostreet_7620553408390434070.zip",
       "suggestedProducts": [
         {
           "name": "'Structure' Graphic Knitted Sweater",
@@ -211,86 +111,104 @@
       ]
     },
     {
-      "id": "tiktok_thebrand4u_7620495805312552224",
-      "type": "image",
-      "thumbPath": "thumbs/tiktok_thebrand4u_7620495805312552224.jpg",
-      "adCopy": "@thebrand4u \u00e2\u20ac\u201d 5 slides \u00e2\u20ac\u201d Streetwear style>>>all other styles || #streetwear #streetstyle #streetfashion #fashion #mensfashion",
-      "reach": 2369,
-      "reachFormatted": "2.4K",
+      "id": "decarba_2026-03-25_0",
+      "type": "video",
+      "thumbPath": "thumbs/decarba_2026-03-25_0.jpg",
+      "adCopy": "Step into Spring with the Broken Creme Sneakers\nand get 3 FR",
+      "reach": 100700,
+      "reachFormatted": "100.7K",
       "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-23",
+      "daysActive": 6,
+      "startDate": "2026-03-18",
       "platforms": [
-        "tiktok"
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
       ],
-      "downloadUrl": "creatives/2026-03-25/tiktok_thebrand4u_7620495805312552224.jpg",
-      "suggestedProducts": [
-        {
-          "name": "'Structure' Graphic Knitted Sweater",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Denim Striped Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "Ocean Stars Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ],
-      "slides": [
-        "creatives/2026-03-25/tiktok_thebrand4u_7620495805312552224_slide1.jpg",
-        "creatives/2026-03-25/tiktok_thebrand4u_7620495805312552224_slide2.jpg",
-        "creatives/2026-03-25/tiktok_thebrand4u_7620495805312552224_slide3.jpg",
-        "creatives/2026-03-25/tiktok_thebrand4u_7620495805312552224_slide4.jpg",
-        "creatives/2026-03-25/tiktok_thebrand4u_7620495805312552224_slide5.jpg"
-      ]
+      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_0.mp4",
+      "suggestedProducts": []
     },
     {
-      "id": "tiktok_outfitinspostreet_7620945712792014102",
+      "id": "decarba_2026-03-25_3",
       "type": "image",
-      "thumbPath": "thumbs/tiktok_outfitinspostreet_7620945712792014102.jpg",
-      "adCopy": "@outfitinspostreet \u2014 9 slides \u2014 Chiic finds | #outfitinspo #streetwear #fashion #menswear #fyp",
-      "reach": 2627,
-      "reachFormatted": "2.6K",
+      "thumbPath": "thumbs/decarba_2026-03-25_3.jpg",
+      "adCopy": "S'26 just got real. DCRB Wavey Clogs are LIVE â€” bold, durabl",
+      "reach": 118400,
+      "reachFormatted": "118.4K",
       "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-24",
+      "daysActive": 9,
+      "startDate": "2026-03-07",
       "platforms": [
-        "tiktok"
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
       ],
-      "downloadUrl": "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102.zip",
-      "suggestedProducts": [
-        {
-          "name": "Heavyweight Zipped Hoodie",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "'Weathered' Baggy Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
+      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_3.jpg",
+      "suggestedProducts": []
+    },
+    {
+      "id": "decarba_2026-03-25_6",
+      "type": "image",
+      "thumbPath": "thumbs/decarba_2026-03-25_6.jpg",
+      "adCopy": "S'26 just got real. DCRB Wavey Clogs are LIVE â€” bold, durabl",
+      "reach": 134900,
+      "reachFormatted": "134.9K",
+      "reachCost": "",
+      "daysActive": 10,
+      "startDate": "2026-02-28",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
       ],
-      "slides": [
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide1.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide2.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide3.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide4.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide5.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide6.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide7.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide8.jpg",
-        "creatives/2026-03-25/tiktok_outfitinspostreet_7620945712792014102_slide9.jpg"
-      ]
+      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_6.jpg",
+      "suggestedProducts": []
+    },
+    {
+      "id": "decarba_2026-03-25_8",
+      "type": "video",
+      "thumbPath": "thumbs/decarba_2026-03-25_8.jpg",
+      "adCopy": "NEW Collection is live. Sizes go fast ðŸ’¨",
+      "reach": 134100,
+      "reachFormatted": "134.1K",
+      "reachCost": "",
+      "daysActive": 20,
+      "startDate": "2026-02-27",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_8.mp4",
+      "suggestedProducts": []
+    },
+    {
+      "id": "decarba_2026-03-25_10",
+      "type": "video",
+      "thumbPath": "thumbs/decarba_2026-03-25_10.jpg",
+      "adCopy": "NEW Collection is live. Sizes go fast ðŸ’¨",
+      "reach": 232500,
+      "reachFormatted": "232.5K",
+      "reachCost": "",
+      "daysActive": 24,
+      "startDate": "2026-02-20",
+      "platforms": [
+        "facebook",
+        "instagram",
+        "audience_network",
+        "messenger",
+        "threads"
+      ],
+      "downloadUrl": "creatives/2026-03-25/decarba_2026-03-25_10.mp4",
+      "suggestedProducts": []
     }
   ]
 }
