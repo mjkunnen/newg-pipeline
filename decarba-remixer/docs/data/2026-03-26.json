@@ -3,38 +3,6 @@
   "competitor": "decarba",
   "ads": [
     {
-      "id": "pinterest_1003176885764319277",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_1003176885764319277.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-26",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-26/pinterest_1003176885764319277.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Checkered Inside Out Zipper",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "'Graphic Lining' Baggy Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
       "id": "decarba_2026-03-26_4",
       "type": "image",
       "thumbPath": "thumbs/decarba_2026-03-26_4.jpg",
@@ -60,38 +28,6 @@
         },
         {
           "name": "Denim Striped Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "pinterest_1003176885764319292",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_1003176885764319292.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-26",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-26/pinterest_1003176885764319292.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Graphic Puff Print Zip-Up Hoodie",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Embroidered Striped Baggy Jeans",
           "collection": "bestseller-bottoms",
           "role": "bottom"
         },

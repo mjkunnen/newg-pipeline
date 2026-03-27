@@ -20,10 +20,47 @@ const COMPETITOR = "decarba";
 const THUMB_WIDTH = 400;
 const MAX_DAYS_KEEP = 7;
 const SEEN_PPSPY_PATH = join(DATA_DIR, "seen-ppspy.json");
+const MAX_TIKTOK_PER_DAY = 2;
+const MAX_PINTEREST_PER_DAY = 2;
+const MIN_TIKTOK_REACH = 3000;
+
+// Pinterest remake tracking sheet — pins already processed should NOT appear on dashboard
+const PINTEREST_SHEET_ID = "1BQ54wjilxW3F8rQFnVjwCRJtBTPDrSj3U5D0XYHjsgY";
+const PINTEREST_SHEET_CSV = `https://docs.google.com/spreadsheets/d/${PINTEREST_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Blad1`;
 
 interface SeenPpspy {
   urls: string[];
   adCopies: string[];
+}
+
+async function getProcessedPinIds(): Promise<Set<string>> {
+  try {
+    const resp = await fetch(PINTEREST_SHEET_CSV);
+    if (!resp.ok) throw new Error(`Sheet fetch failed: ${resp.status}`);
+    const text = await resp.text();
+    const lines = text.split("\n");
+    if (lines.length < 2) return new Set();
+
+    const headers = lines[0].split(",").map((h) => h.replace(/"/g, "").trim().toLowerCase());
+    let pinCol = 6;
+    for (let i = 0; i < headers.length; i++) {
+      if (headers[i] === "pin_id") { pinCol = i; break; }
+    }
+
+    const ids = new Set<string>();
+    for (let i = 1; i < lines.length; i++) {
+      const cols = lines[i].split(",");
+      if (cols.length > pinCol) {
+        const val = cols[pinCol].replace(/"/g, "").trim();
+        if (val) ids.add(val);
+      }
+    }
+    console.log(`[dashboard] Pinterest sheet: ${ids.size} already-processed pin IDs`);
+    return ids;
+  } catch (err) {
+    console.error(`[dashboard] Failed to read Pinterest tracking sheet: ${err}`);
+    return new Set();
+  }
 }
 
 async function findAllScrapes(): Promise<{ date: string; ads: ScrapedAd[] }[]> {
@@ -326,6 +363,9 @@ async function generate() {
   const seenPpspyCopies = new Set<string>(seenData.adCopies);
   console.log(`[dashboard] ${seenPpspyUrls.size} seen URLs, ${seenPpspyCopies.size} seen ad copies`);
 
+  // Load processed pin IDs from tracking sheet — these should NEVER appear on dashboard
+  const processedPinIds = await getProcessedPinIds();
+
   // Cross-day dedup for TikTok (by post ID) and Pinterest (by pin ID)
   const seenTiktokPostIds = new Set<string>();
   const seenPinterestPinIds = new Set<string>();
@@ -363,17 +403,18 @@ async function generate() {
       if (copyKey) seenPpspyCopies.add(copyKey);
     }
 
-    // Limit Pinterest to top 2 per day, dedup across dates by pin ID
-    const MAX_PINTEREST = 2;
+    // Limit Pinterest to top 2 per day, dedup across dates by pin ID, exclude already-processed pins
     const newPinterest = pinterestRaw.filter((a) => {
       const pinId = a.id.replace("pinterest_", "");
-      if (seenPinterestPinIds.has(pinId)) return false;
+      if (processedPinIds.has(pinId)) return false; // already remade — skip
+      if (seenPinterestPinIds.has(pinId)) return false; // cross-day dupe
       seenPinterestPinIds.add(pinId);
       return true;
     });
-    const pinterestToShow = newPinterest.slice(0, MAX_PINTEREST);
+    const pinterestToShow = newPinterest.slice(0, MAX_PINTEREST_PER_DAY);
     if (pinterestRaw.length > pinterestToShow.length) {
-      console.log(`[dashboard] Pinterest: showing ${pinterestToShow.length} of ${pinterestRaw.length} pins (${pinterestRaw.length - newPinterest.length} dupes skipped)`);
+      const inSheet = pinterestRaw.filter((a) => processedPinIds.has(a.id.replace("pinterest_", ""))).length;
+      console.log(`[dashboard] Pinterest: showing ${pinterestToShow.length} of ${pinterestRaw.length} pins (${inSheet} already in sheet, ${pinterestRaw.length - newPinterest.length - inSheet} cross-day dupes)`);
     }
 
     // Limit TikTok to top 2 by reach (views), dedup across dates by post ID
@@ -441,6 +482,55 @@ async function generate() {
         // existing file corrupt, overwrite
       }
     }
+
+    // Re-apply Pinterest limits after merge: remove already-processed + enforce max per day
+    const pinterestInMerged = mergedAds.filter((a) => a.id.startsWith("pinterest_"));
+    if (pinterestInMerged.length > 0) {
+      const nonPinterest = mergedAds.filter((a) => !a.id.startsWith("pinterest_"));
+      // Remove pins already in tracking sheet
+      let filteredPinterest = pinterestInMerged.filter((a) => {
+        const pinId = a.id.replace("pinterest_", "");
+        if (processedPinIds.has(pinId)) return false; // already remade
+        if (seenPinterestPinIds.has(pinId)) return false; // cross-day dupe
+        return true;
+      });
+      // Enforce max per day
+      if (filteredPinterest.length > MAX_PINTEREST_PER_DAY) {
+        filteredPinterest = filteredPinterest.slice(0, MAX_PINTEREST_PER_DAY);
+      }
+      // Track for cross-day dedup
+      for (const a of filteredPinterest) seenPinterestPinIds.add(a.id.replace("pinterest_", ""));
+      const totalRemoved = pinterestInMerged.length - filteredPinterest.length;
+      if (totalRemoved > 0) {
+        console.log(`[dashboard] ${date}: trimmed ${totalRemoved} Pinterest pins (processed/dupe/over limit)`);
+      }
+      mergedAds = [...nonPinterest, ...filteredPinterest];
+    }
+
+    // Re-apply TikTok limits after merge to prevent accumulation across runs
+    const tiktokInMerged = mergedAds.filter((a) => a.id.startsWith("tiktok_"));
+    if (tiktokInMerged.length > MAX_TIKTOK_PER_DAY) {
+      const nonTiktok = mergedAds.filter((a) => !a.id.startsWith("tiktok_"));
+      // Keep only top N TikTok by reach, filtered by minimum reach
+      const bestTiktok = tiktokInMerged
+        .filter((a) => a.reach >= MIN_TIKTOK_REACH)
+        .sort((a, b) => b.reach - a.reach)
+        .slice(0, MAX_TIKTOK_PER_DAY);
+      const removed = tiktokInMerged.length - bestTiktok.length;
+      if (removed > 0) {
+        console.log(`[dashboard] ${date}: trimmed ${removed} low-reach/excess TikTok entries (keeping top ${bestTiktok.length} above ${MIN_TIKTOK_REACH} views)`);
+      }
+      mergedAds = [...nonTiktok, ...bestTiktok];
+    } else {
+      // Even with <= MAX_TIKTOK, still filter by minimum reach
+      const tiktokFiltered = mergedAds.filter(
+        (a) => !a.id.startsWith("tiktok_") || a.reach >= MIN_TIKTOK_REACH,
+      );
+      if (tiktokFiltered.length < mergedAds.length) {
+        console.log(`[dashboard] ${date}: removed ${mergedAds.length - tiktokFiltered.length} TikTok entries below ${MIN_TIKTOK_REACH} views`);
+        mergedAds = tiktokFiltered;
+      }
+    }
     await writeFile(
       dateJsonPath,
       JSON.stringify({ date, competitor: COMPETITOR, ads: mergedAds }, null, 2),
@@ -472,7 +562,51 @@ async function generate() {
       if (match && !indexedDates.has(match[1])) {
         try {
           const existing = JSON.parse(await readFile(join(DATA_DIR, f), "utf-8"));
-          const ads: DashboardAd[] = existing.ads || [];
+          let ads: DashboardAd[] = existing.ads || [];
+
+          let dirty = false;
+
+          // Apply Pinterest filter: remove already-processed + cross-day dupes + enforce max per day
+          const pinterestAds = ads.filter((a) => a.id.startsWith("pinterest_"));
+          if (pinterestAds.length > 0) {
+            const nonPinterest = ads.filter((a) => !a.id.startsWith("pinterest_"));
+            let filteredPins = pinterestAds.filter((a) => {
+              const pinId = a.id.replace("pinterest_", "");
+              if (processedPinIds.has(pinId)) return false;
+              if (seenPinterestPinIds.has(pinId)) return false; // cross-day dupe
+              return true;
+            });
+            if (filteredPins.length > MAX_PINTEREST_PER_DAY) filteredPins = filteredPins.slice(0, MAX_PINTEREST_PER_DAY);
+            // Track these pins for cross-day dedup
+            for (const a of filteredPins) seenPinterestPinIds.add(a.id.replace("pinterest_", ""));
+            const removed = pinterestAds.length - filteredPins.length;
+            if (removed > 0) {
+              console.log(`[dashboard] ${match[1]}: trimmed ${removed} Pinterest pins (processed/dupe/over limit)`);
+              ads = [...nonPinterest, ...filteredPins];
+              dirty = true;
+            }
+          }
+
+          // Apply TikTok quality filter to preserved dates too
+          const tiktokAds = ads.filter((a) => a.id.startsWith("tiktok_"));
+          if (tiktokAds.length > 0) {
+            const nonTiktok = ads.filter((a) => !a.id.startsWith("tiktok_"));
+            const bestTiktok = tiktokAds
+              .filter((a) => a.reach >= MIN_TIKTOK_REACH)
+              .sort((a, b) => b.reach - a.reach)
+              .slice(0, MAX_TIKTOK_PER_DAY);
+            const removed = tiktokAds.length - bestTiktok.length;
+            if (removed > 0) {
+              console.log(`[dashboard] ${match[1]}: trimmed ${removed} low-reach/excess TikTok entries (keeping top ${bestTiktok.length})`);
+              ads = [...nonTiktok, ...bestTiktok];
+              dirty = true;
+            }
+          }
+
+          if (dirty) {
+            await writeFile(join(DATA_DIR, f), JSON.stringify({ date: match[1], competitor: COMPETITOR, ads }, null, 2));
+          }
+
           const videoCount = ads.filter((a) => a.type === "video").length;
           dateIndex.push({
             date: match[1],

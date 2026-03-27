@@ -7,8 +7,7 @@ import type { ScrapedAd } from "./types.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
 
-const APIFY_TOKEN = process.env.APIFY_TOKEN || "";
-const APIFY_ACTOR_ID = "GdWCkxBtKWOsKjdch"; // clockworks/tiktok-scraper
+const ENSEMBLEDATA_TOKEN = process.env.ENSEMBLEDATA_TOKEN || "";
 
 const TIKTOK_ACCOUNTS = [
   "fiveleafsclo",
@@ -28,7 +27,6 @@ const TIKTOK_ACCOUNTS = [
 
 const MAX_CAROUSELS = 2;
 const MAX_AGE_DAYS = 14;
-const RESULTS_PER_PAGE = 50;
 const MIN_REACH = 3000; // skip carousels under this view count
 
 // Local tracking of processed post IDs (shared with tiktok_checker.py)
@@ -97,16 +95,29 @@ async function saveProcessedId(postId: string) {
   await writeFile(PROCESSED_FILE, JSON.stringify(entries, null, 2));
 }
 
-interface ApifyPost {
-  id: string;
-  isSlideshow?: boolean;
-  slideshowImageLinks?: Array<{ downloadLink?: string; tiktokLink?: string }>;
-  createTime?: number;
-  createTimeISO?: string;
-  playCount?: number;
-  webVideoUrl?: string;
-  text?: string;
-  authorMeta?: { name?: string };
+// EnsembleData post format (TikTok internal API)
+interface EnsemblePost {
+  aweme_id: string;
+  desc?: string;
+  create_time?: number;
+  share_url?: string;
+  statistics?: {
+    play_count?: number;
+    digg_count?: number;
+    share_count?: number;
+    comment_count?: number;
+  };
+  author?: {
+    unique_id?: string;
+    nickname?: string;
+  };
+  image_post_info?: {
+    images?: Array<{
+      display_image?: { url_list?: string[] };
+      owner_watermark_image?: { url_list?: string[] };
+      thumbnail?: { url_list?: string[] };
+    }>;
+  };
 }
 
 interface CarouselCandidate {
@@ -117,97 +128,86 @@ interface CarouselCandidate {
   webUrl: string;
   text: string;
   numSlides: number;
-  slides: Array<{ downloadLink?: string; tiktokLink?: string }>;
+  slideUrls: string[];
 }
 
-async function fetchPostsViaApify(): Promise<ApifyPost[]> {
-  if (!APIFY_TOKEN) {
-    console.log("[tiktok] No APIFY_TOKEN set, skipping");
+async function fetchPostsViaEnsemble(): Promise<EnsemblePost[]> {
+  if (!ENSEMBLEDATA_TOKEN) {
+    console.log("[tiktok] No ENSEMBLEDATA_TOKEN set, skipping");
     return [];
   }
 
-  const profileUrls = TIKTOK_ACCOUNTS.map((a) => `https://www.tiktok.com/@${a}`);
-  const runInput = {
-    profiles: profileUrls,
-    resultsPerPage: RESULTS_PER_PAGE,
-    shouldDownloadVideos: false,
-    shouldDownloadCovers: false,
-  };
+  const allPosts: EnsemblePost[] = [];
 
-  console.log(`[tiktok] Starting Apify run for ${TIKTOK_ACCOUNTS.length} accounts...`);
-  const startResp = await fetch(
-    `https://api.apify.com/v2/acts/${APIFY_ACTOR_ID}/runs?token=${APIFY_TOKEN}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(runInput),
-    },
-  );
-  if (!startResp.ok) {
-    console.error(`[tiktok] Apify start failed: ${startResp.status}`);
-    return [];
-  }
-
-  const runData = (await startResp.json()) as { data: { id: string; defaultDatasetId: string } };
-  const runId = runData.data.id;
-  const datasetId = runData.data.defaultDatasetId;
-  console.log(`[tiktok] Apify run started: ${runId}`);
-
-  // Poll for completion (max 8 min)
-  const statusUrl = `https://api.apify.com/v2/actor-runs/${runId}?token=${APIFY_TOKEN}`;
-  for (let i = 0; i < 96; i++) {
-    await delay(5000);
+  for (const username of TIKTOK_ACCOUNTS) {
+    const url = `https://ensembledata.com/apis/tt/user/posts?username=${username}&depth=1&token=${ENSEMBLEDATA_TOKEN}`;
     try {
-      const statusResp = await fetch(statusUrl);
-      const statusData = (await statusResp.json()) as { data: { status: string } };
-      const status = statusData.data.status;
+      const resp = await fetch(url);
+      if (!resp.ok) {
+        console.log(`[tiktok] EnsembleData error for @${username}: ${resp.status}`);
+        continue;
+      }
+      const result = await resp.json() as { data?: EnsemblePost[] };
+      const posts = result.data || [];
+      console.log(`[tiktok] @${username}: ${posts.length} posts`);
+      allPosts.push(...posts);
+    } catch (err) {
+      console.log(`[tiktok] EnsembleData fetch failed for @${username}: ${err}`);
+    }
+    // Small delay between API calls to be polite
+    await delay(500);
+  }
 
-      if (status === "SUCCEEDED") {
-        console.log(`[tiktok] Apify run completed after ${(i + 1) * 5}s`);
-        break;
-      }
-      if (["FAILED", "ABORTED", "TIMED-OUT"].includes(status)) {
-        console.error(`[tiktok] Apify run failed: ${status}`);
-        return [];
-      }
-    } catch {
-      // retry
+  console.log(`[tiktok] Fetched ${allPosts.length} total posts from EnsembleData (${TIKTOK_ACCOUNTS.length} accounts, ${TIKTOK_ACCOUNTS.length} units used)`);
+  return allPosts;
+}
+
+function getSlideUrls(post: EnsemblePost): string[] {
+  const images = post.image_post_info?.images || [];
+  const urls: string[] = [];
+  for (const img of images) {
+    const urlList = img.display_image?.url_list
+      || img.owner_watermark_image?.url_list
+      || img.thumbnail?.url_list
+      || [];
+    if (urlList.length > 0) {
+      urls.push(urlList[0]);
     }
   }
-
-  // Fetch results
-  const itemsUrl = `https://api.apify.com/v2/datasets/${datasetId}/items?token=${APIFY_TOKEN}&format=json`;
-  const itemsResp = await fetch(itemsUrl);
-  const items = (await itemsResp.json()) as ApifyPost[];
-  console.log(`[tiktok] Fetched ${items.length} total posts from Apify`);
-  return items;
+  return urls;
 }
 
 function selectTopCarousels(
-  posts: ApifyPost[],
+  posts: EnsemblePost[],
   processedIds: Set<string>,
 ): CarouselCandidate[] {
   const cutoff = Date.now() / 1000 - MAX_AGE_DAYS * 86400;
 
   const candidates: CarouselCandidate[] = [];
   for (const post of posts) {
-    if (!post.isSlideshow) continue;
-    const slides = post.slideshowImageLinks || [];
-    if (slides.length < 2) continue;
-    if ((post.createTime || 0) < cutoff) continue;
+    if (!post.image_post_info) continue;
+    const slideUrls = getSlideUrls(post);
+    if (slideUrls.length < 2) continue;
+    if ((post.create_time || 0) < cutoff) continue;
 
-    const postId = String(post.id || "");
+    const postId = String(post.aweme_id || "");
     if (!postId || processedIds.has(postId)) continue;
+
+    const username = post.author?.unique_id || "unknown";
+    const playCount = post.statistics?.play_count || 0;
+    const createDate = post.create_time
+      ? new Date(post.create_time * 1000).toISOString()
+      : "";
 
     candidates.push({
       postId,
-      username: post.authorMeta?.name || "unknown",
-      playCount: post.playCount || 0,
-      createDate: post.createTimeISO || "",
-      webUrl: post.webVideoUrl || "",
-      text: (post.text || "").slice(0, 100),
-      numSlides: slides.length,
-      slides,
+      username,
+      playCount,
+      createDate,
+      webUrl: post.share_url || `https://www.tiktok.com/@${username}/photo/${postId}`,
+      text: (post.desc || "").slice(0, 100),
+      numSlides: slideUrls.length,
+      slideUrls,
     });
   }
 
@@ -230,7 +230,7 @@ function selectTopCarousels(
   const selected = qualified.slice(0, MAX_CAROUSELS);
   console.log(`[tiktok] Selected top ${selected.length} (above ${MIN_REACH.toLocaleString()} views):`);
   for (const c of selected) {
-    console.log(`[tiktok]   ✓ @${c.username} — ${c.playCount.toLocaleString()} views — ${c.postId}`);
+    console.log(`[tiktok]   @${c.username} — ${c.playCount.toLocaleString()} views — ${c.postId}`);
   }
 
   return selected;
@@ -264,7 +264,7 @@ export async function scrapeTiktok(): Promise<ScrapedAd[]> {
   const processedIds = await getProcessedIds();
   console.log(`[tiktok] ${processedIds.size} previously processed post IDs`);
 
-  const posts = await fetchPostsViaApify();
+  const posts = await fetchPostsViaEnsemble();
   if (posts.length === 0) {
     const metaPath = join(outputDir, "metadata-tiktok.json");
     await writeFile(metaPath, JSON.stringify([], null, 2));
@@ -290,9 +290,8 @@ export async function scrapeTiktok(): Promise<ScrapedAd[]> {
 
     // Download ALL slides
     const slidePaths: string[] = [];
-    for (let si = 0; si < carousel.slides.length; si++) {
-      const slide = carousel.slides[si];
-      const slideUrl = slide?.downloadLink || slide?.tiktokLink || "";
+    for (let si = 0; si < carousel.slideUrls.length; si++) {
+      const slideUrl = carousel.slideUrls[si];
       if (!slideUrl) continue;
 
       const filename = `slide_${si + 1}.jpg`;

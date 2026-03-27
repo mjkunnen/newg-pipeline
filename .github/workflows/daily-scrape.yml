@@ -66,6 +66,7 @@ jobs:
           META_AD_ACCOUNT_ID=${{ secrets.META_AD_ACCOUNT_ID }}
           ZAPIER_WEBHOOK_URL=${{ secrets.ZAPIER_WEBHOOK_URL }}
           APIFY_TOKEN=${{ secrets.APIFY_TOKEN }}
+          ENSEMBLEDATA_TOKEN=${{ secrets.ENSEMBLEDATA_TOKEN }}
           DASHBOARD_AUTO_PUSH=false
           ENVEOF
 

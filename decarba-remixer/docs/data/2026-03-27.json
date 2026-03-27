@@ -3,6 +3,83 @@
   "competitor": "decarba",
   "ads": [
     {
+      "id": "tiktok_outfits.nstra_7617625007941946626",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfits.nstra_7617625007941946626.jpg",
+      "adCopy": "@outfits.nstra — 4 slides — Outfit ideas for you #fyp #outfit #StreetStyle #streetwear #pourtoi ",
+      "reach": 348537,
+      "reachFormatted": "348.5K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-15",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626.zip",
+      "suggestedProducts": [
+        {
+          "name": "Checkered Inside Out Zipper",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "Retro Patchwork Barrel Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626_slide1.jpg",
+        "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626_slide2.jpg",
+        "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626_slide3.jpg",
+        "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626_slide4.jpg"
+      ]
+    },
+    {
+      "id": "tiktok_strhvn2_7616754925657148694",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_strhvn2_7616754925657148694.jpg",
+      "adCopy": "@strhvn2 — 5 slides — outfitinspo… #streetwear #fitcheck #outfitinspo #StreetwearTok ",
+      "reach": 70030,
+      "reachFormatted": "70.0K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-13",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694.zip",
+      "suggestedProducts": [
+        {
+          "name": "'Structure' Graphic Knitted Sweater",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "Denim Striped Barrel Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "StarSign Graphic Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide1.jpg",
+        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide2.jpg",
+        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide3.jpg",
+        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide4.jpg",
+        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide5.jpg"
+      ]
+    },
+    {
       "id": "pinterest_1003176885764290400",
       "type": "image",
       "thumbPath": "thumbs/pinterest_1003176885764290400.jpg",
@@ -61,115 +138,6 @@
         },
         {
           "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
-      "id": "tiktok_outfits.nstra_7617625007941946626",
-      "type": "image",
-      "thumbPath": "thumbs/tiktok_outfits.nstra_7617625007941946626.jpg",
-      "adCopy": "@outfits.nstra — 4 slides — Outfit ideas for you #fyp #outfit #streetstyle #streetwear #pourtoi ",
-      "reach": 348300,
-      "reachFormatted": "348.3K",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-15",
-      "platforms": [
-        "tiktok"
-      ],
-      "downloadUrl": "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626.zip",
-      "suggestedProducts": [
-        {
-          "name": "Checkered Inside Out Zipper",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Retro Patchwork Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ],
-      "slides": [
-        "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626_slide1.jpg",
-        "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626_slide2.jpg",
-        "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626_slide3.jpg",
-        "creatives/2026-03-27/tiktok_outfits.nstra_7617625007941946626_slide4.jpg"
-      ]
-    },
-    {
-      "id": "tiktok_strhvn2_7616754925657148694",
-      "type": "image",
-      "thumbPath": "thumbs/tiktok_strhvn2_7616754925657148694.jpg",
-      "adCopy": "@strhvn2 — 5 slides — outfitinspo…\n#streetwear #fitcheck #outfitinspo #StreetwearTok ",
-      "reach": 70000,
-      "reachFormatted": "70.0K",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-13",
-      "platforms": [
-        "tiktok"
-      ],
-      "downloadUrl": "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694.zip",
-      "suggestedProducts": [
-        {
-          "name": "'Structure' Graphic Knitted Sweater",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "Denim Striped Barrel Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ],
-      "slides": [
-        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide1.jpg",
-        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide2.jpg",
-        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide3.jpg",
-        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide4.jpg",
-        "creatives/2026-03-27/tiktok_strhvn2_7616754925657148694_slide5.jpg"
-      ]
-    },
-    {
-      "id": "pinterest_702983823133849558",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_702983823133849558.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-27",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-27/pinterest_702983823133849558.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Graphic Puff Print Zip-Up Hoodie",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "'Weathered' Baggy Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "Ocean Stars Sneaker",
           "collection": "bestseller-shoes",
           "role": "shoes"
         }
