@@ -27,8 +27,9 @@ const TIKTOK_ACCOUNTS = [
 ];
 
 const MAX_CAROUSELS = 2;
-const MAX_AGE_DAYS = 7;
-const RESULTS_PER_PAGE = 20;
+const MAX_AGE_DAYS = 14;
+const RESULTS_PER_PAGE = 50;
+const MIN_REACH = 3000; // skip carousels under this view count
 
 // Local tracking of processed post IDs (shared with tiktok_checker.py)
 const PROCESSED_FILE = join(import.meta.dirname, "../../../scout/processed_tiktok.json");
@@ -41,11 +42,33 @@ function delay(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+interface ProcessedEntry {
+  id: string;
+  processedAt: string; // ISO date
+}
+
 async function getProcessedIds(): Promise<Set<string>> {
   try {
     if (existsSync(PROCESSED_FILE)) {
-      const data = JSON.parse(await readFile(PROCESSED_FILE, "utf-8"));
-      return new Set(data);
+      const raw = JSON.parse(await readFile(PROCESSED_FILE, "utf-8"));
+
+      // Support both old format (string[]) and new format (ProcessedEntry[])
+      if (Array.isArray(raw) && raw.length > 0) {
+        if (typeof raw[0] === "string") {
+          // Old format — migrate: treat all as current
+          return new Set(raw);
+        }
+        // New format — prune entries older than 30 days
+        const cutoff = Date.now() - 30 * 86400 * 1000;
+        const entries = (raw as ProcessedEntry[]).filter(
+          (e) => new Date(e.processedAt).getTime() > cutoff,
+        );
+        if (entries.length < raw.length) {
+          console.log(`[tiktok] Pruned ${raw.length - entries.length} processed IDs older than 30 days`);
+          await writeFile(PROCESSED_FILE, JSON.stringify(entries, null, 2));
+        }
+        return new Set(entries.map((e) => e.id));
+      }
     }
   } catch {
     // ignore
@@ -54,9 +77,24 @@ async function getProcessedIds(): Promise<Set<string>> {
 }
 
 async function saveProcessedId(postId: string) {
-  const existing = await getProcessedIds();
-  existing.add(postId);
-  await writeFile(PROCESSED_FILE, JSON.stringify([...existing].sort(), null, 2));
+  let entries: ProcessedEntry[] = [];
+  try {
+    if (existsSync(PROCESSED_FILE)) {
+      const raw = JSON.parse(await readFile(PROCESSED_FILE, "utf-8"));
+      if (Array.isArray(raw) && raw.length > 0) {
+        if (typeof raw[0] === "string") {
+          // Migrate old format → new format
+          entries = (raw as string[]).map((id) => ({ id, processedAt: new Date().toISOString() }));
+        } else {
+          entries = raw as ProcessedEntry[];
+        }
+      }
+    }
+  } catch {
+    // ignore
+  }
+  entries.push({ id: postId, processedAt: new Date().toISOString() });
+  await writeFile(PROCESSED_FILE, JSON.stringify(entries, null, 2));
 }
 
 interface ApifyPost {
@@ -174,11 +212,25 @@ function selectTopCarousels(
   }
 
   candidates.sort((a, b) => b.playCount - a.playCount);
-  const selected = candidates.slice(0, MAX_CAROUSELS);
 
-  console.log(`[tiktok] ${candidates.length} carousel candidates, selected top ${selected.length}`);
+  // Log ALL candidates so we can see what's available
+  console.log(`[tiktok] ${candidates.length} carousel candidates (sorted by reach):`);
+  for (const c of candidates) {
+    const flag = c.playCount < MIN_REACH ? " [SKIP: low reach]" : "";
+    console.log(`[tiktok]   @${c.username} — ${c.playCount.toLocaleString()} views — ${c.numSlides} slides — ${c.createDate.split("T")[0]} — ${c.postId}${flag}`);
+  }
+
+  // Filter by minimum reach
+  const qualified = candidates.filter((c) => c.playCount >= MIN_REACH);
+  if (qualified.length === 0 && candidates.length > 0) {
+    console.log(`[tiktok] No carousels above ${MIN_REACH.toLocaleString()} views — skipping low-reach content`);
+    return [];
+  }
+
+  const selected = qualified.slice(0, MAX_CAROUSELS);
+  console.log(`[tiktok] Selected top ${selected.length} (above ${MIN_REACH.toLocaleString()} views):`);
   for (const c of selected) {
-    console.log(`[tiktok]   @${c.username} — ${c.playCount.toLocaleString()} views — ${c.numSlides} slides — ${c.postId}`);
+    console.log(`[tiktok]   ✓ @${c.username} — ${c.playCount.toLocaleString()} views — ${c.postId}`);
   }
 
   return selected;
