@@ -45,7 +45,13 @@ Plans:
   2. A content_items row can be inserted with a unique content ID (PPSpy ad ID, TikTok video ID, Pinterest pin ID, Meta ad ID) and the insert is idempotent — re-inserting the same ID does not create a duplicate
   3. A content item can move through the status lifecycle (discovered → surfaced → queued → ready_to_launch → launched) via API calls, and each transition is observable in the database
   4. Existing Google Sheets data remains readable and the launcher can fall back to Sheets when querying items
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — ContentItem model + Alembic migration + pytest scaffold (STATE-01, STATE-02)
+- [ ] 01-02-PLAN.md — Content API routes (POST/GET/PATCH) + wire into main.py (STATE-02, STATE-03)
+- [x] 01-03-PLAN.md — Fix fromSheet.ts hardcoded GOOGLE_SHEET_ID fallback (STATE-04)
+- [ ] 01-04-PLAN.md — decarba-remixer HTTP bridge: writeToContentAPI() after scrape (STATE-02)
 
 ### Phase 2: Discovery Reliability
 **Goal**: All four content sources run automatically on schedule, each producing deduplicated, viral-filtered content written to Postgres, with structured failure alerts when any step breaks
@@ -91,7 +97,7 @@ Phases execute in numeric order: 0 → 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 0. Codebase Consolidation | 3/3 | Complete   | 2026-03-28 |
-| 1. State Layer | 0/TBD | Not started | - |
+| 1. State Layer | 0/4 | Not started | - |
 | 2. Discovery Reliability | 0/TBD | Not started | - |
 | 3. Dashboard Unification | 0/TBD | Not started | - |
 | 4. Launch Hardening | 0/TBD | Not started | - |
