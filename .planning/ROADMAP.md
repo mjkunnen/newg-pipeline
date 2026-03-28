@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: State Layer** - Deploy ad-command-center to Railway with Postgres as the shared truth store
 - [x] **Phase 2: Discovery Reliability** - Automate all four sources with dedup, viral filtering, and no silent failures (completed 2026-03-28)
 - [x] **Phase 3: Dashboard Unification** - Single operational dashboard the editor trusts and acts on daily (completed 2026-03-28)
-- [ ] **Phase 4: Launch Hardening** - Safe, idempotent, dry-run-capable launch automation reading from Postgres
+- [x] **Phase 4: Launch Hardening** - Safe, idempotent, dry-run-capable launch automation reading from Postgres (completed 2026-03-28)
 
 ## Phase Details
 
@@ -67,7 +67,7 @@ Plans:
 
 Plans:
 - [x] 04-01-PLAN.md — Postgres launcher + Graph API v23.0 upgrade + workflow fallback (LAUNCH-01)
-- [ ] 04-02-PLAN.md — Dry-run mode + token type check + System User docs (LAUNCH-02, LAUNCH-03)
+- [x] 04-02-PLAN.md — Dry-run mode + token type check + System User docs (LAUNCH-02, LAUNCH-03)
 
 ### Phase 3: Dashboard Unification
 **Goal**: A single Railway-deployed dashboard replaces all operational interfaces, showing the editor fresh daily discoveries, their remake queue, and the health of each pipeline source
@@ -99,7 +99,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Postgres launcher + Graph API v23.0 upgrade + workflow fallback (LAUNCH-01)
+- [x] 04-01-PLAN.md — Postgres launcher + Graph API v23.0 upgrade + workflow fallback (LAUNCH-01)
 - [ ] 04-02-PLAN.md — Dry-run mode + token type check + System User docs (LAUNCH-02, LAUNCH-03)
 
 ## Progress
@@ -113,4 +113,4 @@ Phases execute in numeric order: 0 → 1 → 2 → 3 → 4
 | 1. State Layer | 2/4 | In Progress|  |
 | 2. Discovery Reliability | 1/1 | Complete   | 2026-03-28 |
 | 3. Dashboard Unification | 3/3 | Complete   | 2026-03-28 |
-| 4. Launch Hardening | 1/2 | In Progress|  |
+| 4. Launch Hardening | 2/2 | Complete   | 2026-03-28 |
