@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { chromium } from "playwright";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
