@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "boards": [
+    "https://www.pinterest.com/mygarmentseu/ads-newgarments/"
+  ],
+  "max_new_pins_per_run": 2
+}

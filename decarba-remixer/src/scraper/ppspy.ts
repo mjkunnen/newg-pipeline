@@ -1,10 +1,30 @@
 import { chromium } from "playwright";
-import { writeFile, mkdir } from "fs/promises";
+import { writeFile, mkdir, readFile } from "fs/promises";
 import { join } from "path";
 import type { ScrapedAd } from "./types.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
 const DEBUG_DIR = join(import.meta.dirname, "../../output/debug");
+const CONFIG_PATH = join(import.meta.dirname, "../../config/ppspy-settings.json");
+
+interface PPSpyConfig {
+  enabled: boolean;
+  search_terms: string[];
+  ai_score_filter: string;
+  order_by: string;
+  direction: string;
+  max_ads_per_term: number;
+}
+
+async function loadConfig(): Promise<PPSpyConfig> {
+  const raw = await readFile(CONFIG_PATH, "utf-8");
+  return JSON.parse(raw) as PPSpyConfig;
+}
+
+function buildPPSpyUrl(searchTerm: string, config: PPSpyConfig): string {
+  const keywords = JSON.stringify([{ field: "all", value: searchTerm, logic_operator: "and" }]);
+  return `https://app.ppspy.com/ads?extend_keywords=${encodeURIComponent(keywords)}&ad_forecast=[3]&order_by=${config.order_by}&direction=${config.direction}`;
+}
 
 function requireEnv(key: string): string {
   const val = process.env[key];
@@ -16,9 +36,6 @@ function requireEnv(key: string): string {
   }
   return val;
 }
-
-const PPSPY_ADS_URL =
-  'https://app.ppspy.com/ads?extend_keywords=[{"field":"all","value":"decarba","logic_operator":"and"}]&ad_forecast=[3]&order_by=ad_created_at&direction=desc';
 
 function todayDir(): string {
   return new Date().toISOString().split("T")[0];
@@ -41,6 +58,13 @@ function parseDays(text: string): number {
 }
 
 export async function scrapePPSpy(): Promise<ScrapedAd[]> {
+  const config = await loadConfig();
+
+  if (!config.enabled) {
+    console.log("[ppspy] Scraping disabled via config (enabled=false)");
+    return [];
+  }
+
   const cookiesJson = process.env.PPSPY_COOKIES_JSON;
   if (!cookiesJson) throw new Error("PPSPY_COOKIES_JSON required in .env");
 
@@ -108,13 +132,14 @@ export async function scrapePPSpy(): Promise<ScrapedAd[]> {
     // Screenshot before search
     await page.screenshot({ path: join(DEBUG_DIR, "ppspy-before-search.png") });
 
-    // Type "decarba" in the main search bar
-    console.log("[ppspy] Typing 'decarba' in search...");
+    // Use first configured search term
+    const searchTerm = config.search_terms[0] || "decarba";
+    console.log(`[ppspy] Typing '${searchTerm}' in search...`);
     const searchInput = page.locator('input[placeholder*="Search by"]').first();
     await searchInput.waitFor({ timeout: 10000 });
     await searchInput.click();
     await delay(500);
-    await searchInput.fill("decarba");
+    await searchInput.fill(searchTerm);
     await delay(500);
 
     // Click the blue search icon button next to the input
@@ -270,8 +295,9 @@ export async function scrapePPSpy(): Promise<ScrapedAd[]> {
     console.log(`[ppspy] Extracted ${rawAds.length} ads from DOM`);
 
     // Parse into ScrapedAd format
-    const ads: ScrapedAd[] = rawAds.slice(0, 15).map((raw, i) => ({
-      id: `decarba_${todayDir()}_${i}`,
+    const searchTerm2 = config.search_terms[0] || "decarba";
+    const ads: ScrapedAd[] = rawAds.slice(0, config.max_ads_per_term).map((raw, i) => ({
+      id: `ppspy_${searchTerm2}_${todayDir()}_${i}`,
       type: raw.type as "image" | "video",
       creativeUrl: raw.creativeUrl,
       adCopy: raw.adCopy || undefined,

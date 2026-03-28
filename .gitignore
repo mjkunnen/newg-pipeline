@@ -53,6 +53,9 @@ pipeline/output/
 pipiads_data/*.json
 scout/output/*.json
 
+# TikTok dedup file — retired in Phase 2, dedup now via Postgres
+scout/processed_tiktok.json
+
 # VPS automation
 credentials/
 logs/

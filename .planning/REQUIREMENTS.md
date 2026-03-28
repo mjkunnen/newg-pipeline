@@ -18,11 +18,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Discovery Reliability
 
-- [ ] **DISC-01**: Seen-content tracking persists across runs — content shown once in dashboard never resurfaces
+- [x] **DISC-01**: Seen-content tracking persists across runs — content shown once in dashboard never resurfaces
 - [ ] **DISC-02**: TikTok content filtered by engagement rate (views/followers) per account, not flat view count — only viral content surfaces
 - [ ] **DISC-03**: Pinterest flow checks seen-content state before acting — no old pins reprocessed
 - [ ] **DISC-04**: Every GitHub Actions workflow step logs structured results and sends alert on failure (no silent failures — use `if: always()` pattern)
-- [ ] **DISC-05**: All scraping settings (competitor URLs, thresholds, source configs) in one central config file per source
+- [x] **DISC-05**: All scraping settings (competitor URLs, thresholds, source configs) in one central config file per source
 
 ### State Layer
 
@@ -96,11 +96,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | STATE-02 | Phase 1 | Complete |
 | STATE-03 | Phase 1 | Complete |
 | STATE-04 | Phase 1 | Complete |
-| DISC-01 | Phase 2 | Pending |
+| DISC-01 | Phase 2 | Complete |
 | DISC-02 | Phase 2 | Pending |
 | DISC-03 | Phase 2 | Pending |
 | DISC-04 | Phase 2 | Pending |
-| DISC-05 | Phase 2 | Pending |
+| DISC-05 | Phase 2 | Complete |
 | SRC-01 | Phase 2 | Pending |
 | SRC-02 | Phase 2 | Pending |
 | SRC-03 | Phase 2 | Pending |

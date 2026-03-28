@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "search_terms": [
+    "decarba"
+  ],
+  "ai_score_filter": "Winning",
+  "order_by": "ad_created_at",
+  "direction": "desc",
+  "max_ads_per_term": 15
+}

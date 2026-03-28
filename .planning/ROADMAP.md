@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 0: Codebase Consolidation** - Archive all versioned scripts, establish one canonical entrypoint per function (completed 2026-03-28)
 - [ ] **Phase 1: State Layer** - Deploy ad-command-center to Railway with Postgres as the shared truth store
-- [ ] **Phase 2: Discovery Reliability** - Automate all four sources with dedup, viral filtering, and no silent failures
+- [x] **Phase 2: Discovery Reliability** - Automate all four sources with dedup, viral filtering, and no silent failures (completed 2026-03-28)
 - [ ] **Phase 3: Dashboard Unification** - Single operational dashboard the editor trusts and acts on daily
 - [ ] **Phase 4: Launch Hardening** - Safe, idempotent, dry-run-capable launch automation reading from Postgres
 
@@ -98,6 +98,6 @@ Phases execute in numeric order: 0 → 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 0. Codebase Consolidation | 3/3 | Complete   | 2026-03-28 |
 | 1. State Layer | 2/4 | In Progress|  |
-| 2. Discovery Reliability | 0/TBD | Not started | - |
+| 2. Discovery Reliability | 1/1 | Complete   | 2026-03-28 |
 | 3. Dashboard Unification | 0/TBD | Not started | - |
 | 4. Launch Hardening | 0/TBD | Not started | - |
