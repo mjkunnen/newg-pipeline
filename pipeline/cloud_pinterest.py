@@ -28,7 +28,19 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).parent.parent
 load_dotenv(BASE_DIR / ".env")
 
-FAL_KEY = os.getenv("FAL_KEY")
+
+def _require(key: str) -> str:
+    """Raise at startup if a required env var is missing. Never silent."""
+    val = os.getenv(key)
+    if not val:
+        raise RuntimeError(
+            f"Required env var {key!r} is not set. "
+            "Add it to .env (local) or GitHub Actions secrets (CI)."
+        )
+    return val
+
+
+FAL_KEY = _require("FAL_KEY")
 FAL_EDIT_URL = "https://queue.fal.run/fal-ai/nano-banana-2/edit"
 FAL_HEADERS = {
     "Authorization": f"Key {FAL_KEY}",
@@ -41,7 +53,7 @@ SHEET_ID = "1BQ54wjilxW3F8rQFnVjwCRJtBTPDrSj3U5D0XYHjsgY"
 SHEET_CSV_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Blad1"
 
 # Apps Script URL — deploy the pinterest_apps_script.gs and paste URL here
-APPS_SCRIPT_URL = os.getenv("PINTEREST_APPS_SCRIPT_URL", "")
+APPS_SCRIPT_URL = _require("PINTEREST_APPS_SCRIPT_URL")
 
 # Shopify CDN product reference URLs
 TOPS = {
@@ -310,13 +322,6 @@ def main():
     log.info("NEWGARMENTS Cloud Pinterest Remake Pipeline")
     log.info(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     log.info("=" * 60)
-
-    if not FAL_KEY:
-        log.error("FAL_KEY not set")
-        sys.exit(1)
-    if not APPS_SCRIPT_URL:
-        log.error("PINTEREST_APPS_SCRIPT_URL not set")
-        sys.exit(1)
 
     # Step 1: Read processed pins from Sheet (public CSV)
     processed_ids, processed_hashes = get_processed_pin_ids()
