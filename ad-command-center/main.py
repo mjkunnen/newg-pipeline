@@ -8,7 +8,7 @@ from db import init_db
 from config import SYNC_INTERVAL_MINUTES
 from sync import run_sync
 from analysis import run_analysis
-from routes import auth, kpis, ads, notifications, analysis as analysis_routes
+from routes import auth, kpis, ads, notifications, analysis as analysis_routes, content
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -50,6 +50,7 @@ app.include_router(kpis.router)
 app.include_router(ads.router)
 app.include_router(notifications.router)
 app.include_router(analysis_routes.router)
+app.include_router(content.router)
 
 # Manual sync trigger
 @app.post("/api/sync")
