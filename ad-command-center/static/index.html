@@ -1166,20 +1166,16 @@ async function loadContentDiscovery() {
 
   try {
     let items = [];
-    if (statusFilter) {
-      let url = '/api/content?status=' + statusFilter + '&limit=200' + todayParam;
-      if (sourceFilter) url += '&source=' + sourceFilter;
-      const resp = await authFetch(url);
-      if (resp.ok) items = await resp.json();
-    } else {
-      const sf = sourceFilter ? '&source=' + sourceFilter : '';
-      const [r1, r2] = await Promise.all([
-        authFetch('/api/content?status=discovered&limit=200' + sf + todayParam),
-        authFetch('/api/content?status=surfaced&limit=200' + sf + todayParam)
-      ]);
-      if (r1.ok) items = items.concat(await r1.json());
-      if (r2.ok) items = items.concat(await r2.json());
-      items.sort((a, b) => new Date(b.discovered_at) - new Date(a.discovered_at));
+    let url = '/api/content?limit=200' + todayParam;
+    if (statusFilter) url += '&status=' + statusFilter;
+    if (sourceFilter) url += '&source=' + sourceFilter;
+    const resp = await authFetch(url);
+    if (resp.ok) {
+      items = await resp.json();
+      // If no status filter, hide launched items by default
+      if (!statusFilter) {
+        items = items.filter(i => i.status !== 'launched');
+      }
     }
 
     contentCache = items;
