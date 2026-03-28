@@ -51,8 +51,12 @@ def create_content_item(body: ContentItemCreate, db: Session = Depends(get_db)):
     item_data["id"] = str(uuid.uuid4())
     item_data["status"] = "discovered"
 
-    stmt = pg_insert(ContentItem).values(**item_data).on_conflict_do_nothing(
-        constraint="uq_content_id_source"
+    stmt = pg_insert(ContentItem).values(**item_data).on_conflict_do_update(
+        constraint="uq_content_id_source",
+        set_={
+            "thumbnail_url": body.thumbnail_url or ContentItem.thumbnail_url,
+            "metadata_json": body.metadata_json or ContentItem.metadata_json,
+        },
     )
     db.execute(stmt)
     db.commit()
