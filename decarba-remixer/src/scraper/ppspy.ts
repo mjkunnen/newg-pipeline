@@ -1,11 +1,11 @@
 import { chromium } from "playwright";
-import { writeFile, mkdir, readFile } from "fs/promises";
+import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import type { ScrapedAd } from "./types.js";
+import { loadConfig } from "./config.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
 const DEBUG_DIR = join(import.meta.dirname, "../../output/debug");
-const CONFIG_PATH = join(import.meta.dirname, "../../config/ppspy-settings.json");
 
 interface PPSpyConfig {
   enabled: boolean;
@@ -14,11 +14,6 @@ interface PPSpyConfig {
   order_by: string;
   direction: string;
   max_ads_per_term: number;
-}
-
-async function loadConfig(): Promise<PPSpyConfig> {
-  const raw = await readFile(CONFIG_PATH, "utf-8");
-  return JSON.parse(raw) as PPSpyConfig;
 }
 
 function buildPPSpyUrl(searchTerm: string, config: PPSpyConfig): string {
@@ -58,7 +53,7 @@ function parseDays(text: string): number {
 }
 
 export async function scrapePPSpy(): Promise<ScrapedAd[]> {
-  const config = await loadConfig();
+  const config = loadConfig<PPSpyConfig>("ppspy-settings.json");
 
   if (!config.enabled) {
     console.log("[ppspy] Scraping disabled via config (enabled=false)");
@@ -433,6 +428,8 @@ export async function scrapePPSpy(): Promise<ScrapedAd[]> {
     const metaPath = join(outputDir, "metadata.json");
     await writeFile(metaPath, JSON.stringify(ads, null, 2));
     console.log(`[ppspy] Saved ${ads.length} ads to ${metaPath}`);
+
+    console.log(`[result] source=ppspy found=${ads.length} written=${ads.length} skipped=0 errors=0`);
 
     return ads;
   } finally {
