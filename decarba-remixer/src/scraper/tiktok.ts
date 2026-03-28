@@ -7,7 +7,18 @@ import type { ScrapedAd } from "./types.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
 
-const ENSEMBLEDATA_TOKEN = process.env.ENSEMBLEDATA_TOKEN || "";
+function requireEnv(key: string): string {
+  const val = process.env[key];
+  if (!val) {
+    throw new Error(
+      `Required env var ${key} is not set. ` +
+      "Add it to .env (local) or GitHub Actions secrets (CI)."
+    );
+  }
+  return val;
+}
+
+const ENSEMBLEDATA_TOKEN = requireEnv("ENSEMBLEDATA_TOKEN");
 
 const TIKTOK_ACCOUNTS = [
   "fiveleafsclo",
@@ -132,11 +143,6 @@ interface CarouselCandidate {
 }
 
 async function fetchPostsViaEnsemble(): Promise<EnsemblePost[]> {
-  if (!ENSEMBLEDATA_TOKEN) {
-    console.log("[tiktok] No ENSEMBLEDATA_TOKEN set, skipping");
-    return [];
-  }
-
   const allPosts: EnsemblePost[] = [];
 
   for (const username of TIKTOK_ACCOUNTS) {

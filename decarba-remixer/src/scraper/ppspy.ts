@@ -6,6 +6,17 @@ import type { ScrapedAd } from "./types.js";
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
 const DEBUG_DIR = join(import.meta.dirname, "../../output/debug");
 
+function requireEnv(key: string): string {
+  const val = process.env[key];
+  if (!val) {
+    throw new Error(
+      `Required env var ${key} is not set. ` +
+      "Add it to .env (local) or GitHub Actions secrets (CI)."
+    );
+  }
+  return val;
+}
+
 const PPSPY_ADS_URL =
   'https://app.ppspy.com/ads?extend_keywords=[{"field":"all","value":"decarba","logic_operator":"and"}]&ad_forecast=[3]&order_by=ad_created_at&direction=desc';
 
@@ -47,6 +58,18 @@ export async function scrapePPSpy(): Promise<ScrapedAd[]> {
     httpOnly?: boolean;
     secure?: boolean;
   }> = JSON.parse(cookiesJson);
+
+  const nowSec = Math.floor(Date.now() / 1000);
+  const expiredCookies = rawCookies.filter(
+    (c) => c.expirationDate !== undefined && c.expirationDate < nowSec
+  );
+  if (expiredCookies.length > 0) {
+    const names = expiredCookies.map((c) => c.name).join(", ");
+    throw new Error(
+      `PPSpy session cookies expired: [${names}]. ` +
+      "Update PPSPY_COOKIES_JSON in GitHub Actions secrets."
+    );
+  }
 
   const playwrightCookies = rawCookies.map((c) => ({
     name: c.name,

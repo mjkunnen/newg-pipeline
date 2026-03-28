@@ -2,7 +2,18 @@ import "dotenv/config";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 
-const APIFY_TOKEN = process.env.APIFY_TOKEN || "";
+function requireEnv(key: string): string {
+  const val = process.env[key];
+  if (!val) {
+    throw new Error(
+      `Required env var ${key} is not set. ` +
+      "Add it to .env (local) or GitHub Actions secrets (CI)."
+    );
+  }
+  return val;
+}
+
+const APIFY_TOKEN = requireEnv("APIFY_TOKEN");
 const APIFY_ACTOR = "pizani~taobao-product-scraper";
 const OUTPUT_DIR = join(import.meta.dirname, "../../output/products");
 
@@ -52,8 +63,6 @@ export async function resolveShortUrl(shortUrl: string): Promise<string> {
  * Scrape a Taobao product using Apify actor.
  */
 export async function scrapeTaobaoProduct(productUrl: string): Promise<TaobaoProduct> {
-  if (!APIFY_TOKEN) throw new Error("APIFY_TOKEN required in .env");
-
   // Resolve short URLs first
   let productId: string;
   let fullUrl: string;

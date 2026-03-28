@@ -2,6 +2,17 @@ import { readFile, writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import type { CampaignDraft, MetaCampaign, RemixResult } from "../scraper/types.js";
 
+function requireEnv(key: string): string {
+  const val = process.env[key];
+  if (!val) {
+    throw new Error(
+      `Required env var ${key} is not set. ` +
+      "Add it to .env (local) or GitHub Actions secrets (CI)."
+    );
+  }
+  return val;
+}
+
 const GRAPH_API = "https://graph.facebook.com/v21.0";
 const CAMPAIGNS_DIR = join(import.meta.dirname, "../../output/campaigns");
 
@@ -104,7 +115,7 @@ function todayDir(): string {
 function getConfig() {
   const token = process.env.META_ACCESS_TOKEN;
   const adAccountId = process.env.META_AD_ACCOUNT_ID;
-  const igAccountId = process.env.META_INSTAGRAM_ACCOUNT_ID;
+  const igAccountId = process.env.META_INSTAGRAM_ACCOUNT_ID; // Optional: only used for Instagram placements
 
   if (!token || !adAccountId) {
     throw new Error("META_ACCESS_TOKEN and META_AD_ACCOUNT_ID required");
@@ -303,7 +314,7 @@ export async function launchBatch(
 ): Promise<BatchResult> {
   const { token, adAccountId, igAccountId } = getConfig();
   const actId = `act_${adAccountId}`;
-  const pageId = process.env.META_PAGE_ID || "337283139475030";
+  const pageId = requireEnv("META_PAGE_ID");
   const dailyBudget = inputs[0]?.dailyBudget || 5000;
 
   // Find or create persistent campaign + ad set
