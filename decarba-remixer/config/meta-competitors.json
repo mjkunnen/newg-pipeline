@@ -1,13 +1,10 @@
 {
-  "enabled": false,
-  "search_terms": [
-    "NEWGARMENTS",
-    "decarba",
-    "fiveleaf",
-    "thefitscene",
-    "strhvn"
+  "advertiser_urls": [
+    "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=NL&q=Decarba&search_type=page",
+    "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=NL&q=Strhvn&search_type=page",
+    "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=NL&q=FIVELEAF&search_type=page"
   ],
-  "ad_active_status": "ACTIVE",
-  "max_ads_per_term": 10,
-  "note": "Meta Ad Library via Apify actor — actor selection TBD in plan 02-03. Set enabled=true once actor is configured."
+  "max_ads_per_competitor": 10,
+  "country": "NL",
+  "timeout_seconds": 300
 }

@@ -10,6 +10,7 @@
     "scrape": "node dist/scraper/ppspy.js",
     "scrape:pinterest": "node dist/scraper/pinterest.js",
     "scrape:tiktok": "node dist/scraper/tiktok.js",
+    "scrape:meta": "node dist/scraper/meta.js",
     "remix": "node dist/index.js --skip-scrape",
     "launch": "node dist/launcher/fromSheet.js",
     "dashboard": "node dist/dashboard/generate.js",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "@fal-ai/client": "1.9.4",
+    "apify-client": "^2.22.3",
     "cheerio": "1.2.0",
     "dotenv": "16.6.1",
     "openai": "4.104.0",
