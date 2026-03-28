@@ -95,15 +95,30 @@ log = logging.getLogger("cloud_pinterest")
 # ---------------------------------------------------------------------------
 
 def get_processed_pin_ids():
-    """Read all pin_id AND image URL hashes from sheet via public CSV export.
-    Returns (set of pin_ids, set of image hashes) for dual dedup."""
+    """Read all pin_id AND image URL hashes from Postgres (via PROCESSED_PINS_FILE) and Sheet CSV.
+    Returns (set of pin_ids, set of image hashes) for dual dedup.
+    Postgres is the primary source (D-07); Sheet provides fallback for IDs not yet migrated."""
+    pin_ids = set()
+    image_hashes = set()
+
+    # Primary: read Postgres-sourced pin IDs from file written by workflow step
+    postgres_file = os.getenv("PROCESSED_PINS_FILE")
+    if postgres_file and os.path.exists(postgres_file):
+        with open(postgres_file) as f:
+            for line in f:
+                pid = line.strip()
+                if pid:
+                    pin_ids.add(pid)
+        log.info(f"Postgres: {len(pin_ids)} pre-loaded pin IDs from content API")
+
+    # Fallback: also read from Google Sheet CSV (catches IDs not yet in Postgres)
     try:
         resp = requests.get(SHEET_CSV_URL, timeout=15)
         resp.raise_for_status()
         reader = csv.reader(io.StringIO(resp.text))
         rows = list(reader)
         if len(rows) < 2:
-            return set(), set()
+            return pin_ids, image_hashes
         # Find columns by header name
         headers = [h.strip().lower() for h in rows[0]]
         pin_col = 6  # default: column G
@@ -113,20 +128,20 @@ def get_processed_pin_ids():
                 pin_col = i
             elif h == "pin_url":
                 url_col = i
-        pin_ids = set()
-        image_hashes = set()
+        sheet_pin_count = 0
         for row in rows[1:]:
             if len(row) > pin_col and row[pin_col].strip():
                 pin_ids.add(row[pin_col].strip())
+                sheet_pin_count += 1
             if len(row) > url_col and row[url_col].strip():
                 img_hash = _extract_image_hash(row[url_col].strip())
                 if img_hash:
                     image_hashes.add(img_hash)
-        log.info(f"Sheet: {len(pin_ids)} processed pin IDs, {len(image_hashes)} unique image hashes")
+        log.info(f"Sheet: {sheet_pin_count} pin IDs, {len(image_hashes)} unique image hashes (total dedup set: {len(pin_ids)})")
         return pin_ids, image_hashes
     except Exception as e:
         log.error(f"Failed to read sheet: {e}")
-        return set(), set()
+        return pin_ids, image_hashes
 
 
 def _extract_image_hash(url):

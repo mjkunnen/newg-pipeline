@@ -77,20 +77,72 @@ jobs:
         if: steps.check.outputs.already_ran == 'false'
         run: npm run build
 
+      - name: Initialize job summary
+        if: steps.check.outputs.already_ran == 'false'
+        run: |
+          echo "## Scrape Results $(date +%Y-%m-%d)" >> $GITHUB_STEP_SUMMARY
+          echo "| Source | Found | Written | Skipped | Errors |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|---------|---------|--------|" >> $GITHUB_STEP_SUMMARY
+
       - name: Scrape PPSpy
         if: steps.check.outputs.already_ran == 'false'
-        run: npm run scrape
+        run: |
+          OUTPUT=$(npm run scrape 2>&1) || true
+          echo "$OUTPUT"
+          RESULT=$(echo "$OUTPUT" | grep "^\[result\]" | tail -1)
+          if [ -n "$RESULT" ]; then
+            FOUND=$(echo "$RESULT" | grep -oP 'found=\K\d+' || echo "0")
+            WRITTEN=$(echo "$RESULT" | grep -oP 'written=\K\d+' || echo "0")
+            SKIPPED=$(echo "$RESULT" | grep -oP 'skipped=\K\d+' || echo "0")
+            ERRORS=$(echo "$RESULT" | grep -oP 'errors=\K\d+' || echo "0")
+            echo "| PPSpy | $FOUND | $WRITTEN | $SKIPPED | $ERRORS |" >> $GITHUB_STEP_SUMMARY
+          fi
         timeout-minutes: 10
 
       - name: Scrape Pinterest board
         if: steps.check.outputs.already_ran == 'false'
-        run: npm run scrape:pinterest
+        run: |
+          OUTPUT=$(npm run scrape:pinterest 2>&1) || true
+          echo "$OUTPUT"
+          RESULT=$(echo "$OUTPUT" | grep "^\[result\]" | tail -1)
+          if [ -n "$RESULT" ]; then
+            FOUND=$(echo "$RESULT" | grep -oP 'found=\K\d+' || echo "0")
+            WRITTEN=$(echo "$RESULT" | grep -oP 'written=\K\d+' || echo "0")
+            SKIPPED=$(echo "$RESULT" | grep -oP 'skipped=\K\d+' || echo "0")
+            ERRORS=$(echo "$RESULT" | grep -oP 'errors=\K\d+' || echo "0")
+            echo "| Pinterest | $FOUND | $WRITTEN | $SKIPPED | $ERRORS |" >> $GITHUB_STEP_SUMMARY
+          fi
         timeout-minutes: 5
 
       - name: Scrape TikTok carousels
         if: steps.check.outputs.already_ran == 'false'
-        run: npm run scrape:tiktok
+        run: |
+          OUTPUT=$(npm run scrape:tiktok 2>&1) || true
+          echo "$OUTPUT"
+          RESULT=$(echo "$OUTPUT" | grep "^\[result\]" | tail -1)
+          if [ -n "$RESULT" ]; then
+            FOUND=$(echo "$RESULT" | grep -oP 'found=\K\d+' || echo "0")
+            WRITTEN=$(echo "$RESULT" | grep -oP 'written=\K\d+' || echo "0")
+            SKIPPED=$(echo "$RESULT" | grep -oP 'skipped=\K\d+' || echo "0")
+            ERRORS=$(echo "$RESULT" | grep -oP 'errors=\K\d+' || echo "0")
+            echo "| TikTok | $FOUND | $WRITTEN | $SKIPPED | $ERRORS |" >> $GITHUB_STEP_SUMMARY
+          fi
         timeout-minutes: 12
+
+      - name: Scrape Meta Ad Library
+        if: steps.check.outputs.already_ran == 'false'
+        run: |
+          OUTPUT=$(npm run scrape:meta 2>&1) || true
+          echo "$OUTPUT"
+          RESULT=$(echo "$OUTPUT" | grep "^\[result\]" | tail -1)
+          if [ -n "$RESULT" ]; then
+            FOUND=$(echo "$RESULT" | grep -oP 'found=\K\d+' || echo "0")
+            WRITTEN=$(echo "$RESULT" | grep -oP 'written=\K\d+' || echo "0")
+            SKIPPED=$(echo "$RESULT" | grep -oP 'skipped=\K\d+' || echo "0")
+            ERRORS=$(echo "$RESULT" | grep -oP 'errors=\K\d+' || echo "0")
+            echo "| Meta | $FOUND | $WRITTEN | $SKIPPED | $ERRORS |" >> $GITHUB_STEP_SUMMARY
+          fi
+        timeout-minutes: 8
 
       - name: Generate dashboard
         if: steps.check.outputs.already_ran == 'false'
@@ -109,6 +161,15 @@ jobs:
             git commit -m "dashboard: $(date +%Y-%m-%d)"
             git pull --rebase origin master || true
             git push
+          fi
+
+      - name: Notify Slack on failure
+        if: failure()
+        run: |
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            curl -s -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
+              -H "Content-Type: application/json" \
+              -d "{\"text\": \":red_circle: *${{ github.workflow }}* failed on ${{ github.ref_name }} — <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>\"}"
           fi
 
   deploy-pages:

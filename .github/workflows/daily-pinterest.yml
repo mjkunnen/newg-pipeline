@@ -10,6 +10,11 @@ on:
 jobs:
   pinterest-remake:
     runs-on: ubuntu-latest
+    env:
+      FAL_KEY: ${{ secrets.FAL_KEY }}
+      PINTEREST_APPS_SCRIPT_URL: ${{ secrets.PINTEREST_APPS_SCRIPT_URL }}
+      CONTENT_API_URL: ${{ secrets.CONTENT_API_URL }}
+      DASHBOARD_SECRET: ${{ secrets.DASHBOARD_SECRET }}
 
     steps:
       - name: Checkout
@@ -44,9 +49,36 @@ jobs:
           pip install requests python-dotenv playwright
           playwright install chromium --with-deps
 
+      - name: Fetch processed pin IDs from Postgres
+        if: steps.check.outputs.already_ran == 'false'
+        run: |
+          if [ -n "$CONTENT_API_URL" ] && [ -n "$DASHBOARD_SECRET" ]; then
+            echo "Fetching processed pinterest pins from content API..."
+            curl -sf "${CONTENT_API_URL}/api/content?source=pinterest" \
+              -H "Authorization: Bearer ${DASHBOARD_SECRET}" \
+              | python3 -c "import sys,json; items=json.load(sys.stdin); print('\n'.join(i['content_id'] for i in items))" \
+              > /tmp/processed_pin_ids.txt 2>/dev/null || echo "Warning: Could not fetch processed pins from Postgres"
+            echo "Found $(wc -l < /tmp/processed_pin_ids.txt) already-processed pins in Postgres"
+          else
+            echo "CONTENT_API_URL not set — skipping Postgres dedup pre-check"
+            touch /tmp/processed_pin_ids.txt
+          fi
+
       - name: Run Pinterest remake pipeline
         if: steps.check.outputs.already_ran == 'false'
         env:
           FAL_KEY: ${{ secrets.FAL_KEY }}
           PINTEREST_APPS_SCRIPT_URL: ${{ secrets.PINTEREST_APPS_SCRIPT_URL }}
+          PROCESSED_PINS_FILE: /tmp/processed_pin_ids.txt
         run: python pipeline/cloud_pinterest.py --max 2
+
+      - name: Notify Slack on failure
+        if: failure()
+        run: |
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            curl -s -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
+              -H "Content-Type: application/json" \
+              -d "{\"text\": \":red_circle: *${{ github.workflow }}* failed on ${{ github.ref_name }} — <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>\"}"
+          fi
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
