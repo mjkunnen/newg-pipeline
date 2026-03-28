@@ -1,10 +1,10 @@
 import "dotenv/config";
-import { writeFile, mkdir, unlink } from "fs/promises";
+import { unlink } from "fs/promises";
 import { join, extname } from "path";
 import { launchBatch, type SubmissionInput } from "./meta.js";
+import { downloadCreative } from "../lib/driveDownload.js";
 
-const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxN7hSUicVX6-JvOpFQMbABsQqc8CxPHMbUCjsYkhRNcNeddjw-4GP2F66PSDXhDrKsjA/exec";
+const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_URL || "";
 
 const TMP_DIR = join(import.meta.dirname, "../../output/tmp");
 
@@ -91,52 +91,16 @@ async function fetchPendingSubmissions(): Promise<SheetSubmission[]> {
   return submissions;
 }
 
-async function downloadCreative(
-  driveLink: string,
-  adId: string,
-): Promise<string> {
-  await mkdir(TMP_DIR, { recursive: true });
-
-  // Convert Drive share link to direct download
-  let downloadUrl = driveLink;
-  const fileIdMatch = driveLink.match(
-    /\/d\/([a-zA-Z0-9_-]+)/,
-  );
-  if (fileIdMatch) {
-    // confirm=t bypasses the "virus scan" confirmation page for larger files
-    downloadUrl = `https://drive.google.com/uc?export=download&confirm=t&id=${fileIdMatch[1]}`;
-  }
-
-  console.log(`[launcher] Downloading creative for ${adId}...`);
-  const resp = await fetch(downloadUrl, { redirect: "follow" });
-  if (!resp.ok) throw new Error(`Download failed: ${resp.status} ${downloadUrl}`);
-
-  const contentType = resp.headers.get("content-type") || "";
-  let ext = ".jpg";
-  if (contentType.includes("video") || contentType.includes("mp4")) ext = ".mp4";
-  else if (contentType.includes("png")) ext = ".png";
-  else if (contentType.includes("webp")) ext = ".webp";
-
-  const buffer = Buffer.from(await resp.arrayBuffer());
-
-  // Verify we got actual media, not an HTML confirmation page
-  const head = buffer.subarray(0, 20).toString("utf8");
-  if (head.includes("<!DOCTYPE") || head.includes("<html")) {
-    throw new Error(`Download returned HTML page instead of media file — is the Drive file shared publicly?`);
-  }
-
-  const filePath = join(TMP_DIR, `${adId}${ext}`);
-  await writeFile(filePath, buffer);
-  console.log(`[launcher] Downloaded: ${filePath} (${(buffer.length / 1024).toFixed(0)}KB)`);
-  return filePath;
-}
-
 async function updateSheetStatus(
   adId: string,
   status: string,
   campaignId?: string,
   error?: string,
 ): Promise<void> {
+  if (!APPS_SCRIPT_URL) {
+    console.warn(`[launcher] APPS_SCRIPT_URL not set — skipping Sheet status update for ${adId}`);
+    return;
+  }
   try {
     const body: Record<string, string> = {
       action: "update",
@@ -190,7 +154,7 @@ async function main() {
 
   for (const sub of deduped) {
     try {
-      const creativePath = await downloadCreative(sub.drive_link, sub.ad_id);
+      const creativePath = await downloadCreative(sub.drive_link, sub.ad_id, TMP_DIR);
       tempFiles.push(creativePath);
 
       const ext = extname(creativePath).toLowerCase();

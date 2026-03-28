@@ -13,10 +13,9 @@
     "scrape:meta": "node dist/scraper/meta.js",
     "remix": "node dist/index.js --skip-scrape",
     "launch": "node dist/launcher/fromSheet.js",
+    "launch:postgres": "node dist/launcher/fromPostgres.js",
     "dashboard": "node dist/dashboard/generate.js",
-    "products": "node dist/converter/taobao-to-shopify.js",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "products": "node dist/converter/taobao-to-shopify.js"
   },
   "dependencies": {
     "@fal-ai/client": "1.9.4",

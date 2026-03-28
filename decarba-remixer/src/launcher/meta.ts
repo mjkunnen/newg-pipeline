@@ -13,7 +13,8 @@ function requireEnv(key: string): string {
   return val;
 }
 
-const GRAPH_API = "https://graph.facebook.com/v21.0";
+export const GRAPH_API_VERSION = "v23.0";
+const GRAPH_API = `https://graph.facebook.com/${GRAPH_API_VERSION}`;
 const CAMPAIGNS_DIR = join(import.meta.dirname, "../../output/campaigns");
 
 const CAMPAIGN_NAME = "NEWG-Scaling";
