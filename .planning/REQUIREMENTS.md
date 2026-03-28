@@ -12,7 +12,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Codebase Consolidation
 
 - [x] **CLEAN-01**: All versioned scripts (pipiads v1-v4, slideshow data v3-v5) archived, one canonical file per component
-- [ ] **CLEAN-02**: Every automated script validates required env vars, API keys, and cookie freshness at startup before doing work
+- [x] **CLEAN-02**: Every automated script validates required env vars, API keys, and cookie freshness at startup before doing work
 - [x] **CLEAN-03**: package.json (decarba-remixer) and requirements.txt (Python scripts) accurately reflect all dependencies with pinned versions
 - [x] **CLEAN-04**: Dead/orphaned directories identified and archived (clone/, clone_runs/, bot/, tiktok-test/)
 
@@ -89,7 +89,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | CLEAN-01 | Phase 0 | Complete |
-| CLEAN-02 | Phase 0 | Pending |
+| CLEAN-02 | Phase 0 | Complete |
 | CLEAN-03 | Phase 0 | Complete |
 | CLEAN-04 | Phase 0 | Complete |
 | STATE-01 | Phase 1 | Pending |

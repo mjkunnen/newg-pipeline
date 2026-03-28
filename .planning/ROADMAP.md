@@ -12,7 +12,7 @@ The pipeline exists but is broken in ways that compound each other: wrong canoni
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 0: Codebase Consolidation** - Archive all versioned scripts, establish one canonical entrypoint per function
+- [x] **Phase 0: Codebase Consolidation** - Archive all versioned scripts, establish one canonical entrypoint per function (completed 2026-03-28)
 - [ ] **Phase 1: State Layer** - Deploy ad-command-center to Railway with Postgres as the shared truth store
 - [ ] **Phase 2: Discovery Reliability** - Automate all four sources with dedup, viral filtering, and no silent failures
 - [ ] **Phase 3: Dashboard Unification** - Single operational dashboard the editor trusts and acts on daily
@@ -33,7 +33,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 00-01-PLAN.md — Archive dead directories and versioned scripts (CLEAN-01, CLEAN-04)
-- [ ] 00-02-PLAN.md — Add startup env var validation and PPSpy cookie expiry check (CLEAN-02)
+- [x] 00-02-PLAN.md — Add startup env var validation and PPSpy cookie expiry check (CLEAN-02)
 - [x] 00-03-PLAN.md — Pin Python and Node dependencies, update .env.example (CLEAN-03)
 
 ### Phase 1: State Layer
@@ -90,7 +90,7 @@ Phases execute in numeric order: 0 → 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 0. Codebase Consolidation | 2/3 | In Progress|  |
+| 0. Codebase Consolidation | 3/3 | Complete   | 2026-03-28 |
 | 1. State Layer | 0/TBD | Not started | - |
 | 2. Discovery Reliability | 0/TBD | Not started | - |
 | 3. Dashboard Unification | 0/TBD | Not started | - |
