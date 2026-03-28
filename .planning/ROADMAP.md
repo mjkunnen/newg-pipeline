@@ -48,7 +48,7 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — ContentItem model + Alembic migration + pytest scaffold (STATE-01, STATE-02)
+- [x] 01-01-PLAN.md — ContentItem model + Alembic migration + pytest scaffold (STATE-01, STATE-02)
 - [ ] 01-02-PLAN.md — Content API routes (POST/GET/PATCH) + wire into main.py (STATE-02, STATE-03)
 - [x] 01-03-PLAN.md — Fix fromSheet.ts hardcoded GOOGLE_SHEET_ID fallback (STATE-04)
 - [ ] 01-04-PLAN.md — decarba-remixer HTTP bridge: writeToContentAPI() after scrape (STATE-02)
@@ -97,7 +97,7 @@ Phases execute in numeric order: 0 → 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 0. Codebase Consolidation | 3/3 | Complete   | 2026-03-28 |
-| 1. State Layer | 0/4 | Not started | - |
+| 1. State Layer | 2/4 | In Progress|  |
 | 2. Discovery Reliability | 0/TBD | Not started | - |
 | 3. Dashboard Unification | 0/TBD | Not started | - |
 | 4. Launch Hardening | 0/TBD | Not started | - |
