@@ -21,7 +21,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **DISC-01**: Seen-content tracking persists across runs — content shown once in dashboard never resurfaces
 - [x] **DISC-02**: TikTok content filtered by engagement rate (views/followers) per account, not flat view count — only viral content surfaces
 - [ ] **DISC-03**: Pinterest flow checks seen-content state before acting — no old pins reprocessed
-- [ ] **DISC-04**: Every GitHub Actions workflow step logs structured results and sends alert on failure (no silent failures — use `if: always()` pattern)
+- [x] **DISC-04**: Every GitHub Actions workflow step logs structured results and sends alert on failure (no silent failures — use `if: always()` pattern)
 - [x] **DISC-05**: All scraping settings (competitor URLs, thresholds, source configs) in one central config file per source
 
 ### State Layer
@@ -36,7 +36,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **SRC-01**: TikTok scraping automated via GitHub Actions (currently requires manual Claude invocation — needs to become automated like PPSpy)
 - [ ] **SRC-02**: Pinterest scraping automated via GitHub Actions (currently partial — needs full automation)
 - [ ] **SRC-03**: Meta Ad Library scraping automated via GitHub Actions (currently manual via scout/daily_discovery.py + Claude)
-- [ ] **SRC-04**: PPSpy scraping continues working reliably (already automated in decarba-remixer — maintain and harden)
+- [x] **SRC-04**: PPSpy scraping continues working reliably (already automated in decarba-remixer — maintain and harden)
 
 ### Dashboard
 
@@ -99,12 +99,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DISC-01 | Phase 2 | Complete |
 | DISC-02 | Phase 2 | Complete |
 | DISC-03 | Phase 2 | Pending |
-| DISC-04 | Phase 2 | Pending |
+| DISC-04 | Phase 2 | Complete |
 | DISC-05 | Phase 2 | Complete |
 | SRC-01 | Phase 2 | Complete |
 | SRC-02 | Phase 2 | Pending |
 | SRC-03 | Phase 2 | Pending |
-| SRC-04 | Phase 2 | Pending |
+| SRC-04 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |

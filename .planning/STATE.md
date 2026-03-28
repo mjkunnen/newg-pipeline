@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-03-28T03:37:29.615Z"
+stopped_at: Completed 02-05-PLAN.md
+last_updated: "2026-03-28T03:45:45.898Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 5
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 8
+  completed_phases: 3
+  total_plans: 12
+  completed_plans: 12
   percent: 0
 ---
 
@@ -60,6 +60,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-state-layer P02 | 2 | 2 tasks | 2 files |
 | Phase 01-state-layer P04 | 1 | 1 tasks | 1 files |
 | Phase 02 P02 | 4 | 2 tasks | 13 files |
+| Phase 02-discovery-reliability P05 | 5 | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,9 @@ Recent decisions affecting current work:
 - [Phase 02]: ENSEMBLEDATA_TOKEN requireEnv moved from module level to scrapeTiktok() scope — allows test imports without env var set
 - [Phase 02]: TikTok file-based dedup (scout/processed_tiktok.json) removed — Postgres ON CONFLICT DO NOTHING is sole dedup mechanism per D-01, D-02
 - [Phase 02]: contentApi.ts writeToContentAPI generalized with source parameter — ppspy/tiktok/pinterest/meta — shared by all scrapers
+- [Phase 02-discovery-reliability]: PPSpy inline async loadConfig replaced with shared sync loadConfig<T> from config.ts — consistent with all scrapers
+- [Phase 02-discovery-reliability]: cloud_pinterest.py archived after adding Postgres dedup — archive preserves final state including D-07 logic
+- [Phase 02-discovery-reliability]: Postgres dedup is primary source, Google Sheet CSV is fallback — merged set prevents re-processing pins in either store
 
 ### Pending Todos
 
@@ -98,6 +102,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T03:37:29.613Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-03-28T03:45:45.895Z
+Stopped at: Completed 02-05-PLAN.md
 Resume file: None
