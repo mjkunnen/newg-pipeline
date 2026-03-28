@@ -72,6 +72,10 @@ export async function scrapeMetaAds(): Promise<ScrapedAd[]> {
   const run = await client.actor("apify/facebook-ads-scraper").call({
     startUrls,
     resultsLimit: config.max_ads_per_competitor,
+    proxyConfiguration: {
+      useApifyProxy: true,
+      apifyProxyGroups: ["RESIDENTIAL"],
+    },
   }, { timeout: config.timeout_seconds });
 
   const { items } = await client.dataset(run.defaultDatasetId).listItems();

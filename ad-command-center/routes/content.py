@@ -81,7 +81,7 @@ def list_content_items(
         q = q.filter_by(status=status)
     if source:
         q = q.filter_by(source=source)
-    return q.order_by(ContentItem.discovered_at.desc()).limit(min(limit, 200)).all()
+    return q.order_by(ContentItem.discovered_at.desc()).limit(min(limit, 1000)).all()
 
 
 @router.get("/api/content/health")
