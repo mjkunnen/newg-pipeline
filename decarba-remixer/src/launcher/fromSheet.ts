@@ -60,9 +60,10 @@ function parseCSV(text: string): string[][] {
 }
 
 async function fetchPendingSubmissions(): Promise<SheetSubmission[]> {
-  const sheetId =
-    process.env.GOOGLE_SHEET_ID ||
-    "1p8pdlNQKYRoX8HydJAHqAX6NhK_FAMxt2WHmWWps-yw";
+  const sheetId = process.env.GOOGLE_SHEET_ID;
+  if (!sheetId) {
+    throw new Error("[launcher] GOOGLE_SHEET_ID env var is required but not set");
+  }
   const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Data`;
 
   console.log("[launcher] Fetching submissions from Sheet...");
