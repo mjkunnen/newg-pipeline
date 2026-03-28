@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
+stopped_at: "Completed 00-01-PLAN.md (archive dead code). Next: 00-02-PLAN.md"
+last_updated: "2026-03-28T01:56:13.271Z"
+last_activity: 2026-03-28
+progress:
+  total_phases: 5
+  completed_phases: 0
+  total_plans: 3
+  completed_plans: 2
+  percent: 0
+---
+
 # Project State
 
 ## Project Reference
@@ -5,20 +21,21 @@
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** Reliable daily discovery of the best viral competitor content, surfaced in a dashboard the creative editor can trust and act on immediately.
-**Current focus:** Phase 0 — Codebase Consolidation (not yet started)
+**Current focus:** Phase 00 — codebase-consolidation
 
 ## Current Position
 
-Phase: 0 of 4 (Codebase Consolidation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-27 — Roadmap created, research completed, requirements validated
+Phase: 00 (codebase-consolidation) — EXECUTING
+Plan: 3 of 3
+Status: Ready to execute
+Last activity: 2026-03-28
 
 Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 0
 - Average duration: —
 - Total execution time: —
@@ -30,10 +47,13 @@ Progress: [░░░░░░░░░░] 0%
 | - | - | - | - |
 
 **Recent Trend:**
+
 - Last 5 plans: —
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 00-codebase-consolidation P01 | 2min | 2 tasks | 211 files |
+| Phase 00 P03 | 8 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -45,6 +65,8 @@ Recent decisions affecting current work:
 - [Roadmap]: Phase 0 must precede all other phases — fixes applied to wrong script version compound every subsequent problem
 - [Roadmap]: Railway Postgres is the truth store; Google Sheets retained as fallback only during transition (not replaced entirely in v1)
 - [Roadmap]: PPSpy/PipiAds integration approach is unconfirmed (no public API) — Phase 2 plan must resolve this before committing implementation
+- [Phase 00-codebase-consolidation]: Archive not delete: all dead code moved via git mv to preserve full history (bot/, tiktok-test/, pipiads-versioned, slideshow-data-versioned, root-orphans)
+- [Phase 00]: Pin package.json versions to lock file actuals (not RESEARCH.md suggestions) to ensure npm ci consistency
 
 ### Pending Todos
 
@@ -58,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27
-Stopped at: Roadmap written, STATE.md written, REQUIREMENTS.md traceability updated. Next: /gsd:plan-phase 0
+Last session: 2026-03-28T01:55:56.860Z
+Stopped at: Completed 00-01-PLAN.md (archive dead code). Next: 00-02-PLAN.md
 Resume file: None
