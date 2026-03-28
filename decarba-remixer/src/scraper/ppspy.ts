@@ -1,8 +1,10 @@
+import "dotenv/config";
 import { chromium } from "playwright";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import type { ScrapedAd } from "./types.js";
 import { loadConfig } from "./config.js";
+import { writeToContentAPI } from "./contentApi.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
 const DEBUG_DIR = join(import.meta.dirname, "../../output/debug");
@@ -288,9 +290,9 @@ export async function scrapePPSpy(): Promise<ScrapedAd[]> {
 
     console.log(`[ppspy] Extracted ${rawAds.length} ads from DOM`);
 
-    // Parse into ScrapedAd format
+    // Parse into ScrapedAd format, sort by reach (best performing first)
     const searchTerm2 = config.search_terms[0] || "decarba";
-    const ads: ScrapedAd[] = rawAds.slice(0, config.max_ads_per_term).map((raw, i) => ({
+    const allAds: ScrapedAd[] = rawAds.map((raw, i) => ({
       id: `ppspy_${searchTerm2}_${todayDir()}_${i}`,
       type: raw.type as "image" | "video",
       creativeUrl: raw.creativeUrl,
@@ -302,7 +304,11 @@ export async function scrapePPSpy(): Promise<ScrapedAd[]> {
       scrapedAt: new Date().toISOString(),
     }));
 
-    console.log(`[ppspy] Top ${ads.length} ads ready`);
+    // Sort by reach descending (best performing first), then take top N
+    allAds.sort((a, b) => (b.reach ?? 0) - (a.reach ?? 0));
+    const ads = allAds.slice(0, config.max_ads_per_term);
+
+    console.log(`[ppspy] Top ${ads.length} ads by reach (from ${allAds.length} total)`);
 
     // For video ads: click into detail dialog to get real video URL
     for (let i = 0; i < ads.length; i++) {
@@ -428,7 +434,10 @@ export async function scrapePPSpy(): Promise<ScrapedAd[]> {
     await writeFile(metaPath, JSON.stringify(ads, null, 2));
     console.log(`[ppspy] Saved ${ads.length} ads to ${metaPath}`);
 
-    console.log(`[result] source=ppspy found=${ads.length} written=${ads.length} skipped=0 errors=0`);
+    // Write to Content API (Postgres)
+    const result = await writeToContentAPI(ads, "ppspy");
+
+    console.log(`[result] source=ppspy found=${allAds.length} written=${result.written} skipped=${result.skipped} errors=0`);
 
     return ads;
   } finally {
