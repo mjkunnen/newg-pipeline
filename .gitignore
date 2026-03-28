@@ -8,6 +8,8 @@ gcp-oauth.keys.json
 *.key
 *_secret*
 *_token*
+# Exception: documentation about token setup is not a secret file
+!docs/META_TOKEN_SETUP.md
 
 # Python
 __pycache__/

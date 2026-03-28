@@ -155,6 +155,37 @@ export async function markLaunched(itemId: number): Promise<void> {
   }
 }
 
+/**
+ * Check whether the Meta access token is a System User token or a personal token.
+ * Informational only — never blocks the launch (D-11).
+ * Logs a warning if the token appears to be a personal (expiring) token.
+ */
+export async function checkTokenType(token: string): Promise<void> {
+  const GRAPH_API_CHECK = "https://graph.facebook.com/v23.0";
+  try {
+    const resp = await fetch(`${GRAPH_API_CHECK}/me?fields=name,id&access_token=${token}`);
+    if (!resp.ok) {
+      console.warn("[launcher] Could not verify token type — Meta /me returned", resp.status);
+      return;
+    }
+    const data: { name?: string; id?: string } = await resp.json();
+    const name = data.name || "";
+    if (/system|bot|api|automation/i.test(name)) {
+      console.log(`[launcher] Token type: System User confirmed (name="${name}")`);
+    } else {
+      console.warn(
+        `[launcher] WARNING: Token may be a personal token (name="${name}"). ` +
+          "System User token recommended — see docs/META_TOKEN_SETUP.md",
+      );
+    }
+  } catch (err) {
+    console.warn(
+      "[launcher] Token type check failed:",
+      err instanceof Error ? err.message : String(err),
+    );
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
@@ -165,6 +196,12 @@ async function main(): Promise<void> {
   }
 
   console.log("[fromPostgres] Starting Postgres-driven launcher...");
+
+  // Check token type at startup — informational only, never blocks launch (D-11)
+  const metaToken = process.env.META_ACCESS_TOKEN;
+  if (metaToken) {
+    await checkTokenType(metaToken).catch(() => {/* non-blocking */});
+  }
 
   // Fetch ready items — on failure exit(1) to trigger Sheets fallback (D-04)
   let items: ContentItem[];

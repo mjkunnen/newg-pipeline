@@ -4,7 +4,12 @@ on:
   workflow_run:
     workflows: ["Daily Scrape + Dashboard"]
     types: [completed]
-  workflow_dispatch: # manual trigger
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run in dry-run mode (no Meta API calls)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -51,11 +56,11 @@ jobs:
 
       - name: Launch from Postgres
         id: postgres_launch
-        run: npm run launch:postgres
+        run: npm run launch:postgres${{ github.event.inputs.dry_run == 'true' && ' -- --dry-run' || '' }}
         timeout-minutes: 5
         continue-on-error: true
 
       - name: Launch from Sheets (fallback)
         if: steps.postgres_launch.outcome == 'failure'
-        run: npm run launch
+        run: npm run launch${{ github.event.inputs.dry_run == 'true' && ' -- --dry-run' || '' }}
         timeout-minutes: 5
