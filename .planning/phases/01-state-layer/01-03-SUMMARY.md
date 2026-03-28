@@ -96,3 +96,10 @@ None - `launch-campaigns.yml` already has `GOOGLE_SHEET_ID=${{ secrets.GOOGLE_SH
 ---
 *Phase: 01-state-layer*
 *Completed: 2026-03-28*
+
+## Self-Check: PASSED
+
+- FOUND: decarba-remixer/src/launcher/fromSheet.ts
+- FOUND: decarba-remixer/.env.example
+- FOUND: .planning/phases/01-state-layer/01-03-SUMMARY.md
+- FOUND: commit bafba13

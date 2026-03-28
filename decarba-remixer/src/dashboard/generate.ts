@@ -20,6 +20,7 @@ const COMPETITOR = "decarba";
 const THUMB_WIDTH = 400;
 const MAX_DAYS_KEEP = 7;
 const SEEN_PPSPY_PATH = join(DATA_DIR, "seen-ppspy.json");
+const PROCESSED_PINS_CACHE = join(DATA_DIR, "processed-pins-cache.json");
 const MAX_TIKTOK_PER_DAY = 2;
 const MAX_PINTEREST_PER_DAY = 2;
 const MIN_TIKTOK_REACH = 3000;
@@ -34,33 +35,68 @@ interface SeenPpspy {
 }
 
 async function getProcessedPinIds(): Promise<Set<string>> {
-  try {
-    const resp = await fetch(PINTEREST_SHEET_CSV);
-    if (!resp.ok) throw new Error(`Sheet fetch failed: ${resp.status}`);
-    const text = await resp.text();
-    const lines = text.split("\n");
-    if (lines.length < 2) return new Set();
-
-    const headers = lines[0].split(",").map((h) => h.replace(/"/g, "").trim().toLowerCase());
-    let pinCol = 6;
-    for (let i = 0; i < headers.length; i++) {
-      if (headers[i] === "pin_id") { pinCol = i; break; }
+  // Load local cache first — this is our safety net
+  let cached = new Set<string>();
+  if (existsSync(PROCESSED_PINS_CACHE)) {
+    try {
+      const raw = JSON.parse(await readFile(PROCESSED_PINS_CACHE, "utf-8"));
+      cached = new Set<string>(raw.ids || []);
+      console.log(`[dashboard] Loaded ${cached.size} processed pin IDs from local cache`);
+    } catch {
+      // cache corrupt, start fresh
     }
-
-    const ids = new Set<string>();
-    for (let i = 1; i < lines.length; i++) {
-      const cols = lines[i].split(",");
-      if (cols.length > pinCol) {
-        const val = cols[pinCol].replace(/"/g, "").trim();
-        if (val) ids.add(val);
-      }
-    }
-    console.log(`[dashboard] Pinterest sheet: ${ids.size} already-processed pin IDs`);
-    return ids;
-  } catch (err) {
-    console.error(`[dashboard] Failed to read Pinterest tracking sheet: ${err}`);
-    return new Set();
   }
+
+  // Try to fetch from sheet (with retry)
+  let sheetIds: Set<string> | null = null;
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const resp = await fetch(PINTEREST_SHEET_CSV);
+      if (!resp.ok) throw new Error(`Sheet fetch failed: ${resp.status}`);
+      const text = await resp.text();
+      const lines = text.split("\n");
+      if (lines.length < 2) { sheetIds = new Set(); break; }
+
+      const headers = lines[0].split(",").map((h) => h.replace(/"/g, "").trim().toLowerCase());
+      let pinCol = 6;
+      for (let i = 0; i < headers.length; i++) {
+        if (headers[i] === "pin_id") { pinCol = i; break; }
+      }
+
+      sheetIds = new Set<string>();
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(",");
+        if (cols.length > pinCol) {
+          const val = cols[pinCol].replace(/"/g, "").trim();
+          if (val) sheetIds.add(val);
+        }
+      }
+      console.log(`[dashboard] Pinterest sheet (attempt ${attempt}): ${sheetIds.size} processed pin IDs`);
+      break;
+    } catch (err) {
+      console.error(`[dashboard] Sheet fetch attempt ${attempt} failed: ${err}`);
+      if (attempt < 2) await new Promise((r) => setTimeout(r, 2000));
+    }
+  }
+
+  // Merge: union of cache + sheet (never lose known-processed IDs)
+  const merged = new Set<string>(cached);
+  if (sheetIds !== null) {
+    for (const id of sheetIds) merged.add(id);
+  } else {
+    console.warn(`[dashboard] WARNING: Sheet fetch failed, falling back to local cache (${cached.size} IDs)`);
+  }
+
+  // Update local cache with merged set
+  await mkdir(DATA_DIR, { recursive: true });
+  await writeFile(PROCESSED_PINS_CACHE, JSON.stringify({
+    ids: [...merged],
+    lastUpdated: new Date().toISOString(),
+    source: sheetIds !== null ? "sheet+cache" : "cache-only",
+  }, null, 2));
+
+  console.log(`[dashboard] Total processed pin IDs: ${merged.size} (cache: ${cached.size}, sheet: ${sheetIds?.size ?? "failed"})`);
+  return merged;
 }
 
 async function findAllScrapes(): Promise<{ date: string; ads: ScrapedAd[] }[]> {
@@ -322,6 +358,39 @@ function assignProducts(ad: ScrapedAd, allProducts: Product[]): SuggestedProduct
   }
 
   return result;
+}
+
+/** Remove already-processed pins from raw metadata files so they never re-enter the pipeline */
+async function cleanProcessedPinsFromRaw(processedPinIds: Set<string>) {
+  if (processedPinIds.size === 0 || !existsSync(RAW_DIR)) return;
+
+  const dirs = await readdir(RAW_DIR);
+  for (const dir of dirs) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dir)) continue;
+    const pinterestPath = join(RAW_DIR, dir, "metadata-pinterest.json");
+    if (!existsSync(pinterestPath)) continue;
+
+    try {
+      const raw = await readFile(pinterestPath, "utf-8");
+      const pins: ScrapedAd[] = JSON.parse(raw);
+      const cleaned = pins.filter((p) => {
+        const pinId = p.id.replace("pinterest_", "");
+        return !processedPinIds.has(pinId);
+      });
+
+      if (cleaned.length < pins.length) {
+        const removed = pins.length - cleaned.length;
+        console.log(`[dashboard] Cleaned ${removed} processed pin(s) from raw/${dir}/metadata-pinterest.json`);
+        if (cleaned.length === 0) {
+          await rm(pinterestPath, { force: true });
+        } else {
+          await writeFile(pinterestPath, JSON.stringify(cleaned, null, 2));
+        }
+      }
+    } catch {
+      // skip corrupt files
+    }
+  }
 }
 
 async function generate() {
@@ -624,6 +693,9 @@ async function generate() {
     // Sort dateIndex newest-first
     dateIndex.sort((a, b) => b.date.localeCompare(a.date));
   }
+
+  // Clean processed pins from raw metadata files so they can't re-enter through any path
+  await cleanProcessedPinsFromRaw(processedPinIds);
 
   // Cleanup old creatives (keep only recent + preserved dates)
   await cleanupOldCreatives(keepDates);
