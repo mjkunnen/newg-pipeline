@@ -438,6 +438,10 @@ a{color:var(--accent);text-decoration:none}
         <option value="queued">Queued</option>
         <option value="ready_to_launch">Ready to Launch</option>
       </select>
+      <select class="filter-select" id="date-filter" onchange="loadContentDiscovery()">
+        <option value="today">Today</option>
+        <option value="all">All Time</option>
+      </select>
     </div>
     <div id="content-grid" class="content-grid">
       <div class="loading-state">Loading content...</div>
@@ -1157,19 +1161,21 @@ async function loadContentDiscovery() {
 
   const sourceFilter = document.getElementById('source-filter').value;
   const statusFilter = document.getElementById('status-filter').value;
+  const dateFilter = document.getElementById('date-filter').value;
+  const todayParam = dateFilter === 'today' ? '&today=true' : '';
 
   try {
     let items = [];
     if (statusFilter) {
-      let url = '/api/content?status=' + statusFilter + '&limit=200';
+      let url = '/api/content?status=' + statusFilter + '&limit=200' + todayParam;
       if (sourceFilter) url += '&source=' + sourceFilter;
       const resp = await authFetch(url);
       if (resp.ok) items = await resp.json();
     } else {
       const sf = sourceFilter ? '&source=' + sourceFilter : '';
       const [r1, r2] = await Promise.all([
-        authFetch('/api/content?status=discovered&limit=200' + sf),
-        authFetch('/api/content?status=surfaced&limit=200' + sf)
+        authFetch('/api/content?status=discovered&limit=200' + sf + todayParam),
+        authFetch('/api/content?status=surfaced&limit=200' + sf + todayParam)
       ]);
       if (r1.ok) items = items.concat(await r1.json());
       if (r2.ok) items = items.concat(await r2.json());

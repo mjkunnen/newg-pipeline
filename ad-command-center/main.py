@@ -88,6 +88,13 @@ async def debug_info():
 # Serve frontend - MUST be last (catches all unmatched routes)
 @app.get("/")
 async def serve_frontend():
-    return FileResponse("static/index.html")
+    return FileResponse(
+        "static/index.html",
+        headers={
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
+    )
 
 app.mount("/static", StaticFiles(directory="static"), name="static")

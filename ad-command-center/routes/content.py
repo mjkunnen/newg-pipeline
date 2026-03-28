@@ -69,18 +69,23 @@ def create_content_item(body: ContentItemCreate, db: Session = Depends(get_db)):
 def list_content_items(
     status: Optional[str] = None,
     source: Optional[str] = None,
+    today: bool = False,
     limit: int = 200,
     db: Session = Depends(get_db),
 ):
     """
     List content items, optionally filtered by status and/or source.
-    Ordered by discovered_at descending. Max 200 items per call.
+    If today=true, only return items discovered today.
+    Ordered by discovered_at descending. Max 1000 items per call.
     """
     q = db.query(ContentItem)
     if status:
         q = q.filter_by(status=status)
     if source:
         q = q.filter_by(source=source)
+    if today:
+        today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        q = q.filter(ContentItem.discovered_at >= today_start)
     return q.order_by(ContentItem.discovered_at.desc()).limit(min(limit, 1000)).all()
 
 
