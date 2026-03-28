@@ -1,14 +1,22 @@
 import { chromium } from "playwright";
-import { writeFile, mkdir } from "fs/promises";
+import { writeFile, mkdir, readFile } from "fs/promises";
 import { join } from "path";
+import { writeToContentAPI } from "../lib/contentApi.js";
 import type { ScrapedAd } from "./types.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
-const BOARD_URL = "https://www.pinterest.com/mygarmentseu/ads-newgarments/";
+const CONFIG_PATH = join(import.meta.dirname, "../../config/pinterest-boards.json");
 
-// Pinterest remake tracking sheet (same one used by cloud_pinterest.py)
-const SHEET_ID = "1BQ54wjilxW3F8rQFnVjwCRJtBTPDrSj3U5D0XYHjsgY";
-const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Blad1`;
+interface PinterestConfig {
+  enabled: boolean;
+  boards: string[];
+  max_new_pins_per_run: number;
+}
+
+async function loadConfig(): Promise<PinterestConfig> {
+  const raw = await readFile(CONFIG_PATH, "utf-8");
+  return JSON.parse(raw) as PinterestConfig;
+}
 
 function todayDir(): string {
   return new Date().toISOString().split("T")[0];
@@ -18,45 +26,46 @@ function delay(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms + Math.random() * 500));
 }
 
-async function getProcessedPinIds(): Promise<Set<string>> {
-  try {
-    const resp = await fetch(SHEET_CSV_URL);
-    if (!resp.ok) throw new Error(`Sheet fetch failed: ${resp.status}`);
-    const text = await resp.text();
-    const lines = text.split("\n");
-    if (lines.length < 2) return new Set();
-
-    const headers = lines[0].split(",").map((h) => h.replace(/"/g, "").trim().toLowerCase());
-    let pinCol = 6;
-    for (let i = 0; i < headers.length; i++) {
-      if (headers[i] === "pin_id") {
-        pinCol = i;
-        break;
-      }
-    }
-
-    const ids = new Set<string>();
-    for (let i = 1; i < lines.length; i++) {
-      const cols = lines[i].split(",");
-      if (cols.length > pinCol) {
-        const val = cols[pinCol].replace(/"/g, "").trim();
-        if (val) ids.add(val);
-      }
-    }
-    console.log(`[pinterest] Sheet: ${ids.size} already-processed pin IDs`);
-    return ids;
-  } catch (err) {
-    console.error(`[pinterest] Failed to read tracking sheet: ${err}`);
-    return new Set();
-  }
-}
-
 export async function scrapePinterest(): Promise<ScrapedAd[]> {
+  const config = await loadConfig();
+
+  if (!config.enabled) {
+    console.log("[pinterest] Scraping disabled via config (enabled=false)");
+    return [];
+  }
+
+  if (config.boards.length === 0) {
+    console.log("[pinterest] No boards configured");
+    return [];
+  }
+
   const outputDir = join(OUTPUT_BASE, todayDir());
   await mkdir(outputDir, { recursive: true });
 
-  const processedIds = await getProcessedPinIds();
+  // Dedup is handled by Postgres ON CONFLICT DO NOTHING via content API.
+  // No Google Sheet read needed for dedup — we write all discovered pins
+  // and the content API silently absorbs duplicates.
 
+  const allAds: ScrapedAd[] = [];
+
+  for (const boardUrl of config.boards) {
+    const boardAds = await scrapeBoardPins(boardUrl, config.max_new_pins_per_run, outputDir);
+    allAds.push(...boardAds);
+  }
+
+  // Write to Postgres via content API (dedup handled by ON CONFLICT DO NOTHING)
+  if (allAds.length > 0) {
+    await writeToContentAPI(allAds, "pinterest");
+  }
+
+  return allAds;
+}
+
+async function scrapeBoardPins(
+  boardUrl: string,
+  maxNewPins: number,
+  outputDir: string,
+): Promise<ScrapedAd[]> {
   console.log("[pinterest] Launching browser...");
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({
@@ -65,8 +74,8 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
   });
 
   try {
-    console.log(`[pinterest] Navigating to board: ${BOARD_URL}`);
-    await page.goto(BOARD_URL, { waitUntil: "networkidle", timeout: 30000 });
+    console.log(`[pinterest] Navigating to board: ${boardUrl}`);
+    await page.goto(boardUrl, { waitUntil: "networkidle", timeout: 30000 });
     await delay(3000);
 
     // Pinterest virtualizes the DOM — pins get removed as you scroll past them.
@@ -136,22 +145,14 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
 
     console.log(`[pinterest] Found ${allPins.size} total unique pins on board`);
 
-    // Show all board pins that are NOT in the tracking sheet
-    const newPins: Array<{ pinId: string; imageUrl: string }> = [];
-    for (const [pinId, imageUrl] of allPins) {
-      if (!processedIds.has(pinId)) {
-        newPins.push({ pinId, imageUrl });
-      }
-    }
-    const MAX_NEW_PINS = 2;
-    console.log(`[pinterest] ${newPins.length} pins not in sheet (${allPins.size - newPins.length} already in sheet)`);
-    if (newPins.length > MAX_NEW_PINS) {
-      console.log(`[pinterest] Limiting to ${MAX_NEW_PINS} new pins per day`);
-      newPins.splice(MAX_NEW_PINS);
-    }
+    // Take up to maxNewPins pins from the board.
+    // The content API will handle dedup via ON CONFLICT DO NOTHING —
+    // pins already in Postgres will be silently skipped.
+    const pinsToProcess = Array.from(allPins.entries()).slice(0, maxNewPins);
+    console.log(`[pinterest] Processing up to ${maxNewPins} pins (board has ${allPins.size})`);
 
-    if (newPins.length === 0) {
-      console.log("[pinterest] No new pins to add to dashboard");
+    if (pinsToProcess.length === 0) {
+      console.log("[pinterest] No pins to add to dashboard");
       const metaPath = join(outputDir, "metadata-pinterest.json");
       await writeFile(metaPath, JSON.stringify([], null, 2));
       return [];
@@ -160,13 +161,13 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
     // Download images
     const ads: ScrapedAd[] = [];
 
-    for (const pin of newPins) {
-      const id = `pinterest_${pin.pinId}`;
+    for (const [pinId, imageUrl] of pinsToProcess) {
+      const id = `pinterest_${pinId}`;
 
       try {
-        const response = await page.request.get(pin.imageUrl);
+        const response = await page.request.get(imageUrl);
         const buffer = await response.body();
-        const ext = pin.imageUrl.includes(".png") ? ".png" : ".jpg";
+        const ext = imageUrl.includes(".png") ? ".png" : ".jpg";
         const filename = `${id}${ext}`;
         const filepath = join(outputDir, filename);
         await writeFile(filepath, buffer);
@@ -183,7 +184,7 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
         ads.push({
           id,
           type: "image",
-          creativeUrl: pin.imageUrl,
+          creativeUrl: imageUrl,
           localPath: filepath,
           adCopy: "",
           reach: 0,
@@ -193,7 +194,7 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
           scrapedAt: new Date().toISOString(),
         });
       } catch (err) {
-        console.error(`[pinterest] Failed to download pin ${pin.pinId}:`, err);
+        console.error(`[pinterest] Failed to download pin ${pinId}:`, err);
       }
 
       await delay(300);
@@ -201,7 +202,7 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
 
     const metaPath = join(outputDir, "metadata-pinterest.json");
     await writeFile(metaPath, JSON.stringify(ads, null, 2));
-    console.log(`[pinterest] Saved ${ads.length} new pins to ${metaPath}`);
+    console.log(`[pinterest] Saved ${ads.length} pins to ${metaPath}`);
 
     return ads;
   } finally {
