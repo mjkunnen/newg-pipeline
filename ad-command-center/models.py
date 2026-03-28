@@ -1,6 +1,7 @@
-from sqlalchemy import Column, String, Integer, Float, DateTime, Boolean, Text, LargeBinary, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, DateTime, Boolean, Text, LargeBinary, ForeignKey, UniqueConstraint, Index
 from sqlalchemy.sql import func
 from db import Base
+import uuid as _uuid
 
 class Campaign(Base):
     __tablename__ = "campaigns"
@@ -74,3 +75,25 @@ class IterationJob(Base):
     error = Column(Text, nullable=True)
     created_at = Column(DateTime, server_default=func.now())
     completed_at = Column(DateTime, nullable=True)
+
+
+class ContentItem(Base):
+    __tablename__ = "content_items"
+
+    id = Column(String, primary_key=True, default=lambda: str(_uuid.uuid4()))
+    content_id = Column(String, nullable=False)
+    source = Column(String, nullable=False)  # ppspy | tiktok | pinterest | meta
+    status = Column(String, nullable=False, default="discovered")
+    # valid statuses: discovered | surfaced | queued | ready_to_launch | launched
+    creative_url = Column(Text, nullable=True)
+    thumbnail_url = Column(Text, nullable=True)
+    ad_copy = Column(Text, nullable=True)
+    metadata_json = Column(Text, nullable=True)  # raw scrape data as JSON string
+    discovered_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    __table_args__ = (
+        UniqueConstraint("content_id", "source", name="uq_content_id_source"),
+        Index("ix_content_items_status", "status"),
+        Index("ix_content_items_source", "source"),
+    )
