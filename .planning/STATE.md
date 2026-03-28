@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-28T03:03:29.530Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-03-28T03:37:29.615Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 5
-  completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
+  completed_phases: 1
+  total_plans: 3
+  completed_plans: 8
   percent: 0
 ---
 
@@ -59,6 +59,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-state-layer P01 | 12 | 2 tasks | 11 files |
 | Phase 01-state-layer P02 | 2 | 2 tasks | 2 files |
 | Phase 01-state-layer P04 | 1 | 1 tasks | 1 files |
+| Phase 02 P02 | 4 | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,9 @@ Recent decisions affecting current work:
 - [Phase 01-state-layer]: pg_insert ON CONFLICT DO NOTHING for idempotent content insert — handles concurrent scraper writes without 409 errors
 - [Phase 01-state-layer]: writeToContentAPI uses typed field access (no casts): ScrapedAd in types.ts has all required fields typed directly
 - [Phase 01-state-layer]: writeToContentAPI writes full ad array before max_ads slice — discovery record complete, remix pipeline bounded
+- [Phase 02]: ENSEMBLEDATA_TOKEN requireEnv moved from module level to scrapeTiktok() scope — allows test imports without env var set
+- [Phase 02]: TikTok file-based dedup (scout/processed_tiktok.json) removed — Postgres ON CONFLICT DO NOTHING is sole dedup mechanism per D-01, D-02
+- [Phase 02]: contentApi.ts writeToContentAPI generalized with source parameter — ppspy/tiktok/pinterest/meta — shared by all scrapers
 
 ### Pending Todos
 
@@ -94,6 +98,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T03:03:29.527Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-discovery-reliability/02-CONTEXT.md
+Last session: 2026-03-28T03:37:29.613Z
+Stopped at: Completed 02-02-PLAN.md
+Resume file: None
