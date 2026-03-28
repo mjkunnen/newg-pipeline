@@ -32,6 +32,15 @@ const dryRun = process.argv.includes("--dry-run");
 // Types
 // ---------------------------------------------------------------------------
 
+interface DryRunResult {
+  ad_id: string;
+  source: string;
+  creative_type: "image" | "video";
+  landing_page: string;
+  status: "would_launch" | "skipped";
+  reason?: string;
+}
+
 export interface ContentItem {
   id: number;
   content_id: string;
@@ -175,20 +184,40 @@ async function main(): Promise<void> {
   const inputs: SubmissionInput[] = [];
   const tempFiles: string[] = [];
   const launchedItemIds: number[] = [];
+  const dryRunResults: DryRunResult[] = [];
 
   try {
     // Build inputs — skip items with missing drive_link
     for (const item of items) {
       const meta = extractMeta(item);
-      if (!meta) continue; // Already warned in extractMeta
+      if (!meta) {
+        dryRunResults.push({
+          ad_id: item.content_id,
+          source: item.source,
+          creative_type: "image",
+          landing_page: "",
+          status: "skipped",
+          reason: "missing or invalid metadata_json / drive_link",
+        });
+        continue; // Already warned in extractMeta
+      }
 
       let creativePath: string;
       try {
+        // Always download creative — validates Drive link in dry-run too (D-06)
         creativePath = await downloadCreative(meta.driveLink, item.content_id, TMP_DIR);
         tempFiles.push(creativePath);
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
         console.error(`[fromPostgres] Failed to download creative for ${item.content_id}: ${msg}`);
+        dryRunResults.push({
+          ad_id: item.content_id,
+          source: item.source,
+          creative_type: "image",
+          landing_page: meta.landingPage,
+          status: "skipped",
+          reason: `creative download failed: ${msg}`,
+        });
         continue;
       }
 
@@ -206,29 +235,40 @@ async function main(): Promise<void> {
       });
 
       launchedItemIds.push(item.id);
+
+      dryRunResults.push({
+        ad_id: item.content_id,
+        source: item.source,
+        creative_type: creativeType,
+        landing_page: meta.landingPage,
+        status: "would_launch",
+      });
     }
 
     if (inputs.length === 0) {
+      if (dryRun && dryRunResults.length > 0) {
+        console.log("[fromPostgres] DRY-RUN summary:");
+        console.log(JSON.stringify(dryRunResults, null, 2));
+      }
       console.log("[fromPostgres] No valid creatives to launch. Done.");
       process.exit(0);
     }
 
-    if (dryRun) {
-      console.log(
-        `[fromPostgres] DRY RUN — would launch ${inputs.length} ad(s): ${inputs.map((i) => i.adId).join(", ")}`,
-      );
-      process.exit(0);
-    }
-
-    // Launch via Meta
-    const result = await launchBatch(inputs);
+    // Launch via Meta (passes dryRun flag — meta.ts returns mock response when true)
+    const result = await launchBatch(inputs, dryRun);
     console.log(
       `[fromPostgres] Campaign ${result.campaignId} / AdSet ${result.adSetId} — ${result.ads.length} ad(s) added`,
     );
 
-    // Mark each launched item in Postgres (D-02)
-    for (const itemId of launchedItemIds) {
-      await markLaunched(itemId);
+    if (dryRun) {
+      // Log structured dry-run summary — do NOT mark items as launched (D-02)
+      console.log("[fromPostgres] DRY-RUN summary:");
+      console.log(JSON.stringify(dryRunResults, null, 2));
+    } else {
+      // Mark each launched item in Postgres (D-02)
+      for (const itemId of launchedItemIds) {
+        await markLaunched(itemId);
+      }
     }
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

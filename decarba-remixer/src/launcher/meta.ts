@@ -309,10 +309,26 @@ export interface BatchResult {
 /**
  * Add new creatives as ads to the persistent NEWG-Scaling campaign + AdSet_Broad.
  * 1 campaign, 1 ad set, N ads. No learning phase resets.
+ *
+ * @param dryRun - When true, returns mock BatchResult without making any Meta API calls.
  */
 export async function launchBatch(
   inputs: SubmissionInput[],
+  dryRun = false,
 ): Promise<BatchResult> {
+  if (dryRun) {
+    console.log("[meta] DRY-RUN mode — no Meta API calls will be made");
+    return {
+      campaignId: "dry-run-campaign",
+      adSetId: "dry-run-adset",
+      ads: inputs.map((i) => ({
+        adId: i.adId,
+        adCreativeId: `dry-run-creative-${i.adId}`,
+        metaAdId: `dry-run-ad-${i.adId}`,
+      })),
+    };
+  }
+
   const { token, adAccountId, igAccountId } = getConfig();
   const actId = `act_${adAccountId}`;
   const pageId = requireEnv("META_PAGE_ID");

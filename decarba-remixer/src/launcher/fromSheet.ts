@@ -5,8 +5,17 @@ import { launchBatch, type SubmissionInput } from "./meta.js";
 import { downloadCreative } from "../lib/driveDownload.js";
 
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_URL || "";
+const dryRun = process.argv.includes("--dry-run");
 
 const TMP_DIR = join(import.meta.dirname, "../../output/tmp");
+
+interface DryRunResult {
+  ad_id: string;
+  creative_type: "image" | "video";
+  landing_page: string;
+  status: "would_launch" | "skipped";
+  reason?: string;
+}
 
 interface SheetSubmission {
   editor: string;
@@ -124,6 +133,9 @@ async function updateSheetStatus(
 }
 
 async function main() {
+  if (dryRun) {
+    console.log("[launcher] DRY-RUN mode active — no Meta API calls or Sheet status writes");
+  }
   console.log("[launcher] Starting campaign launcher...");
 
   const allSubmissions = await fetchPendingSubmissions();
@@ -148,9 +160,10 @@ async function main() {
     return true;
   }).reverse();
 
-  // Download all creatives first
+  // Download all creatives first (always download even in dry-run — validates Drive links per D-06)
   const inputs: SubmissionInput[] = [];
   const tempFiles: string[] = [];
+  const dryRunResults: DryRunResult[] = [];
 
   for (const sub of deduped) {
     try {
@@ -169,33 +182,61 @@ async function main() {
         landingPage: sub.landing_page,
         date: sub.date,
       });
+
+      dryRunResults.push({
+        ad_id: sub.ad_id,
+        creative_type: creativeType,
+        landing_page: sub.landing_page,
+        status: "would_launch",
+      });
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error(`[launcher] Failed to download ${sub.ad_id}:`, msg);
-      await updateSheetStatus(sub.ad_id, "failed", undefined, msg.slice(0, 200));
+      dryRunResults.push({
+        ad_id: sub.ad_id,
+        creative_type: "image",
+        landing_page: sub.landing_page,
+        status: "skipped",
+        reason: `creative download failed: ${msg}`,
+      });
+      if (!dryRun) {
+        await updateSheetStatus(sub.ad_id, "failed", undefined, msg.slice(0, 200));
+      }
     }
   }
 
   if (inputs.length === 0) {
+    if (dryRun) {
+      console.log("[launcher] DRY-RUN summary:");
+      console.log(JSON.stringify(dryRunResults, null, 2));
+    }
     console.log("[launcher] No creatives downloaded successfully. Done.");
     return;
   }
 
-  // Launch all as one campaign with separate ad sets
+  // Launch all as one campaign with separate ad sets (passes dryRun — meta.ts returns mock when true)
   try {
-    const result = await launchBatch(inputs);
+    const result = await launchBatch(inputs, dryRun);
     console.log(`[launcher] Campaign ${result.campaignId} / AdSet ${result.adSetId} — ${result.ads.length} ad(s) added`);
 
-    // Update Sheet for each successful ad
-    for (const ad of result.ads) {
-      await updateSheetStatus(ad.adId, "launched", result.campaignId);
+    if (dryRun) {
+      // Log structured dry-run summary — do NOT update Sheet status
+      console.log("[launcher] DRY-RUN summary:");
+      console.log(JSON.stringify(dryRunResults, null, 2));
+    } else {
+      // Update Sheet for each successful ad
+      for (const ad of result.ads) {
+        await updateSheetStatus(ad.adId, "launched", result.campaignId);
+      }
     }
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error(`[launcher] Batch launch failed:`, msg);
-    // Mark all as failed
-    for (const input of inputs) {
-      await updateSheetStatus(input.adId, "failed", undefined, msg.slice(0, 200));
+    if (!dryRun) {
+      // Mark all as failed
+      for (const input of inputs) {
+        await updateSheetStatus(input.adId, "failed", undefined, msg.slice(0, 200));
+      }
     }
   } finally {
     // Cleanup temp files
