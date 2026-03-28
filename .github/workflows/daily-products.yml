@@ -1,0 +1,44 @@
+name: Daily Product Listing
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # 10:00 CET (08:00 UTC)
+  workflow_dispatch: # manual trigger
+
+jobs:
+  list-products:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: decarba-remixer
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: decarba-remixer/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create .env
+        run: |
+          cat > .env << 'ENVEOF'
+          APIFY_TOKEN=${{ secrets.APIFY_TOKEN }}
+          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+          FAL_KEY=${{ secrets.FAL_KEY }}
+          MAKE_WEBHOOK_URL=${{ secrets.MAKE_WEBHOOK_URL }}
+          PRODUCT_SHEET_ID=1-AIOqQSC5CgdtdppRlaLsXNFoP933esW5ZnYSrD6rkM
+          ENVEOF
+
+      - name: Build
+        run: npm run build
+
+      - name: Run product pipeline
+        run: npm run products
+        timeout-minutes: 30

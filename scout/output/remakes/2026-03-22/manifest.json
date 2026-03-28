@@ -1,0 +1,45 @@
+[
+  {
+    "name": "remake_jeans_hoodie_gray",
+    "source": "revivo_ad2_shirtless_jeans.jpg",
+    "output": "C:\\Users\\maxku\\OneDrive\\Bureaublad\\competitor creative research (NEWG)\\scout\\output\\remakes\\2026-03-22\\remake_jeans_hoodie_gray.png",
+    "products": [
+      "checkered-zipper-gray.png",
+      "embroidered-striped-jeans.png"
+    ]
+  },
+  {
+    "name": "remake_jeans_hoodie_green",
+    "source": "revivo_ad2_shirtless_jeans.jpg",
+    "output": "C:\\Users\\maxku\\OneDrive\\Bureaublad\\competitor creative research (NEWG)\\scout\\output\\remakes\\2026-03-22\\remake_jeans_hoodie_green.png",
+    "products": [
+      "zip-hoodie-y2k-dark-green.png",
+      "graphic-lining-jeans.png"
+    ]
+  },
+  {
+    "name": "remake_jacket_hoodie_black",
+    "source": "revivo_ad3_double_dark.jpg",
+    "output": "C:\\Users\\maxku\\OneDrive\\Bureaublad\\competitor creative research (NEWG)\\scout\\output\\remakes\\2026-03-22\\remake_jacket_hoodie_black.png",
+    "products": [
+      "zip-hoodie-y2k-black.png"
+    ]
+  },
+  {
+    "name": "remake_jacket_vanity_pink",
+    "source": "revivo_ad5_vanity_jacket.jpg",
+    "output": "C:\\Users\\maxku\\OneDrive\\Bureaublad\\competitor creative research (NEWG)\\scout\\output\\remakes\\2026-03-22\\remake_jacket_vanity_pink.png",
+    "products": [
+      "zip-hoodie-y2k-pink.png"
+    ]
+  },
+  {
+    "name": "remake_model_green_outfit",
+    "source": "revivo_ad1_model_green.jpg",
+    "output": "C:\\Users\\maxku\\OneDrive\\Bureaublad\\competitor creative research (NEWG)\\scout\\output\\remakes\\2026-03-22\\remake_model_green_outfit.png",
+    "products": [
+      "checkered-zipper-red.png",
+      "embroidered-striped-jeans.png"
+    ]
+  }
+]

@@ -1,0 +1,1287 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e32]:
+    - generic [ref=e34]:
+      - generic [ref=e39] [cursor=pointer]:
+        - img [ref=e41]
+        - generic [ref=e43]: u
+      - generic [ref=e44]:
+        - generic [ref=e46] [cursor=pointer]:
+          - img "TikTok Logo" [ref=e47]
+          - generic [ref=e48]: Ads Manager
+        - list [ref=e50]:
+          - listitem [ref=e51] [cursor=pointer]:
+            - generic [ref=e55]:
+              - generic: Dashboard
+          - listitem [ref=e56] [cursor=pointer]:
+            - generic [ref=e60]:
+              - generic: Campaigns
+          - listitem [ref=e61] [cursor=pointer]:
+            - generic [ref=e62]:
+              - generic:
+                - generic: Audience
+                - generic:
+                  - generic: Audience Manager
+                - generic:
+                  - generic: Comments Manager
+                - generic: Creative
+                - generic:
+                  - generic: Creative Library
+                - generic:
+                  - generic: Instant page
+                - generic:
+                  - generic: Video editor
+                  - generic: New
+                - generic:
+                  - generic: TikTok Symphony
+                - generic:
+                  - generic: Creative inspiration
+                - generic:
+                  - generic: Ad Preview Tool
+                  - generic: New
+                - generic: Management
+                - generic:
+                  - generic: Recommendation Center
+                - generic:
+                  - generic: Catalog Manager
+                - generic:
+                  - generic: Automated rules
+                - generic:
+                  - generic: Events Manager
+                - generic:
+                  - generic: Leads Center
+                - generic:
+                  - generic: MMM Data Request
+                - generic:
+                  - generic: Pangle brand safety
+                - generic:
+                  - generic: Mission manager
+                - generic: Search Center
+                - generic:
+                  - generic: Keyword planner
+                  - generic: New
+                - generic:
+                  - generic: Negative keywords
+                - generic:
+                  - generic: Search ads inspiration
+                  - generic: New
+                - generic: Settings
+                - generic:
+                  - generic: Account setup
+                - generic:
+                  - generic: Audience controls
+                - generic:
+                  - generic: Brand safety hub
+                - generic:
+                  - generic: Documents
+                - generic:
+                  - generic: Payments
+                - generic [ref=e65]:
+                  - generic: Tools
+          - listitem [ref=e66] [cursor=pointer]:
+            - generic [ref=e67]:
+              - generic:
+                - generic:
+                  - generic: Custom reports
+                - generic:
+                  - generic: Experiment manager
+                - generic:
+                  - generic: Attribution analytics
+                - generic:
+                  - generic: Audience insights
+                - generic:
+                  - generic: Comment insights
+                - generic:
+                  - generic: Creative inspirations
+                - generic:
+                  - generic: Video insights
+                - generic [ref=e70]:
+                  - generic: Analytics
+      - generic [ref=e77]:
+        - img [ref=e82] [cursor=pointer]
+        - generic [ref=e89] [cursor=pointer]:
+          - img [ref=e92]
+          - generic [ref=e97]:
+            - generic: 9+
+        - img [ref=e102] [cursor=pointer]
+        - generic [ref=e110] [cursor=pointer]:
+          - generic [ref=e111]:
+            - generic: MJK Products0705
+          - img [ref=e113]
+  - generic:
+    - generic [ref=e117] [cursor=pointer]:
+      - img [ref=e119]
+      - generic [ref=e126]: Ad Assistant
+    - generic:
+      - generic:
+        - generic:
+          - generic: I have reviewed and will abide by TikTok's Anti-Discrimination Ad Policy and all applicable laws.
+        - generic:
+          - generic: I will not use TikTok Advertising for any wrongfully discriminatory practices.
+        - generic: Accept
+  - generic [ref=e127]:
+    - generic [ref=e130]:
+      - generic:
+        - generic: ": Published. We recommend not making any changes to this campaign, as edits won't be synced to campaign B and may impact the effectiveness of your split test."
+        - generic: View & Edit
+      - generic [ref=e131]:
+        - generic [ref=e136] [cursor=pointer]: NEWGARMENTS - Choose Your Style - 24/03
+        - generic [ref=e588]:
+          - generic [ref=e590] [cursor=pointer]:
+            - generic [ref=e592]: 
+            - generic [ref=e596]: Ad group 20260324042935
+          - generic [ref=e2016] [cursor=pointer]:
+            - img [ref=e2019]
+            - generic [ref=e2024]:
+              - generic [ref=e2027]: Ad name2026-03-24 04:34:35
+              - generic [ref=e2028]:
+                - generic [ref=e2030]: 
+                - generic [ref=e2031]:
+                  - text:  
+                  - img [ref=e2033]
+      - generic:
+        - generic: The test version of your campaign can be created after this existing one has been published.
+    - generic [ref=e146]:
+      - generic [ref=e2042]:
+        - generic [ref=e2043]:
+          - generic [ref=e2044]:
+            - generic [ref=e2045]:
+              - img [ref=e2046]
+              - generic [ref=e2048]:
+                - generic [ref=e2049]: "We've made some updates to streamline your workflow:"
+                - list [ref=e2050]:
+                  - listitem [ref=e2051]: Selecting an identity now comes after you've chosen your creative.
+                  - listitem [ref=e2052]: Identity is no longer required when using a creator's TikTok post for Spark Ads.
+                  - listitem [ref=e2053]: All authorized TikTok posts now appear under a new tab in the creative drawer.
+            - generic [ref=e2054]: 
+          - generic [ref=e2055]:
+            - generic [ref=e2057]: Ad name
+            - textbox "Enter ad name" [ref=e2067]: Ad name2026-03-24 04:34:35
+          - generic [ref=e2068]:
+            - generic [ref=e2069] [cursor=pointer]:
+              - generic [ref=e2070]: 
+              - generic [ref=e2071]: Ad setup
+            - generic [ref=e2793]:
+              - generic [ref=e2794]: Select your ad images, videos, and products without using your catalog
+              - generic [ref=e2796]:
+                - img [ref=e2797]
+                - generic [ref=e2799]:
+                  - generic [ref=e2800]: Switching to catalog ad setup is recommended
+                  - generic [ref=e2801]: Automatically include ad images, videos, and products from your catalog. Advertisers who use Catalog Ads can reduce their average CPA up to 29% compared to advertisers only using manually created ads.
+              - button "Switch to catalog ad setup" [ref=e2804] [cursor=pointer]:
+                - generic:
+                  - text: Switch to catalog ad setup
+                  - img [ref=e2807]
+          - generic [ref=e2120]:
+            - generic [ref=e2122]:
+              - generic [ref=e2123]:
+                - generic [ref=e2124]: Create ads
+                - generic [ref=e2125]: Ads will be generated based on combinations of your videos and ad texts, and the high-performing combinations will be automatically delivered.
+              - generic [ref=e2128]:
+                - generic [ref=e2681]:
+                  - generic [ref=e2682]: Destination
+                  - generic [ref=e2683]:
+                    - generic [ref=e2684] [cursor=pointer]:
+                      - text: Website
+                      - generic [ref=e2686]: 
+                    - generic [ref=e2690]:
+                      - generic [ref=e2692]:
+                        - text: Destination URL
+                        - generic [ref=e2693] [cursor=pointer]: 
+                      - generic [ref=e2695]:
+                        - text: You agree that TikTok can regularly access, use, and modify all information at the URL (images, videos, etc.) and related pages to help you develop and improve your ads, optimize campaigns, and provide recommendations. All such information is considered 'Your Content' and is subject to the
+                        - link "TikTok for Business Commercial Terms of Service" [ref=e2696] [cursor=pointer]:
+                          - /url: https://ads.tiktok.com/i18n/official/policy/commercial-terms-of-service
+                        - text: .
+                      - generic [ref=e2700]:
+                        - generic [ref=e2811]:
+                          - text: https://newgarments.store/collections/frontpage ?
+                          - generic [ref=e2815] [cursor=pointer]: "&view=choose-your-style"
+                          - generic [ref=e2819] [cursor=pointer]: "&utm_source=tiktok"
+                          - generic [ref=e2823] [cursor=pointer]: "&utm_id=__CAMPAIGN_ID__"
+                          - generic [ref=e2827] [cursor=pointer]: "&utm_campaign=__CAMPAIGN_NAME__"
+                          - generic [ref=e2831] [cursor=pointer]: "&utm_medium=paid"
+                        - generic [ref=e2832]:
+                          - generic [ref=e2833]: 
+                          - text: Suggested parameters added
+                      - generic [ref=e2704]:
+                        - button " Build URL parameters" [ref=e2705] [cursor=pointer]:
+                          - generic [ref=e2706]:
+                            - generic [ref=e2707]: 
+                            - text: Build URL parameters
+                        - button " Preview" [ref=e2834] [cursor=pointer]:
+                          - generic [ref=e2835]:
+                            - generic [ref=e2836]: 
+                            - text: Preview
+                      - generic [ref=e2709]:
+                        - generic [ref=e2711]: Added URL parameters
+                        - generic [ref=e2712]: 4 UTM parameters, 1 custom parameters
+                - generic:
+                  - generic:  
+                - generic [ref=e2162]:
+                  - generic [ref=e2163]:
+                    - text: Creative assets (0/50)
+                    - generic [ref=e2164] [cursor=pointer]: 
+                  - generic [ref=e2165]:
+                    - button " Add existing" [ref=e2713] [cursor=pointer]:
+                      - generic [ref=e2167]: 
+                      - generic [ref=e2168]: Add existing
+                    - button " Create new videos" [ref=e2169] [cursor=pointer]:
+                      - generic [ref=e2170]: 
+                      - generic [ref=e2171]: Create new videos
+                  - generic [ref=e2173]:
+                    - generic [ref=e2839]:
+                      - img [ref=e2842]
+                      - generic [ref=e2846]:
+                        - generic [ref=e2848]: We've updated recommendations based on the changes you made to your campaign.
+                        - link "See options" [ref=e2851]:
+                          - generic [ref=e2853] [cursor=pointer]: See options
+                      - button [ref=e2857] [cursor=pointer]:
+                        - img [ref=e2859]
+                    - text: 
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Video
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic: Image
+                                  - generic:
+                                    - generic: Video templates and video URLs
+                                  - generic:
+                                    - generic: Manage templates
+                                - generic: Including all creative types is recommended and may improve your campaign's performance
+                        - generic:
+                          - generic:
+                            - generic: Cancel
+                          - generic:
+                            - generic: Save
+                    - generic: 
+                  - generic [ref=e2862]:
+                    - generic [ref=e2864] [cursor=pointer]: 
+                    - generic [ref=e2866]:
+                      - heading "Add creatives" [level=3] [ref=e2868]
+                      - generic [ref=e2870]:
+                        - tablist [ref=e2874]:
+                          - tab "Recommended New" [ref=e2876]:
+                            - paragraph [ref=e2877] [cursor=pointer]:
+                              - text: Recommended
+                              - generic [ref=e2881]:
+                                - generic: New
+                          - tab "TikTok posts" [selected] [ref=e2882]:
+                            - paragraph [ref=e2883] [cursor=pointer]: TikTok posts
+                          - tab "Creative library" [ref=e2884]:
+                            - paragraph [ref=e2885] [cursor=pointer]: Creative library
+                        - generic [ref=e2886]:
+                          - tabpanel "TikTok posts" [ref=e3164]:
+                            - generic [ref=e3167]:
+                              - generic [ref=e3168]:
+                                - generic [ref=e3170]:
+                                  - textbox "Search by post caption or post ID" [ref=e3171]
+                                  - generic [ref=e3173]: 
+                                - generic [ref=e3174]:
+                                  - generic [ref=e3178]:
+                                    - generic [ref=e3179]: "Sort by:"
+                                    - generic [ref=e3180]: Post date (Most to least recent)
+                                    - generic [ref=e3181]: 
+                                  - generic [ref=e3184]:
+                                    - text:     
+                                    - generic [ref=e3186]:
+                                      - generic [ref=e3187]: "TikTok account:"
+                                      - generic [ref=e3188]: 5 TikTok accounts selected
+                                      - generic [ref=e3189]: 
+                                    - text:      
+                                  - generic [ref=e3193]:
+                                    - generic [ref=e3194]: "Format:"
+                                    - generic [ref=e3195]: Images
+                                    - generic [ref=e3196]: 
+                                  - button "Filter" [ref=e3202] [cursor=pointer]:
+                                    - generic [ref=e3203]:
+                                      - img [ref=e3204]
+                                      - text: Filter
+                                - button "Add post" [ref=e3208] [cursor=pointer]
+                              - list [ref=e5522]:
+                                - generic [ref=e5523] [cursor=pointer]:
+                                  - generic [ref=e5525]:
+                                    - checkbox [ref=e5526]
+                                    - generic [ref=e5530]:
+                                      - img "poster" [ref=e5533]
+                                      - img [ref=e5534]
+                                    - generic [ref=e5537]:
+                                      - generic [ref=e5538]: 
+                                      - generic [ref=e5539]: "7"
+                                  - generic [ref=e5541]:
+                                    - img [ref=e5543]
+                                    - generic [ref=e5544]:
+                                      - generic [ref=e5545]: NEWGARMENTS
+                                      - generic [ref=e5548]: Be fast or be gone… Limited stock.
+                                - generic [ref=e5550] [cursor=pointer]:
+                                  - generic [ref=e5552]:
+                                    - checkbox [ref=e5553]
+                                    - generic [ref=e5557]:
+                                      - img "poster" [ref=e5560]
+                                      - img [ref=e5561]
+                                    - generic [ref=e5564]:
+                                      - generic [ref=e5565]: 
+                                      - generic [ref=e5566]: "5"
+                                  - generic [ref=e5568]:
+                                    - img [ref=e5570]
+                                    - generic [ref=e5571]:
+                                      - generic [ref=e5572]: NEWGARMENTS
+                                      - generic [ref=e5575]: Be fast or be gone! Limited time only.
+                                - generic [ref=e5577] [cursor=pointer]:
+                                  - generic [ref=e5579]:
+                                    - checkbox [ref=e5580]
+                                    - generic [ref=e5588]:
+                                      - tabpanel [ref=e5589]
+                                      - tabpanel [ref=e5595]
+                                      - tabpanel [ref=e5601]
+                                      - tabpanel [ref=e5607]
+                                      - tabpanel [ref=e5613]
+                                      - tabpanel [ref=e5619]
+                                    - generic [ref=e5625]:
+                                      - generic [ref=e5626]: 
+                                      - generic [ref=e5627]: "6"
+                                  - generic [ref=e5629]:
+                                    - img [ref=e5631]
+                                    - generic [ref=e5632]:
+                                      - generic [ref=e5633]: NEWGARMENTS
+                                      - generic [ref=e5636]: Be fast or Be gone! Limited stock only.
+                                - generic [ref=e5638] [cursor=pointer]:
+                                  - generic [ref=e5640]:
+                                    - checkbox [ref=e5641]
+                                    - generic [ref=e5645]:
+                                      - img "poster" [ref=e5648]
+                                      - img [ref=e5649]
+                                    - generic [ref=e5652]:
+                                      - generic [ref=e5653]: 
+                                      - generic [ref=e5654]: "6"
+                                  - generic [ref=e5656]:
+                                    - img [ref=e5658]
+                                    - generic [ref=e5659]:
+                                      - generic [ref=e5660]: NEWGARMENTS
+                                      - generic [ref=e5663]: Be fast or be gone. When sold out, website closes!
+                                - generic [ref=e5665] [cursor=pointer]:
+                                  - generic [ref=e5667]:
+                                    - checkbox [ref=e5668]
+                                    - generic [ref=e5672]:
+                                      - img "poster" [ref=e5675]
+                                      - img [ref=e5676]
+                                    - generic [ref=e5679]:
+                                      - generic [ref=e5680]: 
+                                      - generic [ref=e5681]: "4"
+                                  - generic [ref=e5683]:
+                                    - img [ref=e5685]
+                                    - generic [ref=e5686]:
+                                      - generic [ref=e5687]: NEWGARMENTS
+                                      - generic [ref=e5690]: Be fast or be gone. Limited stock only.
+                                - generic [ref=e5692] [cursor=pointer]:
+                                  - generic [ref=e5694]:
+                                    - checkbox [ref=e5695]
+                                    - generic [ref=e5699]:
+                                      - img "poster" [ref=e5702]
+                                      - img [ref=e5703]
+                                    - generic [ref=e5706]:
+                                      - generic [ref=e5707]: 
+                                      - generic [ref=e5708]: "5"
+                                  - generic [ref=e5710]:
+                                    - img [ref=e5712]
+                                    - generic [ref=e5713]:
+                                      - generic [ref=e5714]: NEWGARMENTS
+                                      - generic [ref=e5717]: Be fast or be gone.
+                                - generic [ref=e5719] [cursor=pointer]:
+                                  - generic [ref=e5721]:
+                                    - checkbox [ref=e5722]
+                                    - generic [ref=e5726]:
+                                      - img "poster" [ref=e5729]
+                                      - img [ref=e5730]
+                                    - generic [ref=e5733]:
+                                      - generic [ref=e5734]: 
+                                      - generic [ref=e5735]: "3"
+                                  - generic [ref=e5737]:
+                                    - img [ref=e5739]
+                                    - generic [ref=e5740]:
+                                      - generic [ref=e5741]: NEWGARMENTS
+                                      - generic [ref=e5744]: The first 10 comments will get a surprise:)
+                                - generic [ref=e5746] [cursor=pointer]:
+                                  - generic [ref=e5748]:
+                                    - checkbox [ref=e5749]
+                                    - generic [ref=e5753]:
+                                      - img "poster" [ref=e5756]
+                                      - img [ref=e5757]
+                                    - generic [ref=e5760]:
+                                      - generic [ref=e5761]: 
+                                      - generic [ref=e5762]: "4"
+                                  - generic [ref=e5764]:
+                                    - img [ref=e5766]
+                                    - generic [ref=e5767]:
+                                      - generic [ref=e5768]: NEWGARMENTS
+                                      - generic [ref=e5771]: The first 10 comments will get a surprise:)
+                                - generic [ref=e5773] [cursor=pointer]:
+                                  - generic [ref=e5775]:
+                                    - checkbox [ref=e5776]
+                                    - generic [ref=e5780]:
+                                      - img "poster" [ref=e5783]
+                                      - img [ref=e5784]
+                                    - generic [ref=e5787]:
+                                      - generic [ref=e5788]: 
+                                      - generic [ref=e5789]: "3"
+                                  - generic [ref=e5791]:
+                                    - img [ref=e5793]
+                                    - generic [ref=e5794]:
+                                      - generic [ref=e5795]: NEWGARMENTS
+                                      - generic [ref=e5798]: The first 10 comments will get a surprise:)
+                                - generic [ref=e5800] [cursor=pointer]:
+                                  - generic [ref=e5802]:
+                                    - checkbox [ref=e5803]
+                                    - generic [ref=e5807]:
+                                      - img "poster" [ref=e5810]
+                                      - img [ref=e5811]
+                                    - generic [ref=e5814]:
+                                      - generic [ref=e5815]: 
+                                      - generic [ref=e5816]: "4"
+                                  - generic [ref=e5818]:
+                                    - img [ref=e5820]
+                                    - generic [ref=e5821]:
+                                      - generic [ref=e5822]: NEWGARMENTS
+                                      - generic [ref=e5825]: The first 10 comments will get a surprise:)
+                                - generic [ref=e5827] [cursor=pointer]:
+                                  - generic [ref=e5829]:
+                                    - checkbox [ref=e5830]
+                                    - generic [ref=e5834]:
+                                      - img "poster" [ref=e5837]
+                                      - img [ref=e5838]
+                                    - generic [ref=e5841]:
+                                      - generic [ref=e5842]: 
+                                      - generic [ref=e5843]: "3"
+                                  - generic [ref=e5845]:
+                                    - img [ref=e5847]
+                                    - generic [ref=e5848]:
+                                      - generic [ref=e5849]: NEWGARMENTS
+                                      - generic [ref=e5852]: The first 10 comments will get a surprise:)
+                                - generic [ref=e5854] [cursor=pointer]:
+                                  - generic [ref=e5856]:
+                                    - checkbox [ref=e5857]
+                                    - generic [ref=e5861]:
+                                      - img "poster" [ref=e5864]
+                                      - img [ref=e5865]
+                                    - generic [ref=e5868]:
+                                      - generic [ref=e5869]: 
+                                      - generic [ref=e5870]: "4"
+                                  - generic [ref=e5872]:
+                                    - img [ref=e5874]
+                                    - generic [ref=e5875]:
+                                      - generic [ref=e5876]: NEWGARMENTS
+                                      - generic [ref=e5879]: Not for everyone. Drop is live now.
+                                - generic [ref=e5881] [cursor=pointer]:
+                                  - generic [ref=e5883]:
+                                    - checkbox [ref=e5884]
+                                    - generic [ref=e5888]:
+                                      - img "poster" [ref=e5891]
+                                      - img [ref=e5892]
+                                    - generic [ref=e5895]:
+                                      - generic [ref=e5896]: 
+                                      - generic [ref=e5897]: "6"
+                                  - generic [ref=e5899]:
+                                    - img [ref=e5901]
+                                    - generic [ref=e5902]:
+                                      - generic [ref=e5903]: NEWGARMENTS
+                                      - generic [ref=e5906]: The first 10 comments will get a surprise:)
+                                - generic [ref=e5908] [cursor=pointer]:
+                                  - generic [ref=e5910]:
+                                    - checkbox [ref=e5911]
+                                    - generic [ref=e5915]:
+                                      - img "poster" [ref=e5918]
+                                      - img [ref=e5919]
+                                    - generic [ref=e5922]:
+                                      - generic [ref=e5923]: 
+                                      - generic [ref=e5924]: "9"
+                                  - generic [ref=e5926]:
+                                    - img [ref=e5928]
+                                    - generic [ref=e5929]:
+                                      - generic [ref=e5930]: NEWGARMENTS
+                                      - generic [ref=e5933]: The first 10 comments will get a surprise:)
+                                - generic [ref=e5935] [cursor=pointer]:
+                                  - generic [ref=e5937]:
+                                    - checkbox [ref=e5938]
+                                    - generic [ref=e5942]:
+                                      - img "poster" [ref=e5945]
+                                      - img [ref=e5946]
+                                    - generic [ref=e5949]:
+                                      - generic [ref=e5950]: 
+                                      - generic [ref=e5951]: "5"
+                                  - generic [ref=e5953]:
+                                    - img [ref=e5955]
+                                    - generic [ref=e5956]:
+                                      - generic [ref=e5957]: NEWGARMENTS
+                                      - generic [ref=e5960]: The first 10 comments will get a surprise:)
+                                - generic [ref=e5962] [cursor=pointer]:
+                                  - generic [ref=e5964]:
+                                    - checkbox [ref=e5965]
+                                    - generic [ref=e5969]:
+                                      - img "poster" [ref=e5972]
+                                      - img [ref=e5973]
+                                    - generic [ref=e5976]:
+                                      - generic [ref=e5977]: 
+                                      - generic [ref=e5978]: "8"
+                                  - generic [ref=e5980]:
+                                    - img [ref=e5982]
+                                    - generic [ref=e5983]:
+                                      - generic [ref=e5984]: NEWGARMENTS
+                                      - generic [ref=e5987]: The first 10 comments will get a surprise:)
+                                - generic [ref=e5989] [cursor=pointer]:
+                                  - generic [ref=e5991]:
+                                    - checkbox [ref=e5992]
+                                    - generic [ref=e5996]:
+                                      - img "poster" [ref=e5999]
+                                      - img [ref=e6000]
+                                    - generic [ref=e6003]:
+                                      - generic [ref=e6004]: 
+                                      - generic [ref=e6005]: "6"
+                                  - generic [ref=e6007]:
+                                    - img [ref=e6009]
+                                    - generic [ref=e6010]:
+                                      - generic [ref=e6011]: NEWGARMENTS
+                                      - generic [ref=e6014]: The first 10 comments will get a surprise:)
+                                - generic [ref=e6016] [cursor=pointer]:
+                                  - generic [ref=e6018]:
+                                    - checkbox [ref=e6019]
+                                    - generic [ref=e6023]:
+                                      - img "poster" [ref=e6026]
+                                      - img [ref=e6027]
+                                    - generic [ref=e6030]:
+                                      - generic [ref=e6031]: 
+                                      - generic [ref=e6032]: "5"
+                                    - img [ref=e6034]
+                                  - generic [ref=e6042]:
+                                    - img [ref=e6044]
+                                    - generic [ref=e6045]:
+                                      - generic [ref=e6046]: NEWGARMENTS
+                                      - generic [ref=e6049]: Don’t miss this opportunity, website closes when stock is gone…
+                                - generic [ref=e6051] [cursor=pointer]:
+                                  - generic [ref=e6053]:
+                                    - checkbox [ref=e6054]
+                                    - generic [ref=e6058]:
+                                      - img "poster" [ref=e6061]
+                                      - img [ref=e6062]
+                                    - generic [ref=e6065]:
+                                      - generic [ref=e6066]: 
+                                      - generic [ref=e6067]: "4"
+                                    - img [ref=e6069]
+                                  - generic [ref=e6077]:
+                                    - img [ref=e6079]
+                                    - generic [ref=e6080]:
+                                      - generic [ref=e6081]: NEWGARMENTS
+                                      - generic [ref=e6084]: The last sizes are now online!
+                                - generic [ref=e6086] [cursor=pointer]:
+                                  - generic [ref=e6088]:
+                                    - checkbox [ref=e6089]
+                                    - generic [ref=e6093]:
+                                      - img "poster" [ref=e6096]
+                                      - img [ref=e6097]
+                                    - generic [ref=e6100]:
+                                      - generic [ref=e6101]: 
+                                      - generic [ref=e6102]: "4"
+                                    - img [ref=e6104]
+                                  - generic [ref=e6112]:
+                                    - img [ref=e6114]
+                                    - generic [ref=e6115]:
+                                      - generic [ref=e6116]: NEWGARMENTS
+                                      - generic [ref=e6119]: Last sizes are now online!
+                                - generic [ref=e6121] [cursor=pointer]:
+                                  - generic [ref=e6123]:
+                                    - checkbox [ref=e6124]
+                                    - generic [ref=e6128]:
+                                      - img "poster" [ref=e6131]
+                                      - img [ref=e6132]
+                                    - generic [ref=e6135]:
+                                      - generic [ref=e6136]: 
+                                      - generic [ref=e6137]: "5"
+                                  - generic [ref=e6139]:
+                                    - img [ref=e6141]
+                                    - generic [ref=e6142]:
+                                      - generic [ref=e6143]: NEWGARMENTS
+                                      - generic [ref=e6146]: Last sizes are online now! When stock is gone our website closes!
+                                - generic [ref=e6148] [cursor=pointer]:
+                                  - generic [ref=e6150]:
+                                    - checkbox [ref=e6151]
+                                    - generic [ref=e6155]:
+                                      - img "poster" [ref=e6158]
+                                      - img [ref=e6159]
+                                    - generic [ref=e6162]:
+                                      - generic [ref=e6163]: 
+                                      - generic [ref=e6164]: "5"
+                                  - generic [ref=e6166]:
+                                    - img [ref=e6168]
+                                    - generic [ref=e6169]:
+                                      - generic [ref=e6170]: NEWGARMENTS
+                                      - generic [ref=e6173]: Last sizes are online now! When stock is gone our website closes!
+                                - generic [ref=e6175] [cursor=pointer]:
+                                  - generic [ref=e6177]:
+                                    - checkbox [ref=e6178]
+                                    - generic [ref=e6182]:
+                                      - img "poster" [ref=e6185]
+                                      - img [ref=e6186]
+                                    - generic [ref=e6189]:
+                                      - generic [ref=e6190]: 
+                                      - generic [ref=e6191]: "7"
+                                  - generic [ref=e6193]:
+                                    - img [ref=e6195]
+                                    - generic [ref=e6196]:
+                                      - generic [ref=e6197]: NEWGARMENTS
+                                      - generic [ref=e6200]: The first 10 comments will get a surprise:)
+                                - generic [ref=e6202] [cursor=pointer]:
+                                  - generic [ref=e6204]:
+                                    - checkbox [ref=e6205]
+                                    - generic [ref=e6209]:
+                                      - img "poster" [ref=e6212]
+                                      - img [ref=e6213]
+                                    - generic [ref=e6216]:
+                                      - generic [ref=e6217]: 
+                                      - generic [ref=e6218]: "8"
+                                  - generic [ref=e6220]:
+                                    - img [ref=e6222]
+                                    - generic [ref=e6223]:
+                                      - generic [ref=e6224]: NEWGARMENTS
+                                      - generic [ref=e6227]: The first 10 comments will get a surprise:)
+                                - generic [ref=e6229] [cursor=pointer]:
+                                  - generic [ref=e6231]:
+                                    - checkbox [ref=e6232]
+                                    - generic [ref=e6236]:
+                                      - img "poster" [ref=e6239]
+                                      - img [ref=e6240]
+                                    - generic [ref=e6243]:
+                                      - generic [ref=e6244]: 
+                                      - generic [ref=e6245]: "6"
+                                  - generic [ref=e6247]:
+                                    - img [ref=e6249]
+                                    - generic [ref=e6250]:
+                                      - generic [ref=e6251]: NEWGARMENTS
+                                      - generic [ref=e6254]: The first 10 comments will get a surprise:)
+                                - generic [ref=e6256] [cursor=pointer]:
+                                  - generic [ref=e6258]:
+                                    - checkbox [ref=e6259]
+                                    - generic [ref=e6263]:
+                                      - img "poster" [ref=e6266]
+                                      - img [ref=e6267]
+                                    - generic [ref=e6270]:
+                                      - generic [ref=e6271]: 
+                                      - generic [ref=e6272]: "6"
+                                  - generic [ref=e6274]:
+                                    - img [ref=e6276]
+                                    - generic [ref=e6277]:
+                                      - generic [ref=e6278]: NEWGARMENTS
+                                      - generic [ref=e6281]: The first 10 comments will get a surprise:)
+                                - generic [ref=e6283] [cursor=pointer]:
+                                  - generic [ref=e6285]:
+                                    - checkbox [ref=e6286]
+                                    - generic [ref=e6290]:
+                                      - img "poster" [ref=e6293]
+                                      - img [ref=e6294]
+                                    - generic [ref=e6297]:
+                                      - generic [ref=e6298]: 
+                                      - generic [ref=e6299]: "5"
+                                  - generic [ref=e6301]:
+                                    - img [ref=e6303]
+                                    - generic [ref=e6304]:
+                                      - generic [ref=e6305]: NEWGARMENTS
+                                      - generic [ref=e6308]: The first 10 comments will get a surprise:)
+                                - generic [ref=e6310] [cursor=pointer]:
+                                  - generic [ref=e6312]:
+                                    - checkbox [ref=e6313]
+                                    - generic [ref=e6317]:
+                                      - img "poster" [ref=e6320]
+                                      - img [ref=e6321]
+                                    - generic [ref=e6324]:
+                                      - generic [ref=e6325]: 
+                                      - generic [ref=e6326]: "6"
+                                  - generic [ref=e6328]:
+                                    - img [ref=e6330]
+                                    - generic [ref=e6331]:
+                                      - generic [ref=e6332]: NEWGARMENTS
+                                      - generic [ref=e6335]: The first 10 comments will get a surprise:)
+                                - generic [ref=e6337] [cursor=pointer]:
+                                  - generic [ref=e6339]:
+                                    - checkbox [ref=e6340]
+                                    - generic [ref=e6344]:
+                                      - img "poster" [ref=e6347]
+                                      - img [ref=e6348]
+                                    - generic [ref=e6351]:
+                                      - generic [ref=e6352]: 
+                                      - generic [ref=e6353]: "6"
+                                    - img [ref=e6355]
+                                  - generic [ref=e6363]:
+                                    - img [ref=e6365]
+                                    - generic [ref=e6366]:
+                                      - generic [ref=e6367]: NEWGARMENTS
+                                      - generic [ref=e6370]: ⛔️ WEBSITE CLOSES WHEN SOLD OUT | ESTIMATED TIME 00:03:59 MINUTES
+                                - generic [ref=e6372] [cursor=pointer]:
+                                  - generic [ref=e6374]:
+                                    - checkbox [ref=e6375]
+                                    - generic [ref=e6379]:
+                                      - img "poster" [ref=e6382]
+                                      - img [ref=e6383]
+                                    - generic [ref=e6386]:
+                                      - generic [ref=e6387]: 
+                                      - generic [ref=e6388]: "6"
+                                    - img [ref=e6390]
+                                  - generic [ref=e6398]:
+                                    - img [ref=e6400]
+                                    - generic [ref=e6401]:
+                                      - generic [ref=e6402]: NEWGARMENTS
+                                      - generic [ref=e6405]: ⛔️ WEBSITE CLOSES WHEN SOLD OUT | ESTIMATED TIME 00:03:59 MINUTES
+                                - generic [ref=e6407] [cursor=pointer]:
+                                  - generic [ref=e6409]:
+                                    - checkbox [ref=e6410]
+                                    - generic [ref=e6414]:
+                                      - img "poster" [ref=e6417]
+                                      - img [ref=e6418]
+                                    - generic [ref=e6421]:
+                                      - generic [ref=e6422]: 
+                                      - generic [ref=e6423]: "5"
+                                    - img [ref=e6425]
+                                  - generic [ref=e6433]:
+                                    - img [ref=e6435]
+                                    - generic [ref=e6436]:
+                                      - generic [ref=e6437]: NEWGARMENTS
+                                      - generic [ref=e6440]: ⛔️ WEBSITE CLOSES WHEN SOLD OUT | ESTIMATED TIME 00:03:59 MINUTES
+                                - generic [ref=e6442] [cursor=pointer]:
+                                  - generic [ref=e6444]:
+                                    - checkbox [ref=e6445]
+                                    - generic [ref=e6449]:
+                                      - img "poster" [ref=e6452]
+                                      - img [ref=e6453]
+                                    - generic [ref=e6456]:
+                                      - generic [ref=e6457]: 
+                                      - generic [ref=e6458]: "5"
+                                    - img [ref=e6460]
+                                  - generic [ref=e6468]:
+                                    - img [ref=e6470]
+                                    - generic [ref=e6471]:
+                                      - generic [ref=e6472]: NEWGARMENTS
+                                      - generic [ref=e6475]: ⛔️ WEBSITE CLOSES WHEN STOCK IS GONE | ESTIMATED TIME 00:04:59 MINUTES
+                                - generic [ref=e6477] [cursor=pointer]:
+                                  - generic [ref=e6479]:
+                                    - checkbox [ref=e6480]
+                                    - generic [ref=e6484]:
+                                      - img "poster" [ref=e6487]
+                                      - img [ref=e6488]
+                                    - generic [ref=e6491]:
+                                      - generic [ref=e6492]: 
+                                      - generic [ref=e6493]: "5"
+                                    - img [ref=e6495]
+                                  - generic [ref=e6503]:
+                                    - img [ref=e6505]
+                                    - generic [ref=e6506]:
+                                      - generic [ref=e6507]: NEWGARMENTS
+                                      - generic [ref=e6510]: ⛔️ WEBSITE CLOSES WHEN STOCK IS GONE | ESTIMATED TIME 00:04:59 MINUTES
+                                - generic [ref=e6512] [cursor=pointer]:
+                                  - generic [ref=e6514]:
+                                    - checkbox [ref=e6515]
+                                    - generic [ref=e6519]:
+                                      - img "poster" [ref=e6522]
+                                      - img [ref=e6523]
+                                    - generic [ref=e6526]:
+                                      - generic [ref=e6527]: 
+                                      - generic [ref=e6528]: "5"
+                                    - img [ref=e6530]
+                                  - generic [ref=e6538]:
+                                    - img [ref=e6540]
+                                    - generic [ref=e6541]:
+                                      - generic [ref=e6542]: NEWGARMENTS
+                                      - generic [ref=e6545]: ⛔️ WEBSITE CLOSES WHEN STOCK IS GONE | ESTIMATED TIME 00:04:59 MINUTES
+                                - generic [ref=e6547] [cursor=pointer]:
+                                  - generic [ref=e6549]:
+                                    - checkbox [ref=e6550]
+                                    - generic [ref=e6554]:
+                                      - img "poster" [ref=e6557]
+                                      - img [ref=e6558]
+                                    - generic [ref=e6561]:
+                                      - generic [ref=e6562]: 
+                                      - generic [ref=e6563]: "3"
+                                  - generic [ref=e6565]:
+                                    - img [ref=e6567]
+                                    - generic [ref=e6568]:
+                                      - generic [ref=e6569]: NEWGARMENTS
+                                      - generic [ref=e6572]: The first 10 comments will get a surprise:)
+                                - generic [ref=e6574] [cursor=pointer]:
+                                  - generic [ref=e6576]:
+                                    - checkbox [ref=e6577]
+                                    - generic [ref=e6581]:
+                                      - img "poster" [ref=e6584]
+                                      - img [ref=e6585]
+                                    - generic [ref=e6588]:
+                                      - generic [ref=e6589]: 
+                                      - generic [ref=e6590]: "5"
+                                    - img [ref=e6592]
+                                  - generic [ref=e6600]:
+                                    - img [ref=e6602]
+                                    - generic [ref=e6603]:
+                                      - generic [ref=e6604]: NEWGARMENTS
+                                      - generic [ref=e6607]: "⛔️ WEBSITE CLOSES WHEN STOCK IS GONE | ESTIMATED TIME: 00:03:59"
+                                - generic [ref=e6609] [cursor=pointer]:
+                                  - generic [ref=e6611]:
+                                    - checkbox [ref=e6612]
+                                    - generic [ref=e6616]:
+                                      - img "poster" [ref=e6619]
+                                      - img [ref=e6620]
+                                    - generic [ref=e6623]:
+                                      - generic [ref=e6624]: 
+                                      - generic [ref=e6625]: "5"
+                                    - img [ref=e6627]
+                                  - generic [ref=e6635]:
+                                    - img [ref=e6637]
+                                    - generic [ref=e6638]:
+                                      - generic [ref=e6639]: NEWGARMENTS
+                                      - generic [ref=e6642]: "⛔️ WEBSITE CLOSES WHEN STOCK IS GONE | ESTIMATED TIME: 00:03:59"
+                                - generic [ref=e6644] [cursor=pointer]:
+                                  - generic [ref=e6646]:
+                                    - checkbox [ref=e6647]
+                                    - generic [ref=e6651]:
+                                      - img "poster" [ref=e6654]
+                                      - img [ref=e6655]
+                                    - generic [ref=e6658]:
+                                      - generic [ref=e6659]: 
+                                      - generic [ref=e6660]: "5"
+                                    - img [ref=e6662]
+                                  - generic [ref=e6670]:
+                                    - img [ref=e6672]
+                                    - generic [ref=e6673]:
+                                      - generic [ref=e6674]: NEWGARMENTS
+                                      - generic [ref=e6677]: "⛔️ WEBSITE CLOSES WHEN STOCK IS GONE | ESTIMATED TIME: 00:03:59"
+                                - generic [ref=e6679] [cursor=pointer]:
+                                  - generic [ref=e6681]:
+                                    - checkbox [ref=e6682]
+                                    - generic [ref=e6686]:
+                                      - img "poster" [ref=e6689]
+                                      - img [ref=e6690]
+                                    - generic [ref=e6693]:
+                                      - generic [ref=e6694]: 
+                                      - generic [ref=e6695]: "3"
+                                    - img [ref=e6697]
+                                  - generic [ref=e6705]:
+                                    - img [ref=e6707]
+                                    - generic [ref=e6708]:
+                                      - generic [ref=e6709]: NEWGARMENTS
+                                      - generic [ref=e6712]: "⛔️ WEBSITE CLOSES WHEN STOCK IS GONE | ESTIMATED TIME: 00:03:59"
+                                - generic [ref=e6714] [cursor=pointer]:
+                                  - generic [ref=e6716]:
+                                    - checkbox [ref=e6717]
+                                    - generic [ref=e6721]:
+                                      - img "poster" [ref=e6724]
+                                      - img [ref=e6725]
+                                    - generic [ref=e6728]:
+                                      - generic [ref=e6729]: 
+                                      - generic [ref=e6730]: "6"
+                                    - img [ref=e6732]
+                                  - generic [ref=e6740]:
+                                    - img [ref=e6742]
+                                    - generic [ref=e6743]:
+                                      - generic [ref=e6744]: NEWGARMENTS
+                                      - generic [ref=e6747]: "⛔️ WEBSITE CLOSES WHEN STOCK IS GONE! ESTIMATED TIME FOR STOCK: 00:02:59!"
+                          - text:  
+                      - button "Save" [ref=e3162] [cursor=pointer]
+                - generic [ref=e2256]:
+                  - generic [ref=e2717]:
+                    - generic [ref=e2718]:
+                      - generic [ref=e2719]:
+                        - generic [ref=e2720]:
+                          - generic: Add product information
+                        - generic [ref=e2723]:
+                          - generic: Optional
+                      - generic [ref=e2725]:
+                        - generic: This information will be used in different ad variations to create personalized ad delivery with the goal of improving ad performance.
+                        - generic [ref=e2726]:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Additional product information will be used to create ad variations to help achieve advertising goals such as standing out, building trust, or boosting performance. Examples only.
+                              - link "See example" [ref=e2727]:
+                                - generic [ref=e2728] [cursor=pointer]:
+                                  - generic: See example
+                    - generic [ref=e2735]:
+                      - link "View ad variations" [ref=e2736]:
+                        - generic [ref=e2737] [cursor=pointer]:
+                          - generic: View ad variations
+                      - generic [ref=e2739]:
+                        - generic [ref=e2740]:
+                          - generic [ref=e2742]:
+                            - generic [ref=e2743]:
+                              - generic: Product name
+                            - generic [ref=e2745]: 
+                          - textbox [ref=e2750]:
+                            - /placeholder: Enter title
+                            - text: Home page– NEWGARMENTS
+                        - generic [ref=e2751]:
+                          - generic [ref=e2753]:
+                            - generic [ref=e2754]:
+                              - generic: Product image
+                            - generic [ref=e2756]: 
+                          - generic [ref=e2759]:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Only 10 product images can be selected at once. Remove at least one image to change your selections.
+                                - generic [ref=e2764] [cursor=pointer]: 
+                      - generic [ref=e2765]:
+                        - generic [ref=e2766]:
+                          - generic: Selling points
+                        - generic [ref=e2769]:
+                          - generic:
+                            - generic [ref=e2773]:
+                              - textbox "0/25" [ref=e2774]:
+                                - /placeholder: Press enter to add each entry
+                              - generic [ref=e2776]: 0/25
+                            - button "Confirm" [ref=e2778] [cursor=pointer]:
+                              - generic: Confirm
+                        - generic [ref=e2779]:
+                          - generic [ref=e2780]: "Suggestions:"
+                          - generic [ref=e2781] [cursor=pointer]:
+                            - generic [ref=e2782]: + x% off ,
+                            - generic [ref=e2783]: + Save $x ,
+                            - generic [ref=e2784]: + Limited-time offer ,
+                            - generic [ref=e2785]: + Best seller ,
+                            - generic [ref=e2786]: + x bought in past month ,
+                            - generic [ref=e2787]: + Top rated ,
+                            - generic [ref=e2788]: + Free returns ,
+                            - generic [ref=e2789]: + Climate-friendly
+                          - generic [ref=e2790] [cursor=pointer]: Show all
+                  - generic [ref=e2261]:
+                    - generic [ref=e2262]:
+                      - generic [ref=e2263]:
+                        - generic: Add promo code or offer
+                      - generic [ref=e2266]:
+                        - generic: Optional
+                      - generic [ref=e2267]:
+                        - generic:
+                          - generic: Highlight your promo codes and offers directly in your ads. Promo codes require shoppers to enter a code at checkout. Offers apply automatically — no code needed.
+                          - generic: Learn more
+                          - img [ref=e2269]
+                    - generic [ref=e2274]:
+                      - generic: Your offer details for promo codes, offers, or events will be highlighted to boost engagement and ad performance
+                    - button "Add" [ref=e2278] [cursor=pointer]:
+                      - generic:
+                        - img [ref=e2280]
+                        - text: Add
+                    - generic [ref=e2281]:
+                      - generic [ref=e2282]:
+                        - generic: Use eligible codes from other campaigns
+                      - img [ref=e2286] [cursor=pointer]
+                - generic [ref=e2292]:
+                  - generic [ref=e2294]:
+                    - generic [ref=e2295]:
+                      - generic: Call to action
+                    - img [ref=e2298]
+                  - generic [ref=e2303]:
+                    - generic [ref=e2304]:
+                      - generic: 10 calls to action applied
+                    - button [ref=e2308] [cursor=pointer]:
+                      - img [ref=e2310]
+                - text: 
+                - generic [ref=e2314]:
+                  - generic [ref=e2315]:
+                    - switch [ref=e2316] [cursor=pointer]:
+                      - checkbox
+                    - generic [ref=e2318]: Disclaimer
+                    - generic [ref=e2319] [cursor=pointer]: 
+                  - generic [ref=e2320]: Disclaimer will take effect on TikTok placements.
+                  - text: 
+                - generic [ref=e2323]:
+                  - generic [ref=e2325]:
+                    - generic [ref=e2326]:
+                      - generic: Automatic enhancements and display options
+                    - generic [ref=e2327]:
+                      - generic:
+                        - generic: Use automatic enhancements to boost the quality and engagement potential of your ads, ensuring they stay relevant and perform better.
+                        - generic: Learn more
+                        - img [ref=e2329]
+                  - generic [ref=e2334]:
+                    - generic [ref=e2335]:
+                      - generic [ref=e2336]:
+                        - generic:
+                          - generic [ref=e2337]: "Turned on:"
+                          - generic [ref=e2338]: None
+                      - generic [ref=e2339]:
+                        - generic:
+                          - generic [ref=e2340]: "Turned off:"
+                          - generic [ref=e2341]: Product display settings
+                    - img [ref=e2345] [cursor=pointer]
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Exit without saving changes?
+                        - generic:
+                          - generic:
+                            - generic: Exit without saving
+                          - generic:
+                            - generic: Continue editing
+                  - generic:
+                    - generic:
+                      - generic: Don’t show products from catalog?
+                      - generic:
+                        - generic:
+                          - generic: Cancel
+                        - generic:
+                          - generic: Confirm
+                - generic [ref=e2349]:
+                  - generic [ref=e2350] [cursor=pointer]:
+                    - generic [ref=e2351]: 
+                    - generic [ref=e2352]: Advanced settings
+                  - text:   
+            - generic [ref=e2359]:
+              - text: "0"
+              - generic [ref=e2360]:
+                - generic [ref=e2389]:
+                  - generic [ref=e2390]:
+                    - img [ref=e2395] [cursor=pointer]
+                    - img [ref=e2401]
+                    - img [ref=e2411]
+                    - img [ref=e2417]
+                    - img [ref=e2423]
+                  - button [ref=e2427] [cursor=pointer]:
+                    - img [ref=e2430]
+                - generic [ref=e2439]:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: Learn more
+                - generic [ref=e2792]: Since ad variations are automatically generated, your generated ad content may be slightly different than the preview.
+          - generic [ref=e2476]:
+            - generic [ref=e2477] [cursor=pointer]:
+              - generic [ref=e2478]: 
+              - generic [ref=e2479]: Tracking (optional)
+            - generic [ref=e2484]:
+              - generic [ref=e2486]:
+                - generic [ref=e2487]:
+                  - generic [ref=e2488]: TikTok events tracking
+                  - text: 
+                - generic [ref=e2489]:
+                  - generic [ref=e2492]:
+                    - generic [ref=e2494]: "App events:"
+                    - generic [ref=e2495]: "-"
+                  - generic [ref=e2498]:
+                    - generic [ref=e2500]: "Offline events:"
+                    - generic [ref=e2501]: "-"
+              - generic [ref=e2502]:
+                - generic [ref=e2503]: Third-party tracking settings
+                - generic [ref=e2505]:
+                  - generic [ref=e2506]:
+                    - generic [ref=e2507]: "Impression tracking URL: -"
+                    - generic [ref=e2508]: "Click tracking URL: -"
+                  - text: 
+          - generic [ref=e2512]:
+            - text: By clicking "Submit", you agree to
+            - generic [ref=e2513]:       TikTok's Online Data Terms
+            - text: and
+            - link "Advertising Credit Terms and Conditions" [ref=e2514] [cursor=pointer]:
+              - /url: /i18n/official/article?aid=10016914
+            - text: .
+        - generic [ref=e2516]:
+          - generic [ref=e2517]:
+            - text: Recommendation usage
+            - generic [ref=e2518] [cursor=pointer]: 
+          - generic [ref=e2519]:
+            - generic [ref=e2520]:
+              - img [ref=e2521]
+              - generic [ref=e2524]:
+                - generic:
+                  - generic:
+                    - generic: "0123456789"
+                - generic:
+                  - generic:
+                    - generic: "0123456789"
+            - generic [ref=e2525]: Ad group is partially optimized. For best results, apply all recommendations.
+          - generic [ref=e2526]:
+            - list [ref=e2528]:
+              - listitem [ref=e2529]:
+                - generic [ref=e2530]:
+                  - img [ref=e2532]
+                  - generic [ref=e2536]: Optimization and bidding
+              - listitem [ref=e2537]:
+                - generic [ref=e2538]:
+                  - img [ref=e2540]
+                  - generic [ref=e2544]: Budget and schedule
+                - alert [ref=e2546]:
+                  - generic [ref=e2547]:
+                    - generic [ref=e2549]:
+                      - img [ref=e2550]
+                      - generic [ref=e2551]: Increase budget to 132.23 EUR
+                    - paragraph [ref=e2553]:
+                      - generic [ref=e2554]:
+                        - paragraph [ref=e2555]: By increasing your budget, this ad group will be fully supported to scale delivery and maximize performance.
+                        - generic [ref=e2556]:
+                          - button "Apply" [ref=e2557] [cursor=pointer]
+                          - button "Go to budget" [ref=e2558] [cursor=pointer]
+                    - text: 
+              - listitem [ref=e2559]:
+                - generic [ref=e2560]:
+                  - img [ref=e2562]
+                  - generic [ref=e2566]: Audience targeting
+              - listitem [ref=e2567]:
+                - generic [ref=e2568]:
+                  - img [ref=e2570]
+                  - generic [ref=e2574]: Placements
+              - listitem [ref=e2575]:
+                - generic [ref=e2576]:
+                  - img [ref=e2578]
+                  - generic [ref=e2582]: Creative assets
+                - alert [ref=e2584]:
+                  - generic [ref=e2585]:
+                    - generic [ref=e2587]:
+                      - img [ref=e2588]
+                      - generic [ref=e2589]: Add 6 more creatives
+                    - paragraph [ref=e2591]:
+                      - generic [ref=e2592]:
+                        - paragraph [ref=e2593]: By adding more creative assets, you'll be able to maximize ad group efficiency and reduce creative fatigue.
+                        - button "Add creatives" [ref=e2595] [cursor=pointer]
+                    - text: 
+            - generic [ref=e2596] [cursor=pointer]:
+              - generic [ref=e2597]: 
+              - generic [ref=e2598]: View less
+      - generic [ref=e2599]:    
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Split test summary
+            - generic:
+              - generic: If everything looks good, you can publish campaign B, which will complete the creation of your split test.
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Campaign A
+                      - generic: Original campaign.
+                    - generic:
+                      - generic: Campaign B
+                      - generic: Campaign used for comparison.
+                    - generic:
+                      - generic: Campaign name
+                    - generic:
+                      - generic: Advertising objective
+                    - generic:
+                      - generic: Budget strategy
+                    - generic:
+                      - generic: Ad group
+                    - generic:
+                      - generic: Ad group
+                    - generic:
+                      - generic: Campaign budget
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic: Cancel split test?
+              - generic:
+                - generic:
+                  - generic: Cancel test
+                - generic:
+                  - generic: Keep test
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic: Split test details
+              - generic:
+                - generic: Make sure all details are correct before proceeding.
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Today
+                      - generic: Next
+                  - generic:
+                    - generic:
+                      - text: .
+                      - generic:
+                        - generic:
+                          - text: This time zone is based on your ad account settings.
+                          - generic: Learn more
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Select
+              - generic:
+                - generic: Back
+                - generic: Save and continue
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: Your Smart+ campaign is being created
+                  - generic: If you close this window, the new campaign will be saved as a draft in your campaign list.
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Manual and Smart+ campaigns are now a unified workflow
+            - generic:
+              - generic: Learn more
+            - generic: Compatible settings stay the same
+            - generic: Any original settings that are compatible with Smart+ will stay the same.
+            - generic: Enjoy Smart+ automation
+            - generic: We may automate placements, bidding, budget strategy, or targeting settings with options to customize.
+            - generic: Keep manual control
+            - generic: Manually input and customize settings that matter to you.
+          - generic:
+            - generic:
+              - generic: Don't show again
+            - generic: Got it
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Manual and Smart+ campaigns are now a unified workflow
+            - generic:
+              - generic: Learn more
+            - generic: Compatible settings stay the same
+            - generic: Any original settings that are compatible with Smart+ will stay the same.
+            - generic: Enjoy Smart+ automation
+            - generic: We may automate placements, bidding, budget strategy, or targeting settings with options to customize.
+            - generic: Keep manual control
+            - generic: Manually input and customize settings that matter to you.
+          - generic:
+            - generic:
+              - generic: Don't show again
+            - generic: Got it
+  - generic [ref=e272]:
+    - img [ref=e274]
+    - generic [ref=e277] [cursor=pointer]:
+      - generic [ref=e279]: u
+      - generic [ref=e280]: user2161494559212
+      - img [ref=e282]
+    - generic [ref=e288]:
+      - generic [ref=e289]:
+        - button "Ads Manager" [ref=e290] [cursor=pointer]:
+          - img [ref=e293]
+          - generic [ref=e296]: Ads Manager
+        - button "Business Center" [ref=e297] [cursor=pointer]:
+          - img [ref=e300]
+          - generic [ref=e305]: Business Center
+        - button "Leads Center" [ref=e306] [cursor=pointer]:
+          - img [ref=e309]
+          - generic [ref=e313]: Leads Center
+        - button "App Center" [ref=e314] [cursor=pointer]:
+          - img [ref=e317]
+          - generic [ref=e322]: App Center
+        - button "Events Manager" [ref=e323] [cursor=pointer]:
+          - img [ref=e326]
+          - generic [ref=e331]: Events Manager
+      - status [ref=e332]
+      - generic [ref=e333] [cursor=pointer]:
+        - img [ref=e335]
+        - generic [ref=e339]: All tools

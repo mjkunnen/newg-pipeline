@@ -1,0 +1,67 @@
+{% comment %}
+  NEWGARMENTS — Dynamic product sorting via URL parameter
+
+  Usage: /collections/all?top=heavyweight-hoodie-black,cargo-pants-olive
+
+  This moves products matching the given handles to the top of the grid.
+  Paste this into a "Custom Liquid" section on your collection template,
+  or add it to your collection.liquid / main-collection.liquid template.
+{% endcomment %}
+
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const topHandles = params.get('top');
+  if (!topHandles) return;
+
+  const handles = topHandles.split(',').map(h => h.trim().toLowerCase());
+
+  // Wait for DOM to be ready
+  function reorderProducts() {
+    // Find the product grid — adapt selector to your theme
+    const grid = document.querySelector(
+      '.collection-product-list, .product-grid, .grid--collection, [data-collection-products], .collection__products, #product-grid, .ProductList'
+    );
+    if (!grid) {
+      console.warn('[NEWG] Product grid not found. Update the selector in collection-top-sort.liquid');
+      return;
+    }
+
+    // Find all product cards
+    const cards = Array.from(grid.children);
+    const matched = [];
+    const rest = [];
+
+    // Sort: matched handles first (in order), then the rest
+    handles.forEach(handle => {
+      const card = cards.find(c => {
+        const link = c.querySelector('a[href*="/products/"]');
+        if (!link) return false;
+        const href = link.getAttribute('href');
+        return href.includes('/products/' + handle);
+      });
+      if (card) matched.push(card);
+    });
+
+    cards.forEach(card => {
+      if (!matched.includes(card)) rest.push(card);
+    });
+
+    // Reorder DOM
+    [...matched, ...rest].forEach(card => grid.appendChild(card));
+
+    // Optional: add a subtle highlight to promoted products
+    matched.forEach(card => {
+      card.style.order = '-1';
+      card.dataset.promoted = 'true';
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', reorderProducts);
+  } else {
+    // Small delay for themes that render products async
+    setTimeout(reorderProducts, 500);
+  }
+})();
+</script>

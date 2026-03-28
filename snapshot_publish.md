@@ -1,0 +1,843 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e32]:
+    - generic [ref=e34]:
+      - generic [ref=e39] [cursor=pointer]:
+        - img [ref=e41]
+        - generic [ref=e43]: u
+      - generic [ref=e44]:
+        - generic [ref=e46] [cursor=pointer]:
+          - img "TikTok Logo" [ref=e47]
+          - generic [ref=e48]: Ads Manager
+        - list [ref=e50]:
+          - listitem [ref=e51] [cursor=pointer]:
+            - generic [ref=e55]:
+              - generic: Dashboard
+          - listitem [ref=e56] [cursor=pointer]:
+            - generic [ref=e60]:
+              - generic: Campaigns
+          - listitem [ref=e61] [cursor=pointer]:
+            - generic [ref=e62]:
+              - generic:
+                - generic: Audience
+                - generic:
+                  - generic: Audience Manager
+                - generic:
+                  - generic: Comments Manager
+                - generic: Creative
+                - generic:
+                  - generic: Creative Library
+                - generic:
+                  - generic: Instant page
+                - generic:
+                  - generic: Video editor
+                  - generic: New
+                - generic:
+                  - generic: TikTok Symphony
+                - generic:
+                  - generic: Creative inspiration
+                - generic:
+                  - generic: Ad Preview Tool
+                  - generic: New
+                - generic: Management
+                - generic:
+                  - generic: Recommendation Center
+                - generic:
+                  - generic: Catalog Manager
+                - generic:
+                  - generic: Automated rules
+                - generic:
+                  - generic: Events Manager
+                - generic:
+                  - generic: Leads Center
+                - generic:
+                  - generic: MMM Data Request
+                - generic:
+                  - generic: Pangle brand safety
+                - generic:
+                  - generic: Mission manager
+                - generic: Search Center
+                - generic:
+                  - generic: Keyword planner
+                  - generic: New
+                - generic:
+                  - generic: Negative keywords
+                - generic:
+                  - generic: Search ads inspiration
+                  - generic: New
+                - generic: Settings
+                - generic:
+                  - generic: Account setup
+                - generic:
+                  - generic: Audience controls
+                - generic:
+                  - generic: Brand safety hub
+                - generic:
+                  - generic: Documents
+                - generic:
+                  - generic: Payments
+                - generic [ref=e65]:
+                  - generic: Tools
+          - listitem [ref=e66] [cursor=pointer]:
+            - generic [ref=e67]:
+              - generic:
+                - generic:
+                  - generic: Custom reports
+                - generic:
+                  - generic: Experiment manager
+                - generic:
+                  - generic: Attribution analytics
+                - generic:
+                  - generic: Audience insights
+                - generic:
+                  - generic: Comment insights
+                - generic:
+                  - generic: Creative inspirations
+                - generic:
+                  - generic: Video insights
+                - generic [ref=e70]:
+                  - generic: Analytics
+      - generic [ref=e77]:
+        - img [ref=e82] [cursor=pointer]
+        - generic [ref=e89] [cursor=pointer]:
+          - img [ref=e92]
+          - generic [ref=e97]:
+            - generic: 9+
+        - img [ref=e102] [cursor=pointer]
+        - generic [ref=e110] [cursor=pointer]:
+          - generic [ref=e111]:
+            - generic: MJK Products0705
+          - img [ref=e113]
+  - generic:
+    - generic [ref=e117] [cursor=pointer]:
+      - img [ref=e119]
+      - generic [ref=e126]: Ad Assistant
+    - generic:
+      - generic:
+        - generic:
+          - generic: I have reviewed and will abide by TikTok's Anti-Discrimination Ad Policy and all applicable laws.
+        - generic:
+          - generic: I will not use TikTok Advertising for any wrongfully discriminatory practices.
+        - generic: Accept
+  - generic [ref=e127]:
+    - generic [ref=e130]:
+      - generic:
+        - generic: ": Published. We recommend not making any changes to this campaign, as edits won't be synced to campaign B and may impact the effectiveness of your split test."
+        - generic: View & Edit
+      - generic [ref=e131]:
+        - generic [ref=e136] [cursor=pointer]: NEWGARMENTS - Nicos Pieces - 2026-03-23
+        - generic [ref=e601]:
+          - generic [ref=e603] [cursor=pointer]:
+            - generic [ref=e605]: 
+            - generic [ref=e609]: Ad group 20260323080411
+          - generic [ref=e3021] [cursor=pointer]:
+            - generic [ref=e3024]: Ad name2026-03-23 08:15:13
+            - generic [ref=e3025]:
+              - generic [ref=e3027]: 
+              - generic [ref=e3028]:
+                - text:  
+                - img [ref=e3030]
+              - generic [ref=e4797]: 
+      - generic:
+        - generic: The test version of your campaign can be created after this existing one has been published.
+    - generic [ref=e146]:
+      - generic [ref=e3039]:
+        - generic [ref=e3040]:
+          - generic [ref=e3041]:
+            - generic [ref=e3042]:
+              - img [ref=e3043]
+              - generic [ref=e3045]:
+                - generic [ref=e3046]: "We've made some updates to streamline your workflow:"
+                - list [ref=e3047]:
+                  - listitem [ref=e3048]: Selecting an identity now comes after you've chosen your creative.
+                  - listitem [ref=e3049]: Identity is no longer required when using a creator's TikTok post for Spark Ads.
+                  - listitem [ref=e3050]: All authorized TikTok posts now appear under a new tab in the creative drawer.
+            - generic [ref=e3051]: 
+          - generic [ref=e3052]:
+            - generic [ref=e3054]: Ad name
+            - textbox "Enter ad name" [ref=e3064]: Ad name2026-03-23 08:15:13
+          - generic [ref=e3065]:
+            - generic [ref=e3066] [cursor=pointer]:
+              - generic [ref=e3067]: 
+              - generic [ref=e3068]: Ad setup
+            - generic [ref=e4613]:
+              - generic [ref=e4614]:
+                - text: Scale ad creation with information from your catalog
+                - link "Learn more" [ref=e4615] [cursor=pointer]:
+                  - /url: /help/article/catalogs?redirected=1
+              - generic [ref=e4617]:
+                - generic [ref=e4618]:
+                  - generic [ref=e4619]: Catalog
+                  - generic [ref=e4620] [cursor=pointer]: 
+                  - generic [ref=e4621]: Shared setting
+                - generic [ref=e4632]:
+                  - generic [ref=e4634]:
+                    - textbox "Select a catalog" [ref=e4635] [cursor=pointer]: MJK Products0705
+                    - generic [ref=e4637]: 
+                  - text:   
+                - generic [ref=e4639]:
+                  - generic [ref=e4641]:
+                    - text: Products
+                    - generic [ref=e4642] [cursor=pointer]: 
+                  - generic [ref=e4646]:
+                    - textbox "Select" [ref=e4647] [cursor=pointer]: All products
+                    - generic [ref=e4649] [cursor=pointer]: 
+                - text: 
+              - button "Switch to manual ad setup" [ref=e4652] [cursor=pointer]:
+                - generic:
+                  - text: Switch to manual ad setup
+                  - img [ref=e4655]
+          - generic [ref=e3078]:
+            - generic [ref=e3080]:
+              - generic [ref=e3081]:
+                - generic [ref=e3082]: Create ads
+                - generic [ref=e3083]: Ads will be generated based on combinations of your videos and ad texts, and the high-performing combinations will be automatically delivered.
+              - generic [ref=e3086]:
+                - generic [ref=e3092]:
+                  - generic [ref=e3094]:
+                    - text: Destination URL
+                    - generic [ref=e3095] [cursor=pointer]: 
+                  - generic [ref=e3097]:
+                    - text: You agree that TikTok can regularly access, use, and modify all information at the URL (images, videos, etc.) and related pages to help you develop and improve your ads, optimize campaigns, and provide recommendations. All such information is considered 'Your Content' and is subject to the
+                    - link "TikTok for Business Commercial Terms of Service" [ref=e3098] [cursor=pointer]:
+                      - /url: https://ads.tiktok.com/i18n/official/policy/commercial-terms-of-service
+                    - text: .
+                  - generic [ref=e3102]:
+                    - generic [ref=e4521]:
+                      - text: https://newgarments.store/collections/nicos-pieces-1 ?
+                      - generic [ref=e4525] [cursor=pointer]: "&utm_source=tiktok"
+                      - generic [ref=e4529] [cursor=pointer]: "&utm_id=__CAMPAIGN_ID__"
+                      - generic [ref=e4533] [cursor=pointer]: "&utm_campaign=__CAMPAIGN_NAME__"
+                      - generic [ref=e4537] [cursor=pointer]: "&utm_medium=paid"
+                    - generic [ref=e4538]:
+                      - generic [ref=e4539]: 
+                      - text: Suggested parameters added
+                  - generic [ref=e3106]:
+                    - button " Build URL parameters" [ref=e3107] [cursor=pointer]:
+                      - generic [ref=e3108]:
+                        - generic [ref=e3109]: 
+                        - text: Build URL parameters
+                    - button " Preview" [ref=e4540] [cursor=pointer]:
+                      - generic [ref=e4541]:
+                        - generic [ref=e4542]: 
+                        - text: Preview
+                  - generic [ref=e3111]:
+                    - generic [ref=e3113]: Added URL parameters
+                    - generic [ref=e3114]: 4 UTM parameters
+                - generic:
+                  - generic:  
+                - generic [ref=e3120]:
+                  - generic [ref=e3121]:
+                    - text: Creative assets (5/50)
+                    - generic [ref=e3122] [cursor=pointer]: 
+                  - generic [ref=e3123]:
+                    - button " Edit selections" [ref=e3124] [cursor=pointer]:
+                      - generic [ref=e3125]: 
+                      - generic [ref=e3126]: Edit selections
+                    - button " Create new videos" [ref=e3127] [cursor=pointer]:
+                      - generic [ref=e3128]: 
+                      - generic [ref=e3129]: Create new videos
+                  - generic [ref=e3131]:
+                    - generic [ref=e3132]:
+                      - generic [ref=e4545]:
+                        - img [ref=e4548]
+                        - generic [ref=e4552]:
+                          - generic [ref=e4554]: We've updated recommendations based on the changes you made to your campaign.
+                          - link "See options" [ref=e4557]:
+                            - generic [ref=e4559] [cursor=pointer]: See options
+                        - button [ref=e4563] [cursor=pointer]:
+                          - img [ref=e4565]
+                      - alert [ref=e3134]:
+                        - generic [ref=e3136]:
+                          - img [ref=e3140]
+                          - generic [ref=e3143]:
+                            - generic [ref=e3144]:
+                              - generic: Images and videos from your catalog will also be used in your ads. To change this, edit creative assets.
+                            - link "Preview catalog creative ads" [ref=e3146]:
+                              - generic [ref=e3147] [cursor=pointer]:
+                                - generic: Preview catalog creative ads
+                      - generic [ref=e4568]:
+                        - generic [ref=e4658]:
+                          - generic [ref=e4662]:
+                            - generic [ref=e4663]:
+                              - img [ref=e4664]
+                              - img [ref=e4666]
+                            - generic [ref=e4668]:
+                              - generic [ref=e4669]:
+                                - generic [ref=e4671] [cursor=pointer]:
+                                  - generic [ref=e4672]:
+                                    - img [ref=e4673]
+                                    - generic [ref=e4674]: NEWGARMENTS
+                                  - generic [ref=e4676]: Free worldwide shipping + archive sale
+                                - generic [ref=e4677]: 00:10 · 1080x1942
+                              - generic [ref=e4681]: TikTok post
+                          - generic [ref=e4685]:
+                            - generic [ref=e4686]:
+                              - img [ref=e4687]
+                              - img [ref=e4689]
+                            - generic [ref=e4691]:
+                              - generic [ref=e4692]:
+                                - generic [ref=e4694] [cursor=pointer]:
+                                  - generic [ref=e4695]:
+                                    - img [ref=e4696]
+                                    - generic [ref=e4697]: NEWGARMENTS
+                                  - generic [ref=e4699]: The first 10 comments will get a surprise!
+                                - generic [ref=e4700]: 00:11 · 1080x1942
+                              - generic [ref=e4704]: TikTok post
+                          - generic [ref=e4708]:
+                            - generic [ref=e4709]:
+                              - img [ref=e4710]
+                              - img [ref=e4712]
+                            - generic [ref=e4714]:
+                              - generic [ref=e4715]:
+                                - generic [ref=e4717] [cursor=pointer]:
+                                  - generic [ref=e4718]:
+                                    - img [ref=e4719]
+                                    - generic [ref=e4720]: NEWGARMENTS
+                                  - generic [ref=e4722]: Drop it not meant for everyone. Be fast or be gone.
+                                - generic [ref=e4723]: 00:10 · 1080x1936
+                              - generic [ref=e4727]: TikTok post
+                          - generic [ref=e4731]:
+                            - generic [ref=e4732]:
+                              - img [ref=e4733]
+                              - img [ref=e4735]
+                            - generic [ref=e4737]:
+                              - generic [ref=e4738]:
+                                - generic [ref=e4740] [cursor=pointer]:
+                                  - generic [ref=e4741]:
+                                    - img [ref=e4742]
+                                    - generic [ref=e4743]: NEWGARMENTS
+                                  - generic [ref=e4745]: Drop is not meant for everyone. Be fast or be gone.
+                                - generic [ref=e4746]: 00:10 · 1080x1936
+                              - generic [ref=e4750]: TikTok post
+                          - generic [ref=e4754]:
+                            - generic [ref=e4755]:
+                              - img [ref=e4756]
+                              - img [ref=e4758]
+                            - generic [ref=e4760]:
+                              - generic [ref=e4761]:
+                                - generic [ref=e4763] [cursor=pointer]:
+                                  - generic [ref=e4764]:
+                                    - img [ref=e4765]
+                                    - generic [ref=e4766]: NEWGARMENTS
+                                  - generic [ref=e4768]: Just dropped these...
+                                - generic [ref=e4769]: 00:12 · 2160x3884
+                              - generic [ref=e4773]: TikTok post
+                        - generic [ref=e4570]: Catalog creatives and 5 other creative assets selected
+                      - generic [ref=e4571]: You agree to regularly review auto-generated assets in the creative library during your campaign, and remove any inaccurate or inappropriate content. TikTok does not guarantee the accuracy of any auto-generated assets, and you agree to be responsible for any liability resulting from your use of them.
+                    - text: 
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Video
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic:
+                                          - generic: Image
+                                  - generic:
+                                    - generic: Video templates and video URLs
+                                  - generic:
+                                    - generic: Manage templates
+                                - generic: Including all creative types is recommended and may improve your campaign's performance
+                        - generic:
+                          - generic:
+                            - generic: Cancel
+                          - generic:
+                            - generic: Save
+                    - generic: 
+                - generic [ref=e3154]:
+                  - generic [ref=e3155]:
+                    - generic [ref=e3157]: Identity and text for your Video and Image
+                    - generic [ref=e3158]: Your TikTok posts in this campaign will use the creator's original identity and text, not yours.
+                  - generic [ref=e3160]:
+                    - generic [ref=e3162]:
+                      - generic [ref=e3164]:
+                        - text: Identity
+                        - generic [ref=e3165] [cursor=pointer]: 
+                      - generic [ref=e3167]:
+                        - generic [ref=e3170]:
+                          - generic [ref=e3172]:
+                            - textbox "Select an identity" [ref=e3173] [cursor=pointer]: NEWGARMENTS
+                            - img "NEWGARMENTS" [ref=e3175]
+                            - generic [ref=e3177]: 
+                          - text:   
+                        - generic [ref=e3179]: Your ads won't be posted to your TikTok profile
+                    - alert [ref=e3181]:
+                      - img [ref=e3183]
+                      - generic [ref=e3187]:
+                        - generic [ref=e3188]: Custom identity is no longer supported. Using a TikTok account maximizes ad engagement and helps people find and engage with your brand.
+                        - generic [ref=e3189] [cursor=pointer]: 
+                    - generic [ref=e3191]:
+                      - generic [ref=e3193]:
+                        - generic [ref=e3195]:
+                          - 'generic "Ad text: Make every word count" [ref=e3196]': Text
+                          - generic [ref=e3197] [cursor=pointer]: 
+                        - generic [ref=e3201] [cursor=pointer]:
+                          - textbox "Enter text for your ad" [ref=e3204]
+                          - generic [ref=e3205]:
+                            - generic:
+                              - generic: 
+                            - generic [ref=e3206]: 0/100
+                        - generic [ref=e4798]: "Text must be between 1 and 100 characters. (For Chinese, Japanese or Korean: 1-50 fullwidth characters or 1- 100 halfwidth)"
+                      - button " Add text" [ref=e3209] [cursor=pointer]:
+                        - generic [ref=e3210]: 
+                        - generic [ref=e3211]: Add text
+                - generic [ref=e3219]:
+                  - generic [ref=e3220]:
+                    - generic [ref=e3221]:
+                      - generic: Add promo code or offer
+                    - generic [ref=e3224]:
+                      - generic: Optional
+                    - generic [ref=e3225]:
+                      - generic:
+                        - generic: Highlight your promo codes and offers directly in your ads. Promo codes require shoppers to enter a code at checkout. Offers apply automatically — no code needed.
+                        - generic: Learn more
+                        - img [ref=e3227]
+                  - generic [ref=e3232]:
+                    - generic: Your offer details for promo codes, offers, or events will be highlighted to boost engagement and ad performance
+                  - button "Add" [ref=e3236] [cursor=pointer]:
+                    - generic:
+                      - img [ref=e3238]
+                      - text: Add
+                  - generic [ref=e3239]:
+                    - generic [ref=e3240]:
+                      - generic: Use eligible codes from other campaigns
+                    - img [ref=e3244] [cursor=pointer]
+                - generic [ref=e3250]:
+                  - generic [ref=e3252]:
+                    - generic [ref=e3253]:
+                      - generic: Call to action
+                    - img [ref=e3256]
+                  - generic [ref=e3261]:
+                    - generic [ref=e3262]:
+                      - generic: 10 calls to action applied
+                    - button [ref=e3266] [cursor=pointer]:
+                      - img [ref=e3268]
+                - generic [ref=e4775]:
+                  - generic [ref=e4776]:
+                    - switch [ref=e4781] [cursor=pointer]
+                    - generic [ref=e4783]:
+                      - text: Music sharing
+                      - generic [ref=e4784]:
+                        - generic:
+                          - generic: When turned on, audiences will be able to use the music or sound of your ad in their own TikTok content. A dedicated page will be created for your sound where it can be favorited, shared, and saved, helping to increase reach and engagement.
+                          - img [ref=e4786] [cursor=pointer]
+                  - generic [ref=e4789]: Allow the music or sounds in your ad to be used in other TikTok content.
+                - generic [ref=e3272]:
+                  - generic [ref=e3273]:
+                    - switch [ref=e3274] [cursor=pointer]:
+                      - checkbox
+                    - generic [ref=e3276]: Disclaimer
+                    - generic [ref=e3277] [cursor=pointer]: 
+                  - generic [ref=e3278]: Disclaimer will take effect on TikTok placements.
+                  - text: 
+                - generic [ref=e3770]:
+                  - generic [ref=e3772]:
+                    - generic [ref=e3773]:
+                      - generic: Automatic enhancements and display options
+                    - generic [ref=e3774]:
+                      - generic:
+                        - generic: Use automatic enhancements to boost the quality and engagement potential of your ads, ensuring they stay relevant and perform better.
+                        - generic: Learn more
+                        - img [ref=e3776]
+                  - generic [ref=e3781]:
+                    - generic [ref=e3782]:
+                      - generic [ref=e3783]:
+                        - generic:
+                          - generic [ref=e3784]: "Turned on:"
+                          - generic [ref=e3785]: Product display settings, Automatic backgrounds, Image quality, Resize
+                      - generic [ref=e3786]:
+                        - generic:
+                          - generic [ref=e3787]: "Turned off:"
+                          - generic [ref=e3788]: Carousel template editor, Translate and dub, Video quality, Music refresh
+                    - img [ref=e3792] [cursor=pointer]
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Exit without saving changes?
+                        - generic:
+                          - generic:
+                            - generic: Exit without saving
+                          - generic:
+                            - generic: Continue editing
+                  - generic:
+                    - generic:
+                      - generic: Don’t show products from catalog?
+                      - generic:
+                        - generic:
+                          - generic: Cancel
+                        - generic:
+                          - generic: Confirm
+                - generic [ref=e3279]:
+                  - generic [ref=e3280] [cursor=pointer]:
+                    - generic [ref=e3281]: 
+                    - generic [ref=e3282]: Advanced settings
+                  - text:   
+            - generic [ref=e3289]:
+              - text: "0"
+              - generic [ref=e3290]:
+                - generic:
+                  - tablist [ref=e3292]:
+                    - generic [ref=e3293]:
+                      - generic [ref=e3296]:
+                        - tab "Creative" [ref=e3297] [cursor=pointer]:
+                          - generic [ref=e3298]: Creative
+                        - tab "Catalog creative" [selected] [ref=e3299] [cursor=pointer]:
+                          - generic [ref=e3300]: Catalog creative
+                      - generic:
+                        - generic:
+                          - tabpanel
+                  - generic [ref=e3302]:
+                    - generic [ref=e3303]:
+                      - generic [ref=e3306]: Images from your catalog
+                      - generic [ref=e3307]: Text 1
+                    - generic [ref=e3308]:
+                      - img [ref=e3311]
+                      - generic [ref=e3313]: 1 / 2
+                      - img [ref=e3316] [cursor=pointer]
+                - generic [ref=e3319]:
+                  - img [ref=e3325] [cursor=pointer]
+                  - button [ref=e3329] [cursor=pointer]:
+                    - img [ref=e3332]
+                - generic [ref=e3341]:
+                  - generic [ref=e3345]:
+                    - generic [ref=e3346]:
+                      - generic [ref=e3347]:
+                        - generic: Preview products
+                      - img [ref=e3349]
+                    - generic [ref=e3357] [cursor=pointer]:
+                      - textbox "Preview products" [ref=e3363]
+                      - img [ref=e3367]
+                  - generic [ref=e3376]:
+                    - generic:
+                      - generic: In feed
+                      - generic: Search result
+                    - generic [ref=e3379] [cursor=pointer]:
+                      - text: .
+                      - generic [ref=e3382]: In feed
+                      - img [ref=e3387]
+                  - generic [ref=e3395]:
+                    - generic [ref=e3418]:
+                      - generic [ref=e3419]:
+                        - generic [ref=e3420]: 9:41
+                        - generic [ref=e3421]:
+                          - img [ref=e3424]
+                          - img [ref=e3428]
+                          - img [ref=e3432]
+                      - generic [ref=e3437]:
+                        - generic [ref=e3440]:
+                          - generic [ref=e3441]: Following
+                          - generic [ref=e3442]: For You
+                        - img [ref=e3446]
+                    - generic:
+                      - generic [ref=e3449]:
+                        - generic:
+                          - generic: NEWGARMENTS
+                          - generic:
+                            - generic:
+                              - generic:
+                                - img
+                            - generic: Photo
+                        - generic [ref=e3452]: Your text will be shown here
+                        - generic:
+                          - generic:
+                            - generic: Sponsored
+                      - button "Buy it now" [ref=e3455]:
+                        - generic [ref=e3456]: Buy it now
+                    - generic [ref=e3457]:
+                      - generic [ref=e3458]:
+                        - img [ref=e3460]
+                        - img [ref=e3463]
+                      - generic [ref=e3466]:
+                        - generic [ref=e3467]:
+                          - img [ref=e3470]
+                          - generic [ref=e3473]: 991K
+                        - generic [ref=e3474]:
+                          - img [ref=e3477]
+                          - generic [ref=e3480]: "3456"
+                        - generic [ref=e3481]:
+                          - img [ref=e3484]
+                          - generic [ref=e3487]: "810"
+                        - generic [ref=e3488]:
+                          - img [ref=e3491]
+                          - generic [ref=e3494]: "1256"
+                    - generic [ref=e3497]:
+                      - generic [ref=e3498]:
+                        - img [ref=e3501]
+                        - generic [ref=e3503]: Home
+                      - generic [ref=e3504]:
+                        - img [ref=e3507]
+                        - generic [ref=e3512]: Friends
+                      - img [ref=e3516]
+                      - generic [ref=e3521]:
+                        - img [ref=e3524]
+                        - generic [ref=e3528]: Inbox
+                      - generic [ref=e3529]:
+                        - img [ref=e3532]
+                        - generic [ref=e3534]: Me
+                  - generic [ref=e3537]:
+                    - generic [ref=e3544] [cursor=pointer]: Display content safe zone
+                    - generic [ref=e3546]:
+                      - generic:
+                        - generic: Learn more
+                      - img [ref=e3550]
+                - generic [ref=e3562]:
+                  - img [ref=e3565]
+                  - generic [ref=e3567]:
+                    - textbox [ref=e3572]: "1"
+                    - generic [ref=e3573]: /
+                    - text: "3"
+                  - img [ref=e3576] [cursor=pointer]
+                - generic [ref=e3579]: Since ad variations are automatically generated, your generated ad content may be slightly different than the preview.
+          - generic [ref=e3580]:
+            - generic [ref=e3581] [cursor=pointer]:
+              - generic [ref=e3582]: 
+              - generic [ref=e3583]: Tracking (optional)
+            - generic [ref=e3588]:
+              - generic [ref=e3590]:
+                - generic [ref=e3591]:
+                  - generic [ref=e3592]: TikTok events tracking
+                  - text: 
+                - generic [ref=e3593]:
+                  - generic [ref=e3596]:
+                    - generic [ref=e3598]: "App events:"
+                    - generic [ref=e3599]: "-"
+                  - generic [ref=e3602]:
+                    - generic [ref=e3604]: "Offline events:"
+                    - generic [ref=e3605]: "-"
+              - generic [ref=e3606]:
+                - generic [ref=e3607]: Third-party tracking settings
+                - generic [ref=e3609]:
+                  - generic [ref=e3610]:
+                    - generic [ref=e3611]: "Impression tracking URL: -"
+                    - generic [ref=e3612]: "Click tracking URL: -"
+                  - text: 
+          - generic [ref=e3616]:
+            - text: By clicking "Submit", you agree to
+            - generic [ref=e3617]:       TikTok's Online Data Terms
+            - text: and
+            - link "Advertising Credit Terms and Conditions" [ref=e3618] [cursor=pointer]:
+              - /url: /i18n/official/article?aid=10016914
+            - text: .
+        - generic [ref=e3620]:
+          - generic [ref=e3621]:
+            - text: Recommendation usage
+            - generic [ref=e3622] [cursor=pointer]: 
+          - generic [ref=e3623]:
+            - generic [ref=e3624]:
+              - img [ref=e3625]
+              - generic [ref=e3628]:
+                - generic:
+                  - generic:
+                    - generic: "0123456789"
+                - generic:
+                  - generic:
+                    - generic: "0123456789"
+            - generic [ref=e3629]: Ad group is partially optimized. For best results, apply all recommendations.
+          - generic [ref=e3630]:
+            - list [ref=e3632]:
+              - listitem [ref=e3633]:
+                - generic [ref=e3634]:
+                  - img [ref=e3636]
+                  - generic [ref=e3640]: Optimization and bidding
+              - listitem [ref=e3641]:
+                - generic [ref=e3642]:
+                  - img [ref=e3644]
+                  - generic [ref=e3648]: Budget and schedule
+                - alert [ref=e3650]:
+                  - generic [ref=e3651]:
+                    - generic [ref=e3653]:
+                      - img [ref=e3654]
+                      - generic [ref=e3655]: Increase budget to 132.13 EUR
+                    - paragraph [ref=e3657]:
+                      - generic [ref=e3658]:
+                        - paragraph [ref=e3659]: By increasing your budget, this ad group will be fully supported to scale delivery and maximize performance.
+                        - generic [ref=e3660]:
+                          - button "Apply" [ref=e3661] [cursor=pointer]
+                          - button "Go to budget" [ref=e3662] [cursor=pointer]
+                    - text: 
+              - listitem [ref=e3663]:
+                - generic [ref=e3664]:
+                  - img [ref=e3666]
+                  - generic [ref=e3670]: Audience targeting
+              - listitem [ref=e3671]:
+                - generic [ref=e3672]:
+                  - img [ref=e3674]
+                  - generic [ref=e3678]: Placements
+              - listitem [ref=e3679]:
+                - generic [ref=e3680]:
+                  - img [ref=e3682]
+                  - generic [ref=e3686]: Creative assets
+                - alert [ref=e3688]:
+                  - generic [ref=e3689]:
+                    - generic [ref=e3691]:
+                      - img [ref=e3692]
+                      - generic [ref=e3693]: Add 1 more creatives
+                    - paragraph [ref=e3695]:
+                      - generic [ref=e3696]:
+                        - paragraph [ref=e3697]: By adding more creative assets, you'll be able to maximize ad group efficiency and reduce creative fatigue.
+                        - button "Add creatives" [ref=e3699] [cursor=pointer]
+                    - text: 
+            - generic [ref=e3700] [cursor=pointer]:
+              - generic [ref=e3701]: 
+              - generic [ref=e3702]: View less
+      - generic [ref=e3704]:
+        - generic [ref=e3706]:
+          - generic [ref=e3707]:
+            - button "Exit" [ref=e3708] [cursor=pointer]:
+              - generic [ref=e3709]: Exit
+            - button "" [ref=e3710] [cursor=pointer]:
+              - generic [ref=e3712]: 
+          - generic [ref=e3714] [cursor=pointer]:
+            - text: Draft saved
+            - generic [ref=e3715]: 
+          - text:  
+        - generic [ref=e3716]:
+          - generic [ref=e4800] [cursor=pointer]:
+            - generic [ref=e4801]: 
+            - generic [ref=e4802]: 1 error
+          - button "Publish all" [ref=e3721] [cursor=pointer]
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Split test summary
+            - generic:
+              - generic: If everything looks good, you can publish campaign B, which will complete the creation of your split test.
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Campaign A
+                      - generic: Original campaign.
+                    - generic:
+                      - generic: Campaign B
+                      - generic: Campaign used for comparison.
+                    - generic:
+                      - generic: Campaign name
+                    - generic:
+                      - generic: Advertising objective
+                    - generic:
+                      - generic: Budget strategy
+                    - generic:
+                      - generic: Ad group
+                    - generic:
+                      - generic: Ad group
+                    - generic:
+                      - generic: Campaign budget
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic: Cancel split test?
+              - generic:
+                - generic:
+                  - generic: Cancel test
+                - generic:
+                  - generic: Keep test
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic: Split test details
+              - generic:
+                - generic: Make sure all details are correct before proceeding.
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Today
+                      - generic: Next
+                  - generic:
+                    - generic:
+                      - text: .
+                      - generic:
+                        - generic:
+                          - text: This time zone is based on your ad account settings.
+                          - generic: Learn more
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Select
+              - generic:
+                - generic: Back
+                - generic: Save and continue
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: Your Smart+ campaign is being created
+                  - generic: If you close this window, the new campaign will be saved as a draft in your campaign list.
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Manual and Smart+ campaigns are now a unified workflow
+            - generic:
+              - generic: Learn more
+            - generic: Compatible settings stay the same
+            - generic: Any original settings that are compatible with Smart+ will stay the same.
+            - generic: Enjoy Smart+ automation
+            - generic: We may automate placements, bidding, budget strategy, or targeting settings with options to customize.
+            - generic: Keep manual control
+            - generic: Manually input and customize settings that matter to you.
+          - generic:
+            - generic:
+              - generic: Don't show again
+            - generic: Got it
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Manual and Smart+ campaigns are now a unified workflow
+            - generic:
+              - generic: Learn more
+            - generic: Compatible settings stay the same
+            - generic: Any original settings that are compatible with Smart+ will stay the same.
+            - generic: Enjoy Smart+ automation
+            - generic: We may automate placements, bidding, budget strategy, or targeting settings with options to customize.
+            - generic: Keep manual control
+            - generic: Manually input and customize settings that matter to you.
+          - generic:
+            - generic:
+              - generic: Don't show again
+            - generic: Got it
+  - generic [ref=e272]:
+    - img [ref=e274]
+    - generic [ref=e277] [cursor=pointer]:
+      - generic [ref=e279]: u
+      - generic [ref=e280]: user2161494559212
+      - img [ref=e282]
+    - generic [ref=e288]:
+      - generic [ref=e289]:
+        - button "Ads Manager" [ref=e290] [cursor=pointer]:
+          - img [ref=e293]
+          - generic [ref=e296]: Ads Manager
+        - button "Business Center" [ref=e297] [cursor=pointer]:
+          - img [ref=e300]
+          - generic [ref=e305]: Business Center
+        - button "Leads Center" [ref=e306] [cursor=pointer]:
+          - img [ref=e309]
+          - generic [ref=e313]: Leads Center
+        - button "App Center" [ref=e314] [cursor=pointer]:
+          - img [ref=e317]
+          - generic [ref=e322]: App Center
+        - button "Events Manager" [ref=e323] [cursor=pointer]:
+          - img [ref=e326]
+          - generic [ref=e331]: Events Manager
+      - status [ref=e332]
+      - generic [ref=e333] [cursor=pointer]:
+        - img [ref=e335]
+        - generic [ref=e339]: All tools

@@ -1,0 +1,308 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e32]:
+    - generic [ref=e34]:
+      - generic [ref=e39] [cursor=pointer]:
+        - img [ref=e41]
+        - generic [ref=e43]: u
+      - generic [ref=e44]:
+        - generic [ref=e46] [cursor=pointer]:
+          - img "TikTok Logo" [ref=e47]
+          - generic [ref=e48]: Ads Manager
+        - list [ref=e50]:
+          - listitem [ref=e51] [cursor=pointer]:
+            - generic [ref=e55]:
+              - generic: Dashboard
+          - listitem [ref=e56] [cursor=pointer]:
+            - generic [ref=e60]:
+              - generic: Campaigns
+          - listitem [ref=e61] [cursor=pointer]:
+            - generic [ref=e62]:
+              - generic:
+                - generic: Audience
+                - generic:
+                  - generic: Audience Manager
+                - generic:
+                  - generic: Comments Manager
+                - generic: Creative
+                - generic:
+                  - generic: Creative Library
+                - generic:
+                  - generic: Instant page
+                - generic:
+                  - generic: Video editor
+                  - generic: New
+                - generic:
+                  - generic: TikTok Symphony
+                - generic:
+                  - generic: Creative inspiration
+                - generic:
+                  - generic: Ad Preview Tool
+                  - generic: New
+                - generic: Management
+                - generic:
+                  - generic: Recommendation Center
+                - generic:
+                  - generic: Catalog Manager
+                - generic:
+                  - generic: Automated rules
+                - generic:
+                  - generic: Events Manager
+                - generic:
+                  - generic: Leads Center
+                - generic:
+                  - generic: MMM Data Request
+                - generic:
+                  - generic: Pangle brand safety
+                - generic:
+                  - generic: Mission manager
+                - generic: Search Center
+                - generic:
+                  - generic: Keyword planner
+                  - generic: New
+                - generic:
+                  - generic: Negative keywords
+                - generic:
+                  - generic: Search ads inspiration
+                  - generic: New
+                - generic: Settings
+                - generic:
+                  - generic: Account setup
+                - generic:
+                  - generic: Audience controls
+                - generic:
+                  - generic: Brand safety hub
+                - generic:
+                  - generic: Documents
+                - generic:
+                  - generic: Payments
+                - generic [ref=e65]:
+                  - generic: Tools
+          - listitem [ref=e66] [cursor=pointer]:
+            - generic [ref=e67]:
+              - generic:
+                - generic:
+                  - generic: Custom reports
+                - generic:
+                  - generic: Experiment manager
+                - generic:
+                  - generic: Attribution analytics
+                - generic:
+                  - generic: Audience insights
+                - generic:
+                  - generic: Comment insights
+                - generic:
+                  - generic: Creative inspirations
+                - generic:
+                  - generic: Video insights
+                - generic [ref=e70]:
+                  - generic: Analytics
+      - generic [ref=e77]:
+        - img [ref=e82] [cursor=pointer]
+        - generic [ref=e89] [cursor=pointer]:
+          - img [ref=e92]
+          - generic [ref=e97]:
+            - generic: 9+
+        - img [ref=e102] [cursor=pointer]
+        - generic [ref=e110] [cursor=pointer]:
+          - generic [ref=e111]:
+            - generic: MJK Products0705
+          - img [ref=e113]
+  - generic:
+    - generic [ref=e117] [cursor=pointer]:
+      - img [ref=e119]
+      - generic [ref=e126]: Ad Assistant
+    - generic:
+      - generic:
+        - generic:
+          - generic: I have reviewed and will abide by TikTok's Anti-Discrimination Ad Policy and all applicable laws.
+        - generic:
+          - generic: I will not use TikTok Advertising for any wrongfully discriminatory practices.
+        - generic: Accept
+  - generic [ref=e127]:
+    - generic [ref=e130]:
+      - generic:
+        - generic: ": Published. We recommend not making any changes to this campaign, as edits won't be synced to campaign B and may impact the effectiveness of your split test."
+        - generic: View & Edit
+      - generic [ref=e131]:
+        - generic [ref=e133] [cursor=pointer]:
+          - generic [ref=e136]: NEWGARMENTS - Choose Your Style - 24/03
+          - generic [ref=e7170]: 
+        - generic [ref=e588]:
+          - generic [ref=e590]:
+            - generic [ref=e592] [cursor=pointer]: 
+            - generic [ref=e593]:
+              - generic [ref=e596]: Ad group 20260324042935
+              - generic [ref=e7172]: 
+          - generic [ref=e2024] [cursor=pointer]:
+            - generic [ref=e2027]: Ad name2026-03-24 04:34:35
+            - generic [ref=e2028]:
+              - generic [ref=e2030]: 
+              - generic [ref=e2031]:
+                - text:  
+                - img [ref=e2033]
+              - generic [ref=e7174]: 
+      - generic:
+        - generic: The test version of your campaign can be created after this existing one has been published.
+    - generic [ref=e2036]:
+      - generic [ref=e7177]: Ad name2026-03-24 04:34:35 has been published
+      - text:                                       
+    - dialog [ref=e7158]:
+      - generic [ref=e7178]:
+        - generic [ref=e7180]: Campaign published
+        - generic [ref=e7181]: Your ad has been created and will now be reviewed.
+        - generic [ref=e7182]:
+          - img [ref=e7184]
+          - generic [ref=e7186]:
+            - heading "Set up a Post Purchase Survey to measure the impact of your campaign" [level=3] [ref=e7187]
+            - generic [ref=e7188]: Collect feedback from customers immediately after they make a purchase to learn more about how people discover your brand and leverage these insights to make informed campaign optimizations
+          - generic [ref=e7189]:
+            - checkbox "Don't show again" [ref=e7191] [cursor=pointer]:
+              - generic [ref=e7194]: Don't show again
+            - generic [ref=e7195]:
+              - button "Not now" [ref=e7196] [cursor=pointer]:
+                - generic [ref=e7197]: Not now
+              - button "Try it out" [ref=e7198] [cursor=pointer]:
+                - generic [ref=e7199]: Try it out
+    - generic:
+      - generic: 
+      - text: 
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Split test summary
+            - generic:
+              - generic: If everything looks good, you can publish campaign B, which will complete the creation of your split test.
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Campaign A
+                      - generic: Original campaign.
+                    - generic:
+                      - generic: Campaign B
+                      - generic: Campaign used for comparison.
+                    - generic:
+                      - generic: Campaign name
+                    - generic:
+                      - generic: Advertising objective
+                    - generic:
+                      - generic: Budget strategy
+                    - generic:
+                      - generic: Ad group
+                    - generic:
+                      - generic: Ad group
+                    - generic:
+                      - generic: Campaign budget
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic: Cancel split test?
+              - generic:
+                - generic:
+                  - generic: Cancel test
+                - generic:
+                  - generic: Keep test
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic: Split test details
+              - generic:
+                - generic: Make sure all details are correct before proceeding.
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Today
+                      - generic: Next
+                  - generic:
+                    - generic:
+                      - text: .
+                      - generic:
+                        - generic:
+                          - text: This time zone is based on your ad account settings.
+                          - generic: Learn more
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Select
+              - generic:
+                - generic: Back
+                - generic: Save and continue
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: Your Smart+ campaign is being created
+                  - generic: If you close this window, the new campaign will be saved as a draft in your campaign list.
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Manual and Smart+ campaigns are now a unified workflow
+            - generic:
+              - generic: Learn more
+            - generic: Compatible settings stay the same
+            - generic: Any original settings that are compatible with Smart+ will stay the same.
+            - generic: Enjoy Smart+ automation
+            - generic: We may automate placements, bidding, budget strategy, or targeting settings with options to customize.
+            - generic: Keep manual control
+            - generic: Manually input and customize settings that matter to you.
+          - generic:
+            - generic:
+              - generic: Don't show again
+            - generic: Got it
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Manual and Smart+ campaigns are now a unified workflow
+            - generic:
+              - generic: Learn more
+            - generic: Compatible settings stay the same
+            - generic: Any original settings that are compatible with Smart+ will stay the same.
+            - generic: Enjoy Smart+ automation
+            - generic: We may automate placements, bidding, budget strategy, or targeting settings with options to customize.
+            - generic: Keep manual control
+            - generic: Manually input and customize settings that matter to you.
+          - generic:
+            - generic:
+              - generic: Don't show again
+            - generic: Got it
+  - generic [ref=e272]:
+    - img [ref=e274]
+    - generic [ref=e277] [cursor=pointer]:
+      - generic [ref=e279]: u
+      - generic [ref=e280]: user2161494559212
+      - img [ref=e282]
+    - generic [ref=e288]:
+      - generic [ref=e289]:
+        - button "Ads Manager" [ref=e290] [cursor=pointer]:
+          - img [ref=e293]
+          - generic [ref=e296]: Ads Manager
+        - button "Business Center" [ref=e297] [cursor=pointer]:
+          - img [ref=e300]
+          - generic [ref=e305]: Business Center
+        - button "Leads Center" [ref=e306] [cursor=pointer]:
+          - img [ref=e309]
+          - generic [ref=e313]: Leads Center
+        - button "App Center" [ref=e314] [cursor=pointer]:
+          - img [ref=e317]
+          - generic [ref=e322]: App Center
+        - button "Events Manager" [ref=e323] [cursor=pointer]:
+          - img [ref=e326]
+          - generic [ref=e331]: Events Manager
+      - status [ref=e332]
+      - generic [ref=e333] [cursor=pointer]:
+        - img [ref=e335]
+        - generic [ref=e339]: All tools
+  - text: 

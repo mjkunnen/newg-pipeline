@@ -1,0 +1,105 @@
+<h2>Google Drive Folder Structuur</h2>
+<p class="subtitle">Hoe Jerson zijn remakes organiseert zodat het systeem weet welk platform + landing page</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Folder per platform</h3>
+      <p>Jerson dropt files in de juiste folder. Naming convention voor landing page.</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-header">Google Drive</div>
+        <div class="mockup-body" style="font-family:monospace;font-size:13px;line-height:2;color:#ccc">
+          <div>📁 <b>NEWG Remakes/</b></div>
+          <div style="padding-left:20px">📁 <b>2026-03-23/</b></div>
+          <div style="padding-left:40px">📁 <b>meta/</b></div>
+          <div style="padding-left:60px">📄 decarba_0__newgarments.nl-hoodies.mp4</div>
+          <div style="padding-left:60px">📄 decarba_2__newgarments.nl-clogs.jpg</div>
+          <div style="padding-left:40px">📁 <b>tiktok/</b></div>
+          <div style="padding-left:60px">📄 decarba_1__newgarments.nl-sale.mp4</div>
+          <div style="padding-left:60px">📄 decarba_3__newgarments.nl-new.mp4</div>
+          <div style="padding-left:40px">📁 <b>both/</b></div>
+          <div style="padding-left:60px">📄 decarba_6__newgarments.nl-joggers.jpg</div>
+          <div style="padding-left:12px;color:#666;margin-top:8px">Landing page = alles na "__" in filename<br>Platform = folder naam (meta / tiktok / both)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Google Sheet als index</h3>
+      <p>Jerson dropt alles in 1 folder. Een Sheet linkt elke file aan platform + landing page.</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-header">Google Sheet: "Remake Tracker"</div>
+        <div class="mockup-body" style="font-size:12px;color:#ccc">
+          <table style="width:100%;border-collapse:collapse;text-align:left">
+            <tr style="border-bottom:1px solid #333;color:#888">
+              <th style="padding:6px">Ad ID</th>
+              <th style="padding:6px">File</th>
+              <th style="padding:6px">Platform</th>
+              <th style="padding:6px">Landing Page</th>
+              <th style="padding:6px">Status</th>
+            </tr>
+            <tr style="border-bottom:1px solid #222">
+              <td style="padding:6px">decarba_0</td>
+              <td style="padding:6px;color:#4af">remake_0.mp4</td>
+              <td style="padding:6px">Meta</td>
+              <td style="padding:6px">newgarments.nl/hoodies</td>
+              <td style="padding:6px;color:#4a4">✓ Ready</td>
+            </tr>
+            <tr style="border-bottom:1px solid #222">
+              <td style="padding:6px">decarba_2</td>
+              <td style="padding:6px;color:#4af">remake_2.jpg</td>
+              <td style="padding:6px">Both</td>
+              <td style="padding:6px">newgarments.nl/clogs</td>
+              <td style="padding:6px;color:#4a4">✓ Ready</td>
+            </tr>
+            <tr style="border-bottom:1px solid #222">
+              <td style="padding:6px">decarba_6</td>
+              <td style="padding:6px;color:#888">—</td>
+              <td style="padding:6px;color:#888">—</td>
+              <td style="padding:6px;color:#888">—</td>
+              <td style="padding:6px;color:#a44">⏳ Pending</td>
+            </tr>
+          </table>
+          <div style="color:#666;margin-top:8px;font-size:11px">Jerson vult de kolommen in. Script leest de Sheet dagelijks.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Dashboard form + Drive upload</h3>
+      <p>Jerson vult platform + landing page in op het dashboard zelf, upload gaat naar Drive.</p>
+      <div class="mockup" style="margin-top:12px">
+        <div class="mockup-header">Dashboard — Ad Card (expanded)</div>
+        <div class="mockup-body" style="font-size:13px;color:#ccc">
+          <div style="display:flex;gap:16px;align-items:start">
+            <div style="width:100px;height:100px;background:#222;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#555;font-size:11px">THUMB</div>
+            <div style="flex:1">
+              <div style="color:#fff;font-weight:bold;margin-bottom:4px">decarba_0 — VIDEO</div>
+              <div style="color:#888;font-size:12px;margin-bottom:12px">Reach: 181K · 4 days active</div>
+              <div style="margin-bottom:8px">
+                <label style="color:#888;font-size:11px;display:block;margin-bottom:4px">DRIVE LINK</label>
+                <input class="mock-input" placeholder="https://drive.google.com/..." style="width:100%">
+              </div>
+              <div style="margin-bottom:8px">
+                <label style="color:#888;font-size:11px;display:block;margin-bottom:4px">LANDING PAGE</label>
+                <input class="mock-input" placeholder="https://newgarments.nl/..." style="width:100%">
+              </div>
+              <div style="margin-bottom:8px;display:flex;gap:8px">
+                <label style="color:#888;font-size:11px;display:flex;align-items:center;gap:4px"><input type="checkbox" checked> Meta</label>
+                <label style="color:#888;font-size:11px;display:flex;align-items:center;gap:4px"><input type="checkbox"> TikTok</label>
+              </div>
+              <button class="mock-button" style="background:#ff4d00;border:none;color:#fff;padding:8px 16px;border-radius:6px;font-size:12px">✓ Markeer als klaar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

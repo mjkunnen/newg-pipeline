@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWG Creative Hub — Mockup v3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #e8e4df;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  .screen-label {
+    text-align: center;
+    padding: 48px 20px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+  }
+  .screen-label span { color: #aaa; margin: 0 6px; }
+
+  .phone-frame {
+    max-width: 420px;
+    margin: 0 auto 64px;
+    background: #f7f5f2;
+    border-radius: 28px;
+    border: 1px solid #ddd8d2;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  /* ===== SCREEN 1: LOGIN ===== */
+  .login-screen {
+    padding: 80px 36px;
+    text-align: center;
+    background: #f7f5f2;
+  }
+  .login-logo {
+    font-size: 44px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+  }
+  .login-logo span { color: #e04400; }
+  .login-sub {
+    font-size: 11px;
+    color: #999;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 56px;
+  }
+  .login-label {
+    font-size: 10px;
+    color: #aaa;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .login-btn {
+    display: block;
+    width: 100%;
+    padding: 16px 18px;
+    background: #fff;
+    border: 1px solid #e5e0db;
+    border-radius: 14px;
+    color: #1a1a1a;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 10px;
+    text-align: left;
+    position: relative;
+  }
+  .login-btn::after {
+    content: '→';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ccc;
+    transition: all 0.2s ease;
+  }
+  .login-btn:hover {
+    border-color: #e04400;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(224,68,0,0.08);
+  }
+  .login-btn:hover::after { color: #e04400; }
+  .login-btn.secondary { color: #aaa; }
+
+  /* ===== SCREEN 2: DATES ===== */
+  .dates-header {
+    padding: 20px 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .dates-brand {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #1a1a1a;
+  }
+  .dates-brand span { color: #e04400; }
+  .avatar {
+    width: 30px;
+    height: 30px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .dates-title {
+    padding: 24px 20px 4px;
+    font-size: 24px;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+  .dates-subtitle {
+    padding: 0 20px 20px;
+    font-size: 13px;
+    color: #999;
+  }
+
+  .date-card {
+    margin: 0 12px 8px;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #ece8e3;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .date-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transform: translateY(-1px);
+  }
+  .date-card.today {
+    border-color: #e0440033;
+  }
+  .date-card.today::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: #e04400;
+    border-radius: 0 2px 2px 0;
+  }
+  .date-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 8px;
+  }
+  .date-name { font-size: 15px; font-weight: 700; color: #1a1a1a; }
+  .date-tag {
+    font-size: 9px; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 9px; border-radius: 6px;
+    display: inline-block; margin-top: 4px;
+  }
+  .tag-today { background: #e0440012; color: #e04400; }
+  .tag-done { background: #16a34a12; color: #16a34a; }
+  .date-meta { font-size: 12px; color: #999; display: flex; gap: 10px; }
+  .count-big {
+    font-size: 22px; font-weight: 800; color: #1a1a1a;
+  }
+  .count-big .of { color: #ccc; font-weight: 400; }
+  .count-big.done-num { color: #16a34a; }
+
+  .progress-bar {
+    margin-top: 14px; height: 3px;
+    background: #eee; border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill { height: 100%; border-radius: 2px; }
+  .fill-partial { background: linear-gradient(90deg, #e04400, #ff6b2b); }
+  .fill-done { background: #16a34a; }
+
+  /* ===== SCREEN 3: DETAIL ===== */
+  .detail-header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ece8e3;
+    background: #fff;
+  }
+  .detail-back {
+    font-size: 13px; color: #e04400; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 4px;
+  }
+  .detail-date { font-size: 13px; color: #666; font-weight: 600; }
+
+  .detail-progress {
+    padding: 16px 20px 8px;
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: #999; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .detail-progress strong { color: #e04400; }
+
+  /* Ad cards */
+  .ad-card {
+    margin: 10px 12px;
+    background: #fff;
+    border: 1px solid #ece8e3;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .ad-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  .ad-card.done { border-color: #16a34a33; background: #f9fdf9; }
+
+  .ad-top { display: flex; gap: 14px; padding: 16px; }
+  .ad-thumb {
+    width: 72px; height: 72px;
+    background: #f0ece7;
+    border-radius: 12px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .ad-badge {
+    position: absolute; bottom: 4px; right: 4px;
+    font-size: 7px; font-weight: 800; letter-spacing: 1px;
+    padding: 2px 6px; border-radius: 4px;
+  }
+  .badge-video { background: #e04400; color: #fff; }
+  .badge-image { background: #fff; color: #888; border: 1px solid #ddd; }
+
+  .ad-info { flex: 1; min-width: 0; }
+  .ad-title-row {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 4px;
+  }
+  .ad-id { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+  .ad-status {
+    font-size: 9px; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 9px; border-radius: 6px;
+  }
+  .status-open { background: #f5f0eb; color: #b8860b; }
+  .status-done { background: #16a34a14; color: #16a34a; }
+  .ad-copy {
+    font-size: 12px; color: #888; line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .ad-stats {
+    display: flex; gap: 14px;
+    font-size: 11px; color: #bbb;
+  }
+  .ad-stats strong { color: #666; font-weight: 600; }
+
+  .ad-ppspy {
+    display: flex; align-items: center; gap: 6px;
+    padding: 10px 16px;
+    border-top: 1px solid #f0ece7;
+    font-size: 12px; font-weight: 500;
+    color: #e04400;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .ad-ppspy:hover { background: #fdf8f5; }
+
+  /* Form */
+  .ad-form {
+    padding: 16px;
+    border-top: 1px solid #f0ece7;
+    background: #faf8f6;
+  }
+  .form-row { margin-bottom: 12px; }
+  .form-label {
+    font-size: 10px; font-weight: 600; color: #999;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%; padding: 11px 14px;
+    background: #fff;
+    border: 1px solid #e5e0db;
+    border-radius: 10px;
+    color: #1a1a1a;
+    font-family: inherit; font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: #e04400; }
+  .form-input::placeholder { color: #ccc; }
+
+  .form-platforms { display: flex; gap: 8px; }
+  .plat-btn {
+    flex: 1; padding: 10px;
+    background: #fff;
+    border: 1px solid #e5e0db;
+    border-radius: 10px;
+    color: #999;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    text-align: center;
+  }
+  .plat-btn:hover { border-color: #ccc; color: #666; }
+  .plat-btn.active {
+    border-color: #e04400;
+    background: #fef5f0;
+    color: #e04400;
+  }
+  .submit-btn {
+    width: 100%; padding: 13px;
+    background: #1a1a1a;
+    border: none; border-radius: 12px;
+    color: #fff;
+    font-family: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    margin-top: 4px; letter-spacing: 0.5px;
+  }
+  .submit-btn:hover {
+    background: #333;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+
+  .done-summary {
+    padding: 12px 16px;
+    border-top: 1px solid #e8f5e8;
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 11px; color: #999;
+  }
+  .done-summary a { color: #e04400; text-decoration: none; font-weight: 500; }
+  .done-summary .plat-tag { color: #16a34a; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1: LOGIN -->
+<div class="screen-label">Scherm 1 <span>—</span> Login</div>
+<div class="phone-frame">
+  <div class="login-screen">
+    <div class="login-logo">NEW<span>G</span></div>
+    <div class="login-sub">Creative Hub</div>
+    <div class="login-label">Selecteer je naam</div>
+    <button class="login-btn">Jerson</button>
+    <button class="login-btn secondary">Max</button>
+  </div>
+</div>
+
+<!-- SCREEN 2: DATES -->
+<div class="screen-label">Scherm 2 <span>—</span> Opdrachten</div>
+<div class="phone-frame">
+  <div class="dates-header">
+    <div class="dates-brand">NEW<span>G</span></div>
+    <div class="avatar">J</div>
+  </div>
+  <div class="dates-title">Opdrachten</div>
+  <div class="dates-subtitle">Decarba winning ads — dagelijks vernieuwd</div>
+
+  <div class="date-card today">
+    <div class="date-top">
+      <div>
+        <div class="date-name">Zondag 23 maart</div>
+        <div class="date-tag tag-today">VANDAAG</div>
+      </div>
+      <div class="count-big">2<span class="of">/5</span></div>
+    </div>
+    <div class="date-meta">
+      <span>5 creatives</span><span>·</span><span>3 video, 2 image</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill fill-partial" style="width:40%"></div></div>
+  </div>
+
+  <div class="date-card">
+    <div class="date-top">
+      <div><div class="date-name">Zaterdag 22 maart</div></div>
+      <div class="count-big done-num">4<span class="of">/4</span></div>
+    </div>
+    <div class="date-meta">
+      <span>4 creatives</span><span>·</span><span>Alles gelanceerd ✓</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill fill-done" style="width:100%"></div></div>
+  </div>
+
+  <div class="date-card">
+    <div class="date-top">
+      <div><div class="date-name">Vrijdag 21 maart</div></div>
+      <div class="count-big done-num">6<span class="of">/6</span></div>
+    </div>
+    <div class="date-meta">
+      <span>6 creatives</span><span>·</span><span>Alles gelanceerd ✓</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill fill-done" style="width:100%"></div></div>
+  </div>
+
+  <div style="height:20px"></div>
+</div>
+
+<!-- SCREEN 3: DAY DETAIL -->
+<div class="screen-label">Scherm 3 <span>—</span> Dag detail</div>
+<div class="phone-frame">
+  <div class="detail-header">
+    <div class="detail-back">← Terug</div>
+    <div class="detail-date">23 maart 2026</div>
+    <div style="width:50px"></div>
+  </div>
+
+  <div class="detail-progress">
+    <span>Voortgang</span>
+    <strong>2 / 5 klaar</strong>
+  </div>
+  <div style="margin:0 20px 6px;height:3px;background:#ece8e3;border-radius:2px;overflow:hidden">
+    <div style="width:40%;height:100%;background:linear-gradient(90deg,#e04400,#ff6b2b);border-radius:2px"></div>
+  </div>
+
+  <!-- DONE card -->
+  <div class="ad-card done">
+    <div class="ad-top">
+      <div class="ad-thumb">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg,#e8ddd0,#d5c8b8)"></div>
+        <div class="ad-badge badge-video">VIDEO</div>
+      </div>
+      <div class="ad-info">
+        <div class="ad-title-row">
+          <div class="ad-id">#1 — Video Ad</div>
+          <div class="ad-status status-done">KLAAR ✓</div>
+        </div>
+        <div class="ad-copy">NEW Collection is live. Sizes go fast 💨</div>
+        <div class="ad-stats">
+          <span><strong>303K</strong> reach</span>
+          <span><strong>3d</strong> active</span>
+        </div>
+      </div>
+    </div>
+    <a class="ad-ppspy" href="#">↗ Bekijk origineel op PPSpy</a>
+    <div class="done-summary">
+      <span>📎 <a href="#">drive.google.com/file/d/1x...</a></span>
+      <span>🔗 newgarments.nl/hoodies</span>
+      <span class="plat-tag">Meta · TikTok</span>
+    </div>
+  </div>
+
+  <!-- OPEN card with form -->
+  <div class="ad-card">
+    <div class="ad-top">
+      <div class="ad-thumb">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg,#ddd5cc,#c8bfb3)"></div>
+        <div class="ad-badge badge-image">IMAGE</div>
+      </div>
+      <div class="ad-info">
+        <div class="ad-title-row">
+          <div class="ad-id">#2 — Image Ad</div>
+          <div class="ad-status status-open">OPEN</div>
+        </div>
+        <div class="ad-copy">S'26 just got real. DCRB Wavey Clogs are LIVE — bold, durable...</div>
+        <div class="ad-stats">
+          <span><strong>370.5K</strong> reach</span>
+          <span><strong>7d</strong> active</span>
+        </div>
+      </div>
+    </div>
+    <a class="ad-ppspy" href="#">↗ Bekijk origineel op PPSpy</a>
+    <div class="ad-form">
+      <div class="form-row">
+        <div class="form-label">Google Drive Link</div>
+        <input class="form-input" placeholder="Plak hier je Drive link...">
+      </div>
+      <div class="form-row">
+        <div class="form-label">Landing Page</div>
+        <input class="form-input" placeholder="https://newgarments.nl/...">
+      </div>
+      <div class="form-row">
+        <div class="form-label">Platform</div>
+        <div class="form-platforms">
+          <button class="plat-btn active" onclick="this.classList.toggle('active')">Meta</button>
+          <button class="plat-btn" onclick="this.classList.toggle('active')">TikTok</button>
+          <button class="plat-btn" onclick="this.classList.toggle('active')">Beide</button>
+        </div>
+      </div>
+      <button class="submit-btn">Markeer als klaar</button>
+    </div>
+  </div>
+
+  <!-- OPEN card collapsed -->
+  <div class="ad-card">
+    <div class="ad-top">
+      <div class="ad-thumb">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg,#d8d0c6,#ccc3b7)"></div>
+        <div class="ad-badge badge-video">VIDEO</div>
+      </div>
+      <div class="ad-info">
+        <div class="ad-title-row">
+          <div class="ad-id">#3 — Video Ad</div>
+          <div class="ad-status status-open">OPEN</div>
+        </div>
+        <div class="ad-copy">Secure your new fit. 🔥 Up to 70% OFF End of Season Sale</div>
+        <div class="ad-stats">
+          <span><strong>235.4K</strong> reach</span>
+          <span><strong>7d</strong> active</span>
+        </div>
+      </div>
+    </div>
+    <a class="ad-ppspy" href="#">↗ Bekijk origineel op PPSpy</a>
+  </div>
+
+  <div style="height:20px"></div>
+</div>
+
+<div style="height:80px"></div>
+</body>
+</html>

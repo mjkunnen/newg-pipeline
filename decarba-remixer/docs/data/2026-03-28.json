@@ -3,6 +3,95 @@
   "competitor": "decarba",
   "ads": [
     {
+      "id": "tiktok_outfitinspostreet_7621645554019224854",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfitinspostreet_7621645554019224854.jpg",
+      "adCopy": "@outfitinspostreet — 11 slides — Fire fashion pieces🔥 | #streetwear #fashion #outfitinspo #menswear #fyp ",
+      "reach": 3224,
+      "reachFormatted": "3.2K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-26",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854.zip",
+      "suggestedProducts": [
+        {
+          "name": "'Structure' Graphic Knitted Sweater",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "'Weathered' Baggy Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "Ocean Stars Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide1.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide2.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide3.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide4.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide5.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide6.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide7.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide8.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide9.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide10.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7621645554019224854_slide11.jpg"
+      ]
+    },
+    {
+      "id": "tiktok_outfitinspostreet_7622068335663959318",
+      "type": "image",
+      "thumbPath": "thumbs/tiktok_outfitinspostreet_7622068335663959318.jpg",
+      "adCopy": "@outfitinspostreet — 10 slides — Chiic finds | #outfitinspo #fashion #streetwear #menswear #fyp ",
+      "reach": 3019,
+      "reachFormatted": "3.0K",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-27",
+      "platforms": [
+        "tiktok"
+      ],
+      "downloadUrl": "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318.zip",
+      "suggestedProducts": [
+        {
+          "name": "'Structure' Graphic Knitted Sweater",
+          "collection": "bestseller-tops",
+          "role": "top"
+        },
+        {
+          "name": "'Weathered' Baggy Jeans",
+          "collection": "bestseller-bottoms",
+          "role": "bottom"
+        },
+        {
+          "name": "Ocean Stars Sneaker",
+          "collection": "bestseller-shoes",
+          "role": "shoes"
+        }
+      ],
+      "slides": [
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide1.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide2.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide3.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide4.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide5.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide6.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide7.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide8.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide9.jpg",
+        "creatives/2026-03-28/tiktok_outfitinspostreet_7622068335663959318_slide10.jpg"
+      ]
+    },
+    {
       "id": "concept_elevator",
       "type": "video",
       "thumbPath": "",
@@ -12,7 +101,9 @@
       "reachCost": "",
       "daysActive": 0,
       "startDate": "2026-03-28",
-      "platforms": ["ai-video"],
+      "platforms": [
+        "ai-video"
+      ],
       "downloadUrl": "",
       "suggestedProducts": []
     },
@@ -26,7 +117,9 @@
       "reachCost": "",
       "daysActive": 0,
       "startDate": "2026-03-28",
-      "platforms": ["ai-video"],
+      "platforms": [
+        "ai-video"
+      ],
       "downloadUrl": "",
       "suggestedProducts": []
     },
@@ -40,7 +133,9 @@
       "reachCost": "",
       "daysActive": 0,
       "startDate": "2026-03-28",
-      "platforms": ["ai-video"],
+      "platforms": [
+        "ai-video"
+      ],
       "downloadUrl": "",
       "suggestedProducts": []
     }

@@ -1,0 +1,1094 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e32]:
+    - generic [ref=e34]:
+      - generic [ref=e39] [cursor=pointer]:
+        - img [ref=e41]
+        - generic [ref=e43]: u
+      - generic [ref=e44]:
+        - generic [ref=e46] [cursor=pointer]:
+          - img "TikTok Logo" [ref=e47]
+          - generic [ref=e48]: Ads Manager
+        - list [ref=e50]:
+          - listitem [ref=e51] [cursor=pointer]:
+            - generic [ref=e55]:
+              - generic: Dashboard
+          - listitem [ref=e56] [cursor=pointer]:
+            - generic [ref=e60]:
+              - generic: Campaigns
+          - listitem [ref=e61] [cursor=pointer]:
+            - generic [ref=e62]:
+              - generic:
+                - generic: Audience
+                - generic:
+                  - generic: Audience Manager
+                - generic:
+                  - generic: Comments Manager
+                - generic: Creative
+                - generic:
+                  - generic: Creative Library
+                - generic:
+                  - generic: Instant page
+                - generic:
+                  - generic: Video editor
+                  - generic: New
+                - generic:
+                  - generic: TikTok Symphony
+                - generic:
+                  - generic: Creative inspiration
+                - generic:
+                  - generic: Ad Preview Tool
+                  - generic: New
+                - generic: Management
+                - generic:
+                  - generic: Recommendation Center
+                - generic:
+                  - generic: Catalog Manager
+                - generic:
+                  - generic: Automated rules
+                - generic:
+                  - generic: Events Manager
+                - generic:
+                  - generic: Leads Center
+                - generic:
+                  - generic: MMM Data Request
+                - generic:
+                  - generic: Pangle brand safety
+                - generic:
+                  - generic: Mission manager
+                - generic: Search Center
+                - generic:
+                  - generic: Keyword planner
+                  - generic: New
+                - generic:
+                  - generic: Negative keywords
+                - generic:
+                  - generic: Search ads inspiration
+                  - generic: New
+                - generic: Settings
+                - generic:
+                  - generic: Account setup
+                - generic:
+                  - generic: Audience controls
+                - generic:
+                  - generic: Brand safety hub
+                - generic:
+                  - generic: Documents
+                - generic:
+                  - generic: Payments
+                - generic [ref=e65]:
+                  - generic: Tools
+          - listitem [ref=e66] [cursor=pointer]:
+            - generic [ref=e67]:
+              - generic:
+                - generic:
+                  - generic: Custom reports
+                - generic:
+                  - generic: Experiment manager
+                - generic:
+                  - generic: Attribution analytics
+                - generic:
+                  - generic: Audience insights
+                - generic:
+                  - generic: Comment insights
+                - generic:
+                  - generic: Creative inspirations
+                - generic:
+                  - generic: Video insights
+                - generic [ref=e70]:
+                  - generic: Analytics
+      - generic [ref=e77]:
+        - img [ref=e82] [cursor=pointer]
+        - generic [ref=e89] [cursor=pointer]:
+          - img [ref=e92]
+          - generic [ref=e97]:
+            - generic: 9+
+        - img [ref=e102] [cursor=pointer]
+        - generic [ref=e110] [cursor=pointer]:
+          - generic [ref=e111]:
+            - generic: MJK Products0705
+          - img [ref=e113]
+  - generic:
+    - generic [ref=e117] [cursor=pointer]:
+      - img [ref=e119]
+      - generic [ref=e126]: Ad Assistant
+    - generic:
+      - generic:
+        - generic:
+          - generic: I have reviewed and will abide by TikTok's Anti-Discrimination Ad Policy and all applicable laws.
+        - generic:
+          - generic: I will not use TikTok Advertising for any wrongfully discriminatory practices.
+        - generic: Accept
+  - generic [ref=e127]:
+    - generic [ref=e130]:
+      - generic:
+        - generic: ": Published. We recommend not making any changes to this campaign, as edits won't be synced to campaign B and may impact the effectiveness of your split test."
+        - generic: View & Edit
+      - generic [ref=e131]:
+        - generic [ref=e136] [cursor=pointer]: NEWGARMENTS - Nicos Pieces - 2026-03-25
+        - generic [ref=e607]:
+          - generic [ref=e609] [cursor=pointer]: 
+          - generic [ref=e610]:
+            - generic [ref=e613] [cursor=pointer]: Ad group 20260325080507
+            - generic [ref=e614]:
+              - generic [ref=e616] [cursor=pointer]: 
+              - generic [ref=e620]:
+                - text:   
+                - img [ref=e622] [cursor=pointer]
+      - generic:
+        - generic: The test version of your campaign can be created after this existing one has been published.
+    - generic [ref=e146]:
+      - generic [ref=e633]:
+        - generic [ref=e634]:
+          - generic [ref=e635]:
+            - generic [ref=e638] [cursor=pointer]:
+              - generic [ref=e640]:
+                - generic: Ad group name
+              - button [ref=e643]:
+                - img [ref=e645]
+            - generic [ref=e658]:
+              - generic [ref=e659]:
+                - textbox [ref=e664]:
+                  - /placeholder: Enter ad group name
+                  - text: Ad group 20260325080507
+                - generic [ref=e666]:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Create up to 20 reusable name templates to organize your ad groups.
+                            - generic:
+                              - generic:
+                                - generic: Create template
+                      - button "Template" [ref=e668] [cursor=pointer]:
+                        - generic:
+                          - text: Template
+                          - img [ref=e671]
+              - generic:
+                - generic:
+                  - generic: Delete this template?
+                  - generic:
+                    - generic:
+                      - generic: Cancel
+                    - generic:
+                      - generic: Confirm
+          - generic [ref=e673]:
+            - generic [ref=e676] [cursor=pointer]:
+              - generic [ref=e678]:
+                - generic: Optimization and bidding
+              - button [ref=e681]:
+                - img [ref=e683]
+            - generic [ref=e687]:
+              - generic:
+                - generic [ref=e688]:
+                  - generic [ref=e692]:
+                    - generic [ref=e696]:
+                      - generic: Optimization location
+                    - generic [ref=e701]:
+                      - generic:
+                        - generic [ref=e703]:
+                          - radio "Website Drive conversions on your website" [checked] [ref=e704]
+                          - generic [ref=e708] [cursor=pointer]:
+                            - generic:
+                              - text: Website
+                              - generic [ref=e709]: Drive conversions on your website
+                        - generic [ref=e711]:
+                          - radio "TikTok Instant Page Drive conversions on your TikTok Instant Page" [ref=e712]
+                          - generic [ref=e716] [cursor=pointer]:
+                            - generic:
+                              - text: TikTok Instant Page
+                              - generic [ref=e717]: Drive conversions on your TikTok Instant Page
+                  - generic [ref=e722]:
+                    - generic [ref=e726]:
+                      - generic: Goal
+                    - generic [ref=e731]:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Value
+                                  - generic: We'll deliver your ads to users that are more likely to make a purchase in order to maximize your total purchase value.
+                              - generic:
+                                - generic:
+                                  - generic: Conversion
+                                  - generic: We'll show your ads to the people who are most likely to carry out conversions.
+                              - generic:
+                                - generic:
+                                  - generic: Landing page view
+                                  - generic: We'll deliver your ads to the people most likely to land on your website.
+                              - generic:
+                                - generic:
+                                  - generic: Click
+                                  - generic: We'll deliver your ads to the people most likely to click on your ad.
+                          - generic [ref=e734] [cursor=pointer]:
+                            - generic [ref=e1146]:
+                              - generic: Conversion
+                            - img [ref=e739]
+                  - generic [ref=e743]:
+                    - generic [ref=e747]:
+                      - generic: Data connection
+                    - generic [ref=e752]:
+                      - generic:
+                        - generic:
+                          - generic: troubleshooting guide
+                      - generic:
+                        - generic: Refresh
+                        - generic: Get started
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: NEWGARMENTS US
+                                    - generic: Status
+                                    - generic: Activity received in the past 7 days.
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic: NEWGARMENTS US
+                                        - generic: Active
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: TikTok Pixel for Shopify 1725488148
+                                    - generic: Status
+                                    - generic: Activity received, but not in the past 7 days.
+                                    - generic:
+                                      - generic: Edit in events manager
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic: TikTok Pixel for Shopify 1725488148
+                                        - generic: No recent activity
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: TikTok Pixel for Shopify 1697996919
+                                    - generic: Status
+                                    - generic: Activity received in the past 7 days.
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic: TikTok Pixel for Shopify 1697996919
+                                        - generic: Active
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Refresh
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Create new
+                          - generic [ref=e755] [cursor=pointer]:
+                            - generic [ref=e1147]:
+                              - generic: TikTok Pixel for Shopify 1697996919
+                            - img [ref=e760]
+                  - generic [ref=e766]:
+                    - generic [ref=e770]:
+                      - generic: Optimization event
+                    - generic [ref=e775]:
+                      - generic: No event has been created under this pixel.Page view and custom event can't be used as an optimization event.
+                      - generic:
+                        - generic: Refresh
+                        - generic: Create new
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Description
+                                    - generic: When a person adds an item to their cart.
+                                    - generic: Status
+                                    - generic: Activity received in the past 7 days.
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic: Add to cart
+                                        - generic: Active
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Description
+                                    - generic: When a person starts the checkout process.
+                                    - generic: Status
+                                    - generic: Activity received in the past 7 days.
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic: Initiate checkout
+                                        - generic: Active
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Description
+                                    - generic: When a person purchases and makes a payment.
+                                    - generic: Status
+                                    - generic: Activity received in the past 7 days.
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic: Purchase
+                                        - generic: Active
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Description
+                                    - generic: When a person views a specific page.
+                                    - generic: Status
+                                    - generic: Activity received in the past 7 days.
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic: View content
+                                        - generic: Active
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Description
+                                    - generic: When a person adds payment information during checkout stage.
+                                    - generic: Status
+                                    - generic: Activity received, but not in the past 7 days.
+                                    - generic:
+                                      - generic: Edit in events manager
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic: Add payment info
+                                        - generic: No recent activity
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Description
+                                    - generic: When a person searches for something.
+                                    - generic: Status
+                                    - generic: Activity received, but not in the past 7 days.
+                                    - generic:
+                                      - generic: Edit in events manager
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic:
+                                        - generic: Search
+                                        - generic: No recent activity
+                          - generic:
+                            - generic:
+                              - generic: Missing event?
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Refresh
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic: Create new
+                          - generic [ref=e778] [cursor=pointer]:
+                            - generic [ref=e1154]:
+                              - generic: Purchase
+                            - img [ref=e785]
+                  - generic [ref=e788]:
+                    - generic [ref=e794]:
+                      - generic [ref=e796]:
+                        - switch [ref=e801] [cursor=pointer]
+                        - text: Set target CPA
+                      - generic [ref=e804]:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: Target CPA
+                                - generic: A target CPA (cost per action) ensures your average cost is stabilized around or lower than your bid, regardless of budget. This can help improve performance stability while efficiently scaling ad delivery.
+                                - generic:
+                                  - generic: Learn more
+                            - generic:
+                              - generic:
+                                - generic: Maximum delivery
+                                - generic: Maximum delivery drives the highest number of conversions possible within your budget. If you don't set a bid value, this strategy is applied by default. Keep in mind, your cost per result may fluctuate throughout your campaign.
+                                - generic:
+                                  - generic: Learn more
+                          - img [ref=e806]
+                      - generic [ref=e810]:
+                        - generic:
+                          - generic:
+                            - generic: Learn more
+                          - generic [ref=e812] [cursor=pointer]:
+                            - img [ref=e814]
+                            - generic [ref=e820]:
+                              - generic: Incentive offer
+                    - generic [ref=e826]:
+                      - img [ref=e829]
+                      - generic [ref=e834]:
+                        - generic: Set a target CPA to improve performance stability while efficiently scaling ad delivery.
+                      - button [ref=e838] [cursor=pointer]:
+                        - img [ref=e840]
+                - generic [ref=e843]:
+                  - link "More options" [ref=e845]:
+                    - generic [ref=e847] [cursor=pointer]:
+                      - generic [ref=e848]: More options
+                      - img [ref=e852]
+                  - generic [ref=e856]:
+                    - generic [ref=e859]:
+                      - generic [ref=e862]:
+                        - generic [ref=e864]:
+                          - generic:
+                            - generic:
+                              - generic: Introducing attribution settings
+                              - generic:
+                                - generic: You can now view and set up attribution for your ad group. This affects reporting and optimization for ads.
+                              - generic [ref=e865]: Attribution window
+                        - img [ref=e869]
+                      - generic [ref=e874]:
+                        - generic [ref=e875]:
+                          - generic: 7-day click,1-day view
+                        - button [ref=e878] [cursor=pointer]:
+                          - img [ref=e1156]
+                    - generic [ref=e881]:
+                      - generic [ref=e884]:
+                        - generic [ref=e885]:
+                          - generic: Event count
+                        - img [ref=e889]
+                      - generic [ref=e894]:
+                        - generic [ref=e895]:
+                          - generic: Every
+                        - button [ref=e898] [cursor=pointer]:
+                          - img [ref=e1161]
+                    - generic [ref=e901]:
+                      - generic [ref=e904]:
+                        - generic [ref=e905]:
+                          - generic: Billing event
+                        - img [ref=e909]
+                      - generic [ref=e915]:
+                        - generic: Impression (oCPM)
+                    - generic [ref=e918]:
+                      - generic [ref=e921]:
+                        - generic [ref=e922]:
+                          - generic: Delivery type
+                        - img [ref=e926]
+                      - generic [ref=e932]:
+                        - generic [ref=e933]:
+                          - generic: Standard
+                        - generic [ref=e934]:
+                          - generic: Your budget will be used as evenly as possible depending on market demand and peaktime rates. This delivery type is suitable for advertisers who prefer steady spending.
+          - generic [ref=e935]:
+            - generic [ref=e938] [cursor=pointer]:
+              - generic [ref=e940]:
+                - generic: Budget and schedule
+              - button [ref=e943]:
+                - img [ref=e945]
+            - generic [ref=e949]:
+              - generic:
+                - generic [ref=e950]:
+                  - generic [ref=e952]:
+                    - generic [ref=e956]:
+                      - generic: Budget
+                    - generic [ref=e959]:
+                      - generic [ref=e963]:
+                        - generic:
+                          - generic [ref=e969] [cursor=pointer]:
+                            - generic [ref=e1165]:
+                              - generic: Daily
+                            - img [ref=e974]
+                          - generic [ref=e981]:
+                            - textbox "EUR" [ref=e982]:
+                              - /placeholder: At least 20.00
+                              - text: "30.00"
+                            - generic [ref=e984]:
+                              - generic:
+                                - generic:
+                                  - generic: EUR
+                      - generic [ref=e986]:
+                        - text: You'll spend up to 37.50 EUR on some days, and less on others. You'll spend an average of 30.00 EUR per day and no more than 210.00 EUR per calendar week.
+                        - link "Learn more" [ref=e987]:
+                          - generic [ref=e990] [cursor=pointer]:
+                            - generic: Learn more
+                  - generic [ref=e1169]:
+                    - img [ref=e1173]
+                    - generic [ref=e1178]:
+                      - generic [ref=e1179]:
+                        - generic: Increase budget to 108.24 EUR
+                      - generic [ref=e1180]:
+                        - generic: Your current budget cannot sufficiently support this ad group, and performance may be impacted. We recommend using a budget of 108.24 EUR to safely pass the learning phase and ensure ad delivery is scaled effectively.
+                      - link "Apply" [ref=e1183]:
+                        - generic [ref=e1185] [cursor=pointer]: Apply
+                    - button [ref=e1189] [cursor=pointer]:
+                      - img [ref=e1191]
+                  - generic [ref=e992]:
+                    - generic [ref=e995]:
+                      - generic [ref=e996]:
+                        - generic: Schedule
+                      - img [ref=e1000]
+                    - generic [ref=e1008]:
+                      - generic:
+                        - generic [ref=e1010]:
+                          - radio "Set start time and run ad group continuously" [checked] [ref=e1011]
+                          - generic [ref=e1013]:
+                            - generic [ref=e1016] [cursor=pointer]:
+                              - generic: Set start time and run ad group continuously
+                            - generic [ref=e1018]:
+                              - generic [ref=e1024]:
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - text: This time zone is based on your ad account settings. (UTC+01:00) Central European Time (Netherlands)
+                                      - generic: Learn more
+                                    - generic:
+                                      - generic:
+                                        - generic: (UTC+01:00) Central European Time (Netherlands)
+                                  - generic:
+                                    - generic:
+                                      - generic: Today
+                                      - generic: Confirm
+                                  - generic [ref=e1026] [cursor=pointer]:
+                                    - text: .
+                                    - textbox "Select date" [ref=e1028]: Mar 25, 2026, 8:05 AM
+                                    - img [ref=e1031]
+                              - generic [ref=e1040] [cursor=pointer]:
+                                - generic [ref=e1194]:
+                                  - generic: (UTC+01:00) Central European Time (Netherlands)
+                                - img [ref=e1045]
+                        - generic [ref=e1048]:
+                          - radio "Set start and end time" [ref=e1049]
+                          - generic [ref=e1054] [cursor=pointer]:
+                            - generic: Set start and end time
+                - generic [ref=e1055]:
+                  - link "More options" [ref=e1057]:
+                    - generic [ref=e1059] [cursor=pointer]:
+                      - generic [ref=e1060]: More options
+                      - img [ref=e1064]
+                  - generic [ref=e1068]:
+                    - generic [ref=e1069]:
+                      - generic [ref=e1071]:
+                        - generic: Dayparting
+                      - generic [ref=e1074]:
+                        - generic:
+                          - generic [ref=e1078] [cursor=pointer]:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: All day
+                              - img [ref=e1081]
+                          - generic [ref=e1087] [cursor=pointer]:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Select specific time
+                              - img [ref=e1090]
+                    - generic [ref=e1093]:
+                      - generic:
+                        - generic: Confirm to turn off budget increases
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Once you confirm, your scheduled budget increases will be removed.
+                        - generic:
+                          - generic:
+                            - generic: Cancel
+                          - generic:
+                            - generic: Confirm
+                      - generic [ref=e1095]:
+                        - generic [ref=e1100]:
+                          - generic [ref=e1101]:
+                            - generic [ref=e1102]: Schedule budget increase
+                            - img [ref=e1105]
+                            - generic [ref=e1108]: New
+                          - switch [ref=e1112] [cursor=pointer]
+                        - generic [ref=e1114]:
+                          - generic [ref=e1115]: Increase your ad group budget on selected days to capture more traffic during important promotions.
+                          - generic:
+                            - generic: Delete this budget increase?
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Once you confirm, your scheduled budget increase won't be part of your campaign. No other budget increases will be affected.
+                            - generic:
+                              - generic:
+                                - generic: Cancel
+                              - generic:
+                                - generic: Confirm
+          - generic [ref=e1118]:
+            - generic [ref=e1120] [cursor=pointer]:
+              - generic [ref=e1195]:
+                - generic [ref=e1197]:
+                  - generic: Audience targeting
+                - button [ref=e1200]:
+                  - img [ref=e1202]
+              - generic [ref=e1205]:
+                - generic: Targeting is automatic by default. We'll automatically find audiences most likely to engage with your ads to achieve optimal performance.
+            - generic [ref=e1208]:
+              - generic:
+                - generic [ref=e1210]:
+                  - generic [ref=e1212] [cursor=pointer]:
+                    - generic [ref=e1213]:
+                      - generic [ref=e1214]:
+                        - img [ref=e1218]
+                        - generic [ref=e1220]:
+                          - generic: Audience controls
+                      - img [ref=e1223]
+                    - generic [ref=e1229]:
+                      - generic:
+                        - text: Limit who sees your ads. Previous account-level settings have been applied. To modify, visit
+                        - link "Audience controls" [ref=e1230]:
+                          - link "Audience controls" [ref=e1231]:
+                            - /url: https://ads.tiktok.com/i18n/account/account_level_control/?aadvid=7388181184582500369
+                            - generic: Audience controls
+                        - text: .
+                    - generic [ref=e1234]:
+                      - generic [ref=e1237]:
+                        - generic [ref=e1240]:
+                          - generic [ref=e1241]:
+                            - generic: Location
+                          - generic [ref=e1243]:
+                            - generic:
+                              - generic: Learn more
+                              - img [ref=e1245]
+                        - generic [ref=e1251]:
+                          - generic [ref=e1253]:
+                            - generic [ref=e1256]:
+                              - generic [ref=e1257]: Netherlands
+                              - generic [ref=e1260]:
+                                - generic [ref=e1262]:
+                                  - generic: Netherlands
+                                - img [ref=e1265]
+                            - img [ref=e1270]
+                          - generic:
+                            - generic: Tips
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: "Pangle provides its services in available regions as follows: In the US, Pangle operates as an audience network of TikTok, Inc. In other regions, Pangle operates as an ad network of ByteDance Pte. Ltd, a Singapore entity."
+                            - generic:
+                              - generic:
+                                - generic: Got it
+                          - button "Bulk upload" [ref=e1275]:
+                            - generic: Bulk upload
+                      - generic [ref=e1278]:
+                        - generic [ref=e1281]:
+                          - generic [ref=e1282]:
+                            - generic: Minimum age
+                          - img [ref=e1286]
+                        - generic [ref=e1297]:
+                          - generic [ref=e1299]:
+                            - generic: "18"
+                          - img [ref=e1303]
+                      - generic [ref=e1307]:
+                        - generic [ref=e1310]:
+                          - generic [ref=e1311]:
+                            - generic: Languages
+                          - img [ref=e1315]
+                        - generic [ref=e1324]:
+                          - generic [ref=e1328]:
+                            - generic: All
+                          - img [ref=e1331]
+                      - generic [ref=e1335]:
+                        - generic [ref=e1339]:
+                          - generic: Exclude audience
+                        - generic [ref=e1345]:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic: Quick select
+                                  - generic:
+                                    - generic:
+                                      - generic: Custom
+                                  - generic:
+                                    - generic:
+                                      - generic: Lookalike
+                              - generic:
+                                - generic: Refresh
+                                - generic: Create new
+                              - generic [ref=e1348]:
+                                - generic [ref=e1351]:
+                                  - generic: Search or select audiences
+                                - img [ref=e1354]
+                    - generic [ref=e1362]:
+                      - generic [ref=e1363]: "Location:"
+                      - text: Netherlands
+                  - generic [ref=e1365] [cursor=pointer]:
+                    - generic [ref=e1366]:
+                      - generic [ref=e1367]:
+                        - img [ref=e1371]
+                        - generic [ref=e1375]: Audience suggestions · Optional
+                      - img [ref=e1378]
+                    - generic [ref=e1383]:
+                      - generic:
+                        - generic: Guide automatic targeting by choosing additional audience settings. These serve as suggestions only, and delivery to those audiences is not guaranteed.
+                    - generic [ref=e1386]:
+                      - generic [ref=e1389]:
+                        - generic [ref=e1392]:
+                          - generic [ref=e1393]:
+                            - generic: Age
+                          - img [ref=e1397]
+                        - generic [ref=e1404]:
+                          - generic:
+                            - generic [ref=e1409]:
+                              - generic: 18-24
+                              - img [ref=e1411]
+                            - generic [ref=e1417]:
+                              - generic: 25-34
+                              - img [ref=e1419]
+                            - generic [ref=e1425]:
+                              - generic: 35-44
+                              - img [ref=e1427]
+                            - generic [ref=e1433]:
+                              - generic: 45-54
+                              - img [ref=e1435]
+                            - generic [ref=e1441]:
+                              - generic: 55+
+                              - img [ref=e1443]
+                      - generic [ref=e1447]:
+                        - generic [ref=e1451]:
+                          - generic: Gender
+                        - generic [ref=e1457]:
+                          - generic:
+                            - generic [ref=e1462]:
+                              - generic: All
+                            - generic [ref=e1467]:
+                              - generic: Male
+                            - generic [ref=e1472]:
+                              - generic: Female
+                      - generic [ref=e1475]:
+                        - generic [ref=e1479]:
+                          - generic: Custom audience
+                        - generic [ref=e1485]:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - generic: Quick select
+                                  - generic:
+                                    - generic:
+                                      - generic: Custom
+                                  - generic:
+                                    - generic:
+                                      - generic: Lookalike
+                              - generic:
+                                - generic: Refresh
+                                - generic: Create new
+                              - generic [ref=e1488]:
+                                - generic [ref=e1491]:
+                                  - generic: Search or select audiences
+                                - img [ref=e1494]
+                      - generic [ref=e1498]:
+                        - generic [ref=e1499]:
+                          - generic [ref=e1502]:
+                            - generic: Interests & behaviors
+                          - generic [ref=e1504]:
+                            - generic:
+                              - text: Target an audience based on their long-term interests and interactions with content on TikTok.
+                              - generic [ref=e1505]:
+                                - generic: Learn more
+                        - generic [ref=e1511]:
+                          - generic [ref=e1514]:
+                            - generic: Search or select interests & behaviors
+                          - img [ref=e1517]
+                    - generic [ref=e1525]:
+                      - generic [ref=e1526]: "Age:"
+                      - text: 18-24, 25-34, 35-44, 45-54, 55+
+                - button "Switch to manual targeting" [ref=e1532] [cursor=pointer]:
+                  - generic:
+                    - text: Switch to manual targeting
+                    - generic [ref=e1533]:
+                      - generic:
+                        - generic:
+                          - generic: Learn more
+                        - img [ref=e1535]
+          - generic [ref=e1121]:
+            - generic [ref=e1539] [cursor=pointer]:
+              - generic [ref=e1541]:
+                - generic: Placements
+              - button [ref=e1544]:
+                - img [ref=e1546]
+            - generic [ref=e1549]:
+              - generic [ref=e1550]:
+                - generic [ref=e1554]:
+                  - generic: Placements
+                - generic [ref=e1556]:
+                  - generic [ref=e1558]:
+                    - generic: TikTok (including search results)
+                  - generic [ref=e1566]:
+                    - generic [ref=e1567]:
+                      - generic: Select specific placements
+                    - generic [ref=e1577]:
+                      - generic: TikTok (including search results)
+              - generic [ref=e1579]:
+                - generic [ref=e1582]:
+                  - generic [ref=e1583]:
+                    - generic [ref=e1585]:
+                      - generic: User comment
+                    - switch [checked] [ref=e1591] [cursor=pointer]
+                  - generic [ref=e1597]:
+                    - text: We recommend keeping user comments on to help your ads achieve more impressions and conversions. You can hide, pin, and reply to comments using our comment management tools.
+                    - link "How to manage comments" [ref=e1601] [cursor=pointer]:
+                      - generic [ref=e1603]:
+                        - generic: How to manage comments
+                - generic:
+                  - generic:
+                    - generic: Turn off user comment?
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: User comment can help your ads achieve more impressions and conversions. Are you sure you want to turn off this feature?
+                    - generic:
+                      - generic:
+                        - generic: Turn off
+                      - generic:
+                        - generic: Keep on
+              - generic [ref=e1608]:
+                - generic [ref=e1609]:
+                  - generic [ref=e1610]:
+                    - generic: Allow video download
+                  - img [ref=e1614]
+                - switch [checked] [ref=e1622] [cursor=pointer]
+              - generic [ref=e1628]:
+                - generic [ref=e1629]:
+                  - generic [ref=e1630]:
+                    - generic: Allow video sharing
+                  - img [ref=e1634]
+                - switch [checked] [ref=e1642] [cursor=pointer]
+            - generic [ref=e1651] [cursor=pointer]:
+              - generic [ref=e1655]:
+                - generic: Placements
+              - generic [ref=e1657]:
+                - generic: TikTok (including search results)
+        - generic [ref=e1123]:
+          - generic [ref=e1658]:
+            - generic [ref=e1659]:
+              - generic [ref=e1660]:
+                - generic: Recommendation usage
+              - img [ref=e1663]
+            - generic [ref=e1666]:
+              - generic [ref=e1667]:
+                - img [ref=e1668]
+                - generic [ref=e1671]:
+                  - generic:
+                    - generic:
+                      - generic: "0123456789"
+                  - generic:
+                    - generic:
+                      - generic: "0123456789"
+              - generic [ref=e1672]:
+                - generic: Ad group is partially optimized. For best results, apply all recommendations.
+            - generic:
+              - generic:
+                - generic [ref=e1674]:
+                  - img [ref=e1676]
+                  - generic [ref=e1680]:
+                    - generic: Optimization and bidding
+                - generic [ref=e1681]:
+                  - generic [ref=e1682]:
+                    - img [ref=e1684]
+                    - generic [ref=e1688]:
+                      - generic: Budget and schedule
+                  - generic [ref=e1691]:
+                    - img [ref=e1695]
+                    - generic [ref=e1700]:
+                      - generic [ref=e1701]:
+                        - generic: Increase budget to 108.24 EUR
+                      - generic [ref=e1702]:
+                        - generic: By increasing your budget, this ad group will be fully supported to scale delivery and maximize performance.
+                      - link "Apply" [ref=e1705]:
+                        - generic [ref=e1707] [cursor=pointer]: Apply
+                - generic [ref=e1709]:
+                  - img [ref=e1711]
+                  - generic [ref=e1715]:
+                    - generic: Audience targeting
+                - generic [ref=e1717]:
+                  - img [ref=e1719]
+                  - generic [ref=e1723]:
+                    - generic: Placements
+                - generic [ref=e1725]:
+                  - img [ref=e1727]
+                  - generic [ref=e1731]:
+                    - generic: Creative assets
+            - link "View more" [ref=e1732]:
+              - generic [ref=e1733] [cursor=pointer]:
+                - generic:
+                  - generic [ref=e1734]:
+                    - generic: View more
+                  - img [ref=e1736]
+          - generic [ref=e1126]:
+            - generic [ref=e1738]:
+              - generic [ref=e1739]:
+                - generic: Available audience
+              - generic [ref=e1740]:
+                - generic:
+                  - generic:
+                    - generic: Learn more
+                  - img [ref=e1742]
+            - generic [ref=e1752]:
+              - generic:
+                - generic [ref=e1756]:
+                  - generic: Fairly broad
+                - generic [ref=e1757]: 5,973,000-7,301,000
+      - generic [ref=e1128]:
+        - generic [ref=e1130]:
+          - generic [ref=e1131]:
+            - button "Exit" [ref=e1132] [cursor=pointer]:
+              - generic [ref=e1133]: Exit
+            - button "" [ref=e1134] [cursor=pointer]:
+              - generic [ref=e1136]: 
+          - generic [ref=e1138] [cursor=pointer]:
+            - text: Draft saved
+            - generic [ref=e1139]: 
+          - text:  
+        - button "Continue" [ref=e1144] [cursor=pointer]
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Split test summary
+            - generic:
+              - generic: If everything looks good, you can publish campaign B, which will complete the creation of your split test.
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Campaign A
+                      - generic: Original campaign.
+                    - generic:
+                      - generic: Campaign B
+                      - generic: Campaign used for comparison.
+                    - generic:
+                      - generic: Campaign name
+                    - generic:
+                      - generic: Advertising objective
+                    - generic:
+                      - generic: Budget strategy
+                    - generic:
+                      - generic: Ad group
+                    - generic:
+                      - generic: Ad group
+                    - generic:
+                      - generic: Campaign budget
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic: Cancel split test?
+              - generic:
+                - generic:
+                  - generic: Cancel test
+                - generic:
+                  - generic: Keep test
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic: Split test details
+              - generic:
+                - generic: Make sure all details are correct before proceeding.
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Today
+                      - generic: Next
+                  - generic:
+                    - generic:
+                      - text: .
+                      - generic:
+                        - generic:
+                          - text: This time zone is based on your ad account settings.
+                          - generic: Learn more
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Select
+              - generic:
+                - generic: Back
+                - generic: Save and continue
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic: Your Smart+ campaign is being created
+                  - generic: If you close this window, the new campaign will be saved as a draft in your campaign list.
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Manual and Smart+ campaigns are now a unified workflow
+            - generic:
+              - generic: Learn more
+            - generic: Compatible settings stay the same
+            - generic: Any original settings that are compatible with Smart+ will stay the same.
+            - generic: Enjoy Smart+ automation
+            - generic: We may automate placements, bidding, budget strategy, or targeting settings with options to customize.
+            - generic: Keep manual control
+            - generic: Manually input and customize settings that matter to you.
+          - generic:
+            - generic:
+              - generic: Don't show again
+            - generic: Got it
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic: Manual and Smart+ campaigns are now a unified workflow
+            - generic:
+              - generic: Learn more
+            - generic: Compatible settings stay the same
+            - generic: Any original settings that are compatible with Smart+ will stay the same.
+            - generic: Enjoy Smart+ automation
+            - generic: We may automate placements, bidding, budget strategy, or targeting settings with options to customize.
+            - generic: Keep manual control
+            - generic: Manually input and customize settings that matter to you.
+          - generic:
+            - generic:
+              - generic: Don't show again
+            - generic: Got it
+  - generic [ref=e272]:
+    - img [ref=e274]
+    - generic [ref=e277] [cursor=pointer]:
+      - generic [ref=e279]: u
+      - generic [ref=e280]: user2161494559212
+      - img [ref=e282]
+    - generic [ref=e288]:
+      - generic [ref=e289]:
+        - button "Ads Manager" [ref=e290] [cursor=pointer]:
+          - img [ref=e293]
+          - generic [ref=e296]: Ads Manager
+        - button "Business Center" [ref=e297] [cursor=pointer]:
+          - img [ref=e300]
+          - generic [ref=e305]: Business Center
+        - button "Leads Center" [ref=e306] [cursor=pointer]:
+          - img [ref=e309]
+          - generic [ref=e313]: Leads Center
+        - button "App Center" [ref=e314] [cursor=pointer]:
+          - img [ref=e317]
+          - generic [ref=e322]: App Center
+        - button "Events Manager" [ref=e323] [cursor=pointer]:
+          - img [ref=e326]
+          - generic [ref=e331]: Events Manager
+      - status [ref=e332]
+      - generic [ref=e333] [cursor=pointer]:
+        - img [ref=e335]
+        - generic [ref=e339]: All tools
