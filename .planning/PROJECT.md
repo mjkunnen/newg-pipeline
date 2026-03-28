@@ -20,6 +20,9 @@ Reliable daily discovery of the best viral competitor content, surfaced in a das
 - ✓ Decarba Remixer (PPSpy → Vision → fal.ai → Meta) — existing
 - ✓ GitHub Actions workflows (5 active) — existing
 - ✓ Google Sheets → Meta launch integration — existing
+- ✓ Codebase consolidated: one canonical file per component, versioned scripts archived — Phase 0
+- ✓ Startup validation: all active scripts validate env vars and credentials at startup — Phase 0
+- ✓ Dependencies pinned with exact versions, .env.example documents all 21 secrets — Phase 0
 
 ### Active
 
@@ -84,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-27 after initialization*
+*Last updated: 2026-03-28 after Phase 0 completion*
