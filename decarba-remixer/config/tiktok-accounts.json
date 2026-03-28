@@ -1,0 +1,21 @@
+{
+  "accounts": [
+    "fiveleafsclo",
+    "thefitscene",
+    "azeliasolo",
+    "nfits_18",
+    "aightfits_clo",
+    "fupgun",
+    "copenhagenlove1",
+    "strhvn2",
+    "thebrand4u",
+    "outfits.nstra",
+    "outfitinspostreet",
+    "away.fl",
+    "havenfit"
+  ],
+  "min_engagement_rate": 0.15,
+  "min_reach_fallback": 3000,
+  "max_age_days": 14,
+  "max_carousels": 2
+}

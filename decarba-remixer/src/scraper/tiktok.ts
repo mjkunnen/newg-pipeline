@@ -4,6 +4,8 @@ import { join } from "path";
 import { existsSync } from "fs";
 import { execSync } from "child_process";
 import type { ScrapedAd } from "./types.js";
+import { loadConfig } from "./config.js";
+import { writeToContentAPI } from "./contentApi.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
 
@@ -18,30 +20,13 @@ function requireEnv(key: string): string {
   return val;
 }
 
-const ENSEMBLEDATA_TOKEN = requireEnv("ENSEMBLEDATA_TOKEN");
-
-const TIKTOK_ACCOUNTS = [
-  "fiveleafsclo",
-  "thefitscene",
-  "azeliasolo",
-  "nfits_18",
-  "aightfits_clo",
-  "fupgun",
-  "copenhagenlove1",
-  "strhvn2",
-  "thebrand4u",
-  "outfits.nstra",
-  "outfitinspostreet",
-  "away.fl",
-  "havenfit",
-];
-
-const MAX_CAROUSELS = 2;
-const MAX_AGE_DAYS = 14;
-const MIN_REACH = 3000; // skip carousels under this view count
-
-// Local tracking of processed post IDs (shared with tiktok_checker.py)
-const PROCESSED_FILE = join(import.meta.dirname, "../../../scout/processed_tiktok.json");
+interface TikTokConfig {
+  accounts: string[];
+  min_engagement_rate: number;
+  min_reach_fallback: number;
+  max_age_days: number;
+  max_carousels: number;
+}
 
 function todayDir(): string {
   return new Date().toISOString().split("T")[0];
@@ -51,59 +36,32 @@ function delay(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-interface ProcessedEntry {
-  id: string;
-  processedAt: string; // ISO date
+export function meetsEngagementThreshold(
+  playCount: number,
+  followerCount: number,
+  minRate: number,
+  minReachFallback: number = 3000
+): boolean {
+  if (followerCount === 0) return playCount >= minReachFallback;
+  return (playCount / followerCount) >= minRate;
 }
 
-async function getProcessedIds(): Promise<Set<string>> {
-  try {
-    if (existsSync(PROCESSED_FILE)) {
-      const raw = JSON.parse(await readFile(PROCESSED_FILE, "utf-8"));
-
-      // Support both old format (string[]) and new format (ProcessedEntry[])
-      if (Array.isArray(raw) && raw.length > 0) {
-        if (typeof raw[0] === "string") {
-          // Old format — migrate: treat all as current
-          return new Set(raw);
-        }
-        // New format — prune entries older than 30 days
-        const cutoff = Date.now() - 30 * 86400 * 1000;
-        const entries = (raw as ProcessedEntry[]).filter(
-          (e) => new Date(e.processedAt).getTime() > cutoff,
-        );
-        if (entries.length < raw.length) {
-          console.log(`[tiktok] Pruned ${raw.length - entries.length} processed IDs older than 30 days`);
-          await writeFile(PROCESSED_FILE, JSON.stringify(entries, null, 2));
-        }
-        return new Set(entries.map((e) => e.id));
-      }
-    }
-  } catch {
-    // ignore
+async function fetchFollowerCounts(
+  accounts: string[],
+  token: string
+): Promise<Map<string, number>> {
+  const counts = new Map<string, number>();
+  for (const username of accounts) {
+    const url = `https://ensembledata.com/apis/tt/user/info?username=${username}&token=${token}`;
+    try {
+      const resp = await fetch(url);
+      if (!resp.ok) { counts.set(username, 0); continue; }
+      const data = await resp.json() as { data?: { stats?: { followerCount?: number } } };
+      counts.set(username, data?.data?.stats?.followerCount ?? 0);
+    } catch { counts.set(username, 0); }
+    await delay(300);
   }
-  return new Set();
-}
-
-async function saveProcessedId(postId: string) {
-  let entries: ProcessedEntry[] = [];
-  try {
-    if (existsSync(PROCESSED_FILE)) {
-      const raw = JSON.parse(await readFile(PROCESSED_FILE, "utf-8"));
-      if (Array.isArray(raw) && raw.length > 0) {
-        if (typeof raw[0] === "string") {
-          // Migrate old format → new format
-          entries = (raw as string[]).map((id) => ({ id, processedAt: new Date().toISOString() }));
-        } else {
-          entries = raw as ProcessedEntry[];
-        }
-      }
-    }
-  } catch {
-    // ignore
-  }
-  entries.push({ id: postId, processedAt: new Date().toISOString() });
-  await writeFile(PROCESSED_FILE, JSON.stringify(entries, null, 2));
+  return counts;
 }
 
 // EnsembleData post format (TikTok internal API)
@@ -142,11 +100,11 @@ interface CarouselCandidate {
   slideUrls: string[];
 }
 
-async function fetchPostsViaEnsemble(): Promise<EnsemblePost[]> {
+async function fetchPostsViaEnsemble(accounts: string[], token: string): Promise<EnsemblePost[]> {
   const allPosts: EnsemblePost[] = [];
 
-  for (const username of TIKTOK_ACCOUNTS) {
-    const url = `https://ensembledata.com/apis/tt/user/posts?username=${username}&depth=1&token=${ENSEMBLEDATA_TOKEN}`;
+  for (const username of accounts) {
+    const url = `https://ensembledata.com/apis/tt/user/posts?username=${username}&depth=1&token=${token}`;
     try {
       const resp = await fetch(url);
       if (!resp.ok) {
@@ -164,7 +122,7 @@ async function fetchPostsViaEnsemble(): Promise<EnsemblePost[]> {
     await delay(500);
   }
 
-  console.log(`[tiktok] Fetched ${allPosts.length} total posts from EnsembleData (${TIKTOK_ACCOUNTS.length} accounts, ${TIKTOK_ACCOUNTS.length} units used)`);
+  console.log(`[tiktok] Fetched ${allPosts.length} total posts from EnsembleData (${accounts.length} accounts, ${accounts.length} units used)`);
   return allPosts;
 }
 
@@ -185,9 +143,10 @@ function getSlideUrls(post: EnsemblePost): string[] {
 
 function selectTopCarousels(
   posts: EnsemblePost[],
-  processedIds: Set<string>,
+  followerCounts: Map<string, number>,
+  config: TikTokConfig,
 ): CarouselCandidate[] {
-  const cutoff = Date.now() / 1000 - MAX_AGE_DAYS * 86400;
+  const cutoff = Date.now() / 1000 - config.max_age_days * 86400;
 
   const candidates: CarouselCandidate[] = [];
   for (const post of posts) {
@@ -197,7 +156,7 @@ function selectTopCarousels(
     if ((post.create_time || 0) < cutoff) continue;
 
     const postId = String(post.aweme_id || "");
-    if (!postId || processedIds.has(postId)) continue;
+    if (!postId) continue;
 
     const username = post.author?.unique_id || "unknown";
     const playCount = post.statistics?.play_count || 0;
@@ -222,19 +181,22 @@ function selectTopCarousels(
   // Log ALL candidates so we can see what's available
   console.log(`[tiktok] ${candidates.length} carousel candidates (sorted by reach):`);
   for (const c of candidates) {
-    const flag = c.playCount < MIN_REACH ? " [SKIP: low reach]" : "";
+    const passes = meetsEngagementThreshold(c.playCount, followerCounts.get(c.username) ?? 0, config.min_engagement_rate, config.min_reach_fallback);
+    const flag = passes ? "" : " [SKIP: low engagement]";
     console.log(`[tiktok]   @${c.username} — ${c.playCount.toLocaleString()} views — ${c.numSlides} slides — ${c.createDate.split("T")[0]} — ${c.postId}${flag}`);
   }
 
-  // Filter by minimum reach
-  const qualified = candidates.filter((c) => c.playCount >= MIN_REACH);
+  // Filter by engagement rate (views/followers per account)
+  const qualified = candidates.filter((c) =>
+    meetsEngagementThreshold(c.playCount, followerCounts.get(c.username) ?? 0, config.min_engagement_rate, config.min_reach_fallback)
+  );
   if (qualified.length === 0 && candidates.length > 0) {
-    console.log(`[tiktok] No carousels above ${MIN_REACH.toLocaleString()} views — skipping low-reach content`);
+    console.log(`[tiktok] No carousels above ${config.min_engagement_rate * 100}% engagement rate — skipping low-engagement content`);
     return [];
   }
 
-  const selected = qualified.slice(0, MAX_CAROUSELS);
-  console.log(`[tiktok] Selected top ${selected.length} (above ${MIN_REACH.toLocaleString()} views):`);
+  const selected = qualified.slice(0, config.max_carousels);
+  console.log(`[tiktok] Selected top ${selected.length} (above ${config.min_engagement_rate * 100}% engagement rate):`);
   for (const c of selected) {
     console.log(`[tiktok]   @${c.username} — ${c.playCount.toLocaleString()} views — ${c.postId}`);
   }
@@ -264,20 +226,23 @@ async function downloadSlideImage(
 }
 
 export async function scrapeTiktok(): Promise<ScrapedAd[]> {
+  const ENSEMBLEDATA_TOKEN = requireEnv("ENSEMBLEDATA_TOKEN");
+  const config = loadConfig<TikTokConfig>("tiktok-accounts.json");
+
   const outputDir = join(OUTPUT_BASE, todayDir());
   await mkdir(outputDir, { recursive: true });
 
-  const processedIds = await getProcessedIds();
-  console.log(`[tiktok] ${processedIds.size} previously processed post IDs`);
+  const followerCounts = await fetchFollowerCounts(config.accounts, ENSEMBLEDATA_TOKEN);
+  console.log(`[tiktok] Fetched follower counts for ${followerCounts.size} accounts`);
 
-  const posts = await fetchPostsViaEnsemble();
+  const posts = await fetchPostsViaEnsemble(config.accounts, ENSEMBLEDATA_TOKEN);
   if (posts.length === 0) {
     const metaPath = join(outputDir, "metadata-tiktok.json");
     await writeFile(metaPath, JSON.stringify([], null, 2));
     return [];
   }
 
-  const carousels = selectTopCarousels(posts, processedIds);
+  const carousels = selectTopCarousels(posts, followerCounts, config);
   if (carousels.length === 0) {
     console.log("[tiktok] No new carousels to show");
     const metaPath = join(outputDir, "metadata-tiktok.json");
@@ -346,14 +311,15 @@ export async function scrapeTiktok(): Promise<ScrapedAd[]> {
       scrapedAt: new Date().toISOString(),
       // ZIP path stored via naming convention: {id}.zip in same dir
     });
-
-    // Mark as processed so it won't appear again
-    await saveProcessedId(carousel.postId);
   }
 
   const metaPath = join(outputDir, "metadata-tiktok.json");
   await writeFile(metaPath, JSON.stringify(ads, null, 2));
   console.log(`[tiktok] Saved ${ads.length} carousels to ${metaPath}`);
+
+  // Write to Postgres content API for dedup (non-fatal if API unavailable)
+  const result = await writeToContentAPI(ads, "tiktok");
+  console.log(`[result] source=tiktok found=${posts.length} written=${result.written} skipped=${result.skipped} errors=0`);
 
   return ads;
 }
