@@ -1192,6 +1192,21 @@ async function loadContentDiscovery() {
   }
 }
 
+async function fetchTiktokThumb(id) {
+  try {
+    const resp = await authFetch('/api/content/' + id + '/fetch-thumbnail', { method: 'POST' });
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data.thumbnail_url) {
+        const img = document.getElementById('thumb-' + id);
+        const ph = document.getElementById('thumb-ph-' + id);
+        if (img) { img.src = data.thumbnail_url; img.style.display = ''; }
+        if (ph) ph.style.display = 'none';
+      }
+    }
+  } catch {}
+}
+
 function safeParseMeta(item) {
   try { return JSON.parse(item.metadata_json || '{}'); } catch { return {}; }
 }
@@ -1203,12 +1218,11 @@ function renderContentCard(item) {
   if (thumbSrc) {
     thumb = '<img class="content-thumb" src="' + esc(thumbSrc) + '" loading="lazy" onerror="this.outerHTML=\'<div class=content-thumb\\ content-thumb-placeholder>No preview</div>\'">';
   } else if (item.source === 'tiktok') {
-    const slideCount = item.ad_copy ? (item.ad_copy.match(/(\d+) slides/) || [])[1] || '' : '';
-    thumb = '<div class="content-thumb content-thumb-placeholder" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff">' +
-      '<span style="font-size:2rem">🎵</span>' +
-      '<span style="font-size:.85rem;font-weight:600">TikTok Slideshow</span>' +
-      (slideCount ? '<span style="font-size:.75rem;opacity:.7">' + slideCount + ' slides</span>' : '') +
-      '</div>';
+    // Auto-fetch OG thumbnail from TikTok
+    thumb = '<img class="content-thumb" id="thumb-' + item.id + '" src="" loading="lazy" style="display:none">' +
+      '<div class="content-thumb content-thumb-placeholder" id="thumb-ph-' + item.id + '" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff">' +
+      '<span style="font-size:1.2rem">Loading...</span></div>';
+    fetchTiktokThumb(item.id);
   } else {
     thumb = '<div class="content-thumb content-thumb-placeholder">No preview</div>';
   }

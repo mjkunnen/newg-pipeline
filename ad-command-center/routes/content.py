@@ -113,6 +113,38 @@ def list_content_items(
     return all_items
 
 
+@router.post("/api/content/{item_id}/fetch-thumbnail")
+def fetch_tiktok_thumbnail(item_id: str, db: Session = Depends(get_db)):
+    """Fetch OG image from TikTok URL and store as thumbnail_url."""
+    import re
+    import httpx
+
+    item = db.query(ContentItem).filter_by(id=item_id).first()
+    if not item:
+        raise HTTPException(404, "Item not found")
+    if item.thumbnail_url:
+        return {"thumbnail_url": item.thumbnail_url}
+    if not item.creative_url or "tiktok.com" not in item.creative_url:
+        raise HTTPException(400, "Not a TikTok item")
+
+    try:
+        resp = httpx.get(
+            item.creative_url,
+            headers={"User-Agent": "facebookexternalhit/1.1"},
+            follow_redirects=True,
+            timeout=10,
+        )
+        match = re.search(r'property="og:image"\s+content="([^"]+)"', resp.text)
+        if not match:
+            raise HTTPException(404, "No OG image found")
+        og_url = match.group(1).replace("&amp;", "&")
+        item.thumbnail_url = og_url
+        db.commit()
+        return {"thumbnail_url": og_url}
+    except httpx.HTTPError as e:
+        raise HTTPException(502, f"Failed to fetch TikTok page: {e}")
+
+
 @router.get("/api/content/health")
 def content_health(db: Session = Depends(get_db)):
     """Return per-source health data: last_seen timestamp, today_count, and ok flag."""
