@@ -43,8 +43,8 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **DASH-01**: Deploy ad-command-center as the single operational dashboard (retire GitHub Pages static dashboard for discovery)
 - [ ] **DASH-02**: Dashboard shows only fresh, unprocessed content daily — reads from Postgres, never stale or duplicate
 - [ ] **DASH-03**: Editor can download/preview original creative assets directly from dashboard
-- [ ] **DASH-04**: Editor can submit Google Drive link for remade creative via dashboard form, updating content item status in Postgres
-- [ ] **DASH-05**: Dashboard shows health indicators — did each source's scraping succeed today, how many items found, last run timestamp
+- [x] **DASH-04**: Editor can submit Google Drive link for remade creative via dashboard form, updating content item status in Postgres
+- [x] **DASH-05**: Dashboard shows health indicators — did each source's scraping succeed today, how many items found, last run timestamp
 
 ### Launch Automation
 
@@ -108,8 +108,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |
-| DASH-04 | Phase 3 | Pending |
-| DASH-05 | Phase 3 | Pending |
+| DASH-04 | Phase 3 | Complete |
+| DASH-05 | Phase 3 | Complete |
 | LAUNCH-01 | Phase 4 | Pending |
 | LAUNCH-02 | Phase 4 | Pending |
 | LAUNCH-03 | Phase 4 | Pending |
