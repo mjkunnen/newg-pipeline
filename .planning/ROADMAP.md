@@ -63,7 +63,11 @@ Plans:
   3. Pinterest flow checks seen-content state before processing any pin — no old pins are reprocessed even on re-run
   4. A GitHub Actions workflow failure sends a structured alert (email, Slack, or equivalent) within minutes — no failure goes unnoticed for more than one cycle
   5. All scraping settings (competitor URLs, viral thresholds, source on/off toggles) are readable from one central config file without touching any script
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Postgres launcher + Graph API v23.0 upgrade + workflow fallback (LAUNCH-01)
+- [ ] 04-02-PLAN.md — Dry-run mode + token type check + System User docs (LAUNCH-02, LAUNCH-03)
 
 ### Phase 3: Dashboard Unification
 **Goal**: A single Railway-deployed dashboard replaces all operational interfaces, showing the editor fresh daily discoveries, their remake queue, and the health of each pipeline source
@@ -92,7 +96,11 @@ Plans:
   2. Running the launcher with --dry-run prints the full campaign payload that would be sent to Meta without making any API call or spending any budget
   3. A launch failure sends an alert and the content item's status is not advanced — the item remains in ready_to_launch state for manual retry
   4. The Meta token in use is a System User token that does not expire on a 60-day cycle
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Postgres launcher + Graph API v23.0 upgrade + workflow fallback (LAUNCH-01)
+- [ ] 04-02-PLAN.md — Dry-run mode + token type check + System User docs (LAUNCH-02, LAUNCH-03)
 
 ## Progress
 
@@ -105,4 +113,4 @@ Phases execute in numeric order: 0 → 1 → 2 → 3 → 4
 | 1. State Layer | 2/4 | In Progress|  |
 | 2. Discovery Reliability | 1/1 | Complete   | 2026-03-28 |
 | 3. Dashboard Unification | 3/3 | Complete   | 2026-03-28 |
-| 4. Launch Hardening | 0/TBD | Not started | - |
+| 4. Launch Hardening | 0/2 | Not started | - |
