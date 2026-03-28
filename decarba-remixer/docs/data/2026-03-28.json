@@ -1,0 +1,48 @@
+{
+  "date": "2026-03-28",
+  "competitor": "decarba",
+  "ads": [
+    {
+      "id": "concept_elevator",
+      "type": "video",
+      "thumbPath": "",
+      "adCopy": "Concept 1: THE ELEVATOR\n\nShot 1 — Product flat lay on elevator floor\nDark elevator interior, stainless steel walls and doors visible. Full outfit laid out on the floor. A branded packaging bag placed next to the items. Shot from directly above (bird's eye view). No people. 9:16 vertical.\n\nShot 2 — Mirror selfie in the same elevator\nSame elevator. Person standing, framed full body head to toe in the mirror reflection. Wearing the exact same outfit from shot 1. Phone held up covering the face completely. Other hand relaxed at side. The metallic elevator walls create a natural frame. 9:16 vertical.",
+      "reach": 0,
+      "reachFormatted": "—",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-28",
+      "platforms": ["ai-video"],
+      "downloadUrl": "",
+      "suggestedProducts": []
+    },
+    {
+      "id": "concept_car_at_night",
+      "type": "video",
+      "thumbPath": "",
+      "adCopy": "Concept 2: THE CAR AT NIGHT\n\nShot 1 — Product layout on back seat\nDark car interior at night. Black leather back seat. Full outfit laid out across the seat. Branded packaging bag on top. Shot from the open car door looking in. No people. 9:16 vertical.\n\nShot 2 — Person leaning against the car\nSame car, exterior shot at night. Person wearing the full outfit, back towards camera, leaning against the closed car door with arms crossed. No face visible. 9:16 vertical.",
+      "reach": 0,
+      "reachFormatted": "—",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-28",
+      "platforms": ["ai-video"],
+      "downloadUrl": "",
+      "suggestedProducts": []
+    },
+    {
+      "id": "concept_laundromat",
+      "type": "video",
+      "thumbPath": "",
+      "adCopy": "Concept 3: THE LAUNDROMAT\n\nShot 1 — Product on top of washing machine\nLaundromat setting, slightly grungy. Outfit laid out on top of a white washing machine. Other washing machines visible in the background, slightly out of focus. Raw, unpolished look. No people. 9:16 vertical.\n\nShot 2 — Person throwing clothing into the machine\nSame laundromat. Person standing in front of an open washing machine, mid-action pushing clothing into the drum. Shot from behind or from the side, framed from shoulders to knees. Hood up. Face not visible. 9:16 vertical.",
+      "reach": 0,
+      "reachFormatted": "—",
+      "reachCost": "",
+      "daysActive": 0,
+      "startDate": "2026-03-28",
+      "platforms": ["ai-video"],
+      "downloadUrl": "",
+      "suggestedProducts": []
+    }
+  ]
+}
