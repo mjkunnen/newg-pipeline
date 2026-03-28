@@ -1199,12 +1199,19 @@ function safeParseMeta(item) {
 function renderContentCard(item) {
   const meta = safeParseMeta(item);
   const thumbSrc = item.thumbnail_url || (item.creative_url && !item.creative_url.includes('tiktok.com') ? item.creative_url : null);
-  const tiktokSlides = meta.slides || meta.carousel_images || [];
-  const firstSlide = tiktokSlides.length > 0 ? tiktokSlides[0] : null;
-  const imgSrc = thumbSrc || firstSlide;
-  const thumb = imgSrc
-    ? '<img class="content-thumb" src="' + esc(imgSrc) + '" loading="lazy">'
-    : '<div class="content-thumb content-thumb-placeholder">No preview</div>';
+  let thumb;
+  if (thumbSrc) {
+    thumb = '<img class="content-thumb" src="' + esc(thumbSrc) + '" loading="lazy" onerror="this.outerHTML=\'<div class=content-thumb\\ content-thumb-placeholder>No preview</div>\'">';
+  } else if (item.source === 'tiktok') {
+    const slideCount = item.ad_copy ? (item.ad_copy.match(/(\d+) slides/) || [])[1] || '' : '';
+    thumb = '<div class="content-thumb content-thumb-placeholder" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff">' +
+      '<span style="font-size:2rem">🎵</span>' +
+      '<span style="font-size:.85rem;font-weight:600">TikTok Slideshow</span>' +
+      (slideCount ? '<span style="font-size:.75rem;opacity:.7">' + slideCount + ' slides</span>' : '') +
+      '</div>';
+  } else {
+    thumb = '<div class="content-thumb content-thumb-placeholder">No preview</div>';
+  }
 
   const stats = [];
   if (meta.views) stats.push(Number(meta.views).toLocaleString() + ' views');
