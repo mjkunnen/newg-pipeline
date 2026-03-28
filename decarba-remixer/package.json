@@ -11,7 +11,9 @@
     "remix": "node dist/index.js --skip-scrape",
     "launch": "node dist/launcher/fromSheet.js",
     "dashboard": "node dist/dashboard/generate.js",
-    "products": "node dist/converter/taobao-to-shopify.js"
+    "products": "node dist/converter/taobao-to-shopify.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@fal-ai/client": "1.9.4",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "22.19.15",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "^4.1.2"
   }
 }

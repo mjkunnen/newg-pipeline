@@ -1,5 +1,4 @@
 {
-  "enabled": true,
   "accounts": [
     "fiveleafsclo",
     "thefitscene",
@@ -15,9 +14,8 @@
     "away.fl",
     "havenfit"
   ],
-  "viral_filter": {
-    "min_reach": 3000,
-    "max_age_days": 14,
-    "max_carousels_per_run": 2
-  }
+  "min_engagement_rate": 0.15,
+  "min_reach_fallback": 3000,
+  "max_age_days": 14,
+  "max_carousels": 2
 }
