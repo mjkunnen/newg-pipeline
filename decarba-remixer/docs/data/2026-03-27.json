@@ -80,38 +80,6 @@
       ]
     },
     {
-      "id": "pinterest_1003176885764290400",
-      "type": "image",
-      "thumbPath": "thumbs/pinterest_1003176885764290400.jpg",
-      "adCopy": "",
-      "reach": 0,
-      "reachFormatted": "0",
-      "reachCost": "",
-      "daysActive": 0,
-      "startDate": "2026-03-27",
-      "platforms": [
-        "pinterest"
-      ],
-      "downloadUrl": "creatives/2026-03-27/pinterest_1003176885764290400.jpg",
-      "suggestedProducts": [
-        {
-          "name": "Heavyweight Zipped Hoodie",
-          "collection": "bestseller-tops",
-          "role": "top"
-        },
-        {
-          "name": "'Graphic Lining' Baggy Jeans",
-          "collection": "bestseller-bottoms",
-          "role": "bottom"
-        },
-        {
-          "name": "StarSign Graphic Sneaker",
-          "collection": "bestseller-shoes",
-          "role": "shoes"
-        }
-      ]
-    },
-    {
       "id": "pinterest_3659243441278702",
       "type": "image",
       "thumbPath": "thumbs/pinterest_3659243441278702.jpg",
