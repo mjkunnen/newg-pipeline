@@ -1,0 +1,10 @@
+{
+  "advertiser_urls": [
+    "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=NL&q=Decarba&search_type=page",
+    "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=NL&q=Strhvn&search_type=page",
+    "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=NL&q=FIVELEAF&search_type=page"
+  ],
+  "max_ads_per_competitor": 10,
+  "country": "NL",
+  "timeout_seconds": 300
+}
