@@ -16,8 +16,8 @@ router = APIRouter(dependencies=[Depends(verify_auth)])
 VALID_SOURCES = {"ppspy", "tiktok", "pinterest", "meta"}
 
 VALID_TRANSITIONS = {
-    "discovered": ["surfaced"],
-    "surfaced": ["queued", "discovered"],
+    "discovered": ["surfaced", "queued", "ready_to_launch"],
+    "surfaced": ["queued", "ready_to_launch", "discovered"],
     "queued": ["ready_to_launch", "surfaced"],
     "ready_to_launch": ["launched", "queued"],
     "launched": [],  # terminal state

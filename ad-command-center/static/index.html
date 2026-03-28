@@ -1198,9 +1198,13 @@ function safeParseMeta(item) {
 
 function renderContentCard(item) {
   const meta = safeParseMeta(item);
-  const thumb = item.thumbnail_url
-    ? '<img class="content-thumb" src="' + esc(item.thumbnail_url) + '" loading="lazy" onclick="openPreviewModal(\'' + item.id + '\')">'
-    : '<div class="content-thumb content-thumb-placeholder" onclick="openPreviewModal(\'' + item.id + '\')">No preview</div>';
+  const thumbSrc = item.thumbnail_url || (item.creative_url && !item.creative_url.includes('tiktok.com') ? item.creative_url : null);
+  const tiktokSlides = meta.slides || meta.carousel_images || [];
+  const firstSlide = tiktokSlides.length > 0 ? tiktokSlides[0] : null;
+  const imgSrc = thumbSrc || firstSlide;
+  const thumb = imgSrc
+    ? '<img class="content-thumb" src="' + esc(imgSrc) + '" loading="lazy">'
+    : '<div class="content-thumb content-thumb-placeholder">No preview</div>';
 
   const stats = [];
   if (meta.views) stats.push(Number(meta.views).toLocaleString() + ' views');
@@ -1223,25 +1227,17 @@ function renderContentCard(item) {
 
 function renderCardActions(item) {
   const dl = item.creative_url
-    ? '<a class="content-btn secondary" href="' + esc(item.creative_url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">Download</a>'
+    ? '<a class="content-btn secondary" href="' + esc(item.creative_url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open</a>'
     : '';
 
-  if (item.status === 'discovered') {
-    return '<button class="content-btn" onclick="event.stopPropagation();advanceStatus(\'' + item.id + '\',\'surfaced\')">Surface</button>' + dl;
+  if (item.status === 'ready_to_launch' || item.status === 'launched') {
+    return '<span style="color:var(--green);font-size:.8rem;font-weight:600">' + esc(item.status.replace('_', ' ')) + '</span>' + dl;
   }
-  if (item.status === 'surfaced') {
-    return '<button class="content-btn" onclick="event.stopPropagation();advanceStatus(\'' + item.id + '\',\'queued\')">Queue for Remake</button>' + dl;
-  }
-  if (item.status === 'queued') {
-    return '<div style="width:100%">' +
-      '<input type="text" class="drive-link-input" id="drive-' + item.id + '" placeholder="Paste Google Drive link..." onclick="event.stopPropagation()">' +
-      '<button class="content-btn" onclick="event.stopPropagation();submitDriveLink(\'' + item.id + '\')">Submit Remake</button>' +
-      dl + '</div>';
-  }
-  if (item.status === 'ready_to_launch') {
-    return '<span style="color:var(--accent);font-size:.8rem">Ready for launch</span>' + dl;
-  }
-  return dl;
+
+  return '<div style="width:100%;display:flex;gap:4px;align-items:center" onclick="event.stopPropagation()">' +
+    '<input type="text" class="drive-link-input" id="drive-' + item.id + '" placeholder="Drive link..." style="flex:1;padding:6px 8px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.8rem">' +
+    '<button class="content-btn" onclick="quickSubmit(\'' + item.id + '\')" style="white-space:nowrap">Submit</button>' +
+    dl + '</div>';
 }
 
 async function advanceStatus(id, newStatus) {
@@ -1285,6 +1281,27 @@ async function submitDriveLink(id) {
   } catch (e) {
     console.error('Drive link submit error:', e);
     alert('Failed to submit remake');
+  }
+}
+
+async function quickSubmit(id) {
+  const input = document.getElementById('drive-' + id);
+  const link = input ? input.value.trim() : '';
+  if (!link) { alert('Plak een Google Drive link'); return; }
+  try {
+    const resp = await authFetch('/api/content/' + id + '/status', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'ready_to_launch', drive_link: link })
+    });
+    if (resp.ok) {
+      loadContentDiscovery();
+    } else {
+      const err = await resp.json().catch(() => ({}));
+      alert(err.detail || 'Submit mislukt');
+    }
+  } catch (e) {
+    alert('Submit mislukt');
   }
 }
 
@@ -1335,16 +1352,12 @@ function openPreviewModal(itemId) {
   const content = document.getElementById('preview-modal-content');
 
   let actionHtml = '';
-  if (item.status === 'discovered') {
-    actionHtml = '<button class="content-btn" onclick="advanceStatus(\'' + item.id + '\',\'surfaced\');closePreviewModal()">Surface</button>';
-  } else if (item.status === 'surfaced') {
-    actionHtml = '<button class="content-btn" onclick="advanceStatus(\'' + item.id + '\',\'queued\');closePreviewModal()">Queue for Remake</button>';
-  } else if (item.status === 'queued') {
+  if (item.status === 'ready_to_launch' || item.status === 'launched') {
+    actionHtml = '<span style="color:var(--green);font-weight:600">' + esc(item.status.replace('_', ' ')) + '</span>';
+  } else {
     actionHtml =
-      '<input type="text" class="drive-link-input" id="modal-drive-' + item.id + '" placeholder="Paste Google Drive link..." style="width:100%;margin-bottom:8px;padding:8px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text)">' +
-      '<button class="content-btn" onclick="submitDriveLinkFromModal(\'' + item.id + '\')">Submit Remake</button>';
-  } else if (item.status === 'ready_to_launch') {
-    actionHtml = '<span style="color:var(--green);font-weight:600">Ready for launch</span>';
+      '<input type="text" class="drive-link-input" id="modal-drive-' + item.id + '" placeholder="Plak Google Drive link..." style="width:100%;margin-bottom:8px;padding:10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem">' +
+      '<button class="content-btn" onclick="submitDriveLinkFromModal(\'' + item.id + '\')">Submit</button>';
   }
 
   content.innerHTML =
