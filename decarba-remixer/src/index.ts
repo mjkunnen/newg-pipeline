@@ -10,6 +10,7 @@ import { remixVideoAd } from "./remixer/video.js";
 import { prepareAdCampaign, saveDrafts, launchCampaign } from "./launcher/meta.js";
 import { uploadToGoogleDrive } from "./output/drive.js";
 import type { ScrapedAd, RemixResult, CampaignDraft, Settings } from "./scraper/types.js";
+import { writeToContentAPI } from "./scraper/contentApi.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../output");
 const skipScrape = process.argv.includes("--skip-scrape");
@@ -44,61 +45,6 @@ function todayDir(): string {
   return new Date().toISOString().split("T")[0];
 }
 
-async function writeToContentAPI(ads: ScrapedAd[]): Promise<void> {
-  const contentApiUrl = process.env.CONTENT_API_URL;
-  const dashboardSecret = process.env.DASHBOARD_SECRET;
-
-  if (!contentApiUrl || !dashboardSecret) {
-    console.log("[content-api] CONTENT_API_URL or DASHBOARD_SECRET not set — skipping Postgres write");
-    return;
-  }
-
-  let written = 0;
-  let skipped = 0;
-
-  for (const ad of ads) {
-    try {
-      const body = {
-        content_id: ad.id,
-        source: "ppspy",
-        creative_url: ad.creativeUrl ?? null,
-        thumbnail_url: ad.thumbnailUrl ?? null,
-        ad_copy: ad.adCopy ?? null,
-        metadata_json: JSON.stringify({
-          reach: ad.reach,
-          daysActive: ad.daysActive,
-          platforms: ad.platforms,
-          type: ad.type,
-        }),
-      };
-
-      const resp = await fetch(`${contentApiUrl}/api/content`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${dashboardSecret}`,
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (resp.ok) {
-        written++;
-      } else {
-        const text = await resp.text().catch(() => "");
-        console.error(`[content-api] Failed to write ${ad.id}: HTTP ${resp.status} ${text.slice(0, 100)}`);
-        skipped++;
-      }
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.error(`[content-api] Network error for ${ad.id}: ${msg}`);
-      skipped++;
-      // Non-fatal: scrape pipeline continues
-    }
-  }
-
-  console.log(`[content-api] Written: ${written}, skipped/failed: ${skipped}`);
-}
-
 async function main() {
   const settings = await loadSettings();
   console.log("=== Decarba Ad Remixer ===");
@@ -116,7 +62,7 @@ async function main() {
   }
   console.log(`Found ${ads.length} ads, processing top ${settings.max_ads}`);
   // Write all discovered ads to Postgres content_items (non-fatal if API unavailable)
-  await writeToContentAPI(ads);
+  await writeToContentAPI(ads, "ppspy");
   ads = ads.slice(0, settings.max_ads);
 
   // Step 2: Analyze & Remix
