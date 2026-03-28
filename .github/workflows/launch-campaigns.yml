@@ -41,11 +41,21 @@ jobs:
           META_PAGE_ID=${{ secrets.META_PAGE_ID }}
           OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
           GOOGLE_SHEET_ID=${{ secrets.GOOGLE_SHEET_ID }}
+          CONTENT_API_URL=${{ secrets.CONTENT_API_URL }}
+          DASHBOARD_SECRET=${{ secrets.DASHBOARD_SECRET }}
+          APPS_SCRIPT_URL=${{ secrets.APPS_SCRIPT_URL }}
           ENVEOF
 
       - name: Build
         run: npm run build
 
-      - name: Launch pending campaigns
+      - name: Launch from Postgres
+        id: postgres_launch
+        run: npm run launch:postgres
+        timeout-minutes: 5
+        continue-on-error: true
+
+      - name: Launch from Sheets (fallback)
+        if: steps.postgres_launch.outcome == 'failure'
         run: npm run launch
         timeout-minutes: 5
