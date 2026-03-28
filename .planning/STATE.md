@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-28T03:03:29.530Z"
+stopped_at: "Completed 02-03-PLAN.md: Pinterest Postgres dedup"
+last_updated: "2026-03-28T03:34:55.774Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 5
-  completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
+  completed_phases: 1
+  total_plans: 3
+  completed_plans: 8
   percent: 0
 ---
 
@@ -59,6 +59,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-state-layer P01 | 12 | 2 tasks | 11 files |
 | Phase 01-state-layer P02 | 2 | 2 tasks | 2 files |
 | Phase 01-state-layer P04 | 1 | 1 tasks | 1 files |
+| Phase 02-discovery-reliability P03 | 8 | 1 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,8 @@ Recent decisions affecting current work:
 - [Phase 01-state-layer]: pg_insert ON CONFLICT DO NOTHING for idempotent content insert — handles concurrent scraper writes without 409 errors
 - [Phase 01-state-layer]: writeToContentAPI uses typed field access (no casts): ScrapedAd in types.ts has all required fields typed directly
 - [Phase 01-state-layer]: writeToContentAPI writes full ad array before max_ads slice — discovery record complete, remix pipeline bounded
+- [Phase 02-discovery-reliability]: Fail-open dedup: missing CONTENT_API_URL returns empty Set, never blocks scraping — better to re-discover than skip all
+- [Phase 02-discovery-reliability]: contentApi.ts extracted as shared utility with source param — all scrapers use same POST pattern to content API
 
 ### Pending Todos
 
@@ -94,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T03:03:29.527Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-discovery-reliability/02-CONTEXT.md
+Last session: 2026-03-28T03:34:55.771Z
+Stopped at: Completed 02-03-PLAN.md: Pinterest Postgres dedup
+Resume file: None
