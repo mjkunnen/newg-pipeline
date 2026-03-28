@@ -49,7 +49,7 @@ Plans:
 
 Plans:
 - [x] 01-01-PLAN.md — ContentItem model + Alembic migration + pytest scaffold (STATE-01, STATE-02)
-- [ ] 01-02-PLAN.md — Content API routes (POST/GET/PATCH) + wire into main.py (STATE-02, STATE-03)
+- [x] 01-02-PLAN.md — Content API routes (POST/GET/PATCH) + wire into main.py (STATE-02, STATE-03)
 - [x] 01-03-PLAN.md — Fix fromSheet.ts hardcoded GOOGLE_SHEET_ID fallback (STATE-04)
 - [ ] 01-04-PLAN.md — decarba-remixer HTTP bridge: writeToContentAPI() after scrape (STATE-02)
 

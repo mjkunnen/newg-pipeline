@@ -28,7 +28,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **STATE-01**: Deploy ad-command-center to Railway with Postgres — operationalize the existing but dormant database code
 - [x] **STATE-02**: Content items table with dedup (unique content ID across all sources — PPSpy ad ID, TikTok video ID, Pinterest pin ID, Meta ad ID)
-- [ ] **STATE-03**: Status lifecycle per content item: discovered → surfaced → queued → ready_to_launch → launched
+- [x] **STATE-03**: Status lifecycle per content item: discovered → surfaced → queued → ready_to_launch → launched
 - [x] **STATE-04**: Migration path: Google Sheets remains readable during transition, new content writes to Postgres first
 
 ### Content Sources
@@ -94,7 +94,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLEAN-04 | Phase 0 | Complete |
 | STATE-01 | Phase 1 | Complete |
 | STATE-02 | Phase 1 | Complete |
-| STATE-03 | Phase 1 | Pending |
+| STATE-03 | Phase 1 | Complete |
 | STATE-04 | Phase 1 | Complete |
 | DISC-01 | Phase 2 | Pending |
 | DISC-02 | Phase 2 | Pending |

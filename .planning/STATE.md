@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md — ContentItem model, Alembic migrations, pytest scaffold
-last_updated: "2026-03-28T02:25:00.030Z"
+stopped_at: Completed 01-02-PLAN.md — ContentItem CRUD endpoints wired into FastAPI app
+last_updated: "2026-03-28T02:29:21.064Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 7
-  completed_plans: 5
+  completed_plans: 6
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 ## Current Position
 
 Phase: 01 (state-layer) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-03-28
 
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 00-codebase-consolidation P02 | 15 | 2 tasks | 6 files |
 | Phase 01-state-layer P03 | 3 | 1 tasks | 2 files |
 | Phase 01-state-layer P01 | 12 | 2 tasks | 11 files |
+| Phase 01-state-layer P02 | 2 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,8 @@ Recent decisions affecting current work:
 - [Phase 01-state-layer]: Real Google Sheet ID removed from fromSheet.ts source — GOOGLE_SHEET_ID now required strictly via env var, no fallback
 - [Phase 01-state-layer]: Manual Alembic migration over --autogenerate: Railway Postgres internal URL not reachable locally; migration SQL written manually to match ContentItem model
 - [Phase 01-state-layer]: Alembic env.py raises RuntimeError on missing DATABASE_URL — never defaults — per CLAUDE.md security rules
+- [Phase 01-state-layer]: Router-level auth dependency for content.py — APIRouter(dependencies=[Depends(verify_auth)]) prevents any route from being accidentally unprotected
+- [Phase 01-state-layer]: pg_insert ON CONFLICT DO NOTHING for idempotent content insert — handles concurrent scraper writes without 409 errors
 
 ### Pending Todos
 
@@ -88,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T02:25:00.027Z
-Stopped at: Completed 01-01-PLAN.md — ContentItem model, Alembic migrations, pytest scaffold
+Last session: 2026-03-28T02:29:21.062Z
+Stopped at: Completed 01-02-PLAN.md — ContentItem CRUD endpoints wired into FastAPI app
 Resume file: None
