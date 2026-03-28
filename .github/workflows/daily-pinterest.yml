@@ -70,7 +70,7 @@ jobs:
           FAL_KEY: ${{ secrets.FAL_KEY }}
           PINTEREST_APPS_SCRIPT_URL: ${{ secrets.PINTEREST_APPS_SCRIPT_URL }}
           PROCESSED_PINS_FILE: /tmp/processed_pin_ids.txt
-        run: python pipeline/cloud_pinterest.py --max 2
+        run: python archive/pipeline/cloud_pinterest.py --max 2
 
       - name: Notify Slack on failure
         if: failure()
