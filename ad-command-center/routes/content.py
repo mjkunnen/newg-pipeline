@@ -70,24 +70,43 @@ def list_content_items(
     status: Optional[str] = None,
     source: Optional[str] = None,
     today: bool = False,
+    per_source: Optional[int] = None,
     limit: int = 200,
     db: Session = Depends(get_db),
 ):
     """
     List content items, optionally filtered by status and/or source.
-    If today=true, only return items discovered today.
-    Ordered by discovered_at descending. Max 1000 items per call.
+    If today=true, only return items from last 24h (default per_source=2).
+    per_source limits results per source (e.g. per_source=2 = max 2 ppspy + 2 tiktok + ...).
     """
+    from datetime import timedelta
+
     q = db.query(ContentItem)
     if status:
         q = q.filter_by(status=status)
     if source:
         q = q.filter_by(source=source)
     if today:
-        from datetime import timedelta
         cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
         q = q.filter(ContentItem.discovered_at >= cutoff)
-    return q.order_by(ContentItem.discovered_at.desc()).limit(min(limit, 1000)).all()
+        if per_source is None:
+            per_source = 2  # default: max 2 per source for today view
+
+    all_items = q.order_by(ContentItem.discovered_at.desc()).limit(min(limit, 1000)).all()
+
+    if per_source is not None and not source:
+        # Group by source, take top N per source
+        from collections import defaultdict
+        grouped = defaultdict(list)
+        for item in all_items:
+            grouped[item.source].append(item)
+        result = []
+        for src_items in grouped.values():
+            result.extend(src_items[:per_source])
+        result.sort(key=lambda x: x.discovered_at, reverse=True)
+        return result
+
+    return all_items
 
 
 @router.get("/api/content/health")
