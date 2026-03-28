@@ -23,36 +23,51 @@ interface MetaConfig {
 }
 
 export interface MetaAdResult {
-  adArchiveID: string;
-  pageName?: string;
+  ad_archive_id: string;
+  page_name?: string;
   snapshot?: {
+    cards?: Array<{
+      original_image_url?: string;
+      video_hd_url?: string;
+      video_sd_url?: string;
+      video_preview_image_url?: string;
+    }>;
+    videos?: Array<{ video_hd_url?: string; video_sd_url?: string; video_preview_image_url?: string }>;
     images?: Array<{ original_image_url?: string }>;
-    videos?: Array<{ video_hd_url?: string; video_preview_image_url?: string }>;
     body?: { text?: string };
+    display_format?: string;
   };
-  startDate?: string;
-  isActive?: boolean;
+  start_date?: number;
+  is_active?: boolean;
 }
 
 export function transformMetaResults(items: MetaAdResult[]): ScrapedAd[] {
   const ads: ScrapedAd[] = [];
   for (const item of items) {
-    const imageUrl = item.snapshot?.images?.[0]?.original_image_url;
-    const videoUrl = item.snapshot?.videos?.[0]?.video_hd_url;
+    const card = item.snapshot?.cards?.[0];
+    const vid = item.snapshot?.videos?.[0];
+    const img = item.snapshot?.images?.[0];
+
+    const videoUrl = card?.video_hd_url ?? card?.video_sd_url ?? vid?.video_hd_url ?? vid?.video_sd_url;
+    const imageUrl = card?.original_image_url ?? img?.original_image_url;
     const creativeUrl = videoUrl ?? imageUrl ?? "";
     const type: "image" | "video" = videoUrl ? "video" : "image";
 
-    if (!creativeUrl || !item.adArchiveID) continue;
+    if (!creativeUrl || !item.ad_archive_id) continue;
+
+    const startDate = item.start_date
+      ? new Date(item.start_date * 1000).toISOString().split("T")[0]
+      : new Date().toISOString().split("T")[0];
 
     ads.push({
-      id: `meta_${item.adArchiveID}`,
+      id: `meta_${item.ad_archive_id}`,
       type,
       creativeUrl,
-      thumbnailUrl: item.snapshot?.videos?.[0]?.video_preview_image_url ?? imageUrl,
+      thumbnailUrl: card?.video_preview_image_url ?? vid?.video_preview_image_url ?? imageUrl,
       adCopy: item.snapshot?.body?.text ?? "",
       reach: 0,
       daysActive: 0,
-      startedAt: item.startDate ?? new Date().toISOString().split("T")[0],
+      startedAt: startDate,
       platforms: ["meta"],
       scrapedAt: new Date().toISOString(),
     });
@@ -67,15 +82,11 @@ export async function scrapeMetaAds(): Promise<ScrapedAd[]> {
 
   console.log(`[meta] Starting Apify actor with ${config.advertiser_urls.length} competitor URLs`);
 
-  const startUrls = config.advertiser_urls.map((url) => ({ url }));
+  const urls = config.advertiser_urls.map((url) => ({ url }));
 
-  const run = await client.actor("apify/facebook-ads-scraper").call({
-    startUrls,
-    resultsLimit: config.max_ads_per_competitor,
-    proxyConfiguration: {
-      useApifyProxy: true,
-      apifyProxyGroups: ["RESIDENTIAL"],
-    },
+  const run = await client.actor("curious_coder/facebook-ads-library-scraper").call({
+    urls,
+    limitPerSource: config.max_ads_per_competitor,
   }, { timeout: config.timeout_seconds });
 
   const { items } = await client.dataset(run.defaultDatasetId).listItems();
