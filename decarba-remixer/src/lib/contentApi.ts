@@ -17,7 +17,6 @@ export interface ContentApiItem {
   startedAt?: string;
   platforms?: string[];
   scrapedAt?: string;
-  [key: string]: unknown;
 }
 
 /**
