@@ -1211,7 +1211,7 @@ function renderContentCard(item) {
   if (meta.likes) stats.push(Number(meta.likes).toLocaleString() + ' likes');
   if (meta.engagement_rate) stats.push((meta.engagement_rate * 100).toFixed(1) + '% ER');
 
-  return '<div class="content-card" data-id="' + item.id + '" data-status="' + item.status + '">' +
+  return '<div class="content-card" data-id="' + item.id + '" data-status="' + item.status + '" onclick="openPreviewModal(\'' + item.id + '\')" style="cursor:pointer">' +
     thumb +
     '<div class="content-body">' +
       '<div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">' +
@@ -1292,6 +1292,28 @@ async function submitDriveLink(id) {
   }
 }
 
+async function submitDriveLinkFromModal(id) {
+  const input = document.getElementById('modal-drive-' + id);
+  const link = input ? input.value.trim() : '';
+  if (!link) { alert('Please paste a Google Drive link'); return; }
+  try {
+    const resp = await authFetch('/api/content/' + id + '/status', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'ready_to_launch', drive_link: link })
+    });
+    if (resp.ok) {
+      closePreviewModal();
+      loadContentDiscovery();
+    } else {
+      const err = await resp.json().catch(() => ({}));
+      alert(err.detail || 'Failed to submit remake');
+    }
+  } catch (e) {
+    alert('Failed to submit remake');
+  }
+}
+
 // ── Preview Modal ─────────────────────
 function openPreviewModal(itemId) {
   const item = contentCache.find(i => i.id === itemId);
@@ -1315,8 +1337,23 @@ function openPreviewModal(itemId) {
   }
 
   const content = document.getElementById('preview-modal-content');
+
+  let actionHtml = '';
+  if (item.status === 'discovered') {
+    actionHtml = '<button class="content-btn" onclick="advanceStatus(\'' + item.id + '\',\'surfaced\');closePreviewModal()">Surface</button>';
+  } else if (item.status === 'surfaced') {
+    actionHtml = '<button class="content-btn" onclick="advanceStatus(\'' + item.id + '\',\'queued\');closePreviewModal()">Queue for Remake</button>';
+  } else if (item.status === 'queued') {
+    actionHtml =
+      '<input type="text" class="drive-link-input" id="modal-drive-' + item.id + '" placeholder="Paste Google Drive link..." style="width:100%;margin-bottom:8px;padding:8px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text)">' +
+      '<button class="content-btn" onclick="submitDriveLinkFromModal(\'' + item.id + '\')">Submit Remake</button>';
+  } else if (item.status === 'ready_to_launch') {
+    actionHtml = '<span style="color:var(--green);font-weight:600">Ready for launch</span>';
+  }
+
   content.innerHTML =
     mediaHtml +
+    '<div style="margin-top:12px;text-align:center">' + actionHtml + '</div>' +
     '<div style="margin-top:12px;display:flex;gap:8px;justify-content:center">' +
       (item.creative_url ? '<a class="content-btn" href="' + esc(item.creative_url) + '" target="_blank" rel="noopener">Open Original</a>' : '') +
       '<button class="content-btn secondary" onclick="closePreviewModal()">Close</button>' +

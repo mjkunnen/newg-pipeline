@@ -84,8 +84,9 @@ def list_content_items(
     if source:
         q = q.filter_by(source=source)
     if today:
-        today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
-        q = q.filter(ContentItem.discovered_at >= today_start)
+        from datetime import timedelta
+        cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
+        q = q.filter(ContentItem.discovered_at >= cutoff)
     return q.order_by(ContentItem.discovered_at.desc()).limit(min(limit, 1000)).all()
 
 
