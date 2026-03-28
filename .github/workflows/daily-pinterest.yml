@@ -72,13 +72,3 @@ jobs:
           PROCESSED_PINS_FILE: /tmp/processed_pin_ids.txt
         run: python archive/pipeline/cloud_pinterest.py --max 2
 
-      - name: Notify Slack on failure
-        if: failure()
-        run: |
-          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
-            curl -s -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
-              -H "Content-Type: application/json" \
-              -d "{\"text\": \":red_circle: *${{ github.workflow }}* failed on ${{ github.ref_name }} — <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>\"}"
-          fi
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

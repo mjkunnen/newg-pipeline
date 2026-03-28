@@ -1,4 +1,4 @@
-name: Daily Scrape + Dashboard
+name: Daily Scrape
 
 on:
   schedule:
@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   scrape-and-deploy:
@@ -144,59 +142,4 @@ jobs:
           fi
         timeout-minutes: 8
 
-      - name: Generate dashboard
-        if: steps.check.outputs.already_ran == 'false'
-        run: npm run dashboard
 
-      - name: Commit and push
-        if: steps.check.outputs.already_ran == 'false'
-        run: |
-          cd ..
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add decarba-remixer/docs/
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "dashboard: $(date +%Y-%m-%d)"
-            git pull --rebase origin master || true
-            git push
-          fi
-
-      - name: Notify Slack on failure
-        if: failure()
-        run: |
-          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
-            curl -s -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
-              -H "Content-Type: application/json" \
-              -d "{\"text\": \":red_circle: *${{ github.workflow }}* failed on ${{ github.ref_name }} — <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>\"}"
-          fi
-
-  deploy-pages:
-    needs: scrape-and-deploy
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout latest
-        uses: actions/checkout@v4
-        with:
-          ref: master
-          fetch-depth: 1
-
-      - name: Pull latest (after scrape push)
-        run: git pull origin master
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: decarba-remixer/docs
-          retention-days: 1
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
