@@ -2,7 +2,7 @@ name: Launch Campaigns
 
 on:
   workflow_run:
-    workflows: ["Daily Scrape + Dashboard"]
+    workflows: ["Daily Scrape"]
     types: [completed]
   workflow_dispatch:
     inputs:
