@@ -1,0 +1,13 @@
+{
+  "enabled": false,
+  "search_terms": [
+    "NEWGARMENTS",
+    "decarba",
+    "fiveleaf",
+    "thefitscene",
+    "strhvn"
+  ],
+  "ad_active_status": "ACTIVE",
+  "max_ads_per_term": 10,
+  "note": "Meta Ad Library via Apify actor — actor selection TBD in plan 02-03. Set enabled=true once actor is configured."
+}
