@@ -302,6 +302,7 @@ export async function scrapeTiktok(): Promise<ScrapedAd[]> {
       id: baseId,
       type: "image",
       creativeUrl: carousel.webUrl || "",
+      thumbnailUrl: carousel.slideUrls[0] || undefined,
       localPath: existsSync(thumbPath) ? thumbPath : slidePaths[0],
       adCopy: `@${carousel.username} — ${slidePaths.length} slides — ${carousel.text}`,
       reach: carousel.playCount,
@@ -309,7 +310,6 @@ export async function scrapeTiktok(): Promise<ScrapedAd[]> {
       startedAt: carousel.createDate.split("T")[0] || todayDir(),
       platforms: ["tiktok"],
       scrapedAt: new Date().toISOString(),
-      // ZIP path stored via naming convention: {id}.zip in same dir
     });
   }
 
