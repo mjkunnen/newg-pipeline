@@ -229,6 +229,24 @@ export async function scrapeTiktok(): Promise<ScrapedAd[]> {
   const ENSEMBLEDATA_TOKEN = requireEnv("ENSEMBLEDATA_TOKEN");
   const config = loadConfig<TikTokConfig>("tiktok-accounts.json");
 
+  // Skip if we already have TikTok items today (save EnsembleData quota)
+  const contentApiUrl = process.env.CONTENT_API_URL;
+  const dashboardSecret = process.env.DASHBOARD_SECRET;
+  if (contentApiUrl && dashboardSecret) {
+    try {
+      const checkResp = await fetch(`${contentApiUrl}/api/content?source=tiktok&today=true`, {
+        headers: { Authorization: `Bearer ${dashboardSecret}` },
+      });
+      if (checkResp.ok) {
+        const existing = await checkResp.json() as unknown[];
+        if (existing.length >= config.max_carousels) {
+          console.log(`[tiktok] Already ${existing.length} items today — skipping to save EnsembleData quota`);
+          return [];
+        }
+      }
+    } catch { /* proceed if check fails */ }
+  }
+
   const outputDir = join(OUTPUT_BASE, todayDir());
   await mkdir(outputDir, { recursive: true });
 
