@@ -67,12 +67,11 @@ export async function scrapeMetaAds(): Promise<ScrapedAd[]> {
 
   console.log(`[meta] Starting Apify actor with ${config.advertiser_urls.length} competitor URLs`);
 
+  const startUrls = config.advertiser_urls.map((url) => ({ url }));
+
   const run = await client.actor("apify/facebook-ads-scraper").call({
-    advertiserUrls: config.advertiser_urls,
-    count: config.max_ads_per_competitor,
-    country: config.country,
-    adType: "all",
-    activeAdsOnly: false,
+    startUrls,
+    resultsLimit: config.max_ads_per_competitor,
   }, { timeout: config.timeout_seconds });
 
   const { items } = await client.dataset(run.defaultDatasetId).listItems();

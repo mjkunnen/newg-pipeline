@@ -84,9 +84,8 @@ export async function scrapePPSpy(): Promise<ScrapedAd[]> {
   );
   if (expiredCookies.length > 0) {
     const names = expiredCookies.map((c) => c.name).join(", ");
-    throw new Error(
-      `PPSpy session cookies expired: [${names}]. ` +
-      "Update PPSPY_COOKIES_JSON in GitHub Actions secrets."
+    console.warn(
+      `[ppspy] Warning: cookies appear expired per expirationDate: [${names}]. Continuing anyway — browser expiry dates are often stale.`
     );
   }
 
