@@ -48,7 +48,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Launch Automation
 
-- [ ] **LAUNCH-01**: Launcher reads pending remakes from Postgres (with fallback: Google Sheets remains readable during transition)
+- [x] **LAUNCH-01**: Launcher reads pending remakes from Postgres (with fallback: Google Sheets remains readable during transition)
 - [ ] **LAUNCH-02**: Dry-run mode available — test a launch without actually publishing to Meta
 - [ ] **LAUNCH-03**: Meta integration uses System User token (non-expiring) instead of personal token (60-day expiry)
 
@@ -110,7 +110,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DASH-03 | Phase 3 | Complete |
 | DASH-04 | Phase 3 | Complete |
 | DASH-05 | Phase 3 | Complete |
-| LAUNCH-01 | Phase 4 | Pending |
+| LAUNCH-01 | Phase 4 | Complete |
 | LAUNCH-02 | Phase 4 | Pending |
 | LAUNCH-03 | Phase 4 | Pending |
 
