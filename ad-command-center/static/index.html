@@ -290,6 +290,49 @@ a{color:var(--accent);text-decoration:none}
 }
 .loading-overlay .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
 
+/* ── Tab Navigation ── */
+.tab-bar{background:var(--card);border-bottom:1px solid var(--border);display:flex;flex-direction:row;gap:0}
+.tab-btn{padding:12px 24px;background:transparent;color:var(--text-dim);border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:inherit;font-size:.9rem;transition:color .2s,border-color .2s}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--accent)}
+.tab-section{padding:24px 32px}
+.tab-section.hidden{display:none}
+
+/* ── Content Discovery ── */
+.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.content-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:border-color .2s}
+.content-card:hover{border-color:var(--accent)}
+.content-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--bg);display:block}
+.content-thumb-placeholder{width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:.8rem;background:var(--bg)}
+.content-body{padding:12px 16px}
+.source-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:600;text-transform:uppercase}
+.status-discovered{background:rgba(59,130,246,.15);color:var(--blue)}
+.status-surfaced{background:rgba(245,158,11,.15);color:var(--amber)}
+.status-queued{background:rgba(74,222,128,.15);color:var(--green)}
+.status-ready_to_launch{background:rgba(224,68,0,.15);color:var(--accent)}
+.status-launched{background:rgba(100,116,139,.15);color:var(--text-muted)}
+.source-ppspy{color:#ff6b6b}
+.source-tiktok{color:#69c9d0}
+.source-pinterest{color:#e60023}
+.source-meta{color:#1877f2}
+.content-meta{font-size:.8rem;color:var(--text-dim);margin-top:6px}
+.content-actions{padding:8px 16px 12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.content-btn{background:var(--accent);color:#fff;padding:6px 14px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:.8rem;font-family:inherit;text-decoration:none;display:inline-block;transition:opacity .2s}
+.content-btn:hover{opacity:.85}
+.content-btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text)}
+.drive-link-input{width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:inherit;font-size:.85rem;outline:none;margin-bottom:6px}
+.drive-link-input:focus{border-color:var(--accent)}
+.content-filters{display:flex;gap:12px;margin-bottom:20px;align-items:center;flex-wrap:wrap}
+.filter-select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:var(--radius-sm);font-family:inherit;outline:none;cursor:pointer}
+.filter-select:focus{border-color:var(--accent)}
+.empty-state{text-align:center;padding:48px;color:var(--text-muted)}
+.loading-state{text-align:center;padding:48px;color:var(--text-dim)}
+
+/* ── Preview Modal ── */
+.preview-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:flex;align-items:center;justify-content:center}
+.preview-overlay.hidden{display:none}
+.preview-content{max-width:90vw;max-height:90vh;position:relative}
+.preview-close{position:absolute;top:-40px;right:0;color:#fff;background:none;border:none;font-size:1.5rem;cursor:pointer;line-height:1}
+
 /* ── Animations ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -354,6 +397,38 @@ a{color:var(--accent);text-decoration:none}
     </div>
   </header>
 
+  <!-- Tab Navigation -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="discovery" onclick="switchTab('discovery')">Content Discovery</button>
+    <button class="tab-btn" data-tab="performance" onclick="switchTab('performance')">Ad Performance</button>
+    <button class="tab-btn" data-tab="health" onclick="switchTab('health')">Pipeline Health</button>
+  </div>
+
+  <!-- Content Discovery Tab -->
+  <div class="tab-section" data-tab="discovery">
+    <div class="content-filters">
+      <select class="filter-select" id="source-filter" onchange="loadContentDiscovery()">
+        <option value="">All Sources</option>
+        <option value="ppspy">PPSpy</option>
+        <option value="tiktok">TikTok</option>
+        <option value="pinterest">Pinterest</option>
+        <option value="meta">Meta</option>
+      </select>
+      <select class="filter-select" id="status-filter" onchange="loadContentDiscovery()">
+        <option value="">Discovered + Surfaced</option>
+        <option value="discovered">Discovered</option>
+        <option value="surfaced">Surfaced</option>
+        <option value="queued">Queued</option>
+        <option value="ready_to_launch">Ready to Launch</option>
+      </select>
+    </div>
+    <div id="content-grid" class="content-grid">
+      <div class="loading-state">Loading content...</div>
+    </div>
+  </div>
+
+  <!-- Ad Performance Tab -->
+  <div class="tab-section hidden" data-tab="performance">
   <main class="main">
 
     <!-- KPI Cards -->
@@ -421,13 +496,19 @@ a{color:var(--accent);text-decoration:none}
       </div>
     </div>
 
-  </main>
-
   <!-- Footer -->
   <footer class="footer">
     Powered by <span>NEWG Command Center</span> &middot; v1.0.0
     <br>Auto-refresh every 10 minutes
   </footer>
+  </main>
+  </div><!-- /tab-section performance -->
+
+  <!-- Pipeline Health Tab -->
+  <div class="tab-section hidden" data-tab="health">
+    <div class="loading-state">Loading health data...</div>
+  </div>
+
 </div>
 
 <!-- Budget Modal -->
@@ -444,6 +525,14 @@ a{color:var(--accent);text-decoration:none}
 
 <!-- Refresh Indicator -->
 <div class="refresh-indicator" id="refresh-indicator"><div class="spinner"></div> Refreshing...</div>
+
+<!-- Preview Modal -->
+<div id="preview-modal" class="preview-overlay hidden">
+  <div class="preview-content">
+    <button class="preview-close" onclick="closePreviewModal()">&times;</button>
+    <div id="preview-modal-content"></div>
+  </div>
+</div>
 
 <script>
 /* ═══════════════════════════════════════
@@ -492,6 +581,7 @@ async function login() {
     setToken(data.token);
     document.getElementById('login-password').value = '';
     showDashboard();
+    switchTab('discovery');
     loadDashboard();
     startAutoRefresh();
   } catch (e) {
@@ -504,6 +594,7 @@ document.getElementById('login-password').addEventListener('keydown', e => { if 
 function checkAuth() {
   if (getToken()) {
     showDashboard();
+    switchTab('discovery');
     loadDashboard();
     startAutoRefresh();
   } else {
@@ -948,6 +1039,225 @@ async function autoRefresh() {
   indicator.classList.add('show');
   await loadDashboard();
   setTimeout(() => indicator.classList.remove('show'), 1500);
+}
+
+// ── authFetch (returns raw Response, unlike apiFetch) ──
+async function authFetch(url, opts = {}) {
+  const token = getToken();
+  if (!token) { showLogin(); throw new Error('No token'); }
+  const headers = { 'Authorization': 'Bearer ' + token, ...(opts.headers || {}) };
+  const res = await fetch(API_BASE + url, { ...opts, headers });
+  if (res.status === 401) { clearToken(); showLogin(); throw new Error('Unauthorized'); }
+  return res;
+}
+
+// ── Tab Navigation ────────────────────
+let activeTab = 'discovery';
+
+function switchTab(name) {
+  activeTab = name;
+  document.querySelectorAll('.tab-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.tab === name)
+  );
+  document.querySelectorAll('.tab-section').forEach(s =>
+    s.classList.toggle('hidden', s.dataset.tab !== name)
+  );
+  if (name === 'discovery') loadContentDiscovery();
+  if (name === 'health') loadHealthPanel();
+}
+
+// ── Content Discovery ─────────────────
+let contentCache = [];
+
+async function loadContentDiscovery() {
+  const grid = document.getElementById('content-grid');
+  grid.innerHTML = '<div class="loading-state">Loading content...</div>';
+
+  const sourceFilter = document.getElementById('source-filter').value;
+  const statusFilter = document.getElementById('status-filter').value;
+
+  try {
+    let items = [];
+    if (statusFilter) {
+      let url = '/api/content?status=' + statusFilter + '&limit=200';
+      if (sourceFilter) url += '&source=' + sourceFilter;
+      const resp = await authFetch(url);
+      if (resp.ok) items = await resp.json();
+    } else {
+      const sf = sourceFilter ? '&source=' + sourceFilter : '';
+      const [r1, r2] = await Promise.all([
+        authFetch('/api/content?status=discovered&limit=200' + sf),
+        authFetch('/api/content?status=surfaced&limit=200' + sf)
+      ]);
+      if (r1.ok) items = items.concat(await r1.json());
+      if (r2.ok) items = items.concat(await r2.json());
+      items.sort((a, b) => new Date(b.discovered_at) - new Date(a.discovered_at));
+    }
+
+    contentCache = items;
+
+    if (items.length === 0) {
+      grid.innerHTML = '<div class="empty-state">No content found. Check filters or wait for next scrape run.</div>';
+      return;
+    }
+
+    grid.innerHTML = items.map(renderContentCard).join('');
+  } catch (e) {
+    grid.innerHTML = '<div class="empty-state">Failed to load content. Check connection.</div>';
+    console.error('Content load error:', e);
+  }
+}
+
+function safeParseMeta(item) {
+  try { return JSON.parse(item.metadata_json || '{}'); } catch { return {}; }
+}
+
+function renderContentCard(item) {
+  const meta = safeParseMeta(item);
+  const thumb = item.thumbnail_url
+    ? '<img class="content-thumb" src="' + esc(item.thumbnail_url) + '" loading="lazy" onclick="openPreviewModal(\'' + item.id + '\')">'
+    : '<div class="content-thumb content-thumb-placeholder" onclick="openPreviewModal(\'' + item.id + '\')">No preview</div>';
+
+  const stats = [];
+  if (meta.views) stats.push(Number(meta.views).toLocaleString() + ' views');
+  if (meta.likes) stats.push(Number(meta.likes).toLocaleString() + ' likes');
+  if (meta.engagement_rate) stats.push((meta.engagement_rate * 100).toFixed(1) + '% ER');
+
+  return '<div class="content-card" data-id="' + item.id + '" data-status="' + item.status + '">' +
+    thumb +
+    '<div class="content-body">' +
+      '<div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">' +
+        '<span class="source-badge source-' + item.source + '">' + esc(item.source) + '</span>' +
+        '<span class="source-badge status-' + item.status + '">' + esc(item.status.replace('_', ' ')) + '</span>' +
+      '</div>' +
+      '<div style="font-size:.85rem;color:var(--text);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">' + esc(item.ad_copy || 'No ad copy') + '</div>' +
+      '<div class="content-meta">' + (stats.length ? stats.join(' \u00b7 ') + ' \u00b7 ' : '') + new Date(item.discovered_at).toLocaleDateString() + '</div>' +
+    '</div>' +
+    '<div class="content-actions">' + renderCardActions(item) + '</div>' +
+  '</div>';
+}
+
+function renderCardActions(item) {
+  const dl = item.creative_url
+    ? '<a class="content-btn secondary" href="' + esc(item.creative_url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">Download</a>'
+    : '';
+
+  if (item.status === 'discovered') {
+    return '<button class="content-btn" onclick="event.stopPropagation();advanceStatus(\'' + item.id + '\',\'surfaced\')">Surface</button>' + dl;
+  }
+  if (item.status === 'surfaced') {
+    return '<button class="content-btn" onclick="event.stopPropagation();advanceStatus(\'' + item.id + '\',\'queued\')">Queue for Remake</button>' + dl;
+  }
+  if (item.status === 'queued') {
+    return '<div style="width:100%">' +
+      '<input type="text" class="drive-link-input" id="drive-' + item.id + '" placeholder="Paste Google Drive link..." onclick="event.stopPropagation()">' +
+      '<button class="content-btn" onclick="event.stopPropagation();submitDriveLink(\'' + item.id + '\')">Submit Remake</button>' +
+      dl + '</div>';
+  }
+  if (item.status === 'ready_to_launch') {
+    return '<span style="color:var(--accent);font-size:.8rem">Ready for launch</span>' + dl;
+  }
+  return dl;
+}
+
+async function advanceStatus(id, newStatus) {
+  try {
+    const resp = await authFetch('/api/content/' + id + '/status', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus })
+    });
+    if (resp.ok) {
+      loadContentDiscovery();
+    } else {
+      const err = await resp.json().catch(() => ({}));
+      alert(err.detail || 'Failed to update status');
+    }
+  } catch (e) {
+    console.error('Status update error:', e);
+    alert('Failed to update status');
+  }
+}
+
+async function submitDriveLink(id) {
+  const input = document.getElementById('drive-' + id);
+  const link = input ? input.value.trim() : '';
+  if (!link) { alert('Please paste a Google Drive link'); return; }
+  if (!link.includes('drive.google.com') && !link.includes('docs.google.com')) {
+    if (!confirm('This does not look like a Google Drive link. Submit anyway?')) return;
+  }
+  try {
+    const resp = await authFetch('/api/content/' + id + '/status', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'ready_to_launch', drive_link: link })
+    });
+    if (resp.ok) {
+      loadContentDiscovery();
+    } else {
+      const err = await resp.json().catch(() => ({}));
+      alert(err.detail || 'Failed to submit remake');
+    }
+  } catch (e) {
+    console.error('Drive link submit error:', e);
+    alert('Failed to submit remake');
+  }
+}
+
+// ── Preview Modal ─────────────────────
+function openPreviewModal(itemId) {
+  const item = contentCache.find(i => i.id === itemId);
+  if (!item) return;
+  const meta = safeParseMeta(item);
+  const isVideo = item.source === 'ppspy' || meta.type === 'video';
+  const slides = meta.slides || meta.carousel_images || [];
+
+  let mediaHtml;
+  if (slides.length > 1) {
+    mediaHtml = '<div style="display:flex;gap:8px;overflow-x:auto;max-width:80vw">' +
+      slides.map(s => '<img style="max-height:70vh;border-radius:8px" src="' + esc(s) + '">').join('') +
+      '</div>';
+  } else if (isVideo && item.creative_url) {
+    mediaHtml = '<video controls autoplay style="max-width:80vw;max-height:70vh;border-radius:8px" src="' + esc(item.creative_url) + '"></video>';
+  } else {
+    const imgSrc = item.creative_url || item.thumbnail_url;
+    mediaHtml = imgSrc
+      ? '<img style="max-width:80vw;max-height:70vh;object-fit:contain;border-radius:8px" src="' + esc(imgSrc) + '">'
+      : '<div class="empty-state">No preview available</div>';
+  }
+
+  const content = document.getElementById('preview-modal-content');
+  content.innerHTML =
+    mediaHtml +
+    '<div style="margin-top:12px;display:flex;gap:8px;justify-content:center">' +
+      (item.creative_url ? '<a class="content-btn" href="' + esc(item.creative_url) + '" target="_blank" rel="noopener">Open Original</a>' : '') +
+      '<button class="content-btn secondary" onclick="closePreviewModal()">Close</button>' +
+    '</div>' +
+    '<div style="margin-top:8px;font-size:.8rem;color:var(--text-dim);text-align:center">' +
+      esc(item.source.toUpperCase()) + ' \u00b7 ' + esc(item.status) + ' \u00b7 ' + new Date(item.discovered_at).toLocaleDateString() +
+    '</div>';
+
+  document.getElementById('preview-modal').classList.remove('hidden');
+}
+
+function closePreviewModal() {
+  document.getElementById('preview-modal').classList.add('hidden');
+  const content = document.getElementById('preview-modal-content');
+  content.querySelectorAll('video').forEach(v => { v.pause(); v.src = ''; });
+  content.innerHTML = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePreviewModal();
+});
+
+document.getElementById('preview-modal').addEventListener('click', e => {
+  if (e.target.classList.contains('preview-overlay')) closePreviewModal();
+});
+
+// ── Health Panel ──────────────────────
+function loadHealthPanel() {
+  // Populated in plan 03-03
 }
 
 // ── Init ──────────────────────────────
