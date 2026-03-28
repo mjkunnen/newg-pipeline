@@ -2,13 +2,17 @@ import { chromium } from "playwright";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import type { ScrapedAd } from "./types.js";
+import { loadConfig } from "./config.js";
+import { writeToContentAPI } from "./contentApi.js";
 
 const OUTPUT_BASE = join(import.meta.dirname, "../../output/raw");
-const BOARD_URL = "https://www.pinterest.com/mygarmentseu/ads-newgarments/";
 
-// Pinterest remake tracking sheet (same one used by cloud_pinterest.py)
-const SHEET_ID = "1BQ54wjilxW3F8rQFnVjwCRJtBTPDrSj3U5D0XYHjsgY";
-const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Blad1`;
+interface PinterestConfig {
+  board_url: string;
+  max_new_pins: number;
+  scroll_rounds: number;
+  stale_rounds_limit: number;
+}
 
 function todayDir(): string {
   return new Date().toISOString().split("T")[0];
@@ -19,39 +23,35 @@ function delay(ms: number): Promise<void> {
 }
 
 async function getProcessedPinIds(): Promise<Set<string>> {
+  const contentApiUrl = process.env.CONTENT_API_URL;
+  const dashboardSecret = process.env.DASHBOARD_SECRET;
+
+  if (!contentApiUrl || !dashboardSecret) {
+    console.log("[pinterest] Content API not configured — dedup disabled for this run");
+    return new Set();
+  }
+
   try {
-    const resp = await fetch(SHEET_CSV_URL);
-    if (!resp.ok) throw new Error(`Sheet fetch failed: ${resp.status}`);
-    const text = await resp.text();
-    const lines = text.split("\n");
-    if (lines.length < 2) return new Set();
-
-    const headers = lines[0].split(",").map((h) => h.replace(/"/g, "").trim().toLowerCase());
-    let pinCol = 6;
-    for (let i = 0; i < headers.length; i++) {
-      if (headers[i] === "pin_id") {
-        pinCol = i;
-        break;
-      }
+    const resp = await fetch(`${contentApiUrl}/api/content?source=pinterest&limit=1000`, {
+      headers: { "Authorization": `Bearer ${dashboardSecret}` },
+    });
+    if (!resp.ok) {
+      console.error(`[pinterest] Content API returned ${resp.status} — dedup disabled`);
+      return new Set();
     }
-
-    const ids = new Set<string>();
-    for (let i = 1; i < lines.length; i++) {
-      const cols = lines[i].split(",");
-      if (cols.length > pinCol) {
-        const val = cols[pinCol].replace(/"/g, "").trim();
-        if (val) ids.add(val);
-      }
-    }
-    console.log(`[pinterest] Sheet: ${ids.size} already-processed pin IDs`);
+    const items = await resp.json() as Array<{ content_id: string }>;
+    // content_id is stored as "pinterest_12345" — strip prefix for comparison
+    const ids = new Set(items.map(i => i.content_id.replace("pinterest_", "")));
+    console.log(`[pinterest] ${ids.size} seen pin IDs from Postgres`);
     return ids;
   } catch (err) {
-    console.error(`[pinterest] Failed to read tracking sheet: ${err}`);
-    return new Set();
+    console.error(`[pinterest] Failed to load seen IDs from Postgres: ${err}`);
+    return new Set(); // fail open — better to re-discover than skip all
   }
 }
 
 export async function scrapePinterest(): Promise<ScrapedAd[]> {
+  const config = loadConfig<PinterestConfig>("pinterest-boards.json");
   const outputDir = join(OUTPUT_BASE, todayDir());
   await mkdir(outputDir, { recursive: true });
 
@@ -65,8 +65,8 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
   });
 
   try {
-    console.log(`[pinterest] Navigating to board: ${BOARD_URL}`);
-    await page.goto(BOARD_URL, { waitUntil: "networkidle", timeout: 30000 });
+    console.log(`[pinterest] Navigating to board: ${config.board_url}`);
+    await page.goto(config.board_url, { waitUntil: "networkidle", timeout: 30000 });
     await delay(3000);
 
     // Pinterest virtualizes the DOM — pins get removed as you scroll past them.
@@ -84,7 +84,7 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
     console.log(`[pinterest] Board says ${boardPinCount} pins`);
 
     let staleRounds = 0;
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < config.scroll_rounds; i++) {
       const prevSize = allPins.size;
 
       // Extract visible pins
@@ -119,10 +119,10 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
         break;
       }
 
-      // Stop if no new pins found for 2 consecutive scrolls
+      // Stop if no new pins found for configured stale rounds
       if (allPins.size === prevSize) {
         staleRounds++;
-        if (staleRounds >= 2) {
+        if (staleRounds >= config.stale_rounds_limit) {
           console.log(`[pinterest] No new pins in ${staleRounds} scrolls, stopping`);
           break;
         }
@@ -136,18 +136,17 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
 
     console.log(`[pinterest] Found ${allPins.size} total unique pins on board`);
 
-    // Show all board pins that are NOT in the tracking sheet
+    // Show all board pins that are NOT in Postgres
     const newPins: Array<{ pinId: string; imageUrl: string }> = [];
     for (const [pinId, imageUrl] of allPins) {
       if (!processedIds.has(pinId)) {
         newPins.push({ pinId, imageUrl });
       }
     }
-    const MAX_NEW_PINS = 2;
-    console.log(`[pinterest] ${newPins.length} pins not in sheet (${allPins.size - newPins.length} already in sheet)`);
-    if (newPins.length > MAX_NEW_PINS) {
-      console.log(`[pinterest] Limiting to ${MAX_NEW_PINS} new pins per day`);
-      newPins.splice(MAX_NEW_PINS);
+    console.log(`[pinterest] ${newPins.length} pins not in Postgres (${allPins.size - newPins.length} already seen)`);
+    if (newPins.length > config.max_new_pins) {
+      console.log(`[pinterest] Limiting to ${config.max_new_pins} new pins per day`);
+      newPins.splice(config.max_new_pins);
     }
 
     if (newPins.length === 0) {
@@ -202,6 +201,9 @@ export async function scrapePinterest(): Promise<ScrapedAd[]> {
     const metaPath = join(outputDir, "metadata-pinterest.json");
     await writeFile(metaPath, JSON.stringify(ads, null, 2));
     console.log(`[pinterest] Saved ${ads.length} new pins to ${metaPath}`);
+
+    const result = await writeToContentAPI(ads, "pinterest");
+    console.log(`[result] source=pinterest found=${allPins.size} written=${result.written} skipped=${result.skipped} errors=0`);
 
     return ads;
   } finally {
