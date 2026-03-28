@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-28T03:03:29.530Z"
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-28T03:38:02.125Z"
 last_activity: 2026-03-28
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 4
+  completed_plans: 8
   percent: 0
 ---
 
@@ -59,6 +59,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-state-layer P01 | 12 | 2 tasks | 11 files |
 | Phase 01-state-layer P02 | 2 | 2 tasks | 2 files |
 | Phase 01-state-layer P04 | 1 | 1 tasks | 1 files |
+| Phase 02 P01 | 6 | 6 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,9 @@ Recent decisions affecting current work:
 - [Phase 01-state-layer]: pg_insert ON CONFLICT DO NOTHING for idempotent content insert — handles concurrent scraper writes without 409 errors
 - [Phase 01-state-layer]: writeToContentAPI uses typed field access (no casts): ScrapedAd in types.ts has all required fields typed directly
 - [Phase 01-state-layer]: writeToContentAPI writes full ad array before max_ads slice — discovery record complete, remix pipeline bounded
+- [Phase 02]: Central config files (one per source) replace all hardcoded account lists and thresholds — competitor lists are not secrets, JSON config is the right layer
+- [Phase 02]: Shared contentApi.ts module used by all scrapers — prevents copy-paste drift in API auth and error handling
+- [Phase 02]: TikTok and Pinterest dedup migrated from file/Sheet-based to Postgres ON CONFLICT DO NOTHING — scout/processed_tiktok.json removed from git
 
 ### Pending Todos
 
@@ -94,6 +98,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T03:03:29.527Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-discovery-reliability/02-CONTEXT.md
+Last session: 2026-03-28T03:38:02.122Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
