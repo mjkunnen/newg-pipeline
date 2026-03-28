@@ -67,6 +67,9 @@ jobs:
           ZAPIER_WEBHOOK_URL=${{ secrets.ZAPIER_WEBHOOK_URL }}
           APIFY_TOKEN=${{ secrets.APIFY_TOKEN }}
           ENSEMBLEDATA_TOKEN=${{ secrets.ENSEMBLEDATA_TOKEN }}
+          GOOGLE_SHEET_ID=${{ secrets.GOOGLE_SHEET_ID }}
+          CONTENT_API_URL=${{ secrets.CONTENT_API_URL }}
+          DASHBOARD_SECRET=${{ secrets.DASHBOARD_SECRET }}
           DASHBOARD_AUTO_PUSH=false
           ENVEOF
 
