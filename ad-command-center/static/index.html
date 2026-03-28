@@ -333,6 +333,23 @@ a{color:var(--accent);text-decoration:none}
 .preview-content{max-width:90vw;max-height:90vh;position:relative}
 .preview-close{position:absolute;top:-40px;right:0;color:#fff;background:none;border:none;font-size:1.5rem;cursor:pointer;line-height:1}
 
+/* ── Pipeline Health Panel ── */
+.health-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.health-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative}
+.health-card.ok{border-left:3px solid var(--green)}
+.health-card.stale{border-left:3px solid var(--amber)}
+.health-card.down{border-left:3px solid var(--red)}
+.health-source-name{font-size:1.1rem;font-weight:600;margin-bottom:12px;text-transform:uppercase}
+.health-stat{display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.85rem}
+.health-stat-label{color:var(--text-dim)}
+.health-stat-value{color:var(--text);font-weight:500}
+.health-indicator{width:10px;height:10px;border-radius:50%;position:absolute;top:20px;right:20px}
+.health-indicator.ok{background:var(--green)}
+.health-indicator.stale{background:var(--amber)}
+.health-indicator.down{background:var(--red)}
+.health-refresh{margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.health-last-refresh{font-size:0.8rem;color:var(--text-muted)}
+
 /* ── Animations ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -506,7 +523,16 @@ a{color:var(--accent);text-decoration:none}
 
   <!-- Pipeline Health Tab -->
   <div class="tab-section hidden" data-tab="health">
-    <div class="loading-state">Loading health data...</div>
+    <div class="health-refresh">
+      <h2 style="font-size:1.1rem;font-weight:600">Pipeline Health</h2>
+      <div>
+        <span class="health-last-refresh" id="health-refresh-time"></span>
+        <button class="content-btn secondary" onclick="loadHealthPanel()" style="margin-left:8px">Refresh</button>
+      </div>
+    </div>
+    <div id="health-grid" class="health-grid">
+      <div class="loading-state">Loading health data...</div>
+    </div>
   </div>
 
 </div>
@@ -1064,6 +1090,62 @@ function switchTab(name) {
   );
   if (name === 'discovery') loadContentDiscovery();
   if (name === 'health') loadHealthPanel();
+}
+
+// ── Pipeline Health ───────────────────
+
+async function loadHealthPanel() {
+  const grid = document.getElementById('health-grid');
+  grid.innerHTML = '<div class="loading-state">Loading health data...</div>';
+
+  try {
+    const resp = await authFetch('/api/content/health');
+    if (!resp.ok) throw new Error('Health endpoint returned ' + resp.status);
+    const data = await resp.json();
+
+    const sourceNames = { ppspy: 'PPSpy', tiktok: 'TikTok', pinterest: 'Pinterest', meta: 'Meta Ads' };
+    const sourceColors = { ppspy: '#ff6b6b', tiktok: '#69c9d0', pinterest: '#e60023', meta: '#1877f2' };
+
+    grid.innerHTML = Object.entries(data).map(([source, info]) => {
+      const status = info.ok ? 'ok' : (info.last_seen ? 'stale' : 'down');
+      const statusLabel = info.ok ? 'Active today' : (info.last_seen ? 'Stale' : 'No data');
+      const lastSeen = info.last_seen
+        ? new Date(info.last_seen).toLocaleString()
+        : 'Never';
+      const timeSince = info.last_seen
+        ? timeAgo(info.last_seen)
+        : '\u2014';
+
+      return `
+        <div class="health-card ${status}">
+          <div class="health-indicator ${status}"></div>
+          <div class="health-source-name" style="color:${sourceColors[source] || 'var(--text)'}">${sourceNames[source] || source}</div>
+          <div class="health-stat">
+            <span class="health-stat-label">Status</span>
+            <span class="health-stat-value">${statusLabel}</span>
+          </div>
+          <div class="health-stat">
+            <span class="health-stat-label">Items today</span>
+            <span class="health-stat-value">${info.today_count}</span>
+          </div>
+          <div class="health-stat">
+            <span class="health-stat-label">Last discovery</span>
+            <span class="health-stat-value">${lastSeen}</span>
+          </div>
+          <div class="health-stat">
+            <span class="health-stat-label">Time since</span>
+            <span class="health-stat-value">${timeSince}</span>
+          </div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('health-refresh-time').textContent =
+      'Last refreshed: ' + new Date().toLocaleTimeString();
+
+  } catch (e) {
+    grid.innerHTML = '<div class="empty-state">Failed to load health data.</div>';
+    console.error('Health panel error:', e);
+  }
 }
 
 // ── Content Discovery ─────────────────
